@@ -1,0 +1,436 @@
+COMP6771 Advanced C++ Programming week 2 tutorial notes
+=======================================================
+:Author: Christopher Di Bella
+:Email: cjdb.ns@gmail.com
+:Date: 2016/08/03
+:Revision: 1
+
+== Admin
+=== Contact
+* You can contact me at :email:.
+* Please put your subject as "COMP6771 -- <subject>". I get asked a lot of C++ questions, and I need
+  to prioritise _your_ questions over the general public's.
+* Please email staff as soon as you have a question so that you don't forget to ask.
+* There is also an official course forum at http://www.cse.unsw.edu.au/~cs6771. Please use this to
+  ask questions that might benefit the class over both email (personal stuff exempt) and the Facbook
+  group.
+=== Tutorial attendance
+* Not compulsory.
+* We like to keep attendance for book-keeping purposes.
+   * This will help us determine the correlation between attendance and marks.
+* Except in **grievous circumstances**, poor tutorial attendance is likely to hurt your chances for
+  an extension.
+* Bjarne Stroustrup, the original creator of C++ strongly recommends that C++ beginners invest 15+
+  hours per week into learning about C++. Four of these hours have been reserved for you in the form
+  of lectures and tutorials. Please take advantage of this!
+
+== Resources
+=== Books
+* The official course textbook is link:http://amzn.to/2asmqFr[C++ Primer (5th Edition)].
+* I strongly recommend that _all students_ purchase a copy of link:http://amzn.to/2au6ArE[A Tour of C++].
+  This book is written by Stroustrup, and is only 200 pages long (you can literally read it in an
+  afternoon). It presents you with an extremely high overview of C++ that will make diving into
+  lectures, tutorials, and assignments much easier. I recommend that you read this book once before
+  each assignment and once again before the exam.
+* I also recommend Stroustrup's beginner textbook, link:http://amzn.to/2aB2G1H[Programming: Principles and Practice Using C++ (2nd Edition)].
+
+[CAUTION]
+=========
+Generally speaking, the quality of C++ books is _abhorrent_. If you are after a C++ book, please
+confirm that it is on the peer-reviewed StackOverflow link:http://bit.ly/1hOS1iB[Definitive Book Guide and List].
+=========
+
+[TIP]
+=====
+I am a fan of works by Bjarne Stroustrup, Herb Sutter, Scott Meyers, and Sergey Zubkov.
+=====
+
+=== Websites
+* http://en.cppreference.com -- the best C++ reference you can find without buying Stroustrup's
+  link:http://amzn.to/2ahE2Xo[The C++ Programming Langauge (4th Edition)].
+* http://isocpp.org -- the official ISO C++ homepage
+* http://isocpp.org/faq
+* http://stroustrup.com/
+* http://stroustrup.com/bs_faq.html
+* http://stroustrup.com/bs_faq2.html
+* http://stroustrup.com/C++11FAQ.html
+
+=== Style guides
+* There is no course-endorsed C++ style guide.
+* My personal favourite is the link:http://bit.ly/1YnLJv7[CppCoreGuidelines]. My tutorials will
+  reference these guidelines a _lot_. The guidelines were started by Stroustrup and Sutter, and many
+  extremely senior C++ programmer contribute to these guidelines.
+* I am not a fan of the Google C++ Style Guide. It is highly restrictive, and limits the potential
+  of C++ to something similar of a C-subset or Java-subset of C++.
+* I don't like hard-and-fast rules, but I do advocate a _few_.
+
+=== Feedback
+* One reason people dislike C++ is because they have a bad experience with it.
+* Another reason is because they haven't been properly educated on C++.
+* If you find yourself struggling in this course, please ask for help.
+* You pay the university a lot of money to take this course, and if it isn't working for you, you
+  have the right to let us know. Perhaps we can alter our teaching style a little, or find a new
+  reference so that you can learn better.
+
+== Content
+=== C++ is not _C with Classes_.
+* It is much more than _C with Classes_, as you will learn throughout the course.
+* You cannot think of C++ as a superset of C.
+* Many C programs do not compile with a C++ compiler.
+* Some C programs that do compile with a C++ compiler will give you different output to when they
+  are compiled on a C compiler, despite being identical source!
+
+=== C++ is not _Java with low level stuff_
+* link:http://stroustrup.com/bs_faq.html#Java[See Stroustrup's answer on this.]
+* Don't try to program C++ in the same style as Java: you will do very poorly in this course.
+
+=== `main`
+* _Must_ adhere to one of these forms:
+[source,cpp]
+------------
+int main();
+int main(int argc, char* argv[]); // char* argv[] same as char**
+int main(int argc, char* argv[], /* other parameters */);
+------------
+
+* Return type must be `int`. Anything else should be rejected by the compiler, as it is _not_ a C++
+  program.
+* You cannot call `main`.
+
+[TIP]
+=====
+`main` is a special function that does not require a `return` statement.
+If your program reaches the end of `main` and doesn't execute a `return` statement, it implicitly
+returns 0.
+
+I liken this to a POSIX program: if there isn't a problem, no need to signal anything; if there _is_
+a problem, then return a non-zero value.
+=====
+
+Reference: http://en.cppreference.com/w/cpp/language/main_function
+
+=== Types
+* A declaration is like an announcement to the compiler, saying "this exists!"
+* A definition is actually telling the compiler about the object/function/type
+* Prefer to use `{}` over `=` when initialising things. For example:
+[source,cpp]
+------------
+int foo{ 10 };    // do this
+int bar = 10;     // don't do this
+int fizz = 10.5;  // fizz is actually 10
+int buzz{ 10.5 }; // compiler error: trying to put a double in an int
+------------
+
+* Better yet, use `auto` on the left-hand-side. Then you just need to worry about the
+  right-hand-side.
+* You _need_ to use `=` with `auto`, and you _need_ to initialise your variables.
+[source,cpp]
+------------
+auto foo = 10;   // foo is an int
+auto bar = 10.5; // bar is a double
+auto fizz = 10U; // fizz is an unsigned int
+auto buzz;       // error: you forgot to initialise your variable
+------------
+
+==== References
+* A reference is an alias for an object.
+* If you assign a value to a reference, you're in fact assigning it to the object it refers to.
+* You can't change what a reference refers to. It refers to what it is initialised with.
+* We do this to create a reference:
+[source,cpp]
+------------
+auto foo = 10;
+auto bar& = foo;
+
+std::cout << foo << ' ' << bar << '\n';
+++foo;
+std::cout << foo << ' ' << bar << '\n';
+++bar;
+std::cout << foo << ' ' << bar << '\n';
+------------
+
+* A `const` reference refers to an object whose value can't be changed.
+* By putting the `const` there, you are promising that you won't modify the referred object via the
+  reference (but you can via other means).
+[source,cpp]
+------------
+auto foo = 10;
+const auto& bar = foo;
+
+std::cout << foo << ' ' << bar << '\n';
+foo = 20;
+std::cout << foo << ' ' << bar << '\n';
+bar = 300; // error: can't write to a const reference.
+------------
+
+==== Pointers
+* A pointer is an object that 'points' to another object.
+* A pointer is like a reference, but you can change what it points to.
+* `nullptr` means that the pointer doesn't point to anything.
+* Prefer references unless you need to change what is being referred to, or you need a `nullptr`.
+* When you want to access the object that is being referred to, we dereference the pointer.
+* Dereferencing a `nullptr` is undefined behaviour.
+* When assigning a pointer, you need to make sure that the types match up.
+[source,cpp]
+------------
+auto* foo = nullptr; // this isn't pointing to anything.
+auto pi = 3.1415;
+foo = &pi; // foo now points to pi's location in memory
+
+std::cout << foo << ' ' << pi << '\n'; // prints out foo's location in memory
+std::cout << *foo << ' ' << pi << '\n'; // *foo is the same as pi, and is like a reference.
+*foo = 3.141592; // changing pi through foo
+std::cout << foo << ' ' << pi << '\n';
+std::cout << *foo << ' ' << pi << '\n';
+
+auto bar e = 2.8;
+foo = &e; // foo now points to e's memory location and has nothing to do with pi
+std::cout << foo << ' ' << e << ' ' << pi << '\n';
+std::cout << *foo << ' ' << e << ' ' << pi <<'\n';
+------------
+
+* There's two types of pointer: `const` pointers, and pointer to `const`.
+* A `const` pointer is a pointer that can only point to one thing, like a reference can only
+  reference one thing.
+* A pointer to `const` is a pointer that can point to anything at any time, but you can't change the
+  value that is pointed to when you dereference the pointer.
+[source,cpp]
+------------
+auto pi = 3.14;
+auto* const foo = &pi;
+*foo = 3.1415; // ok
+foo = nullptr; // error: foo is a const pointer and cannot be changed
+
+const auto* bar = &pi; // bar is the pointer, pi is the pointee
+*bar = 3.141592; // error: bar is a pointer-to-const, so you cannot change the pointee
+bar = nullptr; // ok
+
+const auto* const fizz = &pi;
+*fizz = 3.141592; // error: fizz is a pointer-to-const, so you cannot change the pointee
+fizz = nullptr; // error: fizz is a const pointer and cannot be changed
+------------
+
+=== Streams
+* `<<` is the put-to operator, and is associated with output.
+* `>>` is the get-from operator, and is associated with input.
+
+==== `iostream`
+* `cout` is the character output stream.
+* `cerr` is the character error stream.
+
+[CAUTION]
+=========
+* Many students asked why I choose to use `'\n'` over `endl` in tutorials.
+* They pointed out that `endl` is a platform-independent version of `'\n'`, and becomes `"\r\n"` on
+  Windows systems, and `'\n'` on Unix systems such as Linux.
+* Many textbooks and online sources state this, but it isn't correct.
+* `endl` does two things: it puts `'\n'` to the output/error stream, and then flushes the buffer.
+* Flushing a buffer is slow, so your program might suffer a performance hit.
+* If you're sceptical, take a look through any of the textbooks I mentioned above.
+* The CppCoreGuidelines recommend against using `endl` unless you _need_ to print `'\n'` and then
+  flush the buffer.
+* If you _really_ need to flush frequently, consider `cerr` or `unitbuf` in real-world programs.
+  I am not sure if this will work for COMP6771 assignments or if output put to `cerr` is ignored.
+* Provided that you understand the first four points, these are not hard-and-fast rules, but my
+  recommendations, based off more experienced C++ programmers (e.g. Stroustrup, Sutter, Zubkov,
+  etc.)
+* The following three code examples all do the same thing:
+[source,cpp]
+------------
+std::cout << "Hello, world!" << std::endl;
+
+std::cout << "Hello, world!\n" << std::flush;
+
+std::cout << "Hello, world!\n";
+std::cout.flush();
+------------
+=========
+
+* `cin` is the character input stream.
+
+[CAUTION]
+=========
+* When getting input from `cin`, you need to check whether or not the input is properly formatted.
+* Compile and run the the program below, and try entering the input `a 12345`:
+
+[source,cpp]
+------------
+#include <iostream>
+
+int main()
+{
+   std::cout << "Enter two unsigned ints:\n";
+   auto a = 0U;
+   auto b = 0U;
+   std::cin >> a >> b;
+   std::cout << "a == " << a << "; b == " << b << '\n';
+}
+------------
+
+* Because you didn't check that the input was good, your program didn't know what to do.
+* The results are probably _very_ interesting.
+* Now do the same thing with this program:
+[source,cpp]
+------------
+#include <iostream>
+#include <limits>
+
+int main()
+{
+   std::cout << "Enter two unsigned ints:\n"
+   auto a = 0U;
+   auto b = 0U;
+
+   // keep trying to get input until the correct type of input is put in
+   while (!(std::cin >> a >> b))
+   {
+      std::cerr << "Whoops! Please enter two whole numbers >= 0.\n";
+      std::cout << "Enter two unsigned ints:\n";
+
+      // clear the error flags
+      std::cin.clear();
+
+      // ignore everything until the first new line in the buffer
+      std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+   }
+
+   std::cout << "a == " << a << "; b == " << b << '\n';
+}
+------------
+=========
+
+==== `fstream`
+* `ofstream` is for file output.
+* `ifstream` is for file input.
+* `fstream` is for file input and file output on the _same_ file at the _same_ time. Don't use this
+  unless you need to perform both input and output on the same file.
+   - Anything applicable to `ifstream` is also applicable to `fstream`
+   - Anything applicable to `ofstream` is also applicable to `fstream`
+* Using file streams is the same as when you use `cout` and `cin`.
+[CAUTION]
+=========
+* Many sources incorrectly inform you to use `ifstream::eof` when reading in from file.
+* `eof` is just an indicator
+* This is the correct way to handle file input:
+[source,cpp]
+------------
+#include <iostream>
+#include <fstream>
+
+int main()
+{
+   auto infile = std::ifstream{ "foo" };
+   if (!infile)
+   {
+      std::cerr << "File opening failed\n";
+      return 1;
+   }
+
+   // we use a for-statement, because we don't need to use the variable `a`
+   // after we finish reading in the file!
+   for (auto a = 0; infile >> a; )
+      std::cout << a << '\n';
+
+   if (infile.eof())
+   {
+      std::cout << "End of file reached successfully\n";
+   }
+   else if (infile.bad())
+   {
+      std::err << "I/O error while reading\n";
+      return 2;
+   }
+   else if (file.fail())
+   {
+      std::err << "Non-integer data encountered\n";
+      return 3;
+   }
+}
+------------
+
+.Reference
+****
+* Author: Sergey Zubkov
+* Source: https://www.quora.com/What-is-the-the-function-of-eof-in-c%2B%2B/answer/Sergey-Zubkov-1?srid=CbmP
+* I modified the code to suit the style of code I teach. This is a demonstration of what _verbatim
+  plagiarism_ looks like.
+* Do not do this in assignments or papers that you publish.
+****
+
+===== RAII
+* Notice how Sergey didn't bother to close the file, and I didn't bother to add it in for him to
+  suit my style.
+* This is an example of Resource Acquisition is Initialisation (RAII for short).
+* RAII is essentially an object cleaning up after itself when you are finished with it.
+* "Finished" means the object has been destroyed:
+   - The end of the expression for a temporary (an object without a name, such as a string literal)
+   - A local variable gone out of scope
+   - Deleting (freeing) an object on the heap
+   - Leaving the program (for `static` varaibles)
+   - Source: http://en.cppreference.com/w/cpp/language/lifetime
+* RAII is not like garbage collection
+   - RAII is a programming _idiom_; garbage collection is a fire-and-forget tool.
+   - RAII requires you to allocate resources and clean up after yourself
+   - When using RAII correctly, you are guaranteed to have the clean up when the object is
+     destroyed. Garbage collection makes no such guarantee.
+   - Source 1: http://en.cppreference.com/w/cpp/language/raii
+   - Source 2: http://stackoverflow.com/questions/8712666/when-has-raii-an-advantage-over-gc
+* When the `ifstream` object goes out of scope, the file will automatically be closed.
+* An `ofstream` file will flush the stream and then close.
+* If you're uncomfortable about the above, you can consider this program instead:
+[source,cpp]
+------------
+#include <iostream>
+#include <fstream>
+
+int main()
+{
+   if (auto infile = std::ifstream{ "foo" })
+   {
+      // we use a for-statement, because we don't need to use the variable `a`
+      // after we finish reading in the file!
+      for (auto a = 0; infile >> a; )
+         std::cout << a << '\n';
+
+      if (infile.eof())
+      {
+         std::cout << "End of file reached successfully\n";
+      }
+      else if (infile.bad())
+      {
+         std::err << "I/O error while reading\n";
+         return 2;
+      }
+      else if (file.fail())
+      {
+         std::err << "Non-integer data encountered\n";
+         return 3;
+      }
+   }
+   else
+   {
+      std::cerr << "File opening failed\n";
+      return 1;
+   }
+}
+------------
+
+.Reference
+****
+* Author: Sergey Zubkov
+* Source: https://www.quora.com/What-is-the-the-function-of-eof-in-c%2B%2B/answer/Sergey-Zubkov-1?srid=CbmP
+* I modified the code to suit the style of code I teach. This is a demonstration of what _derived
+  plagiarism_ looks like.
+* Do not do this in assignments or papers that you publish.
+****
+
+* I actually recommend this one. The original example was just for motivation about RAII.
+* When we get to the end of the outer `if`-statement, the file is automatically closed.
+* We generally like to keep objects as local as possible, which is why I've used a `for`-loop
+  instead of a `while`-loop.
+=========
+==== `sstream`
+* `istringstream` is for converting values in text to types (e.g. `"42"` to `42`)
+* `ostringstream` is for converting objects to values in strings (e.g. `42` to `"42"`)
+* `stringstream` is for both `istringstream` operations and `ostringstream` operations.
+* The same rules apply to the `sstream` objects as `iostream` and `fstream` objects.
