@@ -92,7 +92,7 @@ confirm that it is on the peer-reviewed StackOverflow link:http://bit.ly/1hOS1iB
 =====
 
 === Websites
-* link:en.cppreference.com[] -- the best {cpp} reference you can find without buying Stroustrup's
+* link:en.cppreference.com[en.cppreference.com] -- the best {cpp} reference you can find without buying Stroustrup's
   link:http://amzn.to/2ahE2Xo[The {cpp} Programming Langauge (4th Edition)].
 * link:http://isocpp.org[The official ISO {cpp} homepage]
 * link:http://isocpp.org/faq[A combination of Stroustrup's original FAQ and another popular FAQ]
