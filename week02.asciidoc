@@ -342,7 +342,7 @@ int main()
 
 int main()
 {
-   std::cout << "Enter two unsigned ints:\n"
+   std::cout << "Enter two unsigned ints:\n";
    auto a = 0U;
    auto b = 0U;
 
@@ -410,12 +410,12 @@ int main()
    }
    else if (infile.bad())
    {
-      std::err << "I/O error while reading\n";
+      std::cerr << "I/O error while reading\n";
       return 2;
    }
-   else if (file.fail())
+   else if (infile.fail())
    {
-      std::err << "Non-integer data encountered\n";
+      std::cerr << "Non-integer data encountered\n";
       return 3;
    }
 }
@@ -471,12 +471,12 @@ int main()
       }
       else if (infile.bad())
       {
-         std::err << "I/O error while reading\n";
+         std::cerr << "I/O error while reading\n";
          return 2;
       }
-      else if (file.fail())
+      else if (infile.fail())
       {
-         std::err << "Non-integer data encountered\n";
+         std::cerr << "Non-integer data encountered\n";
          return 3;
       }
    }
