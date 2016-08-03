@@ -358,8 +358,9 @@ int main()
   plagiarism_ looks like.
 * Do not do this in assignments or papers that you publish.
 ****
+=========
 
-==== RAII
+===== RAII
 * Notice how Sergey didn't bother to close the file, and I didn't bother to add it in for him to
   suit my style.
 * This is an example of Resource Acquisition is Initialisation (RAII for short).
@@ -430,7 +431,7 @@ int main()
 * When we get to the end of the outer `if`-statement, the file is automatically closed.
 * We generally like to keep objects as local as possible, which is why I've used a `for`-loop
   instead of a `while`-loop.
-=========
+
 ==== `sstream`
 * `istringstream` is for converting values in text to types (e.g. `"42"` to `42`)
 * `ostringstream` is for converting objects to values in strings (e.g. `42` to `"42"`)
