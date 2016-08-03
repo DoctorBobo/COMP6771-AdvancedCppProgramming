@@ -290,8 +290,7 @@ fizz = nullptr; // error: fizz is a const pointer and cannot be changed
 * If you _really_ need to flush frequently, consider `cerr` or `unitbuf` in real-world programs.
 * I am not sure if COMP6771 assignments check `stderr` (what `cerr` writes to by default).
 * Provided that you understand the first four points, these are not hard-and-fast rules, but my
-  recommendations, based off more experienced {cpp} programmers (e.g. Stroustrup, Sutter, Zubkov,
-  etc.)
+  recommendations, based off programmers such as Stroustrup, Sutter, Zubkov, etc.
 * The following code examples all do exactly the same thing on _every_ system.
 [source,cpp]
 ------------
