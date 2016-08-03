@@ -22,15 +22,15 @@ COMP6771 Advanced C++ Programming week 2 tutorial notes
 * Except in **grievous circumstances**, poor tutorial attendance is likely to hurt your chances for
   an extension.
 * Bjarne Stroustrup, the original creator of C\++ strongly recommends that C\++ beginners invest 15+
-  hours per week into learning about C++. Four of these hours have been reserved for you in the form
+  hours per week into learning about C\++. Four of these hours have been reserved for you in the form
   of lectures and tutorials. Please take advantage of this!
-=== C++11 and C++14
-* C++11 was a major change for C++
-* C++14 is essentially a finished version of C++11, and is only a minor change
+=== C\++11 and C\++14
+* C\++11 was a major change for C\++
+* C\++14 is essentially a finished version of C\++11, and is only a minor change
 * Jingling has told me this:
 
-"I made a brief comment in the course outline. C++14 is a small improvement over C++11 with minor
-features introduced. You can tell students that the exam will focus on the core of C++."
+"I made a brief comment in the course outline. C\++14 is a small improvement over C\++11 with minor
+features introduced. You can tell students that the exam will focus on the core of C\++."
 
 === Feedback
 * link:https://www.quora.com/Why-do-a-lot-of-people-seem-to-dislike-C%2B%2B/answer/Christopher-Di-Bella?srid=CbmP[One reason people dislike C++] is because they have a bad experience with it.
