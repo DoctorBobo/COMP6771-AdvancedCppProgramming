@@ -26,9 +26,11 @@ COMP6771 Advanced C++ Programming week 2 tutorial notes
   hours per week into learning about {cpp}. Four of these hours have been reserved for you in the form
   of lectures and tutorials. Please take advantage of this!
 
-=== {cpp} and {cpp}
+=== {cpp}11 and {cpp}14
 * {cpp}11 was a major change for {cpp}
-* {cpp}4 is essentially a finished version of {cpp}11, and is only a minor change
+* {cpp}14 is essentially a finished version of {cpp}11, and is only a minor change
+* Some students are concerned about the textbook only containing {cpp}11 material, and the
+  examinable content.
 * Jingling has told me this:
 
 "I made a brief comment in the course outline. {cpp}14 is a small improvement over {cpp}11 with minor
@@ -39,9 +41,9 @@ features introduced. You can tell students that the exam will focus on the core 
 * Another reason is because they haven't been properly educated on {cpp}.
 * If you find yourself struggling in this course, please ask for help.
 * You pay the university a lot of money to take this course, and if it isn't working for you, you
-  have the right to let us know. Perhaps we can alter our teaching style a little, or find a new
-  reference so that you can learn better.
-
+  have the right to let us know.
+* Perhaps we can alter our teaching style a little, or find a new reference so that you can learn
+  better.
 * We know a lot about {cpp}, but we don't know everything about {cpp} at all times.
 * There's a lot of {cpp} that I can easily look up, but don't care about in my day-to-day
   programming. Some of it is just for compiler developers/library writers.
@@ -90,7 +92,7 @@ confirm that it is on the peer-reviewed StackOverflow link:http://bit.ly/1hOS1iB
 =====
 
 === Websites
-* http://en.cppreference.com -- the best {cpp} reference you can find without buying Stroustrup's
+* link:en.cppreference.com[] -- the best {cpp} reference you can find without buying Stroustrup's
   link:http://amzn.to/2ahE2Xo[The {cpp} Programming Langauge (4th Edition)].
 * link:http://isocpp.org[The official ISO {cpp} homepage]
 * link:http://isocpp.org/faq[A combination of Stroustrup's original FAQ and another popular FAQ]
@@ -108,9 +110,10 @@ confirm that it is on the peer-reviewed StackOverflow link:http://bit.ly/1hOS1iB
 
 === Style guides
 * There is no course-endorsed C++ style guide.
-* My personal favourite is the link:http://bit.ly/1YnLJv7[CppCoreGuidelines]. My tutorials will
-  reference these guidelines a _lot_. The guidelines were started by Stroustrup and Sutter, and many
-  extremely senior {cpp} programmers contribute to these guidelines.
+* My personal favourite is the link:http://bit.ly/1YnLJv7[CppCoreGuidelines].
+* My tutorials will reference these guidelines a _lot_.
+* The guidelines were started by Stroustrup and Sutter, and many extremely senior {cpp} programmers
+  contribute to these guidelines.
 * I am not a fan of the Google {cpp} Style Guide. It is highly restrictive, and limits the potential
   of {cpp} to something similar of a C-subset or Java-subset of {cpp}.
 * I don't like hard-and-fast rules, but I do advocate a _few_.
@@ -133,13 +136,14 @@ confirm that it is on the peer-reviewed StackOverflow link:http://bit.ly/1hOS1iB
 [source,cpp]
 ------------
 int main() { }
-int main(int argc, char* argv[]) { } // char* argv[] same as char**
+int main(int argc, char* argv[]) { }
 int main(int argc, char* argv[], /* other parameters */) { }
 ------------
 
 * Return type must be `int`. Anything else should be rejected by the compiler, as it is _not_ a {cpp}
   program.
 * You cannot call `main`.
+* `main` cannot be `static`, `inline`, or `constexpr`.
 
 [TIP]
 =====
@@ -176,11 +180,14 @@ auto fizz = 10U; // fizz is an unsigned int
 auto buzz;       // error: you forgot to initialise your variable
 ------------
 
-==== Further reading
+. Further reading
+[TIP]
+=====
 https://herbsutter.com/2013/06/07/gotw-92-solution-auto-variables-part-1/
 https://herbsutter.com/2013/06/13/gotw-93-solution-auto-variables-part-2/
 https://herbsutter.com/2013/08/12/gotw-94-solution-aaa-style-almost-always-auto/
 https://www.youtube.com/watch?v=xnqTKD8uD64&feature=youtu.be&t=28m24s
+=====
 
 ==== References
 * A reference is an alias for an object.
@@ -284,14 +291,22 @@ fizz = nullptr; // error: fizz is a const pointer and cannot be changed
 * Provided that you understand the first four points, these are not hard-and-fast rules, but my
   recommendations, based off more experienced {cpp} programmers (e.g. Stroustrup, Sutter, Zubkov,
   etc.)
-* The following three code examples all do the same thing:
+* The following code examples all do the same thing:
 [source,cpp]
 ------------
+// example 1
 std::cout << "Hello, world!" << std::endl;
 
+// example 2
 std::cout << "Hello, world!\n" << std::flush;
 
+// example 3
 std::cout << "Hello, world!\n";
+std::cout.flush();
+
+// example 4
+std::cout << "Hello, world!";
+std::cout.put('\n');
 std::cout.flush();
 ------------
 =========
@@ -412,13 +427,13 @@ int main()
 * Source: https://www.quora.com/What-is-the-the-function-of-eof-in-c%2B%2B/answer/Sergey-Zubkov-1?srid=CbmP
 * I modified the code to suit the style of code I teach. This is a demonstration of what _verbatim
   plagiarism_ looks like.
-* Do not do this in assignments or papers that you publish.
+* **Do not plagiarise others' work.**
 ****
 =========
 
 === RAII
-* Notice how Sergey didn't bother to close the file, and I didn't bother to add it in for him to
-  suit my style.
+* Notice how Sergey didn't close the file, and I didn't bother to add it in for him to suit my
+  style.
 * This is an example of Resource Acquisition is Initialisation (RAII for short).
 * RAII is essentially an object cleaning up after itself when you are finished with it.
 * "Finished" means the object has been destroyed:
@@ -426,6 +441,7 @@ int main()
    - A local variable gone out of scope
    - Deleting (freeing) an object on the heap
    - Leaving the program (for `static` varaibles)
+   - We will cover object lifetime throughout the course, so don't panic if you don't get it yet.
    - Source: http://en.cppreference.com/w/cpp/language/lifetime
 * RAII is not like garbage collection
    - RAII is a programming _idiom_; garbage collection is a fire-and-forget tool.
@@ -446,8 +462,6 @@ int main()
 {
    if (auto infile = std::ifstream{ "foo" })
    {
-      // we use a for-statement, because we don't need to use the variable `a`
-      // after we finish reading in the file!
       for (auto a = 0; infile >> a; )
          std::cout << a << '\n';
 
@@ -470,18 +484,19 @@ int main()
    {
       std::cerr << "File opening failed\n";
       return 1;
-   }
+   } // file closed here, where the if-statement is finished.
 }
 ------------
 
 .Reference
-****
+[CAUTION]
+=========
 * Author: Sergey Zubkov
 * Source: https://www.quora.com/What-is-the-the-function-of-eof-in-c%2B%2B/answer/Sergey-Zubkov-1?srid=CbmP
 * I modified the code to suit the style of code I teach. This is a demonstration of what _derived
   plagiarism_ looks like.
-* Do not do this in assignments or papers that you publish.
-****
+* **Do not do plagiarise others' work.**
+=========
 
 * I actually recommend this one. The original example was just for motivation about RAII.
 * When we get to the end of the outer `if`-statement, the file is automatically closed.
