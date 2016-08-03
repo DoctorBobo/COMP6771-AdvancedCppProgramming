@@ -9,7 +9,7 @@ COMP6771 Advanced C++ Programming week 2 tutorial notes
 == Admin
 === Contact
 * You can contact me at {Email}.
-* Please put your subject as "COMP6771 -- <subject>". I get asked a lot of C++ questions, and I need
+* Please put your subject as "COMP6771 -- <subject>". I get asked a lot of {cpp} questions, and I need
   to prioritise _your_ questions over the general public's.
 * Please email staff as soon as you have a question so that you don't forget to ask.
 * There is also an official course forum at http://www.cse.unsw.edu.au/~cs6771. Please use this to
@@ -22,27 +22,28 @@ COMP6771 Advanced C++ Programming week 2 tutorial notes
    * This will help us determine the correlation between attendance and marks.
 * Except in **grievous circumstances**, poor tutorial attendance is likely to hurt your chances for
   an extension.
-* Bjarne Stroustrup, the original creator of C\++ strongly recommends that C\++ beginners invest 15\+
-  hours per week into learning about C\++. Four of these hours have been reserved for you in the form
+* Bjarne Stroustrup, the original creator of {cpp} strongly recommends that {cpp} beginners invest 15+
+  hours per week into learning about {cpp}. Four of these hours have been reserved for you in the form
   of lectures and tutorials. Please take advantage of this!
+
 === {cpp} and {cpp}
-* C\++11 was a major change for C\++
-* C\++14 is essentially a finished version of C\++11, and is only a minor change
+* {cpp}11 was a major change for {cpp}
+* {cpp}4 is essentially a finished version of {cpp}11, and is only a minor change
 * Jingling has told me this:
 
-"I made a brief comment in the course outline. C\++14 is a small improvement over C\++11 with minor
-features introduced. You can tell students that the exam will focus on the core of C\++."
+"I made a brief comment in the course outline. {cpp}14 is a small improvement over {cpp}11 with minor
+features introduced. You can tell students that the exam will focus on the core of {cpp}."
 
 === Feedback
-* link:https://www.quora.com/Why-do-a-lot-of-people-seem-to-dislike-C%2B%2B/answer/Christopher-Di-Bella?srid=CbmP[One reason people dislike C++] is because they have a bad experience with it.
-* Another reason is because they haven't been properly educated on C++.
+* link:https://www.quora.com/Why-do-a-lot-of-people-seem-to-dislike-C%2B%2B/answer/Christopher-Di-Bella?srid=CbmP[One reason people dislike {cpp}] is because they have a bad experience with it.
+* Another reason is because they haven't been properly educated on {cpp}.
 * If you find yourself struggling in this course, please ask for help.
 * You pay the university a lot of money to take this course, and if it isn't working for you, you
   have the right to let us know. Perhaps we can alter our teaching style a little, or find a new
   reference so that you can learn better.
 
-* We know a lot about C++, but we don't know everything about C++ at all times.
-* There's a lot of C++ that I can easily look up, but don't care about in my day-to-day
+* We know a lot about {cpp}, but we don't know everything about {cpp} at all times.
+* There's a lot of {cpp} that I can easily look up, but don't care about in my day-to-day
   programming. Some of it is just for compiler developers/library writers.
 * We might occasionally make mistakes. If you spot one, please point it out.
 
@@ -56,16 +57,16 @@ features introduced. You can tell students that the exam will focus on the core 
 == Resources
 === Books
 * The official course textbook is link:http://amzn.to/2asmqFr[C++ Primer (5th Edition)].
-* I strongly recommend that _all students_ purchase a copy of link:http://amzn.to/2au6ArE[A Tour of C\+\+].
+* I strongly recommend that _all students_ purchase a copy of link:http://amzn.to/2au6ArE[A Tour of {cpp}].
   This book is written by Stroustrup, and is only 200 pages long (you can literally read it in an
-  afternoon). It presents you with an extremely high overview of C++ that will make diving into
+  afternoon). It presents you with an extremely high overview of {cpp} that will make diving into
   lectures, tutorials, and assignments much easier. I recommend that you read this book once before
   each assignment and once again before the exam.
-* I also recommend Stroustrup's beginner textbook, link:http://amzn.to/2aB2G1H[Programming: Principles and Practice Using C++ (2nd Edition)].
+* I also recommend Stroustrup's beginner textbook, link:http://amzn.to/2aB2G1H[Programming: Principles and Practice Using {cpp} (2nd Edition)].
 
 [CAUTION]
 =========
-Generally speaking, the quality of C\++ books is _abhorrent_. If you are after a C++ book, please
+Generally speaking, the quality of {cpp} books is _abhorrent_. If you are after a {cpp} book, please
 confirm that it is on the peer-reviewed StackOverflow link:http://bit.ly/1hOS1iB[Definitive Book Guide and List].
 =========
 
@@ -73,35 +74,35 @@ confirm that it is on the peer-reviewed StackOverflow link:http://bit.ly/1hOS1iB
 =====
 * I am a fan of works by Bjarne Stroustrup, Herb Sutter, Scott Meyers, Anthony Williams, and Sergey
   Zubkov.
-* Bjarne Stroustrup is the original creator of C++. He is a senior member of WG21.
-* Herb Sutter is a very senior member of the C++ community, and is the convener for WG21.
-* Scott Meyers is a retired, but senior member of the C\++ community. He is directly responsible for
-  the programming style of a large portion of the C++ community.
-* Anthony Williams is a concurrency expert and a senior member of the C++ community.
-* Sergey Zubkov is a senior member of the C++ community, and also works directly with Stroustrup.
+* Bjarne Stroustrup is the original creator of {cpp}. He is a senior member of WG21.
+* Herb Sutter is a very senior member of the {cpp} community, and is the convener for WG21.
+* Scott Meyers is a retired, but senior member of the {cpp} community. He is directly responsible for
+  the programming style of a large portion of the {cpp} community.
+* Anthony Williams is a concurrency expert and a senior member of the {cpp} community.
+* Sergey Zubkov is a senior member of the {cpp} community, and also works directly with Stroustrup.
   He is a member of WG21, and is a _major_ contributor to en.cppreference.com (see below). He also
   has a link:https://www.quora.com/profile/Sergey-Zubkov-1[Quora.com]
 
 * WG21 is the name of the team of people that ultimately decide what features go into the next
-  version of C++. WG stands for 'Working Group'.
-* SG14 is a Study Group underneath WG21, led by Patrice Roy, concerned with C++ for games and
+  version of {cpp}. WG stands for 'Working Group'.
+* SG14 is a Study Group underneath WG21, led by Patrice Roy, concerned with {cpp} for games and
   finance. I am a passive member of SG14 at present.
 =====
 
 === Websites
-* http://en.cppreference.com -- the best C\++ reference you can find without buying Stroustrup's
-  link:http://amzn.to/2ahE2Xo[The C++ Programming Langauge (4th Edition)].
-* link:http://isocpp.org[The official ISO C++ homepage]
+* http://en.cppreference.com -- the best {cpp} reference you can find without buying Stroustrup's
+  link:http://amzn.to/2ahE2Xo[The {cpp} Programming Langauge (4th Edition)].
+* link:http://isocpp.org[The official ISO {cpp} homepage]
 * link:http://isocpp.org/faq[A combination of Stroustrup's original FAQ and another popular FAQ]
 * link:http://stroustrup.com/[Stroustrup's Homepage]
 * http://stroustrup.com/bs_faq.html
 * http://stroustrup.com/bs_faq2.html
-* link:http://stroustrup.com/C++11FAQ.html[Stroustrup's FAQ for C++11]
+* link:http://stroustrup.com/C++11FAQ.html[Stroustrup's FAQ for {cpp}11]
 * link:https://herbsutter.com/[Herb Sutter's homepage]
 * link:https://herbsutter.com/gotw/[Sutter's problems page] (very insightful, and laid the
   foundations for his book series)
-* link:http://stackoverflow.com/questions/tagged/c%2b%2b-faq?sort=votes[StackOverflow C++ FAQ]
-* link:http://stackoverflow.com/questions/388242/the-definitive-c-book-guide-and-list[The Definitive C++ Book Guide and List]
+* link:http://stackoverflow.com/questions/tagged/c%2b%2b-faq?sort=votes[StackOverflow {cpp} FAQ]
+* link:http://stackoverflow.com/questions/388242/the-definitive-c-book-guide-and-list[The Definitive {cpp} Book Guide and List]
 * link:https://www.quora.com/profile/Christopher-Di-Bella[My Quora.com profile] (yes, I'm tooting
   my own horn a bit here, but you might find it useful)
 
@@ -109,34 +110,34 @@ confirm that it is on the peer-reviewed StackOverflow link:http://bit.ly/1hOS1iB
 * There is no course-endorsed C++ style guide.
 * My personal favourite is the link:http://bit.ly/1YnLJv7[CppCoreGuidelines]. My tutorials will
   reference these guidelines a _lot_. The guidelines were started by Stroustrup and Sutter, and many
-  extremely senior C++ programmer contribute to these guidelines.
-* I am not a fan of the Google C\++ Style Guide. It is highly restrictive, and limits the potential
-  of C\++ to something similar of a C-subset or Java-subset of C++.
+  extremely senior {cpp} programmers contribute to these guidelines.
+* I am not a fan of the Google {cpp} Style Guide. It is highly restrictive, and limits the potential
+  of {cpp} to something similar of a C-subset or Java-subset of {cpp}.
 * I don't like hard-and-fast rules, but I do advocate a _few_.
 
 == Content
-=== C++ is not _C with Classes_.
+=== {cpp} is not _C with Classes_.
 * It is much more than _C with Classes_, as you will learn throughout the course.
-* You cannot think of C++ as a superset of C.
-* Many C programs do not compile with a C++ compiler.
-* Some C programs that do compile with a C++ compiler will give you different output to when they
+* You cannot think of {cpp} as a superset of C.
+* Many C programs do not compile with a {cpp} compiler.
+* Some C programs that do compile with a {cpp} compiler will give you different output to when they
   are compiled on a C compiler, despite being identical source!
 
-=== C++ is not _Java with low level stuff_
+=== {cpp} is not _Java with low level stuff_
 * link:http://stroustrup.com/bs_faq.html#Java[See Stroustrup's answer on this.]
-* Don't try to program C++ in the same style as Java: you will do very poorly in this course.
-* You will also never take advantage of C++'s potential.
+* Don't try to program {cpp} in the same style as Java: you will do very poorly in this course.
+* You will also never take advantage of {cpp}'s potential.
 
 === `main`
 * _Must_ adhere to one of these forms:
 [source,cpp]
 ------------
-int main();
-int main(int argc, char* argv[]); // char* argv[] same as char**
-int main(int argc, char* argv[], /* other parameters */);
+int main() { }
+int main(int argc, char* argv[]) { } // char* argv[] same as char**
+int main(int argc, char* argv[], /* other parameters */) { }
 ------------
 
-* Return type must be `int`. Anything else should be rejected by the compiler, as it is _not_ a C++
+* Return type must be `int`. Anything else should be rejected by the compiler, as it is _not_ a {cpp}
   program.
 * You cannot call `main`.
 
@@ -281,7 +282,7 @@ fizz = nullptr; // error: fizz is a const pointer and cannot be changed
 * If you _really_ need to flush frequently, consider `cerr` or `unitbuf` in real-world programs.
   I am not sure if this will work for COMP6771 assignments or if output put to `cerr` is ignored.
 * Provided that you understand the first four points, these are not hard-and-fast rules, but my
-  recommendations, based off more experienced C++ programmers (e.g. Stroustrup, Sutter, Zubkov,
+  recommendations, based off more experienced {cpp} programmers (e.g. Stroustrup, Sutter, Zubkov,
   etc.)
 * The following three code examples all do the same thing:
 [source,cpp]
@@ -349,10 +350,10 @@ int main()
 =========
 
 ===== References
-* Working Draft, Standard for Programming Language C++, p.1051 (final C++14 draft)
+* Working Draft, Standard for Programming Language {cpp}, p.1051 (final {cpp}14 draft)
 * link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#slio50-avoid-endl[CppCoreGuidelines: Avoid `endl`]
 * link:https://www.quora.com/Why-is-endl-preferred-over-n-sequence-in-C%2B%2B/answer/Sergey-Zubkov-1?srid=CbmP&share=527eb8ca[Why is `endl` preferred over `'\n'` sequence? -- Quora.com]
-* link:https://www.youtube.com/watch?v=GMqQOEZYVJQ[C++ Weekly ep 7: Stop using `std::endl`]
+* link:https://www.youtube.com/watch?v=GMqQOEZYVJQ[{cpp} Weekly ep 7: Stop using `std::endl`]
 * link:http://en.cppreference.com/w/cpp/io/manip/endl[en.cppreference.com on `endl`]
 * link:http://stackoverflow.com/questions/213907/c-stdendl-vs-n[StackOverflow post on `'\n'` and `endl`]
 
