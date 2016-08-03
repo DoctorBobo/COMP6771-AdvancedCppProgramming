@@ -21,7 +21,7 @@ COMP6771 Advanced C++ Programming week 2 tutorial notes
    * This will help us determine the correlation between attendance and marks.
 * Except in **grievous circumstances**, poor tutorial attendance is likely to hurt your chances for
   an extension.
-* Bjarne Stroustrup, the original creator of C\++ strongly recommends that C\++ beginners invest 15+
+* Bjarne Stroustrup, the original creator of C\++ strongly recommends that C\++ beginners invest 15\+
   hours per week into learning about C\++. Four of these hours have been reserved for you in the form
   of lectures and tutorials. Please take advantage of this!
 === C\++11 and C\++14
