@@ -183,10 +183,10 @@ auto buzz;       // error: you forgot to initialise your variable
 . Further reading
 [TIP]
 =====
-https://herbsutter.com/2013/06/07/gotw-92-solution-auto-variables-part-1/
-https://herbsutter.com/2013/06/13/gotw-93-solution-auto-variables-part-2/
-https://herbsutter.com/2013/08/12/gotw-94-solution-aaa-style-almost-always-auto/
-https://www.youtube.com/watch?v=xnqTKD8uD64&feature=youtu.be&t=28m24s
+* https://herbsutter.com/2013/06/07/gotw-92-solution-auto-variables-part-1/
+* https://herbsutter.com/2013/06/13/gotw-93-solution-auto-variables-part-2/
+* https://herbsutter.com/2013/08/12/gotw-94-solution-aaa-style-almost-always-auto/
+* https://www.youtube.com/watch?v=xnqTKD8uD64&feature=youtu.be&t=28m24s
 =====
 
 ==== References
