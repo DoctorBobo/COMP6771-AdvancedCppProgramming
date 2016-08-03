@@ -280,18 +280,19 @@ fizz = nullptr; // error: fizz is a const pointer and cannot be changed
 * Many students asked why I choose to use `'\n'` over `endl` in tutorials.
 * They pointed out that `endl` is a platform-independent version of `'\n'`, and becomes `"\r\n"` on
   Windows systems, and `'\n'` on Unix systems such as Linux.
-* Many textbooks and online sources state this, but it isn't correct.
+* Many textbooks and online sources state this, but it is a red herring (myth, etc.).
 * `endl` does two things: it puts `'\n'` to the output/error stream, and then flushes the buffer.
+* This means that other than flushing the stream, it is literally no different to using `'\n'`.
 * Flushing a buffer is slow, so your program might suffer a performance hit.
 * If you're sceptical, take a look through any of the textbooks I mentioned above.
 * The CppCoreGuidelines recommend against using `endl` unless you _need_ to print `'\n'` and then
   flush the buffer.
 * If you _really_ need to flush frequently, consider `cerr` or `unitbuf` in real-world programs.
-  I am not sure if this will work for COMP6771 assignments or if output put to `cerr` is ignored.
+* I am not sure if COMP6771 assignments check `stderr` (what `cerr` writes to by default).
 * Provided that you understand the first four points, these are not hard-and-fast rules, but my
   recommendations, based off more experienced {cpp} programmers (e.g. Stroustrup, Sutter, Zubkov,
   etc.)
-* The following code examples all do the same thing:
+* The following code examples all do exactly the same thing on _every_ system.
 [source,cpp]
 ------------
 // example 1
@@ -424,6 +425,7 @@ int main()
 .Reference
 ****
 * Author: Sergey Zubkov
+* Website: Quora.com
 * Source: https://www.quora.com/What-is-the-the-function-of-eof-in-c%2B%2B/answer/Sergey-Zubkov-1?srid=CbmP
 * I modified the code to suit the style of code I teach. This is a demonstration of what _verbatim
   plagiarism_ looks like.
@@ -492,6 +494,7 @@ int main()
 [CAUTION]
 =========
 * Author: Sergey Zubkov
+* Website: Quora.com
 * Source: https://www.quora.com/What-is-the-the-function-of-eof-in-c%2B%2B/answer/Sergey-Zubkov-1?srid=CbmP
 * I modified the code to suit the style of code I teach. This is a demonstration of what _derived
   plagiarism_ looks like.
