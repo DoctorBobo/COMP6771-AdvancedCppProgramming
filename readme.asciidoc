@@ -1,4 +1,4 @@
-Christopher Di Bella's COMP6771 Advanced C++ Programming tutorial postscripts
+COMP6771 Advanced C++ Programming tutorial postscripts
 =============================================================================
 :Author: Christopher Di Bella
 :Email: cjdb.ns@gmail.com
