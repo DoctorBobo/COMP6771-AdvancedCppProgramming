@@ -360,7 +360,7 @@ int main()
 ****
 =========
 
-===== RAII
+=== RAII
 * Notice how Sergey didn't bother to close the file, and I didn't bother to add it in for him to
   suit my style.
 * This is an example of Resource Acquisition is Initialisation (RAII for short).
