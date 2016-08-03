@@ -23,8 +23,9 @@ COMP6771 Advanced C++ Programming week 2 tutorial notes
 * Except in **grievous circumstances**, poor tutorial attendance is likely to hurt your chances for
   an extension.
 * Bjarne Stroustrup, the original creator of {cpp} strongly recommends that {cpp} beginners invest 15+
-  hours per week into learning about {cpp}. Four of these hours have been reserved for you in the form
-  of lectures and tutorials. Please take advantage of this!
+  hours per week into learning about {cpp}.
+* Four of these hours have been reserved for you in the form of lectures and tutorials.
+* Please take advantage of this!
 
 === {cpp}11 and {cpp}14
 * {cpp}11 was a major change for {cpp}
@@ -53,8 +54,8 @@ features introduced. You can tell students that the exam will focus on the core 
 * I am against any form of academic misconduct.
 * I tow a very hard line on plagiarism.
 * I do my best to provide citations, or acknowledge authors wherever possible.
-* I might slip up in these notes: if you spot something, please let me know, as my source will
-  often provide more insight than I can.
+* I might slip up in these notes: if you spot something, please let me know, as the referenced
+  source will often provide more insight than I can afford to in a summary.
 
 == Resources
 === Books
@@ -111,12 +112,14 @@ confirm that it is on the peer-reviewed StackOverflow link:http://bit.ly/1hOS1iB
 === Style guides
 * There is no course-endorsed C++ style guide.
 * My personal favourite is the link:http://bit.ly/1YnLJv7[CppCoreGuidelines].
-* My tutorials will reference these guidelines a _lot_.
+* Our tutorials will reference these guidelines a _lot_.
 * The guidelines were started by Stroustrup and Sutter, and many extremely senior {cpp} programmers
   contribute to these guidelines.
 * I am not a fan of the Google {cpp} Style Guide. It is highly restrictive, and limits the potential
   of {cpp} to something similar of a C-subset or Java-subset of {cpp}.
-* I don't like hard-and-fast rules, but I do advocate a _few_.
+* The GSG enforces hard-and-fast rules.
+* This course fouces on good style, but doesn't enforce many hard-and-fast rules, as there is
+  usually an exception to every hard-and-fast rule.
 
 == Content
 === {cpp} is not _C with Classes_.
@@ -284,7 +287,8 @@ fizz = nullptr; // error: fizz is a const pointer and cannot be changed
 * `endl` does two things: it puts `'\n'` to the output/error stream, and then flushes the buffer.
 * This means that other than flushing the stream, it is literally no different to using `'\n'`.
 * Flushing a buffer is slow, so your program might suffer a performance hit.
-* If you're sceptical, take a look through any of the textbooks I mentioned above.
+* If you're sceptical, take a look through any of the textbooks I mentioned above, or any of the
+  references below.
 * The CppCoreGuidelines recommend against using `endl` unless you _need_ to print `'\n'` and then
   flush the buffer.
 * If you _really_ need to flush frequently, consider `cerr` or `unitbuf` in real-world programs.
@@ -426,14 +430,14 @@ int main()
 * Author: Sergey Zubkov
 * Website: Quora.com
 * Source: https://www.quora.com/What-is-the-the-function-of-eof-in-c%2B%2B/answer/Sergey-Zubkov-1?srid=CbmP
-* I modified the code to suit the style of code I teach. This is a demonstration of what _verbatim
+* I modified the code to suit the style of code I recommend. This is a demonstration of what _verbatim
   plagiarism_ looks like.
 * **Do not plagiarise others' work.**
 ****
 =========
 
 === RAII
-* Notice how Sergey didn't close the file, and I didn't bother to add it in for him to suit my
+* Notice how Sergey didn't close the file, and I didn't bother to add it in for him to suit our
   style.
 * This is an example of Resource Acquisition is Initialisation (RAII for short).
 * RAII is essentially an object cleaning up after itself when you are finished with it.
@@ -495,14 +499,14 @@ int main()
 * Author: Sergey Zubkov
 * Website: Quora.com
 * Source: https://www.quora.com/What-is-the-the-function-of-eof-in-c%2B%2B/answer/Sergey-Zubkov-1?srid=CbmP
-* I modified the code to suit the style of code I teach. This is a demonstration of what _derived
+* I modified the code to suit the style I'm recommending. This is a demonstration of what _derived
   plagiarism_ looks like.
 * **Do not do plagiarise others' work.**
 =========
 
 * I actually recommend this one. The original example was just for motivation about RAII.
 * When we get to the end of the outer `if`-statement, the file is automatically closed.
-* We generally like to keep objects as local as possible, which is why I've used a `for`-loop
+* We generally like to keep objects as local as possible, which is why we've used a `for`-loop
   instead of a `while`-loop.
 
 ==== `sstream`
