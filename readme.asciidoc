@@ -83,12 +83,17 @@ features introduced. You can tell students that the exam will focus on the core 
   afternoon). It presents you with an extremely high overview of {cpp} that will make diving into
   lectures, tutorials, and assignments much easier. I recommend that you read this book once before
   each assignment and once again before the exam.
-* I also recommend Stroustrup's beginner textbook, link:http://amzn.to/2aB2G1H[Programming: Principles and Practice Using {cpp} (2nd Edition)].
+* I also recommend Stroustrup's beginner textbook,
+  link:http://amzn.to/2aB2G1H[Programming: Principles and Practice Using {cpp} (2nd Edition)].
+* If you are after a {cpp} reference book, Stroustrup has written
+  link:http://amzn.to/2ahE2Xo[The {cpp} Programming Langauge (4th Edition)].
 
 [CAUTION]
 =========
-Generally speaking, the quality of {cpp} books is _abhorrent_. If you are after a {cpp} book, please
-confirm that it is on the peer-reviewed StackOverflow link:http://bit.ly/1hOS1iB[Definitive Book Guide and List].
+* Most {cpp} books are _abhorrently_ written.
+* If you are after a {cpp} book, please confirm that it is on the peer-reviewed StackOverflow
+  link:http://bit.ly/1hOS1iB[Definitive Book Guide and List].
+* All of the books above are on this list.
 =========
 
 [TIP]
@@ -111,8 +116,7 @@ confirm that it is on the peer-reviewed StackOverflow link:http://bit.ly/1hOS1iB
 =====
 
 === Websites
-* link:http://en.cppreference.com[en.cppreference.com] -- the best {cpp} reference you can find without buying Stroustrup's
-  link:http://amzn.to/2ahE2Xo[The {cpp} Programming Langauge (4th Edition)].
+* link:http://en.cppreference.com[en.cppreference.com] -- the best online {cpp} reference you can find.
 * link:http://isocpp.org[The official ISO {cpp} homepage]
 * link:http://isocpp.org/faq[A combination of Stroustrup's original FAQ and another popular FAQ]
 * link:http://stroustrup.com/[Stroustrup's Homepage]
@@ -121,9 +125,10 @@ confirm that it is on the peer-reviewed StackOverflow link:http://bit.ly/1hOS1iB
 * link:http://stroustrup.com/C++11FAQ.html[Stroustrup's FAQ for {cpp}11]
 * link:https://herbsutter.com/[Herb Sutter's homepage]
 * link:https://herbsutter.com/gotw/[Sutter's problems page] (very insightful, and laid the
-  foundations for his book series)
+  foundations for his excellent book series).
 * link:http://stackoverflow.com/questions/tagged/c%2b%2b-faq?sort=votes[StackOverflow {cpp} FAQ]
 * link:http://stackoverflow.com/questions/388242/the-definitive-c-book-guide-and-list[The Definitive {cpp} Book Guide and List]
+* link:https://www.quora.com/profile/Sergey-Zubkov-1[Sergey Zubkov's Quora.com profile]
 * link:https://www.quora.com/profile/Christopher-Di-Bella[My Quora.com profile] (yes, I'm tooting
   my own horn a bit here, but you might find it useful)
 
