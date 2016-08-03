@@ -6,122 +6,6 @@ COMP6771 Advanced C++ Programming week 2 tutorial notes
 :Revision: 1
 :cpp: C++
 
-== Admin
-=== Contact
-* You can contact me at {Email}.
-* Please put your subject as "COMP6771 -- <subject>". I get asked a lot of {cpp} questions, and I need
-  to prioritise _your_ questions over the general public's.
-* Please email staff as soon as you have a question so that you don't forget to ask.
-* There is also an official course forum at http://www.cse.unsw.edu.au/~cs6771. Please use this to
-  ask questions that might benefit the class over both email (personal stuff exempt) and the Facbook
-  group.
-
-=== Tutorial attendance
-* Not compulsory.
-* We like to keep attendance for book-keeping purposes.
-   * This will help us determine the correlation between attendance and marks.
-* Except in **grievous circumstances**, poor tutorial attendance is likely to hurt your chances for
-  an extension.
-* Bjarne Stroustrup, the original creator of {cpp} strongly recommends that {cpp} beginners invest 15+
-  hours per week into learning about {cpp}.
-* Four of these hours have been reserved for you in the form of lectures and tutorials.
-* Please take advantage of this!
-
-=== {cpp}11 and {cpp}14
-* {cpp}11 was a major change for {cpp}
-* {cpp}14 is essentially a finished version of {cpp}11, and is only a minor change
-* Some students are concerned about the textbook only containing {cpp}11 material, and the
-  examinable content.
-* Jingling has told me this:
-
-"I made a brief comment in the course outline. {cpp}14 is a small improvement over {cpp}11 with minor
-features introduced. You can tell students that the exam will focus on the core of {cpp}."
-
-=== Feedback
-* link:https://www.quora.com/Why-do-a-lot-of-people-seem-to-dislike-C%2B%2B/answer/Christopher-Di-Bella?srid=CbmP[One reason people dislike {cpp}] is because they have a bad experience with it.
-* Another reason is because they haven't been properly educated on {cpp}.
-* If you find yourself struggling in this course, please ask for help.
-* You pay the university a lot of money to take this course, and if it isn't working for you, you
-  have the right to let us know.
-* Perhaps we can alter our teaching style a little, or find a new reference so that you can learn
-  better.
-* We know a lot about {cpp}, but we don't know everything about {cpp} at all times.
-* There's a lot of {cpp} that I can easily look up, but don't care about in my day-to-day
-  programming. Some of it is just for compiler developers/library writers.
-* We might occasionally make mistakes. If you spot one, please point it out.
-
-=== References and plagiarism
-* I am against any form of academic misconduct.
-* I tow a very hard line on plagiarism.
-* I do my best to provide citations, or acknowledge authors wherever possible.
-* I might slip up in these notes: if you spot something, please let me know, as the referenced
-  source will often provide more insight than I can afford to in a summary.
-
-== Resources
-=== Books
-* The official course textbook is link:http://amzn.to/2asmqFr[C++ Primer (5th Edition)].
-* I strongly recommend that _all students_ purchase a copy of link:http://amzn.to/2au6ArE[A Tour of {cpp}].
-  This book is written by Stroustrup, and is only 200 pages long (you can literally read it in an
-  afternoon). It presents you with an extremely high overview of {cpp} that will make diving into
-  lectures, tutorials, and assignments much easier. I recommend that you read this book once before
-  each assignment and once again before the exam.
-* I also recommend Stroustrup's beginner textbook, link:http://amzn.to/2aB2G1H[Programming: Principles and Practice Using {cpp} (2nd Edition)].
-
-[CAUTION]
-=========
-Generally speaking, the quality of {cpp} books is _abhorrent_. If you are after a {cpp} book, please
-confirm that it is on the peer-reviewed StackOverflow link:http://bit.ly/1hOS1iB[Definitive Book Guide and List].
-=========
-
-[TIP]
-=====
-* I am a fan of works by Bjarne Stroustrup, Herb Sutter, Scott Meyers, Anthony Williams, and Sergey
-  Zubkov.
-* Bjarne Stroustrup is the original creator of {cpp}. He is a senior member of WG21.
-* Herb Sutter is a very senior member of the {cpp} community, and is the convener for WG21.
-* Scott Meyers is a retired, but senior member of the {cpp} community. He is directly responsible for
-  the programming style of a large portion of the {cpp} community.
-* Anthony Williams is a concurrency expert and a senior member of the {cpp} community.
-* Sergey Zubkov is a senior member of the {cpp} community, and also works directly with Stroustrup.
-  He is a member of WG21, and is a _major_ contributor to en.cppreference.com (see below). He also
-  has a link:https://www.quora.com/profile/Sergey-Zubkov-1[Quora.com]
-
-* WG21 is the name of the team of people that ultimately decide what features go into the next
-  version of {cpp}. WG stands for 'Working Group'.
-* SG14 is a Study Group underneath WG21, led by Patrice Roy, concerned with {cpp} for games and
-  finance. I am a passive member of SG14 at present.
-=====
-
-=== Websites
-* link:http://en.cppreference.com[en.cppreference.com] -- the best {cpp} reference you can find without buying Stroustrup's
-  link:http://amzn.to/2ahE2Xo[The {cpp} Programming Langauge (4th Edition)].
-* link:http://isocpp.org[The official ISO {cpp} homepage]
-* link:http://isocpp.org/faq[A combination of Stroustrup's original FAQ and another popular FAQ]
-* link:http://stroustrup.com/[Stroustrup's Homepage]
-* http://stroustrup.com/bs_faq.html
-* http://stroustrup.com/bs_faq2.html
-* link:http://stroustrup.com/C++11FAQ.html[Stroustrup's FAQ for {cpp}11]
-* link:https://herbsutter.com/[Herb Sutter's homepage]
-* link:https://herbsutter.com/gotw/[Sutter's problems page] (very insightful, and laid the
-  foundations for his book series)
-* link:http://stackoverflow.com/questions/tagged/c%2b%2b-faq?sort=votes[StackOverflow {cpp} FAQ]
-* link:http://stackoverflow.com/questions/388242/the-definitive-c-book-guide-and-list[The Definitive {cpp} Book Guide and List]
-* link:https://www.quora.com/profile/Christopher-Di-Bella[My Quora.com profile] (yes, I'm tooting
-  my own horn a bit here, but you might find it useful)
-
-=== Style guides
-* There is no course-endorsed C++ style guide.
-* My personal favourite is the link:http://bit.ly/1YnLJv7[CppCoreGuidelines].
-* Our tutorials will reference these guidelines a _lot_.
-* The guidelines were started by Stroustrup and Sutter, and many extremely senior {cpp} programmers
-  contribute to these guidelines.
-* I am not a fan of the Google {cpp} Style Guide. It is highly restrictive, and limits the potential
-  of {cpp} to something similar of a C-subset or Java-subset of {cpp}.
-* The GSG enforces hard-and-fast rules.
-* This course fouces on good style, but doesn't enforce many hard-and-fast rules, as there is
-  usually an exception to every hard-and-fast rule.
-
-== Content
 === {cpp} is not _C with Classes_.
 * It is much more than _C with Classes_, as you will learn throughout the course.
 * You cannot think of {cpp} as a superset of C.
@@ -439,6 +323,7 @@ int main()
 === RAII
 * Notice how Sergey didn't close the file, and I didn't bother to add it in for him to suit our
   style.
+* This caused a bit of concern in the tutorials.
 * This is an example of Resource Acquisition is Initialisation (RAII for short).
 * RAII is essentially an object cleaning up after itself when you are finished with it.
 * "Finished" means the object has been destroyed:
