@@ -47,7 +47,7 @@ I am a fan of works by Bjarne Stroustrup, Herb Sutter, Scott Meyers, and Sergey 
 =====
 
 === Websites
-* http://en.cppreference.com -- the best C++ reference you can find without buying Stroustrup's
+* http://en.cppreference.com -- the best C\++ reference you can find without buying Stroustrup's
   link:http://amzn.to/2ahE2Xo[The C++ Programming Langauge (4th Edition)].
 * http://isocpp.org -- the official ISO C++ homepage
 * http://isocpp.org/faq
