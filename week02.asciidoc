@@ -1,4 +1,4 @@
-COMP6771 Advanced C\++ Programming week 2 tutorial notes
+COMP6771 Advanced C++ Programming week 2 tutorial notes
 =======================================================
 :Author: Christopher Di Bella
 :Email: cjdb.ns@gmail.com
@@ -8,12 +8,13 @@ COMP6771 Advanced C\++ Programming week 2 tutorial notes
 == Admin
 === Contact
 * You can contact me at {:Email:}.
-* Please put your subject as "COMP6771 -- <subject>". I get asked a lot of C\++ questions, and I need
+* Please put your subject as "COMP6771 -- <subject>". I get asked a lot of C++ questions, and I need
   to prioritise _your_ questions over the general public's.
 * Please email staff as soon as you have a question so that you don't forget to ask.
 * There is also an official course forum at http://www.cse.unsw.edu.au/~cs6771. Please use this to
   ask questions that might benefit the class over both email (personal stuff exempt) and the Facbook
   group.
+
 === Tutorial attendance
 * Not compulsory.
 * We like to keep attendance for book-keeping purposes.
@@ -21,22 +22,22 @@ COMP6771 Advanced C\++ Programming week 2 tutorial notes
 * Except in **grievous circumstances**, poor tutorial attendance is likely to hurt your chances for
   an extension.
 * Bjarne Stroustrup, the original creator of C\++ strongly recommends that C\++ beginners invest 15+
-  hours per week into learning about C\++. Four of these hours have been reserved for you in the form
+  hours per week into learning about C++. Four of these hours have been reserved for you in the form
   of lectures and tutorials. Please take advantage of this!
 
 == Resources
 === Books
-* The official course textbook is link:http://amzn.to/2asmqFr[C\++ Primer (5th Edition)].
-* I strongly recommend that _all students_ purchase a copy of link:http://amzn.to/2au6ArE[A Tour of C\++].
+* The official course textbook is link:http://amzn.to/2asmqFr[C++ Primer (5th Edition)].
+* I strongly recommend that _all students_ purchase a copy of link:http://amzn.to/2au6ArE[A Tour of C\+\+].
   This book is written by Stroustrup, and is only 200 pages long (you can literally read it in an
-  afternoon). It presents you with an extremely high overview of C\++ that will make diving into
+  afternoon). It presents you with an extremely high overview of C++ that will make diving into
   lectures, tutorials, and assignments much easier. I recommend that you read this book once before
   each assignment and once again before the exam.
-* I also recommend Stroustrup's beginner textbook, link:http://amzn.to/2aB2G1H[Programming: Principles and Practice Using C\++ (2nd Edition)].
+* I also recommend Stroustrup's beginner textbook, link:http://amzn.to/2aB2G1H[Programming: Principles and Practice Using C++ (2nd Edition)].
 
 [CAUTION]
 =========
-Generally speaking, the quality of C\++ books is _abhorrent_. If you are after a C\++ book, please
+Generally speaking, the quality of C\++ books is _abhorrent_. If you are after a C++ book, please
 confirm that it is on the peer-reviewed StackOverflow link:http://bit.ly/1hOS1iB[Definitive Book Guide and List].
 =========
 
@@ -46,43 +47,44 @@ I am a fan of works by Bjarne Stroustrup, Herb Sutter, Scott Meyers, and Sergey 
 =====
 
 === Websites
-* http://en.cppreference.com -- the best C\++ reference you can find without buying Stroustrup's
-  link:http://amzn.to/2ahE2Xo[The C\++ Programming Langauge (4th Edition)].
-* http://isocpp.org -- the official ISO C\++ homepage
+* http://en.cppreference.com -- the best C++ reference you can find without buying Stroustrup's
+  link:http://amzn.to/2ahE2Xo[The C++ Programming Langauge (4th Edition)].
+* http://isocpp.org -- the official ISO C++ homepage
 * http://isocpp.org/faq
 * http://stroustrup.com/
 * http://stroustrup.com/bs_faq.html
 * http://stroustrup.com/bs_faq2.html
-* http://stroustrup.com/C\++11FAQ.html
+* http://stroustrup.com/C++11FAQ.html
 
 === Style guides
-* There is no course-endorsed C\++ style guide.
+* There is no course-endorsed C++ style guide.
 * My personal favourite is the link:http://bit.ly/1YnLJv7[CppCoreGuidelines]. My tutorials will
   reference these guidelines a _lot_. The guidelines were started by Stroustrup and Sutter, and many
-  extremely senior C\++ programmer contribute to these guidelines.
+  extremely senior C++ programmer contribute to these guidelines.
 * I am not a fan of the Google C\++ Style Guide. It is highly restrictive, and limits the potential
-  of C\++ to something similar of a C-subset or Java-subset of C\++.
+  of C\++ to something similar of a C-subset or Java-subset of C++.
 * I don't like hard-and-fast rules, but I do advocate a _few_.
 
 === Feedback
-* One reason people dislike C\++ is because they have a bad experience with it.
-* Another reason is because they haven't been properly educated on C\++.
+* link:https://www.quora.com/Why-do-a-lot-of-people-seem-to-dislike-C%2B%2B/answer/Christopher-Di-Bella?srid=CbmP[One reason people dislike C++] is because they have a bad experience with it.
+* Another reason is because they haven't been properly educated on C++.
 * If you find yourself struggling in this course, please ask for help.
 * You pay the university a lot of money to take this course, and if it isn't working for you, you
   have the right to let us know. Perhaps we can alter our teaching style a little, or find a new
   reference so that you can learn better.
 
 == Content
-=== C\++ is not _C with Classes_.
+=== C++ is not _C with Classes_.
 * It is much more than _C with Classes_, as you will learn throughout the course.
-* You cannot think of C\++ as a superset of C.
-* Many C programs do not compile with a C\++ compiler.
-* Some C programs that do compile with a C\++ compiler will give you different output to when they
+* You cannot think of C++ as a superset of C.
+* Many C programs do not compile with a C++ compiler.
+* Some C programs that do compile with a C++ compiler will give you different output to when they
   are compiled on a C compiler, despite being identical source!
 
-=== C\++ is not _Java with low level stuff_
+=== C++ is not _Java with low level stuff_
 * link:http://stroustrup.com/bs_faq.html#Java[See Stroustrup's answer on this.]
-* Don't try to program C\++ in the same style as Java: you will do very poorly in this course.
+* Don't try to program C++ in the same style as Java: you will do very poorly in this course.
+* You will also never take advantage of C++'s potential.
 
 === `main`
 * _Must_ adhere to one of these forms:
@@ -93,7 +95,7 @@ int main(int argc, char* argv[]); // char* argv[] same as char**
 int main(int argc, char* argv[], /* other parameters */);
 ------------
 
-* Return type must be `int`. Anything else should be rejected by the compiler, as it is _not_ a C\++
+* Return type must be `int`. Anything else should be rejected by the compiler, as it is _not_ a C++
   program.
 * You cannot call `main`.
 
@@ -232,7 +234,7 @@ fizz = nullptr; // error: fizz is a const pointer and cannot be changed
 * If you _really_ need to flush frequently, consider `cerr` or `unitbuf` in real-world programs.
   I am not sure if this will work for COMP6771 assignments or if output put to `cerr` is ignored.
 * Provided that you understand the first four points, these are not hard-and-fast rules, but my
-  recommendations, based off more experienced C\++ programmers (e.g. Stroustrup, Sutter, Zubkov,
+  recommendations, based off more experienced C++ programmers (e.g. Stroustrup, Sutter, Zubkov,
   etc.)
 * The following three code examples all do the same thing:
 [source,cpp]
