@@ -24,6 +24,33 @@ COMP6771 Advanced C++ Programming week 2 tutorial notes
 * Bjarne Stroustrup, the original creator of C\++ strongly recommends that C\++ beginners invest 15+
   hours per week into learning about C++. Four of these hours have been reserved for you in the form
   of lectures and tutorials. Please take advantage of this!
+=== C++11 and C++14
+* C++11 was a major change for C++
+* C++14 is essentially a finished version of C++11, and is only a minor change
+* Jingling has told me this:
+
+"I made a brief comment in the course outline. C++14 is a small improvement over C++11 with minor
+features introduced. You can tell students that the exam will focus on the core of C++."
+
+=== Feedback
+* link:https://www.quora.com/Why-do-a-lot-of-people-seem-to-dislike-C%2B%2B/answer/Christopher-Di-Bella?srid=CbmP[One reason people dislike C++] is because they have a bad experience with it.
+* Another reason is because they haven't been properly educated on C++.
+* If you find yourself struggling in this course, please ask for help.
+* You pay the university a lot of money to take this course, and if it isn't working for you, you
+  have the right to let us know. Perhaps we can alter our teaching style a little, or find a new
+  reference so that you can learn better.
+
+* We know a lot about C++, but we don't know everything about C++ at all times.
+* There's a lot of C++ that I can easily look up, but don't care about in my day-to-day
+  programming. Some of it is just for compiler developers/library writers.
+* We might occasionally make mistakes. If you spot one, please point it out.
+
+=== References and plagiarism
+* I am against any form of academic misconduct.
+* I tow a very hard line on plagiarism.
+* I do my best to provide citations, or acknowledge authors wherever possible.
+* I might slip up in these notes: if you spot something, please let me know, as my source will
+  often provide more insight than I can.
 
 == Resources
 === Books
@@ -43,18 +70,39 @@ confirm that it is on the peer-reviewed StackOverflow link:http://bit.ly/1hOS1iB
 
 [TIP]
 =====
-I am a fan of works by Bjarne Stroustrup, Herb Sutter, Scott Meyers, and Sergey Zubkov.
+* I am a fan of works by Bjarne Stroustrup, Herb Sutter, Scott Meyers, Anthony Williams, and Sergey
+  Zubkov.
+* Bjarne Stroustrup is the original creator of C++. He is a senior member of WG21.
+* Herb Sutter is a very senior member of the C++ community, and is the convener for WG21.
+* Scott Meyers is a retired, but senior member of the C\++ community. He is directly responsible for
+  the programming style of a large portion of the C++ community.
+* Anthony Williams is a concurrency expert and a senior member of the C++ community.
+* Sergey Zubkov is a senior member of the C++ community, and also works directly with Stroustrup.
+  He is a member of WG21, and is a _major_ contributor to en.cppreference.com (see below). He also
+  has a link:https://www.quora.com/profile/Sergey-Zubkov-1[Quora.com]
+
+* WG21 is the name of the team of people that ultimately decide what features go into the next
+  version of C++. WG stands for 'Working Group'.
+* SG14 is a Study Group underneath WG21, led by Patrice Roy, concerned with C++ for games and
+  finance. I am a passive member of SG14 at present.
 =====
 
 === Websites
 * http://en.cppreference.com -- the best C\++ reference you can find without buying Stroustrup's
   link:http://amzn.to/2ahE2Xo[The C++ Programming Langauge (4th Edition)].
-* http://isocpp.org -- the official ISO C++ homepage
-* http://isocpp.org/faq
-* http://stroustrup.com/
+* link:http://isocpp.org[The official ISO C++ homepage]
+* link:http://isocpp.org/faq[A combination of Stroustrup's original FAQ and another popular FAQ]
+* link:http://stroustrup.com/[Stroustrup's Homepage]
 * http://stroustrup.com/bs_faq.html
 * http://stroustrup.com/bs_faq2.html
-* http://stroustrup.com/C++11FAQ.html
+* link:http://stroustrup.com/C++11FAQ.html[Stroustrup's FAQ for C++11]
+* link:https://herbsutter.com/[Herb Sutter's homepage]
+* link:https://herbsutter.com/gotw/[Sutter's problems page] (very insightful, and laid the
+  foundations for his book series)
+* link:http://stackoverflow.com/questions/tagged/c%2b%2b-faq?sort=votes[StackOverflow C++ FAQ]
+* link:http://stackoverflow.com/questions/388242/the-definitive-c-book-guide-and-list[The Definitive C++ Book Guide and List]
+* link:https://www.quora.com/profile/Christopher-Di-Bella[My Quora.com profile] (yes, I'm tooting
+  my own horn a bit here, but you might find it useful)
 
 === Style guides
 * There is no course-endorsed C++ style guide.
@@ -64,14 +112,6 @@ I am a fan of works by Bjarne Stroustrup, Herb Sutter, Scott Meyers, and Sergey 
 * I am not a fan of the Google C\++ Style Guide. It is highly restrictive, and limits the potential
   of C\++ to something similar of a C-subset or Java-subset of C++.
 * I don't like hard-and-fast rules, but I do advocate a _few_.
-
-=== Feedback
-* link:https://www.quora.com/Why-do-a-lot-of-people-seem-to-dislike-C%2B%2B/answer/Christopher-Di-Bella?srid=CbmP[One reason people dislike C++] is because they have a bad experience with it.
-* Another reason is because they haven't been properly educated on C++.
-* If you find yourself struggling in this course, please ask for help.
-* You pay the university a lot of money to take this course, and if it isn't working for you, you
-  have the right to let us know. Perhaps we can alter our teaching style a little, or find a new
-  reference so that you can learn better.
 
 == Content
 === C++ is not _C with Classes_.
@@ -133,6 +173,12 @@ auto bar = 10.5; // bar is a double
 auto fizz = 10U; // fizz is an unsigned int
 auto buzz;       // error: you forgot to initialise your variable
 ------------
+
+==== Further reading
+https://herbsutter.com/2013/06/07/gotw-92-solution-auto-variables-part-1/
+https://herbsutter.com/2013/06/13/gotw-93-solution-auto-variables-part-2/
+https://herbsutter.com/2013/08/12/gotw-94-solution-aaa-style-almost-always-auto/
+https://www.youtube.com/watch?v=xnqTKD8uD64&feature=youtu.be&t=28m24s
 
 ==== References
 * A reference is an alias for an object.
@@ -300,6 +346,14 @@ int main()
 }
 ------------
 =========
+
+===== References
+* Working Draft, Standard for Programming Language C++, p.1051 (final C++14 draft)
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#slio50-avoid-endl[CppCoreGuidelines: Avoid `endl`]
+* link:https://www.quora.com/Why-is-endl-preferred-over-n-sequence-in-C%2B%2B/answer/Sergey-Zubkov-1?srid=CbmP&share=527eb8ca[Why is `endl` preferred over `'\n'` sequence? -- Quora.com]
+* link:https://www.youtube.com/watch?v=GMqQOEZYVJQ[C++ Weekly ep 7: Stop using `std::endl`]
+* link:http://en.cppreference.com/w/cpp/io/manip/endl[en.cppreference.com on `endl`]
+* link:http://stackoverflow.com/questions/213907/c-stdendl-vs-n[StackOverflow post on `'\n'` and `endl`]
 
 ==== `fstream`
 * `ofstream` is for file output.
