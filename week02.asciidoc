@@ -4,10 +4,11 @@ COMP6771 Advanced C++ Programming week 2 tutorial notes
 :Email: cjdb.ns@gmail.com
 :Date: 2016/08/03
 :Revision: 1
+:cpp: C++
 
 == Admin
 === Contact
-* You can contact me at {:Email:}.
+* You can contact me at {Email}.
 * Please put your subject as "COMP6771 -- <subject>". I get asked a lot of C++ questions, and I need
   to prioritise _your_ questions over the general public's.
 * Please email staff as soon as you have a question so that you don't forget to ask.
@@ -24,7 +25,7 @@ COMP6771 Advanced C++ Programming week 2 tutorial notes
 * Bjarne Stroustrup, the original creator of C\++ strongly recommends that C\++ beginners invest 15\+
   hours per week into learning about C\++. Four of these hours have been reserved for you in the form
   of lectures and tutorials. Please take advantage of this!
-=== C\++11 and C\++14
+=== {cpp} and {cpp}
 * C\++11 was a major change for C\++
 * C\++14 is essentially a finished version of C\++11, and is only a minor change
 * Jingling has told me this:
