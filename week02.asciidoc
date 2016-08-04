@@ -74,6 +74,13 @@ auto buzz;       // error: you forgot to initialise your variable
 * https://herbsutter.com/2013/06/13/gotw-93-solution-auto-variables-part-2/
 * https://herbsutter.com/2013/08/12/gotw-94-solution-aaa-style-almost-always-auto/
 * https://www.youtube.com/watch?v=xnqTKD8uD64&feature=youtu.be&t=28m24s
+* Stroustrup, B. _A Tour of {cpp}_. p5 -- 9. 2014. Pearson Education Inc. Upper Saddle River, NJ.
+* Stroustrup, B. _Programming: Principles and Practice Using {cpp}_ 2nd Edition. p59 -- 87. 2014.
+  Pearson Education Inc. Upper Saddle River, NJ.
+* Stroustrup, B. _The {cpp} Programming Language_ 4th Edition. p135 -- 169. 2013. Pearson Education
+  Inc. Upper Saddle River, NJ.
+* Meyers, S. _Effective Modern {cpp} -- 42 ways to improve your use of {cpp}11 and {cpp14}_. p48
+  -- 57. 2014. O'Reilly Media Inc. Sebastopol, CA. 
 =====
 
 ==== References
@@ -106,6 +113,16 @@ foo = 20;
 std::cout << foo << ' ' << bar << '\n';
 bar = 300; // error: can't write to a const reference.
 ------------
+
+.Further reading
+[TIP]
+====
+* Stroustrup, B. _A Tour of {cpp}_. p9 -- 14. 2014. Pearson Education Inc. Upper Saddle River, NJ.
+* Stroustrup, B. _Programming: Principles and Practice Using {cpp}_. 2nd Edition. p276 -- 284. 2014.
+  Pearson Education Inc. Upper Saddle River, NJ.
+* Stroustrup, B. _The {cpp} Programming Language_ 4th Edition. p190 -- 193. 2013. Pearson Education
+  Inc. Upper Saddle River, NJ.
+====
 
 ==== Pointers
 * A pointer is an object that 'points' to another object.
@@ -153,6 +170,19 @@ const auto* const fizz = &pi;
 *fizz = 3.141592; // error: fizz is a pointer-to-const, so you cannot change the pointee
 fizz = nullptr; // error: fizz is a const pointer and cannot be changed
 ------------
+
+.Further reading
+[TIP]
+=====
+* Stroustrup, B. _A Tour of {cpp}_. p9 -- 14. 2014. Pearson Education Inc. Upper Saddle River, NJ.
+* Stroustrup, B. _Programming: Principles and Practice Using {cpp}_. 2nd Edition. p591 -- 600.
+  Pearson Education Inc. Upper Saddle River, NJ.
+* Stroustrup, B. _The {cpp} Programming Language_ 4th Edition. p171 -- 174, 186 -- 188, 196 -- 199.
+  Pearson Education Inc. Upper Saddle River, NJ.
+* Meyers, S. _More Effective {cpp}_.
+* Lots of the
+  link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md[CppCoreGuidelines]
+=====
 
 === Streams
 * `<<` is the put-to operator, and is associated with output.
@@ -250,13 +280,20 @@ int main()
 ------------
 =========
 
-===== References
+.Further reading
+[TIP]
+=====
 * Working Draft, Standard for Programming Language {cpp}, p.1051 (final {cpp}14 draft)
+* Stroustrup, B. _Programming: Principles and Practice Using {cpp}_. 2nd Edition. p345 -- 410. 2014.
+  Pearson Education Inc. Upper Saddle River, NJ.
+* Stroustrup, B. _The {cpp} Programming Language_ 4th Edition. p1073 -- 1108. 2013. Pearson
+  Education Inc. Upper Saddle River, NJ.
 * link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#slio50-avoid-endl[CppCoreGuidelines: Avoid `endl`]
-* link:https://www.quora.com/Why-is-endl-preferred-over-n-sequence-in-C%2B%2B/answer/Sergey-Zubkov-1?srid=CbmP&share=527eb8ca[Why is `endl` preferred over `'\n'` sequence? -- Quora.com]
+* link:https://www.quora.com/Why-is-endl-preferred-over-n-sequence-in-C%2B%2B/answer/Sergey-Zubkov-1?srid=CbmP&share=527eb8ca[Sergey Zubkov's answer to "Why is `endl` preferred over `'\n'` sequence?" -- Quora.com]
 * link:https://www.youtube.com/watch?v=GMqQOEZYVJQ[{cpp} Weekly ep 7: Stop using `std::endl`]
 * link:http://en.cppreference.com/w/cpp/io/manip/endl[en.cppreference.com on `endl`]
-* link:http://stackoverflow.com/questions/213907/c-stdendl-vs-n[StackOverflow post on `'\n'` and `endl`]
+* link:http://stackoverflow.com/questions/213907/c-stdendl-vs-n[C++ "`std::endl`" vs `'\n'` -- StackOverflow]
+=====
 
 ==== `fstream`
 * `ofstream` is for file output.
@@ -392,8 +429,28 @@ int main()
 * We generally like to keep objects as local as possible, which is why we've used a `for`-loop
   instead of a `while`-loop.
 
+.Further reading
+[TIP]
+=====
+* Stroustrup, B. _A Tour of {cpp}_. p85 -- 94. 2014. Pearson Education Inc. Upper Saddle River, NJ.
+* Stroustrup, B. _Programming: Principles and Practice Using {cpp}_. 2nd Edition. p345 -- 410. 2014.
+  Pearson Education Inc. Upper Saddle River, NJ.
+* Stroustrup, B. _The {cpp} Programming Language_ 4th Edition. p1073 -- 1108. 2013. Pearson
+  Education Inc. Upper Saddle River, NJ.
+=====
+
 ==== `sstream`
 * `istringstream` is for converting values in text to types (e.g. `"42"` to `42`)
 * `ostringstream` is for converting objects to values in strings (e.g. `42` to `"42"`)
 * `stringstream` is for both `istringstream` operations and `ostringstream` operations.
 * The same rules apply to the `sstream` objects as `iostream` and `fstream` objects.
+
+.Further reading
+[TIP]
+=====
+* Stroustrup, B. _A Tour of {cpp}_. p85 -- 94. 2014. Pearson Education Inc. Upper Saddle River, NJ.
+* Stroustrup, B. _Programming: Principles and Practice Using {cpp}_. 2nd Edition. p345 -- 410. 2014.
+  Pearson Education Inc. Upper Saddle River, NJ.
+* Stroustrup, B. _The {cpp} Programming Language_ 4th Edition. p1073 -- 1108. 2013. Pearson
+  Education Inc. Upper Saddle River, NJ.
+=====

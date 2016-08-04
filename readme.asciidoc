@@ -22,7 +22,7 @@ COMP6771 Advanced C++ Programming tutorial postscripts
    - hard work and study
 * Skipping any of the above because you find these notes helpful will probably cause you to do very
   poorly in the course.
-* They are supplementary to the tutorials, and can be used as catch-up if you miss a tutorial, but
+* They are supplementary to the tutorials, and can be used as catch-up if you miss one tutorial, but
   not if you pathologically skip them.
 
 == Contact
@@ -78,6 +78,8 @@ features introduced. You can tell students that the exam will focus on the core 
 == Resources
 === Books
 * The official course textbook is link:http://amzn.to/2asmqFr[C++ Primer (5th Edition)].
+* Tips for further reading will not reference the course textbook, as you should be reading it
+  throughout the course.
 * I strongly recommend that _all students_ purchase a copy of link:http://amzn.to/2au6ArE[A Tour of {cpp}].
   This book is written by Stroustrup, and is only 200 pages long (you can literally read it in an
   afternoon). It presents you with an extremely high overview of {cpp} that will make diving into
