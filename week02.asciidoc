@@ -435,8 +435,8 @@ int main()
 * Stroustrup, B. _A Tour of {cpp}_. p85 -- 94. 2014. Pearson Education Inc. Upper Saddle River, NJ.
 * Stroustrup, B. _Programming: Principles and Practice Using {cpp}_. 2nd Edition. p345 -- 410. 2014.
   Pearson Education Inc. Upper Saddle River, NJ.
-* Stroustrup, B. _The {cpp} Programming Language_ 4th Edition. p1073 -- 1108. 2013. Pearson
-  Education Inc. Upper Saddle River, NJ.
+* Stroustrup, B. _The {cpp} Programming Language_ 4th Edition. p112, 354 -- 357, 1073 -- 1108. 2013.
+  Pearson Education Inc. Upper Saddle River, NJ.
 =====
 
 ==== `sstream`
