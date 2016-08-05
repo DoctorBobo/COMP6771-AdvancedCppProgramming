@@ -113,7 +113,7 @@ features introduced. You can tell students that the exam will focus on the core 
 
 * WG21 is the name of the team of people that ultimately decide what features go into the next
   version of {cpp}. WG stands for 'Working Group'.
-* SG14 is a Study Group underneath WG21, led by Patrice Roy, concerned with {cpp} for games and
+* SG14 is a Study Group underneath WG21, led by Michael Wong, concerned with {cpp} for games and
   finance. I am a passive member of SG14 at present.
 =====
 
