@@ -1,4 +1,4 @@
-COMP6771 Advanced C++ Programming week 2 tutorial notes
+Week 2 tutorial postscript notes
 =======================================================
 :Author: Christopher Di Bella
 :Email: cjdb.ns@gmail.com
@@ -30,9 +30,9 @@ COMP6771 Advanced C++ Programming week 2 tutorial notes
 * _Must_ adhere to one of these forms:
 [source,cpp]
 ------------
-int main() { }
-int main(int argc, char* argv[]) { }
-int main(int argc, char* argv[], /* other parameters */) { }
+int main() {}
+int main(int argc, char* argv[]) {}
+int main(int argc, char* argv[], /* other parameters */) {}
 ------------
 
 * Return type must be `int`. Everything else should be rejected by the compiler, as it is _not_ a {cpp}
@@ -82,13 +82,15 @@ auto buzz;       // error: you forgot to initialise your variable
 * https://herbsutter.com/2013/06/13/gotw-93-solution-auto-variables-part-2/
 * https://herbsutter.com/2013/08/12/gotw-94-solution-aaa-style-almost-always-auto/
 * https://www.youtube.com/watch?v=xnqTKD8uD64&feature=youtu.be&t=28m24s
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#esdcl-declarations[ES.decl Declarations]
+  (ES.5 - ES.11, ES.20 - ES.23, ES.25 - ES.27, ES.30 - ES.33)
 * Stroustrup, B. _A tour of {cpp}_. p5 -- 9. 2014. Pearson Education Inc. Upper Saddle River, NJ.
 * Stroustrup, B. _Programming: principles and practice using {cpp}_ 2nd Edition. p59 -- 87. 2014.
   Pearson Education Inc. Upper Saddle River, NJ.
 * Stroustrup, B. _The {cpp} programming language_ 4th Edition. p135 -- 169. 2013. Pearson Education
   Inc. Upper Saddle River, NJ.
-* Meyers, S. _Effective modern {cpp} -- 42 ways to improve your use of {cpp}11 and {cpp}14_. p48
-  -- 57. 2014. O'Reilly Media Inc. Sebastopol, CA. 
+* Meyers, S. _Effective modern {cpp} -- 42 ways to improve your use of {cpp}11 and {cpp}14_. p37
+  -- 58. 2014. O'Reilly Media Inc. Sebastopol, CA. 
 =====
 
 ==== References
@@ -191,6 +193,8 @@ fizz = nullptr; // error: fizz is a const pointer and cannot be changed
   Pearson Education Inc. Upper Saddle River, NJ.
 * Meyers, S. _More effective {cpp}: 35 new ways to improve your programs and designs_. p9 -- 11. 1996.
   Addison-Wesley. Westford, MA.
+* Meyers, S. _Effective modern {cpp} -- 42 ways to improve your use of {cpp}11 and {cpp}14_. p58
+  -- 62. 2014. O'Reilly Media Inc. Sebastopol, CA. 
 * Lots of the
   link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md[CppCoreGuidelines]
 =====
@@ -451,6 +455,9 @@ int main()
   Pearson Education Inc. Upper Saddle River, NJ.
 * Meyers, S. _Effective {cpp}: 55 specific ways to improve your programs and designs_.
   Third edition. p61 -- 69. 2005. Pearson Education, Inc. Upper Saddle River, NJ.
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#r-resource-management[CppCoreGuidelines -- R: Resource management]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#p8-dont-leak-any-resources[CppCoreGuidelines -- P.8: Don't leak any resources]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#c31-all-resources-acquired-by-a-class-must-be-released-by-the-classs-destructor[CppCoreGuidelines -- C.31: All resources acquired by a class must be released by the class's destructor]
 =====
 
 === `sstream`

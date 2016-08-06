@@ -1,7 +1,6 @@
 COMP6771 Advanced C++ Programming tutorial postscripts
 ======================================================
 :Author: Christopher Di Bella
-:Email: cjdb.ns@gmail.com
 :Date: 2016/08/03
 :Revision: 1
 :cpp: C++
@@ -89,6 +88,13 @@ features introduced. You can tell students that the exam will focus on the core 
   link:http://amzn.to/2aB2G1H[Programming: Principles and Practice Using {cpp} (2nd Edition)].
 * If you are after a {cpp} reference book, Stroustrup has written
   link:http://amzn.to/2ahE2Xo[The {cpp} Programming Langauge (4th Edition)].
+* If you'd like to improve your programming style, Scott Meyers has published four books on good
+  {cpp} style: _Effective {cpp} (Third Edition)_, _More Effective {cpp}_, _Effective STL_,
+  and _Effective Modern {cpp}_. The first three are pre-{cpp}11, but are still _extremely_ relevant
+  for all {cpp} programmers: many of the points helped to form the CppCoreGuidelines (see below).
+* Herb Sutter's four books, _Exceptional C++_, _More Exceptional C++_, _Exceptional C++ Style_ and
+  _C++ Coding Standards_ (co-authored with Andrei Alexandrescu) are also very good. Like Meyers'
+  first three books, they are written with {cpp}98 in mind, but are of high quality, even today.
 
 [CAUTION]
 =========
@@ -104,12 +110,13 @@ features introduced. You can tell students that the exam will focus on the core 
   Zubkov.
 * Bjarne Stroustrup is the original creator of {cpp}. He is a senior member of WG21.
 * Herb Sutter is a very senior member of the {cpp} community, and is the convener for WG21.
-* Scott Meyers is a retired, but senior member of the {cpp} community. He is directly responsible for
-  the programming style of a large portion of the {cpp} community.
+* Scott Meyers was a senior member of the {cpp} community, but chose to retire from {cpp} in 2015.
+  He is directly responsible for the programming style of a large portion of the {cpp} community.
 * Anthony Williams is a concurrency expert and a senior member of the {cpp} community.
 * Sergey Zubkov is a senior member of the {cpp} community, and also works directly with Stroustrup.
   He is a member of WG21, and is a _major_ contributor to en.cppreference.com (see below). He also
-  has a link:https://www.quora.com/profile/Sergey-Zubkov-1[Quora.com]
+  has a link:https://www.quora.com/profile/Sergey-Zubkov-1[Quora.com] profile with 800+ answers in
+  {cpp} alone.
 
 * WG21 is the name of the team of people that ultimately decide what features go into the next
   version of {cpp}. WG stands for 'Working Group'.

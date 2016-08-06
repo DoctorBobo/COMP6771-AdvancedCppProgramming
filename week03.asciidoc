@@ -1,0 +1,121 @@
+Week 3 tutorial postscript
+==========================
+:Author: Christopher Di Bella
+:Email: cjdb.ns@gmail.com
+:Date: TBA
+:Revision: 1
+:cpp: C++
+
+== `const`-correctness
+\n
+
+=== `constexpr`
+\n
+
+=== `const`
+\n
+
+== `namespace`
+\n
+
+=== What is a `namespace`?
+\n
+
+=== `using`-declarations
+\n
+
+=== `using`-directives
+\n
+
+=== `namespace`-aliases
+\n
+
+== Conversions
+\n
+
+=== Narrowing conversions
+\n
+
+=== Implicit conversions
+\n
+
+=== Explicit conversions
+\n
+
+==== C-style casting
+\n
+
+==== {cpp}-style casting
+\n
+
+==== `gsl::narrow_cast`
+\n
+
+== `string`
+\n
+
+=== `std::string` literals
+\n
+
+=== Passing to functions
+\n
+
+=== Passing by value
+\n
+
+=== Pass by reference-to-`const`
+\n
+
+=== Pass by reference
+\n
+
+== `vector` and `array`
+\n
+
+=== C-style arrays and `gsl::span`
+\n
+
+== Adaptors
+\n
+
+=== `stack`
+\n
+
+=== `queue`
+\n
+
+=== `priority_queue`
+\n
+
+== `list` and `forward_list`
+\n
+
+== Associative containers
+\n
+
+=== `map` and `set`
+\n
+
+=== `unordered_map` and `unordered_set`
+\n
+
+== `algorithm`
+\n
+
+=== `const_iterator`
+\n
+
+=== `iterator`
+\n
+
+=== `reverse_iterator`
+\n
+
+== Range-based `for`-statements
+\n
+
+=== Reverse range-based `for`-statements
+[source,cpp]
+------------
+#include <boost/range/adaptor/reversed.hpp>
+------------
