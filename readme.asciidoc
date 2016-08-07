@@ -75,6 +75,13 @@ features introduced. You can tell students that the exam will focus on the core 
   source will often provide more insight than I can afford to in a summary.
 
 == Resources
+[CAUTION]
+=========
+* Most {cpp} resources are _abhorrently_ written.
+* If you are after a {cpp} book, please confirm that it is on the peer-reviewed StackOverflow
+  link:http://bit.ly/1hOS1iB[Definitive Book Guide and List].
+* All of the resources below are on this list.
+=========
 === Books
 * The official course textbook is link:http://amzn.to/2asmqFr[C++ Primer (5th Edition)].
 * Tips for further reading will not reference the course textbook, as you should be reading it
@@ -101,14 +108,6 @@ features introduced. You can tell students that the exam will focus on the core 
      - link:https://www.amazon.com/More-Exceptional-Engineering-Programming-Solutions/dp/020170434X/ref=pd_bxgy_14_img_2?ie=UTF8&psc=1&refRID=HJPPJ82DVSRXDTTZMNQG[More Exceptional {cpp}]
      - link:https://www.amazon.com/Exceptional-Style-Engineering-Programming-Solutions/dp/0201760428/ref=pd_bxgy_14_img_3?ie=UTF8&psc=1&refRID=7WPVNM7VB3TT32WY1BGE[Exceptional {cpp} Style]
      - link:https://www.amazon.com/Coding-Standards-Rules-Guidelines-Practices/dp/0321113586/ref=pd_sim_14_4?ie=UTF8&dpID=51SHzgmnCUL&dpSrc=sims&preST=_AC_UL160_SR129%2C160_&psc=1&refRID=2YM247F81BYEV4QF1GH9][{cpp} Coding Standards] (co-authored with Andrei Alexandrescu) 
-
-[CAUTION]
-=========
-* Most {cpp} books are _abhorrently_ written.
-* If you are after a {cpp} book, please confirm that it is on the peer-reviewed StackOverflow
-  link:http://bit.ly/1hOS1iB[Definitive Book Guide and List].
-* All of the books above are on this list.
-=========
 
 [TIP]
 =====
