@@ -89,12 +89,18 @@ features introduced. You can tell students that the exam will focus on the core 
 * If you are after a {cpp} reference book, Stroustrup has written
   link:http://amzn.to/2ahE2Xo[The {cpp} Programming Langauge (4th Edition)].
 * If you'd like to improve your programming style, Scott Meyers has published four books on good
-  {cpp} style: _Effective {cpp} (Third Edition)_, _More Effective {cpp}_, _Effective STL_,
-  and _Effective Modern {cpp}_. The first three are pre-{cpp}11, but are still _extremely_ relevant
-  for all {cpp} programmers: many of the points helped to form the CppCoreGuidelines (see below).
-* Herb Sutter's four books, _Exceptional C++_, _More Exceptional C++_, _Exceptional C++ Style_ and
-  _C++ Coding Standards_ (co-authored with Andrei Alexandrescu) are also very good. Like Meyers'
-  first three books, they are written with {cpp}98 in mind, but are of high quality, even today.
+  {cpp} style. The first three are pre-{cpp}11, but are still _extremely_ relevant for all {cpp} programmers:
+  many of the points helped to form the CppCoreGuidelines (see below)
+     - link:https://www.amazon.com/Effective-Specific-Improve-Programs-Designs/dp/0321334876/ref=sr_1_2?ie=UTF8&qid=1470533552&sr=8-2&keywords=effective+c%2B%2B[Effective {cpp} (Third Edition)]
+     - link:https://www.amazon.com/More-Effective-Improve-Programs-Designs/dp/020163371X/ref=pd_sim_14_3?ie=UTF8&dpID=51xXovPFsDL&dpSrc=sims&preST=_AC_UL160_SR128%2C160_&psc=1&refRID=GF8PDAM3VFJJQEWFZBDA[More Effective {cpp}]
+     - link:https://www.amazon.com/Effective-STL-Specific-Standard-Template/dp/0201749629/ref=pd_bxgy_14_img_3?ie=UTF8&psc=1&refRID=6CQX0RV3SGF5A4SNCZ3J[Effective STL]
+     - link:https://www.amazon.com/Effective-Modern-Specific-Ways-Improve/dp/1491903996/ref=pd_bxgy_14_img_3?ie=UTF8&psc=1&refRID=AEVKSJ410BRR4TZTD4QK[Effective Modern {cpp}]
+* Herb Sutter's four books are also very good. Like Meyers' original trilogy, they are written with {cpp}98 in
+  mind, but are of high quality, even today.
+     - link:https://www.amazon.com/Exceptional-Engineering-Programming-Problems-Solutions/dp/0201615622/ref=sr_1_1?s=books&ie=UTF8&qid=1470533626&sr=1-1&keywords=exceptional+c%2B%2B[Exceptional {cpp}]
+     - link:https://www.amazon.com/More-Exceptional-Engineering-Programming-Solutions/dp/020170434X/ref=pd_bxgy_14_img_2?ie=UTF8&psc=1&refRID=HJPPJ82DVSRXDTTZMNQG[More Exceptional {cpp}]
+     - link:https://www.amazon.com/Exceptional-Style-Engineering-Programming-Solutions/dp/0201760428/ref=pd_bxgy_14_img_3?ie=UTF8&psc=1&refRID=7WPVNM7VB3TT32WY1BGE[Exceptional {cpp} Style]
+     - link:https://www.amazon.com/Coding-Standards-Rules-Guidelines-Practices/dp/0321113586/ref=pd_sim_14_4?ie=UTF8&dpID=51SHzgmnCUL&dpSrc=sims&preST=_AC_UL160_SR129%2C160_&psc=1&refRID=2YM247F81BYEV4QF1GH9][{cpp} Coding Standards] (co-authored with Andrei Alexandrescu) 
 
 [CAUTION]
 =========
