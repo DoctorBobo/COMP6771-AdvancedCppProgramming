@@ -1,0 +1,1319 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
+<meta name="generator" content="AsciiDoc 8.6.9" />
+<title>COMP6771 Advanced C++ Programming tutorial postscripts</title>
+<style type="text/css">
+/* Shared CSS for AsciiDoc xhtml11 and html5 backends */
+
+/* Default font. */
+body {
+  font-family: Georgia,serif;
+}
+
+/* Title font. */
+h1, h2, h3, h4, h5, h6,
+div.title, caption.title,
+thead, p.table.header,
+#toctitle,
+#author, #revnumber, #revdate, #revremark,
+#footer {
+  font-family: Arial,Helvetica,sans-serif;
+}
+
+body {
+  margin: 1em 5% 1em 5%;
+}
+
+a {
+  color: blue;
+  text-decoration: underline;
+}
+a:visited {
+  color: fuchsia;
+}
+
+em {
+  font-style: italic;
+  color: navy;
+}
+
+strong {
+  font-weight: bold;
+  color: #083194;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #527bbd;
+  margin-top: 1.2em;
+  margin-bottom: 0.5em;
+  line-height: 1.3;
+}
+
+h1, h2, h3 {
+  border-bottom: 2px solid silver;
+}
+h2 {
+  padding-top: 0.5em;
+}
+h3 {
+  float: left;
+}
+h3 + * {
+  clear: left;
+}
+h5 {
+  font-size: 1.0em;
+}
+
+div.sectionbody {
+  margin-left: 0;
+}
+
+hr {
+  border: 1px solid silver;
+}
+
+p {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+ul, ol, li > p {
+  margin-top: 0;
+}
+ul > li     { color: #aaa; }
+ul > li > * { color: black; }
+
+.monospaced, code, pre {
+  font-family: "Courier New", Courier, monospace;
+  font-size: inherit;
+  color: navy;
+  padding: 0;
+  margin: 0;
+}
+pre {
+  white-space: pre-wrap;
+}
+
+#author {
+  color: #527bbd;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+#email {
+}
+#revnumber, #revdate, #revremark {
+}
+
+#footer {
+  font-size: small;
+  border-top: 2px solid silver;
+  padding-top: 0.5em;
+  margin-top: 4.0em;
+}
+#footer-text {
+  float: left;
+  padding-bottom: 0.5em;
+}
+#footer-badges {
+  float: right;
+  padding-bottom: 0.5em;
+}
+
+#preamble {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+div.imageblock, div.exampleblock, div.verseblock,
+div.quoteblock, div.literalblock, div.listingblock, div.sidebarblock,
+div.admonitionblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.admonitionblock {
+  margin-top: 2.0em;
+  margin-bottom: 2.0em;
+  margin-right: 10%;
+  color: #606060;
+}
+
+div.content { /* Block element content. */
+  padding: 0;
+}
+
+/* Block element titles. */
+div.title, caption.title {
+  color: #527bbd;
+  font-weight: bold;
+  text-align: left;
+  margin-top: 1.0em;
+  margin-bottom: 0.5em;
+}
+div.title + * {
+  margin-top: 0;
+}
+
+td div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content + div.title {
+  margin-top: 0.0em;
+}
+
+div.sidebarblock > div.content {
+  background: #ffffee;
+  border: 1px solid #dddddd;
+  border-left: 4px solid #f0f0f0;
+  padding: 0.5em;
+}
+
+div.listingblock > div.content {
+  border: 1px solid #dddddd;
+  border-left: 5px solid #f0f0f0;
+  background: #f8f8f8;
+  padding: 0.5em;
+}
+
+div.quoteblock, div.verseblock {
+  padding-left: 1.0em;
+  margin-left: 1.0em;
+  margin-right: 10%;
+  border-left: 5px solid #f0f0f0;
+  color: #888;
+}
+
+div.quoteblock > div.attribution {
+  padding-top: 0.5em;
+  text-align: right;
+}
+
+div.verseblock > pre.content {
+  font-family: inherit;
+  font-size: inherit;
+}
+div.verseblock > div.attribution {
+  padding-top: 0.75em;
+  text-align: left;
+}
+/* DEPRECATED: Pre version 8.2.7 verse style literal block. */
+div.verseblock + div.attribution {
+  text-align: left;
+}
+
+div.admonitionblock .icon {
+  vertical-align: top;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-decoration: underline;
+  color: #527bbd;
+  padding-right: 0.5em;
+}
+div.admonitionblock td.content {
+  padding-left: 0.5em;
+  border-left: 3px solid #dddddd;
+}
+
+div.exampleblock > div.content {
+  border-left: 3px solid #dddddd;
+  padding-left: 0.5em;
+}
+
+div.imageblock div.content { padding-left: 0; }
+span.image img { border-style: none; vertical-align: text-bottom; }
+a.image:visited { color: white; }
+
+dl {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+dt {
+  margin-top: 0.5em;
+  margin-bottom: 0;
+  font-style: normal;
+  color: navy;
+}
+dd > *:first-child {
+  margin-top: 0.1em;
+}
+
+ul, ol {
+    list-style-position: outside;
+}
+ol.arabic {
+  list-style-type: decimal;
+}
+ol.loweralpha {
+  list-style-type: lower-alpha;
+}
+ol.upperalpha {
+  list-style-type: upper-alpha;
+}
+ol.lowerroman {
+  list-style-type: lower-roman;
+}
+ol.upperroman {
+  list-style-type: upper-roman;
+}
+
+div.compact ul, div.compact ol,
+div.compact p, div.compact p,
+div.compact div, div.compact div {
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+}
+
+tfoot {
+  font-weight: bold;
+}
+td > div.verse {
+  white-space: pre;
+}
+
+div.hdlist {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+div.hdlist tr {
+  padding-bottom: 15px;
+}
+dt.hdlist1.strong, td.hdlist1.strong {
+  font-weight: bold;
+}
+td.hdlist1 {
+  vertical-align: top;
+  font-style: normal;
+  padding-right: 0.8em;
+  color: navy;
+}
+td.hdlist2 {
+  vertical-align: top;
+}
+div.hdlist.compact tr {
+  margin: 0;
+  padding-bottom: 0;
+}
+
+.comment {
+  background: yellow;
+}
+
+.footnote, .footnoteref {
+  font-size: 0.8em;
+}
+
+span.footnote, span.footnoteref {
+  vertical-align: super;
+}
+
+#footnotes {
+  margin: 20px 0 20px 0;
+  padding: 7px 0 0 0;
+}
+
+#footnotes div.footnote {
+  margin: 0 0 5px 0;
+}
+
+#footnotes hr {
+  border: none;
+  border-top: 1px solid silver;
+  height: 1px;
+  text-align: left;
+  margin-left: 0;
+  width: 20%;
+  min-width: 100px;
+}
+
+div.colist td {
+  padding-right: 0.5em;
+  padding-bottom: 0.3em;
+  vertical-align: top;
+}
+div.colist td img {
+  margin-top: 0.3em;
+}
+
+@media print {
+  #footer-badges { display: none; }
+}
+
+#toc {
+  margin-bottom: 2.5em;
+}
+
+#toctitle {
+  color: #527bbd;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-top: 1.0em;
+  margin-bottom: 0.1em;
+}
+
+div.toclevel0, div.toclevel1, div.toclevel2, div.toclevel3, div.toclevel4 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+div.toclevel2 {
+  margin-left: 2em;
+  font-size: 0.9em;
+}
+div.toclevel3 {
+  margin-left: 4em;
+  font-size: 0.9em;
+}
+div.toclevel4 {
+  margin-left: 6em;
+  font-size: 0.9em;
+}
+
+span.aqua { color: aqua; }
+span.black { color: black; }
+span.blue { color: blue; }
+span.fuchsia { color: fuchsia; }
+span.gray { color: gray; }
+span.green { color: green; }
+span.lime { color: lime; }
+span.maroon { color: maroon; }
+span.navy { color: navy; }
+span.olive { color: olive; }
+span.purple { color: purple; }
+span.red { color: red; }
+span.silver { color: silver; }
+span.teal { color: teal; }
+span.white { color: white; }
+span.yellow { color: yellow; }
+
+span.aqua-background { background: aqua; }
+span.black-background { background: black; }
+span.blue-background { background: blue; }
+span.fuchsia-background { background: fuchsia; }
+span.gray-background { background: gray; }
+span.green-background { background: green; }
+span.lime-background { background: lime; }
+span.maroon-background { background: maroon; }
+span.navy-background { background: navy; }
+span.olive-background { background: olive; }
+span.purple-background { background: purple; }
+span.red-background { background: red; }
+span.silver-background { background: silver; }
+span.teal-background { background: teal; }
+span.white-background { background: white; }
+span.yellow-background { background: yellow; }
+
+span.big { font-size: 2em; }
+span.small { font-size: 0.6em; }
+
+span.underline { text-decoration: underline; }
+span.overline { text-decoration: overline; }
+span.line-through { text-decoration: line-through; }
+
+div.unbreakable { page-break-inside: avoid; }
+
+
+/*
+ * xhtml11 specific
+ *
+ * */
+
+div.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.tableblock > table {
+  border: 3px solid #527bbd;
+}
+thead, p.table.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.table {
+  margin-top: 0;
+}
+/* Because the table frame attribute is overriden by CSS in most browsers. */
+div.tableblock > table[frame="void"] {
+  border-style: none;
+}
+div.tableblock > table[frame="hsides"] {
+  border-left-style: none;
+  border-right-style: none;
+}
+div.tableblock > table[frame="vsides"] {
+  border-top-style: none;
+  border-bottom-style: none;
+}
+
+
+/*
+ * html5 specific
+ *
+ * */
+
+table.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+thead, p.tableblock.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.tableblock {
+  margin-top: 0;
+}
+table.tableblock {
+  border-width: 3px;
+  border-spacing: 0px;
+  border-style: solid;
+  border-color: #527bbd;
+  border-collapse: collapse;
+}
+th.tableblock, td.tableblock {
+  border-width: 1px;
+  padding: 4px;
+  border-style: solid;
+  border-color: #527bbd;
+}
+
+table.tableblock.frame-topbot {
+  border-left-style: hidden;
+  border-right-style: hidden;
+}
+table.tableblock.frame-sides {
+  border-top-style: hidden;
+  border-bottom-style: hidden;
+}
+table.tableblock.frame-none {
+  border-style: hidden;
+}
+
+th.tableblock.halign-left, td.tableblock.halign-left {
+  text-align: left;
+}
+th.tableblock.halign-center, td.tableblock.halign-center {
+  text-align: center;
+}
+th.tableblock.halign-right, td.tableblock.halign-right {
+  text-align: right;
+}
+
+th.tableblock.valign-top, td.tableblock.valign-top {
+  vertical-align: top;
+}
+th.tableblock.valign-middle, td.tableblock.valign-middle {
+  vertical-align: middle;
+}
+th.tableblock.valign-bottom, td.tableblock.valign-bottom {
+  vertical-align: bottom;
+}
+
+
+/*
+ * manpage specific
+ *
+ * */
+
+body.manpage h1 {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  border-top: 2px solid silver;
+  border-bottom: 2px solid silver;
+}
+body.manpage h2 {
+  border-style: none;
+}
+body.manpage div.sectionbody {
+  margin-left: 3em;
+}
+
+@media print {
+  body.manpage div#toc { display: none; }
+}
+
+
+</style>
+<script type="text/javascript">
+/*<![CDATA[*/
+var asciidoc = {  // Namespace.
+
+/////////////////////////////////////////////////////////////////////
+// Table Of Contents generator
+/////////////////////////////////////////////////////////////////////
+
+/* Author: Mihai Bazon, September 2002
+ * http://students.infoiasi.ro/~mishoo
+ *
+ * Table Of Content generator
+ * Version: 0.4
+ *
+ * Feel free to use this script under the terms of the GNU General Public
+ * License, as long as you do not remove or alter this notice.
+ */
+
+ /* modified by Troy D. Hanson, September 2006. License: GPL */
+ /* modified by Stuart Rackham, 2006, 2009. License: GPL */
+
+// toclevels = 1..4.
+toc: function (toclevels) {
+
+  function getText(el) {
+    var text = "";
+    for (var i = el.firstChild; i != null; i = i.nextSibling) {
+      if (i.nodeType == 3 /* Node.TEXT_NODE */) // IE doesn't speak constants.
+        text += i.data;
+      else if (i.firstChild != null)
+        text += getText(i);
+    }
+    return text;
+  }
+
+  function TocEntry(el, text, toclevel) {
+    this.element = el;
+    this.text = text;
+    this.toclevel = toclevel;
+  }
+
+  function tocEntries(el, toclevels) {
+    var result = new Array;
+    var re = new RegExp('[hH]([1-'+(toclevels+1)+'])');
+    // Function that scans the DOM tree for header elements (the DOM2
+    // nodeIterator API would be a better technique but not supported by all
+    // browsers).
+    var iterate = function (el) {
+      for (var i = el.firstChild; i != null; i = i.nextSibling) {
+        if (i.nodeType == 1 /* Node.ELEMENT_NODE */) {
+          var mo = re.exec(i.tagName);
+          if (mo && (i.getAttribute("class") || i.getAttribute("className")) != "float") {
+            result[result.length] = new TocEntry(i, getText(i), mo[1]-1);
+          }
+          iterate(i);
+        }
+      }
+    }
+    iterate(el);
+    return result;
+  }
+
+  var toc = document.getElementById("toc");
+  if (!toc) {
+    return;
+  }
+
+  // Delete existing TOC entries in case we're reloading the TOC.
+  var tocEntriesToRemove = [];
+  var i;
+  for (i = 0; i < toc.childNodes.length; i++) {
+    var entry = toc.childNodes[i];
+    if (entry.nodeName.toLowerCase() == 'div'
+     && entry.getAttribute("class")
+     && entry.getAttribute("class").match(/^toclevel/))
+      tocEntriesToRemove.push(entry);
+  }
+  for (i = 0; i < tocEntriesToRemove.length; i++) {
+    toc.removeChild(tocEntriesToRemove[i]);
+  }
+
+  // Rebuild TOC entries.
+  var entries = tocEntries(document.getElementById("content"), toclevels);
+  for (var i = 0; i < entries.length; ++i) {
+    var entry = entries[i];
+    if (entry.element.id == "")
+      entry.element.id = "_toc_" + i;
+    var a = document.createElement("a");
+    a.href = "#" + entry.element.id;
+    a.appendChild(document.createTextNode(entry.text));
+    var div = document.createElement("div");
+    div.appendChild(a);
+    div.className = "toclevel" + entry.toclevel;
+    toc.appendChild(div);
+  }
+  if (entries.length == 0)
+    toc.parentNode.removeChild(toc);
+},
+
+
+/////////////////////////////////////////////////////////////////////
+// Footnotes generator
+/////////////////////////////////////////////////////////////////////
+
+/* Based on footnote generation code from:
+ * http://www.brandspankingnew.net/archive/2005/07/format_footnote.html
+ */
+
+footnotes: function () {
+  // Delete existing footnote entries in case we're reloading the footnodes.
+  var i;
+  var noteholder = document.getElementById("footnotes");
+  if (!noteholder) {
+    return;
+  }
+  var entriesToRemove = [];
+  for (i = 0; i < noteholder.childNodes.length; i++) {
+    var entry = noteholder.childNodes[i];
+    if (entry.nodeName.toLowerCase() == 'div' && entry.getAttribute("class") == "footnote")
+      entriesToRemove.push(entry);
+  }
+  for (i = 0; i < entriesToRemove.length; i++) {
+    noteholder.removeChild(entriesToRemove[i]);
+  }
+
+  // Rebuild footnote entries.
+  var cont = document.getElementById("content");
+  var spans = cont.getElementsByTagName("span");
+  var refs = {};
+  var n = 0;
+  for (i=0; i<spans.length; i++) {
+    if (spans[i].className == "footnote") {
+      n++;
+      var note = spans[i].getAttribute("data-note");
+      if (!note) {
+        // Use [\s\S] in place of . so multi-line matches work.
+        // Because JavaScript has no s (dotall) regex flag.
+        note = spans[i].innerHTML.match(/\s*\[([\s\S]*)]\s*/)[1];
+        spans[i].innerHTML =
+          "[<a id='_footnoteref_" + n + "' href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+        spans[i].setAttribute("data-note", note);
+      }
+      noteholder.innerHTML +=
+        "<div class='footnote' id='_footnote_" + n + "'>" +
+        "<a href='#_footnoteref_" + n + "' title='Return to text'>" +
+        n + "</a>. " + note + "</div>";
+      var id =spans[i].getAttribute("id");
+      if (id != null) refs["#"+id] = n;
+    }
+  }
+  if (n == 0)
+    noteholder.parentNode.removeChild(noteholder);
+  else {
+    // Process footnoterefs.
+    for (i=0; i<spans.length; i++) {
+      if (spans[i].className == "footnoteref") {
+        var href = spans[i].getElementsByTagName("a")[0].getAttribute("href");
+        href = href.match(/#.*/)[0];  // Because IE return full URL.
+        n = refs[href];
+        spans[i].innerHTML =
+          "[<a href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+      }
+    }
+  }
+},
+
+install: function(toclevels) {
+  var timerId;
+
+  function reinstall() {
+    asciidoc.footnotes();
+    if (toclevels) {
+      asciidoc.toc(toclevels);
+    }
+  }
+
+  function reinstallAndRemoveTimer() {
+    clearInterval(timerId);
+    reinstall();
+  }
+
+  timerId = setInterval(reinstall, 500);
+  if (document.addEventListener)
+    document.addEventListener("DOMContentLoaded", reinstallAndRemoveTimer, false);
+  else
+    window.onload = reinstallAndRemoveTimer;
+}
+
+}
+asciidoc.install();
+/*]]>*/
+</script>
+</head>
+<body class="article">
+<div id="header">
+<h1>COMP6771 Advanced C++ Programming tutorial postscripts</h1>
+<span id="author">Christopher Di Bella</span><br />
+<span id="email"><code>&lt;<a href="mailto:cjdb.ns@gmail.com">cjdb.ns@gmail.com</a>&gt;</code></span><br />
+<span id="revnumber">version 1,</span>
+<span id="revdate">2016/08/03</span>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="_what_are_these">What are these?</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+These are tutorial postscript notes for anyone enrolled in COMP6771.
+</p>
+</li>
+<li>
+<p>
+They are derived from tutorials <code>mon16a</code>, <code>tue16a</code>, and <code>tue17a</code>.
+</p>
+</li>
+<li>
+<p>
+From a course perspective, these notes will be largely incomplete.
+</p>
+</li>
+<li>
+<p>
+If I&#8217;m unhappy with something I&#8217;ve said in a tutorial, or I think of a really cool thing
+  afterward, it&#8217;ll appear here.
+</p>
+</li>
+<li>
+<p>
+Tutorial solutions will not appear here.
+</p>
+</li>
+<li>
+<p>
+They are not designed to replace:
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+the textbook
+</p>
+</li>
+<li>
+<p>
+lecture attendance
+</p>
+</li>
+<li>
+<p>
+lecture slides/notes
+</p>
+</li>
+<li>
+<p>
+tutorial questions
+</p>
+</li>
+<li>
+<p>
+tutorial attendance
+</p>
+</li>
+<li>
+<p>
+hard work and study
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Skipping any of the above because you find these notes helpful will probably cause you to do very
+  poorly in the course.
+</p>
+</li>
+<li>
+<p>
+They are supplementary to the tutorials, and can be used as catch-up if you miss one tutorial, but
+  not if you pathologically skip them.
+</p>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_contact">Contact</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+You can contact me at <a href="mailto:cjdb.ns@gmail.com">cjdb.ns@gmail.com</a>.
+</p>
+</li>
+<li>
+<p>
+Please put your subject as "COMP6771&#8201;&#8212;&#8201;&lt;subject&gt;". I get asked a lot of C++ questions, and I need
+  to prioritise <em>your</em> questions over the general public&#8217;s.
+</p>
+</li>
+<li>
+<p>
+Please email staff as soon as you have a question so that you don&#8217;t forget to ask.
+</p>
+</li>
+<li>
+<p>
+There is also an official course forum at <a href="http://www.cse.unsw.edu.au/~cs6771">http://www.cse.unsw.edu.au/~cs6771</a>.
+</p>
+</li>
+<li>
+<p>
+Please use this to ask questions that might benefit the class over both email (personal stuff exempt)
+  and any Facbook groups.
+</p>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_tutorial_attendance">Tutorial attendance</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+Not compulsory.
+</p>
+</li>
+<li>
+<p>
+We like to keep attendance for book-keeping purposes.
+</p>
+</li>
+<li>
+<p>
+This will help us determine the correlation between attendance and marks.
+</p>
+</li>
+<li>
+<p>
+Except in <strong>grievous circumstances</strong>, poor tutorial attendance is likely to hurt your chances for
+  an extension.
+</p>
+</li>
+<li>
+<p>
+Bjarne Stroustrup, the original creator of C++ strongly recommends that C++ beginners invest 15+
+  hours per week into learning about C++.
+</p>
+</li>
+<li>
+<p>
+Four of these hours have been reserved for you in the form of lectures and tutorials.
+</p>
+</li>
+<li>
+<p>
+Please take advantage of this!
+</p>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_c_11_and_c_14">C++11 and C++14</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+C++11 was a major change for C++.
+</p>
+</li>
+<li>
+<p>
+C++14 is essentially a finished version of C++11, and is only a minor change
+</p>
+</li>
+<li>
+<p>
+Some students are concerned about the textbook only containing C++11 material, and the
+  examinable content.
+</p>
+</li>
+<li>
+<p>
+Jingling has told me this:
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>"I made a brief comment in the course outline. C++14 is a small improvement over C++11 with minor
+features introduced. You can tell students that the exam will focus on the core of C++."</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_feedback">Feedback</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+<a href="https://www.quora.com/Why-do-a-lot-of-people-seem-to-dislike-C%2B%2B/answer/Christopher-Di-Bella?srid=CbmP">One reason people dislike C++</a> is because they have a bad experience with it.
+</p>
+</li>
+<li>
+<p>
+Another reason is because they haven&#8217;t been properly educated on C++.
+</p>
+</li>
+<li>
+<p>
+If you find yourself struggling in this course, please ask for help.
+</p>
+</li>
+<li>
+<p>
+You pay the university a lot of money to take this course, and if it isn&#8217;t working for you, you
+  have the right to let us know.
+</p>
+</li>
+<li>
+<p>
+Perhaps we can alter our teaching style a little, or find a new reference so that you can learn
+  better.
+</p>
+</li>
+<li>
+<p>
+We know a lot about C++, but we don&#8217;t know everything about C++ at all times.
+</p>
+</li>
+<li>
+<p>
+There&#8217;s a lot of C++ that I can easily look up, but don&#8217;t care about in my day-to-day
+  programming. Some of it is just for compiler developers/library writers.
+</p>
+</li>
+<li>
+<p>
+We might occasionally make mistakes. If you spot one, please point it out.
+</p>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_references_and_plagiarism">References and plagiarism</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+I am against any form of academic misconduct.
+</p>
+</li>
+<li>
+<p>
+I tow a very hard line on plagiarism.
+</p>
+</li>
+<li>
+<p>
+I do my best to provide citations, or acknowledge authors wherever possible.
+</p>
+</li>
+<li>
+<p>
+I might slip up in these notes: if you spot something, please let me know, as the referenced
+  source will often provide more insight than I can afford to in a summary.
+</p>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_resources">Resources</h2>
+<div class="sectionbody">
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Caution</div>
+</td>
+<td class="content">
+<div class="ulist"><ul>
+<li>
+<p>
+Most C++ resources are <em>abhorrently</em> written.
+</p>
+</li>
+<li>
+<p>
+If you are after a C++ book, please confirm that it is on the peer-reviewed StackOverflow
+  <a href="http://bit.ly/1hOS1iB">Definitive Book Guide and List</a>.
+</p>
+</li>
+<li>
+<p>
+All of the resources below are on this list.
+</p>
+</li>
+</ul></div>
+</td>
+</tr></table>
+</div>
+<div class="sect2">
+<h3 id="_books">Books</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+The official course textbook is <a href="http://amzn.to/2asmqFr">C++ Primer (5th Edition)</a>.
+</p>
+</li>
+<li>
+<p>
+Tips for further reading will not reference the course textbook, as you should be reading it
+  throughout the course.
+</p>
+</li>
+<li>
+<p>
+I strongly recommend that <em>all students</em> purchase a copy of <a href="http://amzn.to/2au6ArE">A Tour of C++</a>.
+  This book is written by Stroustrup, and is only 200 pages long (you can literally read it in an
+  afternoon). It presents you with an extremely high overview of C++ that will make diving into
+  lectures, tutorials, and assignments much easier. I recommend that you read this book once before
+  each assignment and once again before the exam.
+</p>
+</li>
+<li>
+<p>
+I also recommend Stroustrup&#8217;s beginner textbook,
+  <a href="http://amzn.to/2aB2G1H">Programming: Principles and Practice Using C++ (2nd Edition)</a>.
+</p>
+</li>
+<li>
+<p>
+If you are after a C++ reference book, Stroustrup has written
+  <a href="http://amzn.to/2ahE2Xo">The C++ Programming Langauge (4th Edition)</a>.
+</p>
+</li>
+<li>
+<p>
+If you&#8217;d like to improve your programming style, Scott Meyers has published four books on good
+  C++ style. The first three are pre-C++11, but are still <em>extremely</em> relevant for all C++ programmers:
+  many of the points helped to form the CppCoreGuidelines (see below)
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+<a href="https://www.amazon.com/Effective-Specific-Improve-Programs-Designs/dp/0321334876/ref=sr_1_2?ie=UTF8&amp;qid=1470533552&amp;sr=8-2&amp;keywords=effective+c%2B%2B">Effective C++ (Third Edition)</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://www.amazon.com/More-Effective-Improve-Programs-Designs/dp/020163371X/ref=pd_sim_14_3?ie=UTF8&amp;dpID=51xXovPFsDL&amp;dpSrc=sims&amp;preST=<em>AC_UL160_SR128%2C160</em>&amp;psc=1&amp;refRID=GF8PDAM3VFJJQEWFZBDA">More Effective C++</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://www.amazon.com/Effective-STL-Specific-Standard-Template/dp/0201749629/ref=pd_bxgy_14_img_3?ie=UTF8&amp;psc=1&amp;refRID=6CQX0RV3SGF5A4SNCZ3J">Effective STL</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://www.amazon.com/Effective-Modern-Specific-Ways-Improve/dp/1491903996/ref=pd_bxgy_14_img_3?ie=UTF8&amp;psc=1&amp;refRID=AEVKSJ410BRR4TZTD4QK">Effective Modern C++</a>
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Herb Sutter&#8217;s four books are also very good. Like Meyers' original trilogy, they are written with C++98 in
+  mind, but are of high quality, even today.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+<a href="https://www.amazon.com/Exceptional-Engineering-Programming-Problems-Solutions/dp/0201615622/ref=sr_1_1?s=books&amp;ie=UTF8&amp;qid=1470533626&amp;sr=1-1&amp;keywords=exceptional+c%2B%2B">Exceptional C++</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://www.amazon.com/More-Exceptional-Engineering-Programming-Solutions/dp/020170434X/ref=pd_bxgy_14_img_2?ie=UTF8&amp;psc=1&amp;refRID=HJPPJ82DVSRXDTTZMNQG">More Exceptional C++</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://www.amazon.com/Exceptional-Style-Engineering-Programming-Solutions/dp/0201760428/ref=pd_bxgy_14_img_3?ie=UTF8&amp;psc=1&amp;refRID=7WPVNM7VB3TT32WY1BGE">Exceptional C++ Style</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://www.amazon.com/Coding-Standards-Rules-Guidelines-Practices/dp/0321113586/ref=pd_sim_14_4?ie=UTF8&amp;dpID=51SHzgmnCUL&amp;dpSrc=sims&amp;preST=<em>AC_UL160_SR129%2C160</em>&amp;psc=1&amp;refRID=2YM247F81BYEV4QF1GH9]">C++ Coding Standards</a> (co-authored with Andrei Alexandrescu)
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="ulist"><ul>
+<li>
+<p>
+I am a fan of works by Bjarne Stroustrup, Herb Sutter, Scott Meyers, Anthony Williams, and Sergey
+  Zubkov.
+</p>
+</li>
+<li>
+<p>
+Bjarne Stroustrup is the original creator of C++. He is a senior member of WG21.
+</p>
+</li>
+<li>
+<p>
+Herb Sutter is a very senior member of the C++ community, and is the convener for WG21.
+</p>
+</li>
+<li>
+<p>
+Scott Meyers was a senior member of the C++ community, but chose to retire from C++ in 2015.
+  He is directly responsible for the programming style of a large portion of the C++ community.
+</p>
+</li>
+<li>
+<p>
+Anthony Williams is a concurrency expert and a senior member of the C++ community.
+</p>
+</li>
+<li>
+<p>
+Sergey Zubkov is a senior member of the C++ community, and also works directly with Stroustrup.
+  He is a member of WG21, and is a <em>major</em> contributor to en.cppreference.com (see below). He also
+  has a <a href="https://www.quora.com/profile/Sergey-Zubkov-1">Quora.com</a> profile with 800+ answers in
+  C++ alone.
+</p>
+</li>
+<li>
+<p>
+WG21 is the name of the team of people that ultimately decide what features go into the next
+  version of C++. WG stands for <em>Working Group</em>.
+</p>
+</li>
+<li>
+<p>
+SG14 is a Study Group underneath WG21, led by Michael Wong, concerned with C++ for games and
+  finance. I am a passive member of SG14 at present.
+</p>
+</li>
+</ul></div>
+</td>
+</tr></table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_websites">Websites</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+<a href="http://en.cppreference.com">en.cppreference.com</a>&#8201;&#8212;&#8201;the best online C++ reference you can find.
+</p>
+</li>
+<li>
+<p>
+<a href="http://isocpp.org">The official ISO C++ homepage</a>
+</p>
+</li>
+<li>
+<p>
+<a href="http://isocpp.org/faq">A combination of Stroustrup&#8217;s original FAQ and another popular FAQ</a>
+</p>
+</li>
+<li>
+<p>
+<a href="http://stroustrup.com/">Stroustrup&#8217;s Homepage</a>
+</p>
+</li>
+<li>
+<p>
+<a href="http://stroustrup.com/bs_faq.html">http://stroustrup.com/bs_faq.html</a>
+</p>
+</li>
+<li>
+<p>
+<a href="http://stroustrup.com/bs_faq2.html">http://stroustrup.com/bs_faq2.html</a>
+</p>
+</li>
+<li>
+<p>
+<a href="http://stroustrup.com/C++11FAQ.html">Stroustrup&#8217;s FAQ for C++11</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://herbsutter.com/">Herb Sutter&#8217;s homepage</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://herbsutter.com/gotw/">Sutter&#8217;s problems page</a> (very insightful, and laid the
+  foundations for his excellent book series).
+</p>
+</li>
+<li>
+<p>
+<a href="http://stackoverflow.com/questions/tagged/c%2b%2b-faq?sort=votes">StackOverflow C++ FAQ</a>
+</p>
+</li>
+<li>
+<p>
+<a href="http://stackoverflow.com/questions/388242/the-definitive-c-book-guide-and-list">The Definitive C++ Book Guide and List</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://www.quora.com/profile/Sergey-Zubkov-1">Sergey Zubkov&#8217;s Quora.com profile</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://www.quora.com/profile/Christopher-Di-Bella">My Quora.com profile</a> (yes, I&#8217;m tooting
+  my own horn a bit here, but you might find it useful)
+</p>
+</li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="_style_guides">Style guides</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+There is no course-endorsed C++ style guide.
+</p>
+</li>
+<li>
+<p>
+My personal favourite is the <a href="http://bit.ly/1YnLJv7">CppCoreGuidelines</a>.
+</p>
+</li>
+<li>
+<p>
+Our tutorials will reference these guidelines a <em>lot</em>.
+</p>
+</li>
+<li>
+<p>
+The guidelines were started by Stroustrup and Sutter, and many extremely senior C++ programmers
+  contribute to these guidelines.
+</p>
+</li>
+<li>
+<p>
+I am not a fan of the Google C++ Style Guide. It is highly restrictive, and limits the potential
+  of C++ to something similar of a C-subset or Java-subset of C++.
+</p>
+</li>
+<li>
+<p>
+The GSG enforces hard-and-fast rules.
+</p>
+</li>
+<li>
+<p>
+This course fouces on good style, but doesn&#8217;t enforce many hard-and-fast rules, as there is often
+  an exception to every hard-and-fast rule.
+</p>
+</li>
+</ul></div>
+</div>
+</div>
+</div>
+</div>
+<div id="footnotes"><hr /></div>
+<div id="footer">
+<div id="footer-text">
+Version 1<br />
+Last updated 2016-08-08 12:31:18 AEST
+</div>
+</div>
+</body>
+</html>

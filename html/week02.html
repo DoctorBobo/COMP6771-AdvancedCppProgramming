@@ -1,0 +1,2050 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
+<meta name="generator" content="AsciiDoc 8.6.9" />
+<title>Week 2 tutorial postscript notes</title>
+<style type="text/css">
+/* Shared CSS for AsciiDoc xhtml11 and html5 backends */
+
+/* Default font. */
+body {
+  font-family: Georgia,serif;
+}
+
+/* Title font. */
+h1, h2, h3, h4, h5, h6,
+div.title, caption.title,
+thead, p.table.header,
+#toctitle,
+#author, #revnumber, #revdate, #revremark,
+#footer {
+  font-family: Arial,Helvetica,sans-serif;
+}
+
+body {
+  margin: 1em 5% 1em 5%;
+}
+
+a {
+  color: blue;
+  text-decoration: underline;
+}
+a:visited {
+  color: fuchsia;
+}
+
+em {
+  font-style: italic;
+  color: navy;
+}
+
+strong {
+  font-weight: bold;
+  color: #083194;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #527bbd;
+  margin-top: 1.2em;
+  margin-bottom: 0.5em;
+  line-height: 1.3;
+}
+
+h1, h2, h3 {
+  border-bottom: 2px solid silver;
+}
+h2 {
+  padding-top: 0.5em;
+}
+h3 {
+  float: left;
+}
+h3 + * {
+  clear: left;
+}
+h5 {
+  font-size: 1.0em;
+}
+
+div.sectionbody {
+  margin-left: 0;
+}
+
+hr {
+  border: 1px solid silver;
+}
+
+p {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+ul, ol, li > p {
+  margin-top: 0;
+}
+ul > li     { color: #aaa; }
+ul > li > * { color: black; }
+
+.monospaced, code, pre {
+  font-family: "Courier New", Courier, monospace;
+  font-size: inherit;
+  color: navy;
+  padding: 0;
+  margin: 0;
+}
+pre {
+  white-space: pre-wrap;
+}
+
+#author {
+  color: #527bbd;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+#email {
+}
+#revnumber, #revdate, #revremark {
+}
+
+#footer {
+  font-size: small;
+  border-top: 2px solid silver;
+  padding-top: 0.5em;
+  margin-top: 4.0em;
+}
+#footer-text {
+  float: left;
+  padding-bottom: 0.5em;
+}
+#footer-badges {
+  float: right;
+  padding-bottom: 0.5em;
+}
+
+#preamble {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+div.imageblock, div.exampleblock, div.verseblock,
+div.quoteblock, div.literalblock, div.listingblock, div.sidebarblock,
+div.admonitionblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.admonitionblock {
+  margin-top: 2.0em;
+  margin-bottom: 2.0em;
+  margin-right: 10%;
+  color: #606060;
+}
+
+div.content { /* Block element content. */
+  padding: 0;
+}
+
+/* Block element titles. */
+div.title, caption.title {
+  color: #527bbd;
+  font-weight: bold;
+  text-align: left;
+  margin-top: 1.0em;
+  margin-bottom: 0.5em;
+}
+div.title + * {
+  margin-top: 0;
+}
+
+td div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content + div.title {
+  margin-top: 0.0em;
+}
+
+div.sidebarblock > div.content {
+  background: #ffffee;
+  border: 1px solid #dddddd;
+  border-left: 4px solid #f0f0f0;
+  padding: 0.5em;
+}
+
+div.listingblock > div.content {
+  border: 1px solid #dddddd;
+  border-left: 5px solid #f0f0f0;
+  background: #f8f8f8;
+  padding: 0.5em;
+}
+
+div.quoteblock, div.verseblock {
+  padding-left: 1.0em;
+  margin-left: 1.0em;
+  margin-right: 10%;
+  border-left: 5px solid #f0f0f0;
+  color: #888;
+}
+
+div.quoteblock > div.attribution {
+  padding-top: 0.5em;
+  text-align: right;
+}
+
+div.verseblock > pre.content {
+  font-family: inherit;
+  font-size: inherit;
+}
+div.verseblock > div.attribution {
+  padding-top: 0.75em;
+  text-align: left;
+}
+/* DEPRECATED: Pre version 8.2.7 verse style literal block. */
+div.verseblock + div.attribution {
+  text-align: left;
+}
+
+div.admonitionblock .icon {
+  vertical-align: top;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-decoration: underline;
+  color: #527bbd;
+  padding-right: 0.5em;
+}
+div.admonitionblock td.content {
+  padding-left: 0.5em;
+  border-left: 3px solid #dddddd;
+}
+
+div.exampleblock > div.content {
+  border-left: 3px solid #dddddd;
+  padding-left: 0.5em;
+}
+
+div.imageblock div.content { padding-left: 0; }
+span.image img { border-style: none; vertical-align: text-bottom; }
+a.image:visited { color: white; }
+
+dl {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+dt {
+  margin-top: 0.5em;
+  margin-bottom: 0;
+  font-style: normal;
+  color: navy;
+}
+dd > *:first-child {
+  margin-top: 0.1em;
+}
+
+ul, ol {
+    list-style-position: outside;
+}
+ol.arabic {
+  list-style-type: decimal;
+}
+ol.loweralpha {
+  list-style-type: lower-alpha;
+}
+ol.upperalpha {
+  list-style-type: upper-alpha;
+}
+ol.lowerroman {
+  list-style-type: lower-roman;
+}
+ol.upperroman {
+  list-style-type: upper-roman;
+}
+
+div.compact ul, div.compact ol,
+div.compact p, div.compact p,
+div.compact div, div.compact div {
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+}
+
+tfoot {
+  font-weight: bold;
+}
+td > div.verse {
+  white-space: pre;
+}
+
+div.hdlist {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+div.hdlist tr {
+  padding-bottom: 15px;
+}
+dt.hdlist1.strong, td.hdlist1.strong {
+  font-weight: bold;
+}
+td.hdlist1 {
+  vertical-align: top;
+  font-style: normal;
+  padding-right: 0.8em;
+  color: navy;
+}
+td.hdlist2 {
+  vertical-align: top;
+}
+div.hdlist.compact tr {
+  margin: 0;
+  padding-bottom: 0;
+}
+
+.comment {
+  background: yellow;
+}
+
+.footnote, .footnoteref {
+  font-size: 0.8em;
+}
+
+span.footnote, span.footnoteref {
+  vertical-align: super;
+}
+
+#footnotes {
+  margin: 20px 0 20px 0;
+  padding: 7px 0 0 0;
+}
+
+#footnotes div.footnote {
+  margin: 0 0 5px 0;
+}
+
+#footnotes hr {
+  border: none;
+  border-top: 1px solid silver;
+  height: 1px;
+  text-align: left;
+  margin-left: 0;
+  width: 20%;
+  min-width: 100px;
+}
+
+div.colist td {
+  padding-right: 0.5em;
+  padding-bottom: 0.3em;
+  vertical-align: top;
+}
+div.colist td img {
+  margin-top: 0.3em;
+}
+
+@media print {
+  #footer-badges { display: none; }
+}
+
+#toc {
+  margin-bottom: 2.5em;
+}
+
+#toctitle {
+  color: #527bbd;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-top: 1.0em;
+  margin-bottom: 0.1em;
+}
+
+div.toclevel0, div.toclevel1, div.toclevel2, div.toclevel3, div.toclevel4 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+div.toclevel2 {
+  margin-left: 2em;
+  font-size: 0.9em;
+}
+div.toclevel3 {
+  margin-left: 4em;
+  font-size: 0.9em;
+}
+div.toclevel4 {
+  margin-left: 6em;
+  font-size: 0.9em;
+}
+
+span.aqua { color: aqua; }
+span.black { color: black; }
+span.blue { color: blue; }
+span.fuchsia { color: fuchsia; }
+span.gray { color: gray; }
+span.green { color: green; }
+span.lime { color: lime; }
+span.maroon { color: maroon; }
+span.navy { color: navy; }
+span.olive { color: olive; }
+span.purple { color: purple; }
+span.red { color: red; }
+span.silver { color: silver; }
+span.teal { color: teal; }
+span.white { color: white; }
+span.yellow { color: yellow; }
+
+span.aqua-background { background: aqua; }
+span.black-background { background: black; }
+span.blue-background { background: blue; }
+span.fuchsia-background { background: fuchsia; }
+span.gray-background { background: gray; }
+span.green-background { background: green; }
+span.lime-background { background: lime; }
+span.maroon-background { background: maroon; }
+span.navy-background { background: navy; }
+span.olive-background { background: olive; }
+span.purple-background { background: purple; }
+span.red-background { background: red; }
+span.silver-background { background: silver; }
+span.teal-background { background: teal; }
+span.white-background { background: white; }
+span.yellow-background { background: yellow; }
+
+span.big { font-size: 2em; }
+span.small { font-size: 0.6em; }
+
+span.underline { text-decoration: underline; }
+span.overline { text-decoration: overline; }
+span.line-through { text-decoration: line-through; }
+
+div.unbreakable { page-break-inside: avoid; }
+
+
+/*
+ * xhtml11 specific
+ *
+ * */
+
+div.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.tableblock > table {
+  border: 3px solid #527bbd;
+}
+thead, p.table.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.table {
+  margin-top: 0;
+}
+/* Because the table frame attribute is overriden by CSS in most browsers. */
+div.tableblock > table[frame="void"] {
+  border-style: none;
+}
+div.tableblock > table[frame="hsides"] {
+  border-left-style: none;
+  border-right-style: none;
+}
+div.tableblock > table[frame="vsides"] {
+  border-top-style: none;
+  border-bottom-style: none;
+}
+
+
+/*
+ * html5 specific
+ *
+ * */
+
+table.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+thead, p.tableblock.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.tableblock {
+  margin-top: 0;
+}
+table.tableblock {
+  border-width: 3px;
+  border-spacing: 0px;
+  border-style: solid;
+  border-color: #527bbd;
+  border-collapse: collapse;
+}
+th.tableblock, td.tableblock {
+  border-width: 1px;
+  padding: 4px;
+  border-style: solid;
+  border-color: #527bbd;
+}
+
+table.tableblock.frame-topbot {
+  border-left-style: hidden;
+  border-right-style: hidden;
+}
+table.tableblock.frame-sides {
+  border-top-style: hidden;
+  border-bottom-style: hidden;
+}
+table.tableblock.frame-none {
+  border-style: hidden;
+}
+
+th.tableblock.halign-left, td.tableblock.halign-left {
+  text-align: left;
+}
+th.tableblock.halign-center, td.tableblock.halign-center {
+  text-align: center;
+}
+th.tableblock.halign-right, td.tableblock.halign-right {
+  text-align: right;
+}
+
+th.tableblock.valign-top, td.tableblock.valign-top {
+  vertical-align: top;
+}
+th.tableblock.valign-middle, td.tableblock.valign-middle {
+  vertical-align: middle;
+}
+th.tableblock.valign-bottom, td.tableblock.valign-bottom {
+  vertical-align: bottom;
+}
+
+
+/*
+ * manpage specific
+ *
+ * */
+
+body.manpage h1 {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  border-top: 2px solid silver;
+  border-bottom: 2px solid silver;
+}
+body.manpage h2 {
+  border-style: none;
+}
+body.manpage div.sectionbody {
+  margin-left: 3em;
+}
+
+@media print {
+  body.manpage div#toc { display: none; }
+}
+
+
+</style>
+<script type="text/javascript">
+/*<![CDATA[*/
+var asciidoc = {  // Namespace.
+
+/////////////////////////////////////////////////////////////////////
+// Table Of Contents generator
+/////////////////////////////////////////////////////////////////////
+
+/* Author: Mihai Bazon, September 2002
+ * http://students.infoiasi.ro/~mishoo
+ *
+ * Table Of Content generator
+ * Version: 0.4
+ *
+ * Feel free to use this script under the terms of the GNU General Public
+ * License, as long as you do not remove or alter this notice.
+ */
+
+ /* modified by Troy D. Hanson, September 2006. License: GPL */
+ /* modified by Stuart Rackham, 2006, 2009. License: GPL */
+
+// toclevels = 1..4.
+toc: function (toclevels) {
+
+  function getText(el) {
+    var text = "";
+    for (var i = el.firstChild; i != null; i = i.nextSibling) {
+      if (i.nodeType == 3 /* Node.TEXT_NODE */) // IE doesn't speak constants.
+        text += i.data;
+      else if (i.firstChild != null)
+        text += getText(i);
+    }
+    return text;
+  }
+
+  function TocEntry(el, text, toclevel) {
+    this.element = el;
+    this.text = text;
+    this.toclevel = toclevel;
+  }
+
+  function tocEntries(el, toclevels) {
+    var result = new Array;
+    var re = new RegExp('[hH]([1-'+(toclevels+1)+'])');
+    // Function that scans the DOM tree for header elements (the DOM2
+    // nodeIterator API would be a better technique but not supported by all
+    // browsers).
+    var iterate = function (el) {
+      for (var i = el.firstChild; i != null; i = i.nextSibling) {
+        if (i.nodeType == 1 /* Node.ELEMENT_NODE */) {
+          var mo = re.exec(i.tagName);
+          if (mo && (i.getAttribute("class") || i.getAttribute("className")) != "float") {
+            result[result.length] = new TocEntry(i, getText(i), mo[1]-1);
+          }
+          iterate(i);
+        }
+      }
+    }
+    iterate(el);
+    return result;
+  }
+
+  var toc = document.getElementById("toc");
+  if (!toc) {
+    return;
+  }
+
+  // Delete existing TOC entries in case we're reloading the TOC.
+  var tocEntriesToRemove = [];
+  var i;
+  for (i = 0; i < toc.childNodes.length; i++) {
+    var entry = toc.childNodes[i];
+    if (entry.nodeName.toLowerCase() == 'div'
+     && entry.getAttribute("class")
+     && entry.getAttribute("class").match(/^toclevel/))
+      tocEntriesToRemove.push(entry);
+  }
+  for (i = 0; i < tocEntriesToRemove.length; i++) {
+    toc.removeChild(tocEntriesToRemove[i]);
+  }
+
+  // Rebuild TOC entries.
+  var entries = tocEntries(document.getElementById("content"), toclevels);
+  for (var i = 0; i < entries.length; ++i) {
+    var entry = entries[i];
+    if (entry.element.id == "")
+      entry.element.id = "_toc_" + i;
+    var a = document.createElement("a");
+    a.href = "#" + entry.element.id;
+    a.appendChild(document.createTextNode(entry.text));
+    var div = document.createElement("div");
+    div.appendChild(a);
+    div.className = "toclevel" + entry.toclevel;
+    toc.appendChild(div);
+  }
+  if (entries.length == 0)
+    toc.parentNode.removeChild(toc);
+},
+
+
+/////////////////////////////////////////////////////////////////////
+// Footnotes generator
+/////////////////////////////////////////////////////////////////////
+
+/* Based on footnote generation code from:
+ * http://www.brandspankingnew.net/archive/2005/07/format_footnote.html
+ */
+
+footnotes: function () {
+  // Delete existing footnote entries in case we're reloading the footnodes.
+  var i;
+  var noteholder = document.getElementById("footnotes");
+  if (!noteholder) {
+    return;
+  }
+  var entriesToRemove = [];
+  for (i = 0; i < noteholder.childNodes.length; i++) {
+    var entry = noteholder.childNodes[i];
+    if (entry.nodeName.toLowerCase() == 'div' && entry.getAttribute("class") == "footnote")
+      entriesToRemove.push(entry);
+  }
+  for (i = 0; i < entriesToRemove.length; i++) {
+    noteholder.removeChild(entriesToRemove[i]);
+  }
+
+  // Rebuild footnote entries.
+  var cont = document.getElementById("content");
+  var spans = cont.getElementsByTagName("span");
+  var refs = {};
+  var n = 0;
+  for (i=0; i<spans.length; i++) {
+    if (spans[i].className == "footnote") {
+      n++;
+      var note = spans[i].getAttribute("data-note");
+      if (!note) {
+        // Use [\s\S] in place of . so multi-line matches work.
+        // Because JavaScript has no s (dotall) regex flag.
+        note = spans[i].innerHTML.match(/\s*\[([\s\S]*)]\s*/)[1];
+        spans[i].innerHTML =
+          "[<a id='_footnoteref_" + n + "' href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+        spans[i].setAttribute("data-note", note);
+      }
+      noteholder.innerHTML +=
+        "<div class='footnote' id='_footnote_" + n + "'>" +
+        "<a href='#_footnoteref_" + n + "' title='Return to text'>" +
+        n + "</a>. " + note + "</div>";
+      var id =spans[i].getAttribute("id");
+      if (id != null) refs["#"+id] = n;
+    }
+  }
+  if (n == 0)
+    noteholder.parentNode.removeChild(noteholder);
+  else {
+    // Process footnoterefs.
+    for (i=0; i<spans.length; i++) {
+      if (spans[i].className == "footnoteref") {
+        var href = spans[i].getElementsByTagName("a")[0].getAttribute("href");
+        href = href.match(/#.*/)[0];  // Because IE return full URL.
+        n = refs[href];
+        spans[i].innerHTML =
+          "[<a href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+      }
+    }
+  }
+},
+
+install: function(toclevels) {
+  var timerId;
+
+  function reinstall() {
+    asciidoc.footnotes();
+    if (toclevels) {
+      asciidoc.toc(toclevels);
+    }
+  }
+
+  function reinstallAndRemoveTimer() {
+    clearInterval(timerId);
+    reinstall();
+  }
+
+  timerId = setInterval(reinstall, 500);
+  if (document.addEventListener)
+    document.addEventListener("DOMContentLoaded", reinstallAndRemoveTimer, false);
+  else
+    window.onload = reinstallAndRemoveTimer;
+}
+
+}
+asciidoc.install();
+/*]]>*/
+</script>
+</head>
+<body class="article">
+<div id="header">
+<h1>Week 2 tutorial postscript notes</h1>
+<span id="author">Christopher Di Bella</span><br />
+<span id="email"><code>&lt;<a href="mailto:cjdb.ns@gmail.com">cjdb.ns@gmail.com</a>&gt;</code></span><br />
+<span id="revnumber">version 1,</span>
+<span id="revdate">2016/08/03</span>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="_c_is_not_em_c_with_classes_em">C++ is not <em>C with Classes</em>.</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+It is much more than <em>C with Classes</em>, as you will learn throughout the course.
+</p>
+</li>
+<li>
+<p>
+You cannot think of C++ as a superset of C.
+</p>
+</li>
+<li>
+<p>
+Many C programs do not compile with a C++ compiler.
+</p>
+</li>
+<li>
+<p>
+Some C programs that do compile with a C++ compiler will give you different output to when they
+  are compiled on a C compiler, despite being identical source!
+</p>
+</li>
+</ul></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="title">Further reading</div>
+<div class="ulist"><ul>
+<li>
+<p>
+Stroustrup, B. <em>The design and evolution of C++</em>. 1994. Pearson Education, Inc. Laffin, PA.
+</p>
+</li>
+<li>
+<p>
+<a href="https://www.quora.com/Can-we-say-C%2B%2B-is-super-set-of-C/answer/Sergey-Zubkov-1?srid=CbmP">Can we say that "C++ is a superset of C"?</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://www.quora.com/Can-C%2B%2B-do-everything-that-C-can/answers/14784108?srid=CbmP">Can C++ do everything that C can?</a>
+</p>
+</li>
+</ul></div>
+</td>
+</tr></table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_c_is_not_em_java_with_low_level_stuff_em">C++ is not <em>Java with low level stuff</em></h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+<a href="http://stroustrup.com/bs_faq.html#Java">See Stroustrup&#8217;s answer on this.</a>
+</p>
+</li>
+<li>
+<p>
+Don&#8217;t try to program C++ in the same style as Java: you will do very poorly in this course.
+</p>
+</li>
+<li>
+<p>
+You will also never take advantage of C++'s potential.
+</p>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_code_main_code"><code>main</code></h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+<em>Must</em> adhere to one of these forms:
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="color: #009900">int</span> <span style="font-weight: bold"><span style="color: #000000">main</span></span><span style="color: #990000">()</span> <span style="color: #FF0000">{}</span>
+<span style="color: #009900">int</span> <span style="font-weight: bold"><span style="color: #000000">main</span></span><span style="color: #990000">(</span><span style="color: #009900">int</span> argc<span style="color: #990000">,</span> <span style="color: #009900">char</span><span style="color: #990000">*</span> argv<span style="color: #990000">[])</span> <span style="color: #FF0000">{}</span>
+<span style="color: #009900">int</span> <span style="font-weight: bold"><span style="color: #000000">main</span></span><span style="color: #990000">(</span><span style="color: #009900">int</span> argc<span style="color: #990000">,</span> <span style="color: #009900">char</span><span style="color: #990000">*</span> argv<span style="color: #990000">[],</span> <span style="font-style: italic"><span style="color: #9A1900">/* other parameters */</span></span><span style="color: #990000">)</span> <span style="color: #FF0000">{}</span></tt></pre></div></div>
+<div class="ulist"><ul>
+<li>
+<p>
+Return type must be <code>int</code>. Everything else should be rejected by the compiler, as it is <em>not</em> a C++
+  program.
+</p>
+</li>
+<li>
+<p>
+You cannot call <code>main</code>.
+</p>
+</li>
+<li>
+<p>
+<code>main</code> cannot be <code>static</code>, <code>inline</code>, or <code>constexpr</code>.
+</p>
+</li>
+</ul></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="paragraph"><p><code>main</code> is a special function that does not require a <code>return</code> statement.
+If your program reaches the end of <code>main</code> and doesn&#8217;t execute a <code>return</code> statement, it implicitly
+returns 0.</p></div>
+<div class="paragraph"><p>I liken this to a POSIX program: if there isn&#8217;t a problem, no need to signal anything; if there <em>is</em>
+a problem, then return a non-zero value.</p></div>
+</td>
+</tr></table>
+</div>
+<div class="paragraph"><p>Reference: <a href="http://en.cppreference.com/w/cpp/language/main_function">http://en.cppreference.com/w/cpp/language/main_function</a></p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_types">Types</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+A declaration is like an announcement to the compiler, saying "this exists!"
+</p>
+</li>
+<li>
+<p>
+A definition is actually telling the compiler about the object/function/type
+</p>
+</li>
+<li>
+<p>
+Prefer to use <code>{}</code> over <code>=</code> when initialising things. For example:
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="color: #009900">int</span> foo<span style="color: #FF0000">{</span> <span style="color: #993399">10</span> <span style="color: #FF0000">}</span><span style="color: #990000">;</span>    <span style="font-style: italic"><span style="color: #9A1900">// do this</span></span>
+<span style="color: #009900">int</span> bar <span style="color: #990000">=</span> <span style="color: #993399">10</span><span style="color: #990000">;</span>     <span style="font-style: italic"><span style="color: #9A1900">// don't do this</span></span>
+<span style="color: #009900">int</span> fizz <span style="color: #990000">=</span> <span style="color: #993399">10.5</span><span style="color: #990000">;</span>  <span style="font-style: italic"><span style="color: #9A1900">// fizz is actually 10</span></span>
+<span style="color: #009900">int</span> buzz<span style="color: #FF0000">{</span> <span style="color: #993399">10.5</span> <span style="color: #FF0000">}</span><span style="color: #990000">;</span> <span style="font-style: italic"><span style="color: #9A1900">// compiler error: trying to put a double in an int</span></span></tt></pre></div></div>
+<div class="ulist"><ul>
+<li>
+<p>
+Better yet, use <code>auto</code> on the left-hand-side. Then you just need to worry about the
+  right-hand-side.
+</p>
+</li>
+<li>
+<p>
+You <em>need</em> to use <code>=</code> with <code>auto</code>, and you <em>need</em> to initialise your variables.
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> foo <span style="color: #990000">=</span> <span style="color: #993399">10</span><span style="color: #990000">;</span>   <span style="font-style: italic"><span style="color: #9A1900">// foo is an int</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> bar <span style="color: #990000">=</span> <span style="color: #993399">10.5</span><span style="color: #990000">;</span> <span style="font-style: italic"><span style="color: #9A1900">// bar is a double</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> fizz <span style="color: #990000">=</span> 10U<span style="color: #990000">;</span> <span style="font-style: italic"><span style="color: #9A1900">// fizz is an unsigned int</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> buzz<span style="color: #990000">;</span>       <span style="font-style: italic"><span style="color: #9A1900">// error: you forgot to initialise your variable</span></span></tt></pre></div></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="title">Further reading</div>
+<div class="ulist"><ul>
+<li>
+<p>
+<a href="https://herbsutter.com/2013/06/07/gotw-92-solution-auto-variables-part-1/">https://herbsutter.com/2013/06/07/gotw-92-solution-auto-variables-part-1/</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://herbsutter.com/2013/06/13/gotw-93-solution-auto-variables-part-2/">https://herbsutter.com/2013/06/13/gotw-93-solution-auto-variables-part-2/</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://herbsutter.com/2013/08/12/gotw-94-solution-aaa-style-almost-always-auto/">https://herbsutter.com/2013/08/12/gotw-94-solution-aaa-style-almost-always-auto/</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://www.youtube.com/watch?v=xnqTKD8uD64&amp;feature=youtu.be&amp;t=28m24s">https://www.youtube.com/watch?v=xnqTKD8uD64&amp;feature=youtu.be&amp;t=28m24s</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#esdcl-declarations">ES.decl Declarations</a>
+  (ES.5 - ES.11, ES.20 - ES.23, ES.25 - ES.27, ES.30 - ES.33)
+</p>
+</li>
+<li>
+<p>
+Stroustrup, B. <em>A tour of C++</em>. p5&#8201;&#8212;&#8201;9. 2014. Pearson Education Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+Stroustrup, B. <em>Programming: principles and practice using C++</em> 2nd Edition. p59&#8201;&#8212;&#8201;87. 2014.
+  Pearson Education Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+Stroustrup, B. <em>The C++ programming language</em> 4th Edition. p135&#8201;&#8212;&#8201;169. 2013. Pearson Education
+  Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+Meyers, S. <em>Effective modern C++&#8201;&#8212;&#8201;42 ways to improve your use of C++11 and C++14</em>. p37
+ &#8201;&#8212;&#8201;58. 2014. O&#8217;Reilly Media Inc. Sebastopol, CA.
+</p>
+</li>
+<li>
+<p>
+<a href="http://en.cppreference.com/w/cpp/language/auto">en.cppreference.com&#8201;&#8212;&#8201;<code>auto</code> specifier (since C++11)</a>
+</p>
+</li>
+</ul></div>
+</td>
+</tr></table>
+</div>
+<div class="sect2">
+<h3 id="_references">References</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+A reference is an alias for an object.
+</p>
+</li>
+<li>
+<p>
+If you assign a value to a reference, you&#8217;re in fact assigning it to the object it refers to.
+</p>
+</li>
+<li>
+<p>
+You can&#8217;t change what a reference refers to. It refers to what it is initialised with.
+</p>
+</li>
+<li>
+<p>
+We do this to create a reference:
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> foo <span style="color: #990000">=</span> <span style="color: #993399">10</span><span style="color: #990000">;</span>
+<span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> bar<span style="color: #990000">&amp;</span> <span style="color: #990000">=</span> foo<span style="color: #990000">;</span>
+
+std<span style="color: #990000">::</span>cout <span style="color: #990000">&lt;&lt;</span> foo <span style="color: #990000">&lt;&lt;</span> <span style="color: #FF0000">' '</span> <span style="color: #990000">&lt;&lt;</span> bar <span style="color: #990000">&lt;&lt;</span> <span style="color: #FF0000">'</span><span style="color: #CC33CC">\n</span><span style="color: #FF0000">'</span><span style="color: #990000">;</span>
+<span style="color: #990000">++</span>foo<span style="color: #990000">;</span>
+std<span style="color: #990000">::</span>cout <span style="color: #990000">&lt;&lt;</span> foo <span style="color: #990000">&lt;&lt;</span> <span style="color: #FF0000">' '</span> <span style="color: #990000">&lt;&lt;</span> bar <span style="color: #990000">&lt;&lt;</span> <span style="color: #FF0000">'</span><span style="color: #CC33CC">\n</span><span style="color: #FF0000">'</span><span style="color: #990000">;</span>
+<span style="color: #990000">++</span>bar<span style="color: #990000">;</span>
+std<span style="color: #990000">::</span>cout <span style="color: #990000">&lt;&lt;</span> foo <span style="color: #990000">&lt;&lt;</span> <span style="color: #FF0000">' '</span> <span style="color: #990000">&lt;&lt;</span> bar <span style="color: #990000">&lt;&lt;</span> <span style="color: #FF0000">'</span><span style="color: #CC33CC">\n</span><span style="color: #FF0000">'</span><span style="color: #990000">;</span></tt></pre></div></div>
+<div class="ulist"><ul>
+<li>
+<p>
+A <code>const</code> reference refers to an object whose value can&#8217;t be changed.
+</p>
+</li>
+<li>
+<p>
+By putting the <code>const</code> there, you are promising that you won&#8217;t modify the referred object via the
+  reference (but you can via other means).
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> foo <span style="color: #990000">=</span> <span style="color: #993399">10</span><span style="color: #990000">;</span>
+<span style="font-weight: bold"><span style="color: #0000FF">const</span></span> <span style="font-weight: bold"><span style="color: #0000FF">auto</span></span><span style="color: #990000">&amp;</span> bar <span style="color: #990000">=</span> foo<span style="color: #990000">;</span>
+
+std<span style="color: #990000">::</span>cout <span style="color: #990000">&lt;&lt;</span> foo <span style="color: #990000">&lt;&lt;</span> <span style="color: #FF0000">' '</span> <span style="color: #990000">&lt;&lt;</span> bar <span style="color: #990000">&lt;&lt;</span> <span style="color: #FF0000">'</span><span style="color: #CC33CC">\n</span><span style="color: #FF0000">'</span><span style="color: #990000">;</span>
+foo <span style="color: #990000">=</span> <span style="color: #993399">20</span><span style="color: #990000">;</span>
+std<span style="color: #990000">::</span>cout <span style="color: #990000">&lt;&lt;</span> foo <span style="color: #990000">&lt;&lt;</span> <span style="color: #FF0000">' '</span> <span style="color: #990000">&lt;&lt;</span> bar <span style="color: #990000">&lt;&lt;</span> <span style="color: #FF0000">'</span><span style="color: #CC33CC">\n</span><span style="color: #FF0000">'</span><span style="color: #990000">;</span>
+bar <span style="color: #990000">=</span> <span style="color: #993399">300</span><span style="color: #990000">;</span> <span style="font-style: italic"><span style="color: #9A1900">// error: can't write to a const reference.</span></span></tt></pre></div></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="title">Further reading</div>
+<div class="ulist"><ul>
+<li>
+<p>
+Stroustrup, B. <em>A tour of C++</em>. p9&#8201;&#8212;&#8201;14. 2014. Pearson Education Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+Stroustrup, B. <em>Programming: principles and practice using C++</em>. 2nd Edition. p276&#8201;&#8212;&#8201;284. 2014.
+  Pearson Education Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+Stroustrup, B. <em>The C++ programming language</em> 4th Edition. p190&#8201;&#8212;&#8201;193. 2013. Pearson Education
+  Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+Meyers, S. <em>More effective C++: 35 new ways to improve your programs and designs</em>. p9&#8201;&#8212;&#8201;11. 1996.
+  Addison-Wesley. Westford, MA.
+</p>
+</li>
+<li>
+<p>
+<a href="http://en.cppreference.com/book/intro/reference">en.cppreference.com&#8201;&#8212;&#8201;References</a>
+</p>
+</li>
+</ul></div>
+</td>
+</tr></table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_pointers">Pointers</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+A pointer is an object that directs you to another object.
+</p>
+</li>
+<li>
+<p>
+A pointer is like a reference, but you can change what it refers to.
+</p>
+</li>
+<li>
+<p>
+<code>nullptr</code> means that the pointer doesn&#8217;t point to anything.
+</p>
+</li>
+<li>
+<p>
+Prefer references unless:
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+you need to change what is being referred to, or
+</p>
+</li>
+<li>
+<p>
+you need to indicate that nothing is being referred to.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+When you want to access the object that is being referred to, we dereference the pointer.
+</p>
+</li>
+<li>
+<p>
+Dereferencing a <code>nullptr</code> is undefined behaviour.
+</p>
+</li>
+<li>
+<p>
+When assigning a pointer, you need to make sure that the types match up.
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #0000FF">auto</span></span><span style="color: #990000">*</span> foo <span style="color: #990000">=</span> nullptr<span style="color: #990000">;</span> <span style="font-style: italic"><span style="color: #9A1900">// this isn't pointing to anything.</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> pi <span style="color: #990000">=</span> <span style="color: #993399">3.1415</span><span style="color: #990000">;</span>
+foo <span style="color: #990000">=</span> <span style="color: #990000">&amp;</span>pi<span style="color: #990000">;</span> <span style="font-style: italic"><span style="color: #9A1900">// foo now points to pi's location in memory</span></span>
+
+std<span style="color: #990000">::</span>cout <span style="color: #990000">&lt;&lt;</span> foo <span style="color: #990000">&lt;&lt;</span> <span style="color: #FF0000">' '</span> <span style="color: #990000">&lt;&lt;</span> pi <span style="color: #990000">&lt;&lt;</span> <span style="color: #FF0000">'</span><span style="color: #CC33CC">\n</span><span style="color: #FF0000">'</span><span style="color: #990000">;</span> <span style="font-style: italic"><span style="color: #9A1900">// prints out foo's location in memory</span></span>
+std<span style="color: #990000">::</span>cout <span style="color: #990000">&lt;&lt;</span> <span style="color: #990000">*</span>foo <span style="color: #990000">&lt;&lt;</span> <span style="color: #FF0000">' '</span> <span style="color: #990000">&lt;&lt;</span> pi <span style="color: #990000">&lt;&lt;</span> <span style="color: #FF0000">'</span><span style="color: #CC33CC">\n</span><span style="color: #FF0000">'</span><span style="color: #990000">;</span> <span style="font-style: italic"><span style="color: #9A1900">// *foo is the same as pi, and is like a reference.</span></span>
+<span style="color: #990000">*</span>foo <span style="color: #990000">=</span> <span style="color: #993399">3.141592</span><span style="color: #990000">;</span> <span style="font-style: italic"><span style="color: #9A1900">// changing pi through foo</span></span>
+std<span style="color: #990000">::</span>cout <span style="color: #990000">&lt;&lt;</span> foo <span style="color: #990000">&lt;&lt;</span> <span style="color: #FF0000">' '</span> <span style="color: #990000">&lt;&lt;</span> pi <span style="color: #990000">&lt;&lt;</span> <span style="color: #FF0000">'</span><span style="color: #CC33CC">\n</span><span style="color: #FF0000">'</span><span style="color: #990000">;</span>
+std<span style="color: #990000">::</span>cout <span style="color: #990000">&lt;&lt;</span> <span style="color: #990000">*</span>foo <span style="color: #990000">&lt;&lt;</span> <span style="color: #FF0000">' '</span> <span style="color: #990000">&lt;&lt;</span> pi <span style="color: #990000">&lt;&lt;</span> <span style="color: #FF0000">'</span><span style="color: #CC33CC">\n</span><span style="color: #FF0000">'</span><span style="color: #990000">;</span>
+
+<span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> <span style="color: #008080">bar</span> e <span style="color: #990000">=</span> <span style="color: #993399">2.8</span><span style="color: #990000">;</span>
+foo <span style="color: #990000">=</span> <span style="color: #990000">&amp;</span>e<span style="color: #990000">;</span> <span style="font-style: italic"><span style="color: #9A1900">// foo now points to e's memory location and has nothing to do with pi</span></span>
+std<span style="color: #990000">::</span>cout <span style="color: #990000">&lt;&lt;</span> foo <span style="color: #990000">&lt;&lt;</span> <span style="color: #FF0000">' '</span> <span style="color: #990000">&lt;&lt;</span> e <span style="color: #990000">&lt;&lt;</span> <span style="color: #FF0000">' '</span> <span style="color: #990000">&lt;&lt;</span> pi <span style="color: #990000">&lt;&lt;</span> <span style="color: #FF0000">'</span><span style="color: #CC33CC">\n</span><span style="color: #FF0000">'</span><span style="color: #990000">;</span>
+std<span style="color: #990000">::</span>cout <span style="color: #990000">&lt;&lt;</span> <span style="color: #990000">*</span>foo <span style="color: #990000">&lt;&lt;</span> <span style="color: #FF0000">' '</span> <span style="color: #990000">&lt;&lt;</span> e <span style="color: #990000">&lt;&lt;</span> <span style="color: #FF0000">' '</span> <span style="color: #990000">&lt;&lt;</span> pi <span style="color: #990000">&lt;&lt;</span><span style="color: #FF0000">'</span><span style="color: #CC33CC">\n</span><span style="color: #FF0000">'</span><span style="color: #990000">;</span></tt></pre></div></div>
+<div class="ulist"><ul>
+<li>
+<p>
+There are two types of <code>const</code> pointer: <code>const</code> pointers, pointer to <code>const</code>.
+</p>
+</li>
+<li>
+<p>
+A <code>const</code> pointer is a pointer that can only point to one thing, like a reference can only
+  reference one thing.
+</p>
+</li>
+<li>
+<p>
+A pointer to <code>const</code> is a pointer that can point to anything at any time, but you can&#8217;t change the
+  value that is pointed to when you dereference the pointer.
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> pi <span style="color: #990000">=</span> <span style="color: #993399">3.14</span><span style="color: #990000">;</span>
+<span style="font-weight: bold"><span style="color: #0000FF">auto</span></span><span style="color: #990000">*</span> <span style="font-weight: bold"><span style="color: #0000FF">const</span></span> foo <span style="color: #990000">=</span> <span style="color: #990000">&amp;</span>pi<span style="color: #990000">;</span>
+<span style="color: #990000">*</span>foo <span style="color: #990000">=</span> <span style="color: #993399">3.1415</span><span style="color: #990000">;</span> <span style="font-style: italic"><span style="color: #9A1900">// ok</span></span>
+foo <span style="color: #990000">=</span> nullptr<span style="color: #990000">;</span> <span style="font-style: italic"><span style="color: #9A1900">// error: foo is a const pointer and cannot be changed</span></span>
+
+<span style="font-weight: bold"><span style="color: #0000FF">const</span></span> <span style="font-weight: bold"><span style="color: #0000FF">auto</span></span><span style="color: #990000">*</span> bar <span style="color: #990000">=</span> <span style="color: #990000">&amp;</span>pi<span style="color: #990000">;</span> <span style="font-style: italic"><span style="color: #9A1900">// bar is the pointer, pi is the pointee</span></span>
+<span style="color: #990000">*</span>bar <span style="color: #990000">=</span> <span style="color: #993399">3.141592</span><span style="color: #990000">;</span> <span style="font-style: italic"><span style="color: #9A1900">// error: bar is a pointer-to-const, so you cannot change the pointee</span></span>
+bar <span style="color: #990000">=</span> nullptr<span style="color: #990000">;</span> <span style="font-style: italic"><span style="color: #9A1900">// ok</span></span>
+
+<span style="font-weight: bold"><span style="color: #0000FF">const</span></span> <span style="font-weight: bold"><span style="color: #0000FF">auto</span></span><span style="color: #990000">*</span> <span style="font-weight: bold"><span style="color: #0000FF">const</span></span> fizz <span style="color: #990000">=</span> <span style="color: #990000">&amp;</span>pi<span style="color: #990000">;</span>
+<span style="color: #990000">*</span>fizz <span style="color: #990000">=</span> <span style="color: #993399">3.141592</span><span style="color: #990000">;</span> <span style="font-style: italic"><span style="color: #9A1900">// error: fizz is a pointer-to-const, so you cannot change the pointee</span></span>
+fizz <span style="color: #990000">=</span> nullptr<span style="color: #990000">;</span> <span style="font-style: italic"><span style="color: #9A1900">// error: fizz is a const pointer and cannot be changed</span></span></tt></pre></div></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="title">Further reading</div>
+<div class="ulist"><ul>
+<li>
+<p>
+Stroustrup, B. <em>A tour of C++</em>. p9&#8201;&#8212;&#8201;14. 2014. Pearson Education Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+Stroustrup, B. <em>Programming: principles and practice using C++</em>. 2nd Edition. p591&#8201;&#8212;&#8201;600.
+  Pearson Education Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+Stroustrup, B. <em>The C++ programming language</em> 4th Edition. p171&#8201;&#8212;&#8201;174, 186&#8201;&#8212;&#8201;188, 196&#8201;&#8212;&#8201;199.
+  Pearson Education Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+Meyers, S. <em>More effective C++: 35 new ways to improve your programs and designs</em>. p9&#8201;&#8212;&#8201;11. 1996.
+  Addison-Wesley. Westford, MA.
+</p>
+</li>
+<li>
+<p>
+Meyers, S. <em>Effective modern C++&#8201;&#8212;&#8201;42 ways to improve your use of C++11 and C++14</em>. p58
+ &#8201;&#8212;&#8201;62. 2014. O&#8217;Reilly Media Inc. Sebastopol, CA.
+</p>
+</li>
+<li>
+<p>
+Lots of the
+  <a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md">CppCoreGuidelines</a>
+</p>
+</li>
+<li>
+<p>
+<a href="http://en.cppreference.com/book/pointers">en.cppreference.com&#8201;&#8212;&#8201;Pointers</a>
+</p>
+</li>
+</ul></div>
+</td>
+</tr></table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_streams">Streams</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+<code>&lt;&lt;</code> is the put-to operator, and is associated with output.
+</p>
+</li>
+<li>
+<p>
+<code>&gt;&gt;</code> is the get-from operator, and is associated with input.
+</p>
+</li>
+</ul></div>
+<div class="sect2">
+<h3 id="_code_iostream_code"><code>iostream</code></h3>
+<div class="ulist"><ul>
+<li>
+<p>
+<code>cout</code> is the character output stream.
+</p>
+</li>
+<li>
+<p>
+<code>cerr</code> is the character error stream. It is automatically flushed.
+</p>
+</li>
+<li>
+<p>
+<code>wcout</code> is the wide character output stream.
+</p>
+</li>
+<li>
+<p>
+<code>wcerr</code> is the wide character error stream. It is automatically flushed.
+</p>
+</li>
+</ul></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Caution</div>
+</td>
+<td class="content">
+<div class="ulist"><ul>
+<li>
+<p>
+Many students asked why I choose to use <code>'\n'</code> over <code>endl</code> in tutorials.
+</p>
+</li>
+<li>
+<p>
+They pointed out that <code>endl</code> is a platform-independent version of <code>'\n'</code>, and becomes <code>"\r\n"</code> on
+  Windows systems, and <code>'\n'</code> on Unix systems such as Linux.
+</p>
+</li>
+<li>
+<p>
+Many textbooks and online sources state this, but it is a red herring (myth, etc.).
+</p>
+</li>
+<li>
+<p>
+<code>endl</code> does two things: it puts <code>'\n'</code> to the output/error stream, and then flushes the buffer.
+</p>
+</li>
+<li>
+<p>
+This means that other than flushing the stream, it is literally no different to using <code>'\n'</code>.
+</p>
+</li>
+<li>
+<p>
+Flushing a buffer is slow, so your program might suffer a performance hit.
+</p>
+</li>
+<li>
+<p>
+If you&#8217;re sceptical, take a look through any of the textbooks I mentioned above, or any of the
+  references below.
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#slio50-avoid-endl">The CppCoreGuidelines recommend against using <code>endl</code></a> unless you <em>need</em> to print <code>'\n'</code> and then
+  flush the buffer.
+</p>
+</li>
+<li>
+<p>
+Provided that you understand the first five points, it is not a hard-and-fast rule, but my
+  recommendation, based off programmers such as Stroustrup, Sutter, Zubkov, etc.
+</p>
+</li>
+<li>
+<p>
+The following code examples all do exactly the same thing on <em>every</em> system.
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-style: italic"><span style="color: #9A1900">// example 1</span></span>
+std<span style="color: #990000">::</span>cout <span style="color: #990000">&lt;&lt;</span> <span style="color: #FF0000">"Hello, world!"</span> <span style="color: #990000">&lt;&lt;</span> std<span style="color: #990000">::</span>endl<span style="color: #990000">;</span>
+
+<span style="font-style: italic"><span style="color: #9A1900">// example 2</span></span>
+std<span style="color: #990000">::</span>cout <span style="color: #990000">&lt;&lt;</span> <span style="color: #FF0000">"Hello, world!</span><span style="color: #CC33CC">\n</span><span style="color: #FF0000">"</span> <span style="color: #990000">&lt;&lt;</span> std<span style="color: #990000">::</span>flush<span style="color: #990000">;</span>
+
+<span style="font-style: italic"><span style="color: #9A1900">// example 3</span></span>
+std<span style="color: #990000">::</span>cout <span style="color: #990000">&lt;&lt;</span> <span style="color: #FF0000">"Hello, world!</span><span style="color: #CC33CC">\n</span><span style="color: #FF0000">"</span><span style="color: #990000">;</span>
+std<span style="color: #990000">::</span>cout<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">flush</span></span><span style="color: #990000">();</span>
+
+<span style="font-style: italic"><span style="color: #9A1900">// example 4</span></span>
+std<span style="color: #990000">::</span>cout <span style="color: #990000">&lt;&lt;</span> <span style="color: #FF0000">"Hello, world!"</span><span style="color: #990000">;</span>
+std<span style="color: #990000">::</span>cout<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">put</span></span><span style="color: #990000">(</span><span style="color: #FF0000">'</span><span style="color: #CC33CC">\n</span><span style="color: #FF0000">'</span><span style="color: #990000">);</span>
+std<span style="color: #990000">::</span>cout<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">flush</span></span><span style="color: #990000">();</span></tt></pre></div></div>
+</td>
+</tr></table>
+</div>
+<div class="ulist"><ul>
+<li>
+<p>
+<code>cin</code> is the character input stream.
+</p>
+</li>
+<li>
+<p>
+<code>wcin</code> is the wide character input stream.
+</p>
+</li>
+</ul></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Caution</div>
+</td>
+<td class="content">
+<div class="ulist"><ul>
+<li>
+<p>
+When getting input from <code>cin</code>, you need to check whether or not the input is properly formatted.
+</p>
+</li>
+<li>
+<p>
+Compile and run the the program below, and try entering the input <code>a 12345</code>:
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;iostream&gt;</span>
+
+<span style="color: #009900">int</span> <span style="font-weight: bold"><span style="color: #000000">main</span></span><span style="color: #990000">()</span>
+<span style="color: #FF0000">{</span>
+   std<span style="color: #990000">::</span>cout <span style="color: #990000">&lt;&lt;</span> <span style="color: #FF0000">"Enter two unsigned ints:</span><span style="color: #CC33CC">\n</span><span style="color: #FF0000">"</span><span style="color: #990000">;</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> a <span style="color: #990000">=</span> 0U<span style="color: #990000">;</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> b <span style="color: #990000">=</span> 0U<span style="color: #990000">;</span>
+   std<span style="color: #990000">::</span>cin <span style="color: #990000">&gt;&gt;</span> a <span style="color: #990000">&gt;&gt;</span> b<span style="color: #990000">;</span>
+   std<span style="color: #990000">::</span>cout <span style="color: #990000">&lt;&lt;</span> <span style="color: #FF0000">"a == "</span> <span style="color: #990000">&lt;&lt;</span> a <span style="color: #990000">&lt;&lt;</span> <span style="color: #FF0000">"; b == "</span> <span style="color: #990000">&lt;&lt;</span> b <span style="color: #990000">&lt;&lt;</span> <span style="color: #FF0000">'</span><span style="color: #CC33CC">\n</span><span style="color: #FF0000">'</span><span style="color: #990000">;</span>
+<span style="color: #FF0000">}</span></tt></pre></div></div>
+<div class="ulist"><ul>
+<li>
+<p>
+Because you didn&#8217;t check that the input was good, your program didn&#8217;t know what to do.
+</p>
+</li>
+<li>
+<p>
+The results are probably <em>very</em> interesting.
+</p>
+</li>
+<li>
+<p>
+Now do the same thing with this program:
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;iostream&gt;</span>
+<span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;limits&gt;</span>
+
+<span style="color: #009900">int</span> <span style="font-weight: bold"><span style="color: #000000">main</span></span><span style="color: #990000">()</span>
+<span style="color: #FF0000">{</span>
+   std<span style="color: #990000">::</span>cout <span style="color: #990000">&lt;&lt;</span> <span style="color: #FF0000">"Enter two unsigned ints:</span><span style="color: #CC33CC">\n</span><span style="color: #FF0000">"</span><span style="color: #990000">;</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> a <span style="color: #990000">=</span> 0U<span style="color: #990000">;</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> b <span style="color: #990000">=</span> 0U<span style="color: #990000">;</span>
+
+   <span style="font-style: italic"><span style="color: #9A1900">// keep trying to get input until the correct type of input is put in</span></span>
+   <span style="font-weight: bold"><span style="color: #0000FF">while</span></span> <span style="color: #990000">(!(</span>std<span style="color: #990000">::</span>cin <span style="color: #990000">&gt;&gt;</span> a <span style="color: #990000">&gt;&gt;</span> b<span style="color: #990000">))</span>
+   <span style="color: #FF0000">{</span>
+      std<span style="color: #990000">::</span>cerr <span style="color: #990000">&lt;&lt;</span> <span style="color: #FF0000">"Whoops! Please enter two whole numbers &gt;= 0.</span><span style="color: #CC33CC">\n</span><span style="color: #FF0000">"</span><span style="color: #990000">;</span>
+      std<span style="color: #990000">::</span>cout <span style="color: #990000">&lt;&lt;</span> <span style="color: #FF0000">"Enter two unsigned ints:</span><span style="color: #CC33CC">\n</span><span style="color: #FF0000">"</span><span style="color: #990000">;</span>
+
+      <span style="font-style: italic"><span style="color: #9A1900">// clear the error flags</span></span>
+      std<span style="color: #990000">::</span>cin<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">clear</span></span><span style="color: #990000">();</span>
+
+      <span style="font-style: italic"><span style="color: #9A1900">// ignore everything until the first new line in the buffer</span></span>
+      std<span style="color: #990000">::</span>cin<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">ignore</span></span><span style="color: #990000">(</span>std<span style="color: #990000">::</span>numeric_limits<span style="color: #990000">&lt;</span>std<span style="color: #990000">::</span>streamsize<span style="color: #990000">&gt;::</span><span style="font-weight: bold"><span style="color: #000000">max</span></span><span style="color: #990000">(),</span> <span style="color: #FF0000">'</span><span style="color: #CC33CC">\n</span><span style="color: #FF0000">'</span><span style="color: #990000">);</span>
+   <span style="color: #FF0000">}</span>
+
+   std<span style="color: #990000">::</span>cout <span style="color: #990000">&lt;&lt;</span> <span style="color: #FF0000">"a == "</span> <span style="color: #990000">&lt;&lt;</span> a <span style="color: #990000">&lt;&lt;</span> <span style="color: #FF0000">"; b == "</span> <span style="color: #990000">&lt;&lt;</span> b <span style="color: #990000">&lt;&lt;</span> <span style="color: #FF0000">'</span><span style="color: #CC33CC">\n</span><span style="color: #FF0000">'</span><span style="color: #990000">;</span>
+<span style="color: #FF0000">}</span></tt></pre></div></div>
+</td>
+</tr></table>
+</div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="title">Further reading</div>
+<div class="ulist"><ul>
+<li>
+<p>
+Working Draft, Standard for Programming Language C++, p.1051 (final C++14 draft)
+</p>
+</li>
+<li>
+<p>
+Stroustrup, B. <em>Programming: principles and practice using C++</em>. 2nd Edition. p345&#8201;&#8212;&#8201;410. 2014.
+  Pearson Education Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+Stroustrup, B. <em>The C++ programming language</em> 4th Edition. p1073&#8201;&#8212;&#8201;1108. 2013. Pearson
+  Education Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#slio50-avoid-endl">CppCoreGuidelines: Avoid <code>endl</code></a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://www.quora.com/Why-is-endl-preferred-over-n-sequence-in-C%2B%2B/answer/Sergey-Zubkov-1?srid=CbmP&amp;share=527eb8ca">Sergey Zubkov&#8217;s answer to "Why is <code>endl</code> preferred over <code>'\n'</code> sequence?"&#8201;&#8212;&#8201;Quora.com</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://www.youtube.com/watch?v=GMqQOEZYVJQ">C++ Weekly ep 7: Stop using <code>std::endl</code></a>
+</p>
+</li>
+<li>
+<p>
+<a href="http://stackoverflow.com/questions/213907/c-stdendl-vs-n">C++ "<code>std::endl</code>" vs <code>'\n'</code>&#8201;&#8212;&#8201;StackOverflow</a>
+</p>
+</li>
+<li>
+<p>
+<a href="http://en.cppreference.com/w/cpp/io/cout">en.cppreference.com&#8201;&#8212;&#8201;<code>std::cout, std::wcout</code></a>
+</p>
+</li>
+<li>
+<p>
+<a href="http://en.cppreference.com/w/cpp/io/cerr">en.cppreference.com&#8201;&#8212;&#8201;<code>std::cerr, std::wcerr</code></a>
+</p>
+</li>
+<li>
+<p>
+<a href="http://en.cppreference.com/w/cpp/io/clog">en.cppreference.com&#8201;&#8212;&#8201;<code>std::clog, std::wclog</code></a>
+</p>
+</li>
+<li>
+<p>
+<a href="http://en.cppreference.com/w/cpp/io/manip/endl">en.cppreference.com&#8201;&#8212;&#8201;<code>std::endl</code></a>
+</p>
+</li>
+</ul></div>
+</td>
+</tr></table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_code_fstream_code"><code>fstream</code></h3>
+<div class="ulist"><ul>
+<li>
+<p>
+<code>ofstream</code> is for file output.
+</p>
+</li>
+<li>
+<p>
+<code>ifstream</code> is for file input.
+</p>
+</li>
+<li>
+<p>
+<code>fstream</code> is for file input and file output on the <em>same</em> file at the <em>same</em> time. Don&#8217;t use this
+  unless you need to perform both input and output on the same file.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+Anything applicable to <code>ifstream</code> is also applicable to <code>fstream</code>
+</p>
+</li>
+<li>
+<p>
+Anything applicable to <code>ofstream</code> is also applicable to <code>fstream</code>
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Using file streams is the same as when you use <code>cout</code> and <code>cin</code>.
+</p>
+</li>
+<li>
+<p>
+Similarly to <code>cout</code> and <code>cin</code>, the above three streams are for type <code>char</code>.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+To read/write wide characters, you will need to use <code>wofstream</code>, <code>wifstream</code>, and <code>wfstream</code>.
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Caution</div>
+</td>
+<td class="content">
+<div class="ulist"><ul>
+<li>
+<p>
+Many sources incorrectly inform you to use <code>ifstream::eof</code> when reading in from file.
+</p>
+</li>
+<li>
+<p>
+<code>eof</code> is just an indicator
+</p>
+</li>
+<li>
+<p>
+This is the correct way to handle file input:
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;iostream&gt;</span>
+<span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;fstream&gt;</span>
+
+<span style="color: #009900">int</span> <span style="font-weight: bold"><span style="color: #000000">main</span></span><span style="color: #990000">()</span>
+<span style="color: #FF0000">{</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> infile <span style="color: #990000">=</span> std<span style="color: #990000">::</span>ifstream<span style="color: #FF0000">{</span> <span style="color: #FF0000">"foo"</span> <span style="color: #FF0000">}</span><span style="color: #990000">;</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">if</span></span> <span style="color: #990000">(!</span>infile<span style="color: #990000">)</span>
+   <span style="color: #FF0000">{</span>
+      std<span style="color: #990000">::</span>cerr <span style="color: #990000">&lt;&lt;</span> <span style="color: #FF0000">"File opening failed</span><span style="color: #CC33CC">\n</span><span style="color: #FF0000">"</span><span style="color: #990000">;</span>
+      <span style="font-weight: bold"><span style="color: #0000FF">return</span></span> <span style="color: #993399">1</span><span style="color: #990000">;</span>
+   <span style="color: #FF0000">}</span>
+
+   <span style="font-style: italic"><span style="color: #9A1900">// we use a for-statement, because we don't need to use the variable `a`</span></span>
+   <span style="font-style: italic"><span style="color: #9A1900">// after we finish reading in the file!</span></span>
+   <span style="font-weight: bold"><span style="color: #0000FF">for</span></span> <span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> a <span style="color: #990000">=</span> <span style="color: #993399">0</span><span style="color: #990000">;</span> infile <span style="color: #990000">&gt;&gt;</span> a<span style="color: #990000">;</span> <span style="color: #990000">)</span>
+      std<span style="color: #990000">::</span>cout <span style="color: #990000">&lt;&lt;</span> a <span style="color: #990000">&lt;&lt;</span> <span style="color: #FF0000">'</span><span style="color: #CC33CC">\n</span><span style="color: #FF0000">'</span><span style="color: #990000">;</span>
+
+   <span style="font-weight: bold"><span style="color: #0000FF">if</span></span> <span style="color: #990000">(</span>infile<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">eof</span></span><span style="color: #990000">())</span>
+   <span style="color: #FF0000">{</span>
+      std<span style="color: #990000">::</span>cout <span style="color: #990000">&lt;&lt;</span> <span style="color: #FF0000">"End of file reached successfully</span><span style="color: #CC33CC">\n</span><span style="color: #FF0000">"</span><span style="color: #990000">;</span>
+   <span style="color: #FF0000">}</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">else</span></span> <span style="font-weight: bold"><span style="color: #0000FF">if</span></span> <span style="color: #990000">(</span>infile<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">bad</span></span><span style="color: #990000">())</span>
+   <span style="color: #FF0000">{</span>
+      std<span style="color: #990000">::</span>cerr <span style="color: #990000">&lt;&lt;</span> <span style="color: #FF0000">"I/O error while reading</span><span style="color: #CC33CC">\n</span><span style="color: #FF0000">"</span><span style="color: #990000">;</span>
+      <span style="font-weight: bold"><span style="color: #0000FF">return</span></span> <span style="color: #993399">2</span><span style="color: #990000">;</span>
+   <span style="color: #FF0000">}</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">else</span></span> <span style="font-weight: bold"><span style="color: #0000FF">if</span></span> <span style="color: #990000">(</span>infile<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">fail</span></span><span style="color: #990000">())</span>
+   <span style="color: #FF0000">{</span>
+      std<span style="color: #990000">::</span>cerr <span style="color: #990000">&lt;&lt;</span> <span style="color: #FF0000">"Non-integer data encountered</span><span style="color: #CC33CC">\n</span><span style="color: #FF0000">"</span><span style="color: #990000">;</span>
+      <span style="font-weight: bold"><span style="color: #0000FF">return</span></span> <span style="color: #993399">3</span><span style="color: #990000">;</span>
+   <span style="color: #FF0000">}</span>
+<span style="color: #FF0000">}</span></tt></pre></div></div>
+<div class="sidebarblock">
+<div class="content">
+<div class="title">Reference</div>
+<div class="ulist"><ul>
+<li>
+<p>
+Author: Sergey Zubkov
+</p>
+</li>
+<li>
+<p>
+Website: Quora.com
+</p>
+</li>
+<li>
+<p>
+Source: <a href="https://www.quora.com/What-is-the-the-function-of-eof-in-c%2B%2B/answer/Sergey-Zubkov-1?srid=CbmP">https://www.quora.com/What-is-the-the-function-of-eof-in-c%2B%2B/answer/Sergey-Zubkov-1?srid=CbmP</a>
+</p>
+</li>
+<li>
+<p>
+I modified the code to suit the style of code I recommend.
+</p>
+</li>
+<li>
+<p>
+This is a demonstration of what <em>verbatim plagiarism</em> looks like.
+</p>
+</li>
+<li>
+<p>
+<strong>Do not plagiarise others' work.</strong>
+</p>
+</li>
+</ul></div>
+</div></div>
+</td>
+</tr></table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_raii">RAII</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+Notice that Sergey didn&#8217;t close the file, and I didn&#8217;t bother to add it in for him to suit our
+  style.
+</p>
+</li>
+<li>
+<p>
+This caused a bit of concern in the tutorials.
+</p>
+</li>
+<li>
+<p>
+This is an example of Resource Acquisition is Initialisation (RAII for short).
+</p>
+</li>
+<li>
+<p>
+RAII is essentially an object cleaning up after itself when you are finished with it.
+</p>
+</li>
+<li>
+<p>
+"Finished" means the object has been destroyed:
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+The end of the expression for a temporary (an object without a name, such as a string literal)
+</p>
+</li>
+<li>
+<p>
+A local variable gone out of scope
+</p>
+</li>
+<li>
+<p>
+Deleting (freeing) an object on the heap
+</p>
+</li>
+<li>
+<p>
+Leaving the program (for <code>static</code> varaibles)
+</p>
+</li>
+<li>
+<p>
+We will cover object lifetime throughout the course, so don&#8217;t panic if you don&#8217;t get it yet.
+</p>
+</li>
+<li>
+<p>
+Source: <a href="http://en.cppreference.com/w/cpp/language/lifetime">http://en.cppreference.com/w/cpp/language/lifetime</a>
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+RAII is not like garbage collection
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+RAII is a programming <em>idiom</em>; garbage collection is a fire-and-forget tool.
+</p>
+</li>
+<li>
+<p>
+RAII requires you to allocate resources and clean up after yourself
+</p>
+</li>
+<li>
+<p>
+When using RAII correctly, you are guaranteed to have the clean up when the object goes out of
+     scope. Garbage collection makes no such guarantee.
+</p>
+</li>
+<li>
+<p>
+Source 1: <a href="http://en.cppreference.com/w/cpp/language/raii">http://en.cppreference.com/w/cpp/language/raii</a>
+</p>
+</li>
+<li>
+<p>
+Source 2: <a href="http://stackoverflow.com/questions/8712666/when-has-raii-an-advantage-over-gc">http://stackoverflow.com/questions/8712666/when-has-raii-an-advantage-over-gc</a>
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+When the <code>ifstream</code> object goes out of scope, the file will automatically be closed.
+</p>
+</li>
+<li>
+<p>
+A file open with <code>ofstream</code> will flush the stream and then close. There is rarely a need to
+  manually flush before closing.
+</p>
+</li>
+<li>
+<p>
+If you&#8217;re uncomfortable about the above, you can consider this program instead:
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;iostream&gt;</span>
+<span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;fstream&gt;</span>
+
+<span style="color: #009900">int</span> <span style="font-weight: bold"><span style="color: #000000">main</span></span><span style="color: #990000">()</span>
+<span style="color: #FF0000">{</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">if</span></span> <span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> infile <span style="color: #990000">=</span> std<span style="color: #990000">::</span>ifstream<span style="color: #FF0000">{</span> <span style="color: #FF0000">"foo"</span> <span style="color: #FF0000">}</span><span style="color: #990000">)</span>
+   <span style="color: #FF0000">{</span>
+      <span style="font-weight: bold"><span style="color: #0000FF">for</span></span> <span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> a <span style="color: #990000">=</span> <span style="color: #993399">0</span><span style="color: #990000">;</span> infile <span style="color: #990000">&gt;&gt;</span> a<span style="color: #990000">;</span> <span style="color: #990000">)</span>
+         std<span style="color: #990000">::</span>cout <span style="color: #990000">&lt;&lt;</span> a <span style="color: #990000">&lt;&lt;</span> <span style="color: #FF0000">'</span><span style="color: #CC33CC">\n</span><span style="color: #FF0000">'</span><span style="color: #990000">;</span>
+
+      <span style="font-weight: bold"><span style="color: #0000FF">if</span></span> <span style="color: #990000">(</span>infile<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">eof</span></span><span style="color: #990000">())</span>
+      <span style="color: #FF0000">{</span>
+         std<span style="color: #990000">::</span>cout <span style="color: #990000">&lt;&lt;</span> <span style="color: #FF0000">"End of file reached successfully</span><span style="color: #CC33CC">\n</span><span style="color: #FF0000">"</span><span style="color: #990000">;</span>
+      <span style="color: #FF0000">}</span>
+      <span style="font-weight: bold"><span style="color: #0000FF">else</span></span> <span style="font-weight: bold"><span style="color: #0000FF">if</span></span> <span style="color: #990000">(</span>infile<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">bad</span></span><span style="color: #990000">())</span>
+      <span style="color: #FF0000">{</span>
+         std<span style="color: #990000">::</span>cerr <span style="color: #990000">&lt;&lt;</span> <span style="color: #FF0000">"I/O error while reading</span><span style="color: #CC33CC">\n</span><span style="color: #FF0000">"</span><span style="color: #990000">;</span>
+         <span style="font-weight: bold"><span style="color: #0000FF">return</span></span> <span style="color: #993399">2</span><span style="color: #990000">;</span>
+      <span style="color: #FF0000">}</span>
+      <span style="font-weight: bold"><span style="color: #0000FF">else</span></span> <span style="font-weight: bold"><span style="color: #0000FF">if</span></span> <span style="color: #990000">(</span>infile<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">fail</span></span><span style="color: #990000">())</span>
+      <span style="color: #FF0000">{</span>
+         std<span style="color: #990000">::</span>cerr <span style="color: #990000">&lt;&lt;</span> <span style="color: #FF0000">"Non-integer data encountered</span><span style="color: #CC33CC">\n</span><span style="color: #FF0000">"</span><span style="color: #990000">;</span>
+         <span style="font-weight: bold"><span style="color: #0000FF">return</span></span> <span style="color: #993399">3</span><span style="color: #990000">;</span>
+      <span style="color: #FF0000">}</span>
+   <span style="color: #FF0000">}</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">else</span></span>
+   <span style="color: #FF0000">{</span>
+      std<span style="color: #990000">::</span>cerr <span style="color: #990000">&lt;&lt;</span> <span style="color: #FF0000">"File opening failed</span><span style="color: #CC33CC">\n</span><span style="color: #FF0000">"</span><span style="color: #990000">;</span>
+      <span style="font-weight: bold"><span style="color: #0000FF">return</span></span> <span style="color: #993399">1</span><span style="color: #990000">;</span>
+   <span style="color: #FF0000">}</span> <span style="font-style: italic"><span style="color: #9A1900">// file closed here, where the if-statement is finished.</span></span>
+<span style="color: #FF0000">}</span></tt></pre></div></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Caution</div>
+</td>
+<td class="content">
+<div class="title">Reference</div>
+<div class="ulist"><ul>
+<li>
+<p>
+Author: Sergey Zubkov
+</p>
+</li>
+<li>
+<p>
+Website: Quora.com
+</p>
+</li>
+<li>
+<p>
+Source: <a href="https://www.quora.com/What-is-the-the-function-of-eof-in-c%2B%2B/answer/Sergey-Zubkov-1?srid=CbmP">https://www.quora.com/What-is-the-the-function-of-eof-in-c%2B%2B/answer/Sergey-Zubkov-1?srid=CbmP</a>
+</p>
+</li>
+<li>
+<p>
+I modified the code to suit the style I&#8217;m recommending.
+</p>
+</li>
+<li>
+<p>
+This is a demonstration of what <em>derived
+  plagiarism</em> looks like.
+</p>
+</li>
+<li>
+<p>
+<strong>Do not do plagiarise others' work.</strong>
+</p>
+</li>
+</ul></div>
+</td>
+</tr></table>
+</div>
+<div class="ulist"><ul>
+<li>
+<p>
+I actually recommend this one. The original example was just for motivation about RAII.
+</p>
+</li>
+<li>
+<p>
+When we get to the end of the outer <code>if</code>-statement, the file is automatically closed.
+</p>
+</li>
+<li>
+<p>
+We generally like to keep objects as local as possible, which is why we&#8217;ve used a <code>for</code>-loop
+  instead of a <code>while</code>-loop.
+</p>
+</li>
+</ul></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="title">Further reading</div>
+<div class="ulist"><ul>
+<li>
+<p>
+Stroustrup, B. <em>A tour of C++</em>. p85&#8201;&#8212;&#8201;94. 2014. Pearson Education Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+Stroustrup, B. <em>Programming: principles and practice using C++</em>. 2nd Edition. p345&#8201;&#8212;&#8201;410. 2014.
+  Pearson Education Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+Stroustrup, B. <em>The C++ programming language</em> 4th Edition. p112, 354&#8201;&#8212;&#8201;357, 1073&#8201;&#8212;&#8201;1108. 2013.
+  Pearson Education Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+Meyers, S. <em>Effective C++: 55 specific ways to improve your programs and designs</em>.
+  Third edition. p61&#8201;&#8212;&#8201;69. 2005. Pearson Education, Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#r-resource-management">CppCoreGuidelines&#8201;&#8212;&#8201;R: Resource management</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#p8-dont-leak-any-resources">CppCoreGuidelines&#8201;&#8212;&#8201;P.8: Don&#8217;t leak any resources</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#c31-all-resources-acquired-by-a-class-must-be-released-by-the-classs-destructor">CppCoreGuidelines&#8201;&#8212;&#8201;C.31: All resources acquired by a class must be released by the class&#8217;s destructor</a>
+</p>
+</li>
+<li>
+<p>
+<a href="http://en.cppreference.com/w/cpp/io/basic_ofstream">en.cppreference.com&#8201;&#8212;&#8201;<code>basic_ofstream</code></a>
+</p>
+</li>
+<li>
+<p>
+<a href="http://en.cppreference.com/w/cpp/io/basic_ifstream">en.cppreference.com&#8201;&#8212;&#8201;<code>basic_ifstream</code></a>
+</p>
+</li>
+<li>
+<p>
+<a href="http://en.cppreference.com/w/cpp/io/basic_fstream">en.cppreference.com&#8201;&#8212;&#8201;<code>basic_fstream</code></a>
+</p>
+</li>
+</ul></div>
+</td>
+</tr></table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_code_sstream_code"><code>sstream</code></h3>
+<div class="ulist"><ul>
+<li>
+<p>
+<code>istringstream</code> is for converting values in text to types (e.g. <code>"42"</code> to <code>42</code>)
+</p>
+</li>
+<li>
+<p>
+<code>ostringstream</code> is for converting objects to values in strings (e.g. <code>42</code> to <code>"42"</code>)
+</p>
+</li>
+<li>
+<p>
+<code>stringstream</code> is for both <code>istringstream</code> operations and <code>ostringstream</code> operations.
+</p>
+</li>
+<li>
+<p>
+The same rules apply to the <code>sstream</code> objects as <code>iostream</code> and <code>fstream</code> objects.
+</p>
+</li>
+<li>
+<p>
+As with our other streams, these are the character streams: wide characters require a <code>w</code> put in
+  front of the type.
+</p>
+</li>
+</ul></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="title">Further reading</div>
+<div class="ulist"><ul>
+<li>
+<p>
+Stroustrup, B. <em>A tour of C++</em>. p85&#8201;&#8212;&#8201;94. 2014. Pearson Education Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+Stroustrup, B. <em>Programming: principles and practice using C++</em>. 2nd Edition. p345&#8201;&#8212;&#8201;410. 2014.
+  Pearson Education Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+Stroustrup, B. <em>The C++ programming language</em> 4th Edition. p1073&#8201;&#8212;&#8201;1108. 2013. Pearson
+  Education Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+<a href="http://en.cppreference.com/w/cpp/io/basic_ostringstream">en.cppreference.com&#8201;&#8212;&#8201;<code>basic_ostringstream</code></a>
+</p>
+</li>
+<li>
+<p>
+<a href="http://en.cppreference.com/w/cpp/io/basic_istringstream">en.cppreference.com&#8201;&#8212;&#8201;<code>basic_istringstream</code></a>
+</p>
+</li>
+<li>
+<p>
+<a href="http://en.cppreference.com/w/cpp/io/basic_stringstream">en.cppreference.com&#8201;&#8212;&#8201;<code>basic_stringstream</code></a>
+</p>
+</li>
+</ul></div>
+</td>
+</tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footnotes"><hr /></div>
+<div id="footer">
+<div id="footer-text">
+Version 1<br />
+Last updated 2016-08-08 12:29:40 AEST
+</div>
+</div>
+</body>
+</html>
