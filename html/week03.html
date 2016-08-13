@@ -1,0 +1,3721 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
+<meta name="generator" content="AsciiDoc 8.6.9" />
+<title>Week 3 tutorial postscript</title>
+<style type="text/css">
+/* Shared CSS for AsciiDoc xhtml11 and html5 backends */
+
+/* Default font. */
+body {
+  font-family: Georgia,serif;
+}
+
+/* Title font. */
+h1, h2, h3, h4, h5, h6,
+div.title, caption.title,
+thead, p.table.header,
+#toctitle,
+#author, #revnumber, #revdate, #revremark,
+#footer {
+  font-family: Arial,Helvetica,sans-serif;
+}
+
+body {
+  margin: 1em 5% 1em 5%;
+}
+
+a {
+  color: blue;
+  text-decoration: underline;
+}
+a:visited {
+  color: fuchsia;
+}
+
+em {
+  font-style: italic;
+  color: navy;
+}
+
+strong {
+  font-weight: bold;
+  color: #083194;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #527bbd;
+  margin-top: 1.2em;
+  margin-bottom: 0.5em;
+  line-height: 1.3;
+}
+
+h1, h2, h3 {
+  border-bottom: 2px solid silver;
+}
+h2 {
+  padding-top: 0.5em;
+}
+h3 {
+  float: left;
+}
+h3 + * {
+  clear: left;
+}
+h5 {
+  font-size: 1.0em;
+}
+
+div.sectionbody {
+  margin-left: 0;
+}
+
+hr {
+  border: 1px solid silver;
+}
+
+p {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+ul, ol, li > p {
+  margin-top: 0;
+}
+ul > li     { color: #aaa; }
+ul > li > * { color: black; }
+
+.monospaced, code, pre {
+  font-family: "Courier New", Courier, monospace;
+  font-size: inherit;
+  color: navy;
+  padding: 0;
+  margin: 0;
+}
+pre {
+  white-space: pre-wrap;
+}
+
+#author {
+  color: #527bbd;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+#email {
+}
+#revnumber, #revdate, #revremark {
+}
+
+#footer {
+  font-size: small;
+  border-top: 2px solid silver;
+  padding-top: 0.5em;
+  margin-top: 4.0em;
+}
+#footer-text {
+  float: left;
+  padding-bottom: 0.5em;
+}
+#footer-badges {
+  float: right;
+  padding-bottom: 0.5em;
+}
+
+#preamble {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+div.imageblock, div.exampleblock, div.verseblock,
+div.quoteblock, div.literalblock, div.listingblock, div.sidebarblock,
+div.admonitionblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.admonitionblock {
+  margin-top: 2.0em;
+  margin-bottom: 2.0em;
+  margin-right: 10%;
+  color: #606060;
+}
+
+div.content { /* Block element content. */
+  padding: 0;
+}
+
+/* Block element titles. */
+div.title, caption.title {
+  color: #527bbd;
+  font-weight: bold;
+  text-align: left;
+  margin-top: 1.0em;
+  margin-bottom: 0.5em;
+}
+div.title + * {
+  margin-top: 0;
+}
+
+td div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content + div.title {
+  margin-top: 0.0em;
+}
+
+div.sidebarblock > div.content {
+  background: #ffffee;
+  border: 1px solid #dddddd;
+  border-left: 4px solid #f0f0f0;
+  padding: 0.5em;
+}
+
+div.listingblock > div.content {
+  border: 1px solid #dddddd;
+  border-left: 5px solid #f0f0f0;
+  background: #f8f8f8;
+  padding: 0.5em;
+}
+
+div.quoteblock, div.verseblock {
+  padding-left: 1.0em;
+  margin-left: 1.0em;
+  margin-right: 10%;
+  border-left: 5px solid #f0f0f0;
+  color: #888;
+}
+
+div.quoteblock > div.attribution {
+  padding-top: 0.5em;
+  text-align: right;
+}
+
+div.verseblock > pre.content {
+  font-family: inherit;
+  font-size: inherit;
+}
+div.verseblock > div.attribution {
+  padding-top: 0.75em;
+  text-align: left;
+}
+/* DEPRECATED: Pre version 8.2.7 verse style literal block. */
+div.verseblock + div.attribution {
+  text-align: left;
+}
+
+div.admonitionblock .icon {
+  vertical-align: top;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-decoration: underline;
+  color: #527bbd;
+  padding-right: 0.5em;
+}
+div.admonitionblock td.content {
+  padding-left: 0.5em;
+  border-left: 3px solid #dddddd;
+}
+
+div.exampleblock > div.content {
+  border-left: 3px solid #dddddd;
+  padding-left: 0.5em;
+}
+
+div.imageblock div.content { padding-left: 0; }
+span.image img { border-style: none; vertical-align: text-bottom; }
+a.image:visited { color: white; }
+
+dl {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+dt {
+  margin-top: 0.5em;
+  margin-bottom: 0;
+  font-style: normal;
+  color: navy;
+}
+dd > *:first-child {
+  margin-top: 0.1em;
+}
+
+ul, ol {
+    list-style-position: outside;
+}
+ol.arabic {
+  list-style-type: decimal;
+}
+ol.loweralpha {
+  list-style-type: lower-alpha;
+}
+ol.upperalpha {
+  list-style-type: upper-alpha;
+}
+ol.lowerroman {
+  list-style-type: lower-roman;
+}
+ol.upperroman {
+  list-style-type: upper-roman;
+}
+
+div.compact ul, div.compact ol,
+div.compact p, div.compact p,
+div.compact div, div.compact div {
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+}
+
+tfoot {
+  font-weight: bold;
+}
+td > div.verse {
+  white-space: pre;
+}
+
+div.hdlist {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+div.hdlist tr {
+  padding-bottom: 15px;
+}
+dt.hdlist1.strong, td.hdlist1.strong {
+  font-weight: bold;
+}
+td.hdlist1 {
+  vertical-align: top;
+  font-style: normal;
+  padding-right: 0.8em;
+  color: navy;
+}
+td.hdlist2 {
+  vertical-align: top;
+}
+div.hdlist.compact tr {
+  margin: 0;
+  padding-bottom: 0;
+}
+
+.comment {
+  background: yellow;
+}
+
+.footnote, .footnoteref {
+  font-size: 0.8em;
+}
+
+span.footnote, span.footnoteref {
+  vertical-align: super;
+}
+
+#footnotes {
+  margin: 20px 0 20px 0;
+  padding: 7px 0 0 0;
+}
+
+#footnotes div.footnote {
+  margin: 0 0 5px 0;
+}
+
+#footnotes hr {
+  border: none;
+  border-top: 1px solid silver;
+  height: 1px;
+  text-align: left;
+  margin-left: 0;
+  width: 20%;
+  min-width: 100px;
+}
+
+div.colist td {
+  padding-right: 0.5em;
+  padding-bottom: 0.3em;
+  vertical-align: top;
+}
+div.colist td img {
+  margin-top: 0.3em;
+}
+
+@media print {
+  #footer-badges { display: none; }
+}
+
+#toc {
+  margin-bottom: 2.5em;
+}
+
+#toctitle {
+  color: #527bbd;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-top: 1.0em;
+  margin-bottom: 0.1em;
+}
+
+div.toclevel0, div.toclevel1, div.toclevel2, div.toclevel3, div.toclevel4 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+div.toclevel2 {
+  margin-left: 2em;
+  font-size: 0.9em;
+}
+div.toclevel3 {
+  margin-left: 4em;
+  font-size: 0.9em;
+}
+div.toclevel4 {
+  margin-left: 6em;
+  font-size: 0.9em;
+}
+
+span.aqua { color: aqua; }
+span.black { color: black; }
+span.blue { color: blue; }
+span.fuchsia { color: fuchsia; }
+span.gray { color: gray; }
+span.green { color: green; }
+span.lime { color: lime; }
+span.maroon { color: maroon; }
+span.navy { color: navy; }
+span.olive { color: olive; }
+span.purple { color: purple; }
+span.red { color: red; }
+span.silver { color: silver; }
+span.teal { color: teal; }
+span.white { color: white; }
+span.yellow { color: yellow; }
+
+span.aqua-background { background: aqua; }
+span.black-background { background: black; }
+span.blue-background { background: blue; }
+span.fuchsia-background { background: fuchsia; }
+span.gray-background { background: gray; }
+span.green-background { background: green; }
+span.lime-background { background: lime; }
+span.maroon-background { background: maroon; }
+span.navy-background { background: navy; }
+span.olive-background { background: olive; }
+span.purple-background { background: purple; }
+span.red-background { background: red; }
+span.silver-background { background: silver; }
+span.teal-background { background: teal; }
+span.white-background { background: white; }
+span.yellow-background { background: yellow; }
+
+span.big { font-size: 2em; }
+span.small { font-size: 0.6em; }
+
+span.underline { text-decoration: underline; }
+span.overline { text-decoration: overline; }
+span.line-through { text-decoration: line-through; }
+
+div.unbreakable { page-break-inside: avoid; }
+
+
+/*
+ * xhtml11 specific
+ *
+ * */
+
+div.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.tableblock > table {
+  border: 3px solid #527bbd;
+}
+thead, p.table.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.table {
+  margin-top: 0;
+}
+/* Because the table frame attribute is overriden by CSS in most browsers. */
+div.tableblock > table[frame="void"] {
+  border-style: none;
+}
+div.tableblock > table[frame="hsides"] {
+  border-left-style: none;
+  border-right-style: none;
+}
+div.tableblock > table[frame="vsides"] {
+  border-top-style: none;
+  border-bottom-style: none;
+}
+
+
+/*
+ * html5 specific
+ *
+ * */
+
+table.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+thead, p.tableblock.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.tableblock {
+  margin-top: 0;
+}
+table.tableblock {
+  border-width: 3px;
+  border-spacing: 0px;
+  border-style: solid;
+  border-color: #527bbd;
+  border-collapse: collapse;
+}
+th.tableblock, td.tableblock {
+  border-width: 1px;
+  padding: 4px;
+  border-style: solid;
+  border-color: #527bbd;
+}
+
+table.tableblock.frame-topbot {
+  border-left-style: hidden;
+  border-right-style: hidden;
+}
+table.tableblock.frame-sides {
+  border-top-style: hidden;
+  border-bottom-style: hidden;
+}
+table.tableblock.frame-none {
+  border-style: hidden;
+}
+
+th.tableblock.halign-left, td.tableblock.halign-left {
+  text-align: left;
+}
+th.tableblock.halign-center, td.tableblock.halign-center {
+  text-align: center;
+}
+th.tableblock.halign-right, td.tableblock.halign-right {
+  text-align: right;
+}
+
+th.tableblock.valign-top, td.tableblock.valign-top {
+  vertical-align: top;
+}
+th.tableblock.valign-middle, td.tableblock.valign-middle {
+  vertical-align: middle;
+}
+th.tableblock.valign-bottom, td.tableblock.valign-bottom {
+  vertical-align: bottom;
+}
+
+
+/*
+ * manpage specific
+ *
+ * */
+
+body.manpage h1 {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  border-top: 2px solid silver;
+  border-bottom: 2px solid silver;
+}
+body.manpage h2 {
+  border-style: none;
+}
+body.manpage div.sectionbody {
+  margin-left: 3em;
+}
+
+@media print {
+  body.manpage div#toc { display: none; }
+}
+
+
+</style>
+<script type="text/javascript">
+/*<![CDATA[*/
+var asciidoc = {  // Namespace.
+
+/////////////////////////////////////////////////////////////////////
+// Table Of Contents generator
+/////////////////////////////////////////////////////////////////////
+
+/* Author: Mihai Bazon, September 2002
+ * http://students.infoiasi.ro/~mishoo
+ *
+ * Table Of Content generator
+ * Version: 0.4
+ *
+ * Feel free to use this script under the terms of the GNU General Public
+ * License, as long as you do not remove or alter this notice.
+ */
+
+ /* modified by Troy D. Hanson, September 2006. License: GPL */
+ /* modified by Stuart Rackham, 2006, 2009. License: GPL */
+
+// toclevels = 1..4.
+toc: function (toclevels) {
+
+  function getText(el) {
+    var text = "";
+    for (var i = el.firstChild; i != null; i = i.nextSibling) {
+      if (i.nodeType == 3 /* Node.TEXT_NODE */) // IE doesn't speak constants.
+        text += i.data;
+      else if (i.firstChild != null)
+        text += getText(i);
+    }
+    return text;
+  }
+
+  function TocEntry(el, text, toclevel) {
+    this.element = el;
+    this.text = text;
+    this.toclevel = toclevel;
+  }
+
+  function tocEntries(el, toclevels) {
+    var result = new Array;
+    var re = new RegExp('[hH]([1-'+(toclevels+1)+'])');
+    // Function that scans the DOM tree for header elements (the DOM2
+    // nodeIterator API would be a better technique but not supported by all
+    // browsers).
+    var iterate = function (el) {
+      for (var i = el.firstChild; i != null; i = i.nextSibling) {
+        if (i.nodeType == 1 /* Node.ELEMENT_NODE */) {
+          var mo = re.exec(i.tagName);
+          if (mo && (i.getAttribute("class") || i.getAttribute("className")) != "float") {
+            result[result.length] = new TocEntry(i, getText(i), mo[1]-1);
+          }
+          iterate(i);
+        }
+      }
+    }
+    iterate(el);
+    return result;
+  }
+
+  var toc = document.getElementById("toc");
+  if (!toc) {
+    return;
+  }
+
+  // Delete existing TOC entries in case we're reloading the TOC.
+  var tocEntriesToRemove = [];
+  var i;
+  for (i = 0; i < toc.childNodes.length; i++) {
+    var entry = toc.childNodes[i];
+    if (entry.nodeName.toLowerCase() == 'div'
+     && entry.getAttribute("class")
+     && entry.getAttribute("class").match(/^toclevel/))
+      tocEntriesToRemove.push(entry);
+  }
+  for (i = 0; i < tocEntriesToRemove.length; i++) {
+    toc.removeChild(tocEntriesToRemove[i]);
+  }
+
+  // Rebuild TOC entries.
+  var entries = tocEntries(document.getElementById("content"), toclevels);
+  for (var i = 0; i < entries.length; ++i) {
+    var entry = entries[i];
+    if (entry.element.id == "")
+      entry.element.id = "_toc_" + i;
+    var a = document.createElement("a");
+    a.href = "#" + entry.element.id;
+    a.appendChild(document.createTextNode(entry.text));
+    var div = document.createElement("div");
+    div.appendChild(a);
+    div.className = "toclevel" + entry.toclevel;
+    toc.appendChild(div);
+  }
+  if (entries.length == 0)
+    toc.parentNode.removeChild(toc);
+},
+
+
+/////////////////////////////////////////////////////////////////////
+// Footnotes generator
+/////////////////////////////////////////////////////////////////////
+
+/* Based on footnote generation code from:
+ * http://www.brandspankingnew.net/archive/2005/07/format_footnote.html
+ */
+
+footnotes: function () {
+  // Delete existing footnote entries in case we're reloading the footnodes.
+  var i;
+  var noteholder = document.getElementById("footnotes");
+  if (!noteholder) {
+    return;
+  }
+  var entriesToRemove = [];
+  for (i = 0; i < noteholder.childNodes.length; i++) {
+    var entry = noteholder.childNodes[i];
+    if (entry.nodeName.toLowerCase() == 'div' && entry.getAttribute("class") == "footnote")
+      entriesToRemove.push(entry);
+  }
+  for (i = 0; i < entriesToRemove.length; i++) {
+    noteholder.removeChild(entriesToRemove[i]);
+  }
+
+  // Rebuild footnote entries.
+  var cont = document.getElementById("content");
+  var spans = cont.getElementsByTagName("span");
+  var refs = {};
+  var n = 0;
+  for (i=0; i<spans.length; i++) {
+    if (spans[i].className == "footnote") {
+      n++;
+      var note = spans[i].getAttribute("data-note");
+      if (!note) {
+        // Use [\s\S] in place of . so multi-line matches work.
+        // Because JavaScript has no s (dotall) regex flag.
+        note = spans[i].innerHTML.match(/\s*\[([\s\S]*)]\s*/)[1];
+        spans[i].innerHTML =
+          "[<a id='_footnoteref_" + n + "' href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+        spans[i].setAttribute("data-note", note);
+      }
+      noteholder.innerHTML +=
+        "<div class='footnote' id='_footnote_" + n + "'>" +
+        "<a href='#_footnoteref_" + n + "' title='Return to text'>" +
+        n + "</a>. " + note + "</div>";
+      var id =spans[i].getAttribute("id");
+      if (id != null) refs["#"+id] = n;
+    }
+  }
+  if (n == 0)
+    noteholder.parentNode.removeChild(noteholder);
+  else {
+    // Process footnoterefs.
+    for (i=0; i<spans.length; i++) {
+      if (spans[i].className == "footnoteref") {
+        var href = spans[i].getElementsByTagName("a")[0].getAttribute("href");
+        href = href.match(/#.*/)[0];  // Because IE return full URL.
+        n = refs[href];
+        spans[i].innerHTML =
+          "[<a href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+      }
+    }
+  }
+},
+
+install: function(toclevels) {
+  var timerId;
+
+  function reinstall() {
+    asciidoc.footnotes();
+    if (toclevels) {
+      asciidoc.toc(toclevels);
+    }
+  }
+
+  function reinstallAndRemoveTimer() {
+    clearInterval(timerId);
+    reinstall();
+  }
+
+  timerId = setInterval(reinstall, 500);
+  if (document.addEventListener)
+    document.addEventListener("DOMContentLoaded", reinstallAndRemoveTimer, false);
+  else
+    window.onload = reinstallAndRemoveTimer;
+}
+
+}
+asciidoc.install();
+/*]]>*/
+</script>
+</head>
+<body class="article">
+<div id="header">
+<h1>Week 3 tutorial postscript</h1>
+<span id="author">Christopher Di Bella</span><br />
+<span id="email"><code>&lt;<a href="mailto:cjdb.ns@gmail.com">cjdb.ns@gmail.com</a>&gt;</code></span><br />
+<span id="revnumber">version 1,</span>
+<span id="revdate">TBA</span>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="_conversions">Conversions</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+A conversion is when we change on object of type T to type U.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+For example, converting a <code>char</code> to an <code>int</code>.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Conversions may be implicit or explicit.
+</p>
+</li>
+</ul></div>
+<div class="sect2">
+<h3 id="_narrowing_conversions">Narrowing conversions</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+Narrowing conversions happen when we try to fit more information into an object than is allowed.
+</p>
+</li>
+<li>
+<p>
+Examples of narrowing conversions include:
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+<code>int</code> to <code>char</code>
+</p>
+</li>
+<li>
+<p>
+<code>int</code> to <code>float</code>
+</p>
+</li>
+<li>
+<p>
+<code>int</code> to <code>unsigned int</code>
+</p>
+</li>
+<li>
+<p>
+<code>long</code> to <code>int</code>, even if <code>sizeof(int) == sizeof(long)</code>
+</p>
+</li>
+<li>
+<p>
+<code>float</code> to <code>int</code>
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="_promotions">Promotions</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+A promotion is when we <em>upgrade</em> the type of an object.
+</p>
+</li>
+<li>
+<p>
+Examples of promotions include:
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+<code>bool</code> to <code>int</code>
+</p>
+</li>
+<li>
+<p>
+<code>char</code> to <code>int</code>
+</p>
+</li>
+<li>
+<p>
+<code>float</code> to <code>double</code>
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="_implicit_conversions">Implicit conversions</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+An implicit conversion is when the compiler performs a conversion without us telling it to do so.
+</p>
+</li>
+<li>
+<p>
+Since we didn&#8217;t say that the conversion should happen, did we actually mean it?
+</p>
+</li>
+<li>
+<p>
+With the exception of promotions and conversion-to-<code>bool</code>, we should avoid implicit conversions.
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> i <span style="color: #990000">=</span> <span style="color: #993399">100</span><span style="color: #990000">;</span>
+i <span style="color: #990000">=</span> <span style="color: #993399">42.5</span><span style="color: #990000">;</span> <span style="font-style: italic"><span style="color: #9A1900">// an implicit narrowing conversion to 42, avoid me</span></span>
+
+<span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> b <span style="color: #990000">=</span> <span style="font-weight: bold"><span style="color: #0000FF">true</span></span><span style="color: #990000">;</span>
+i <span style="color: #990000">=</span> <span style="font-weight: bold"><span style="color: #0000FF">true</span></span><span style="color: #990000">;</span> <span style="font-style: italic"><span style="color: #9A1900">// a promotion, okay</span></span></tt></pre></div></div>
+<div class="ulist"><ul>
+<li>
+<p>
+Not everything can be implicitly converted. For example:
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> v <span style="color: #990000">=</span> std<span style="color: #990000">::</span>vector<span style="color: #990000">&lt;</span><span style="color: #009900">int</span><span style="color: #990000">&gt;</span><span style="color: #FF0000">{}</span><span style="color: #990000">;</span>
+v <span style="color: #990000">=</span> <span style="color: #993399">1</span><span style="color: #990000">;</span> <span style="font-style: italic"><span style="color: #9A1900">// error, can't convert int to vector&lt;int&gt;</span></span></tt></pre></div></div>
+</div>
+<div class="sect2">
+<h3 id="_explicit_conversions">Explicit conversions</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+An explicit conversion is when the programmer tells the compiler (and other programmers) that a
+  conversion <em>needs</em> to happen.
+</p>
+</li>
+<li>
+<p>
+There are C-style casts and C++-style casts.
+</p>
+</li>
+</ul></div>
+<div class="sect3">
+<h4 id="_c_style_casting">C-style casting</h4>
+<div class="ulist"><ul>
+<li>
+<p>
+Very simple.
+</p>
+</li>
+<li>
+<p>
+Perform three out of four C++-style casts in one.
+</p>
+</li>
+<li>
+<p>
+You never know which cast is actually happening.
+</p>
+</li>
+<li>
+<p>
+Prefer C++-style casts to C-style casts.
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> i <span style="color: #990000">=</span> <span style="color: #993399">0</span><span style="color: #990000">;</span>
+i <span style="color: #990000">=</span> <span style="color: #990000">(</span><span style="color: #009900">int</span><span style="color: #990000">)</span><span style="color: #993399">42.5</span><span style="color: #990000">;</span> <span style="font-style: italic"><span style="color: #9A1900">// don't do this</span></span></tt></pre></div></div>
+</div>
+<div class="sect3">
+<h4 id="_code_static_cast_code"><code>static_cast</code></h4>
+<div class="ulist"><ul>
+<li>
+<p>
+One form of standard C++-style cast.
+</p>
+</li>
+<li>
+<p>
+Used to convert from type-to-type.
+</p>
+</li>
+<li>
+<p>
+The above C-style cast is supposed to mean <code>static_cast</code>, but it might mean a different cast.
+</p>
+</li>
+<li>
+<p>
+If you have a reason to cast, but you don&#8217;t have a reason not to use <code>static_cast</code>, use <code>static_cast</code>.
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> i <span style="color: #990000">=</span> <span style="color: #993399">0</span><span style="color: #990000">;</span>
+i <span style="color: #990000">=</span> <span style="font-weight: bold"><span style="color: #0000FF">static_cast</span></span><span style="color: #990000">&lt;</span><span style="color: #009900">int</span><span style="color: #990000">&gt;(</span><span style="color: #993399">42.5</span><span style="color: #990000">);</span> <span style="font-style: italic"><span style="color: #9A1900">// explicitly converts 42.5 to an int</span></span></tt></pre></div></div>
+</div>
+<div class="sect3">
+<h4 id="_code_dynamic_cast_code"><code>dynamic_cast</code></h4>
+<div class="ulist"><ul>
+<li>
+<p>
+Another standard C++-style cast.
+</p>
+</li>
+<li>
+<p>
+Used with runtime polymorphism.
+</p>
+</li>
+<li>
+<p>
+We will explore this later.
+</p>
+</li>
+<li>
+<p>
+There are good reasons to use <code>dynamic_cast</code> over <code>static_cast</code>.
+</p>
+</li>
+</ul></div>
+</div>
+<div class="sect3">
+<h4 id="_code_reinterpret_cast_code"><code>reinterpret_cast</code></h4>
+<div class="ulist"><ul>
+<li>
+<p>
+Another standard C++-style cast.
+</p>
+</li>
+<li>
+<p>
+This conversion essentially takes the bit pattern of an object and injects it into a new type.
+</p>
+</li>
+<li>
+<p>
+You need a <em>very</em> good reason to use <code>reinterpret_cast</code>.
+</p>
+</li>
+</ul></div>
+</div>
+<div class="sect3">
+<h4 id="_code_const_cast_code"><code>const_cast</code></h4>
+<div class="ulist"><ul>
+<li>
+<p>
+Another standard C++-style cast.
+</p>
+</li>
+<li>
+<p>
+Casts away the `const`ness of an object for an expression.
+</p>
+</li>
+<li>
+<p>
+Writing to an object that has had its `const`ness cast away might yield undefined behaviour.
+</p>
+</li>
+<li>
+<p>
+Do not use <code>const_cast</code>.
+</p>
+</li>
+</ul></div>
+</div>
+<div class="sect3">
+<h4 id="_code_gsl_narrow_cast_code"><code>gsl::narrow_cast</code></h4>
+<div class="ulist"><ul>
+<li>
+<p>
+A way of signalling that you are performing a narrowing conversion.
+</p>
+</li>
+<li>
+<p>
+Identical to <code>static_cast</code>
+</p>
+</li>
+<li>
+<p>
+Not a standard C++-stlye cast.
+</p>
+</li>
+<li>
+<p>
+Found in the Guideline Support Library.
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">"gsl.h"</span>
+
+<span style="color: #009900">int</span> <span style="font-weight: bold"><span style="color: #000000">main</span></span><span style="color: #990000">()</span>
+<span style="color: #FF0000">{</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> i <span style="color: #990000">=</span> <span style="color: #993399">0</span><span style="color: #990000">;</span>
+   i <span style="color: #990000">=</span> gsl<span style="color: #990000">::</span>narrow_cast<span style="color: #990000">&lt;</span><span style="color: #009900">int</span><span style="color: #990000">&gt;(</span><span style="color: #993399">42.5</span><span style="color: #990000">);</span> <span style="font-style: italic"><span style="color: #9A1900">// helps to explain why we are casting</span></span>
+   std<span style="color: #990000">::</span>cout <span style="color: #990000">&lt;&lt;</span> i <span style="color: #990000">&lt;&lt;</span> <span style="color: #FF0000">'</span><span style="color: #CC33CC">\n</span><span style="color: #FF0000">'</span><span style="color: #990000">;</span>
+<span style="color: #FF0000">}</span></tt></pre></div></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="title">Further reading</div>
+<div class="ulist"><ul>
+<li>
+<p>
+Stroustrup, B. <em>The C++ programming language</em>. Fourth edition. p.298&#8201;&#8212;&#8201;303. 2013. Pearson
+  Education, Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+Stroustrup, B. <em>A tour of C++</em>. p.47, 161. 2014. Pearson Education, Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+Stroustrup, B. <em>Programming: principles and practice using C++</em>. Second edition. p.78&#8201;&#8212;&#8201;83. 2014.
+  Pearson Education, Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+Meyers, S. <em>More effective C++: 35 new ways to improve your programs and designs</em>. p.12&#8201;&#8212;&#8201;16. 1996.
+  Addison Wesley. Westford, MA.
+</p>
+</li>
+<li>
+<p>
+Sutter, H. <em>Exceptional C++ style: 40 new engineering puzzles, programming problems, and
+  solutions</em>. p.184&#8201;&#8212;&#8201;189. 2005. Pearson Education, Inc. Boston, MA.
+</p>
+</li>
+<li>
+<p>
+Sutter, H. Alexandrescu, A. <em>C++ coding standards: 101 rules, guidelines, and best practices</em>.
+  p.176&#8201;&#8212;&#8201;181. 2005. Pearson Education, Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+<a href="http://en.cppreference.com/w/cpp/language/static_cast">cppreference.com&#8201;&#8212;&#8201;<code>static_cast</code>
+  conversion</a>
+</p>
+</li>
+<li>
+<p>
+<a href="http://en.cppreference.com/w/cpp/language/dynamic_cast">cppreference.com&#8201;&#8212;&#8201;<code>dynamic_cast</code>
+  conversion</a>
+</p>
+</li>
+<li>
+<p>
+<a href="http://en.cppreference.com/w/cpp/language/reinterpret_cast">cppreference.com&#8201;&#8212;&#8201;  <code>reinterpret_cast</code> conversion</a>
+</p>
+</li>
+<li>
+<p>
+<a href="http://en.cppreference.com/w/cpp/language/const_cast">cppreference.com&#8201;&#8212;&#8201;<code>const_cast</code> conversion</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rp-what">CppCoreGuidelines
+ &#8201;&#8212;&#8201;P.3: Express intent</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rp-typesafe">CppCoreGuidelines
+ &#8201;&#8212;&#8201;P.4: Ideally, a program should be statically type safe</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Res-narrowing">CppCoreGuidelines
+ &#8201;&#8212;&#8201;ES.46: Avoid lossy (narrowing, truncating) arithmetic conversions</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Res-casts">CppCoreGuidelines
+ &#8201;&#8212;&#8201;ES.48: Avoid casts</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Res-casts-named">CppCoreGuidelines
+ &#8201;&#8212;&#8201;ES.49: If you must use a cast, use a named cast</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Res-casts-const">CppCoreGuidelines
+ &#8201;&#8212;&#8201;ES.50: Don&#8217;t cast away <code>const</code></a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Pro-type-reinterpretcast">CppCoreGuidelines
+ &#8201;&#8212;&#8201;Type.1: Don&#8217;t use <code>reinterpret_cast</code></a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Pro-type-constcast">CppCoreGuidelines
+ &#8201;&#8212;&#8201;Type.3: Don&#8217;t use <code>const_cast</code> to cast away <code>const</code> (i.e., at all)</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Pro-type-cstylecast">CppCoreGuidelines
+ &#8201;&#8212;&#8201;Type.4: Don&#8217;t use C-style <code>(T)expression</code> casts that would perform a <code>static_cast</code> downcast,
+  <code>const_cast</code>, or <code>reinterpret_cast</code></a>
+</p>
+</li>
+</ul></div>
+</td>
+</tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_vector">vector</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+Dynamically sized array container.
+</p>
+</li>
+<li>
+<p>
+<code>vector</code> should be your default container.
+</p>
+</li>
+<li>
+<p>
+You should justify why you <em>need</em> to use something other than <code>vector</code>.
+</p>
+</li>
+<li>
+<p>
+Don&#8217;t use <code>vector&lt;bool&gt;</code>. Prefer <code>deque&lt;bool&gt;</code>.
+</p>
+</li>
+</ul></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="title">Further reading</div>
+<div class="ulist"><ul>
+<li>
+<p>
+Stroustrup, B. <em>The C++ programming language</em>. Fourth edition. p.902&#8201;&#8212;&#8201;906, 981&#8201;&#8212;&#8201;982.
+  Pearson Education, Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+Stroustrup, B. <em>A tour of C++</em>. p.96&#8201;&#8212;&#8201;99. Pearson Education, Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+Stroustrup, B. <em>Programming: principles and practice using C++</em>. Second edition. 2014. Pearson
+  Education, Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+Meyers, S. <em>Effective STL: 50 specific ways to improve your use of the standard template
+  library</em>. p.63&#8201;&#8212;&#8201;66, 79&#8201;&#8212;&#8201;82. 2001. Pearson Education, Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+Sutter, H. <em>More exceptional C++: 40 new engineering puzzles, programming problems, and
+  solutions</em>. p.36&#8201;&#8212;&#8201;53. 2002. Pearson Education, Inc. Boston, MA.
+</p>
+</li>
+<li>
+<p>
+Sutter, H. <em>Exceptional C++ style: 40 new engineering puzzles, programming problems, and
+  solutions</em>. p.2&#8201;&#8212;&#8201;9. 2005. Pearson Education, Inc. Boston, MA.
+</p>
+</li>
+<li>
+<p>
+Sutter, H. Alexandrescu, A. <em>C++ coding standards: 101 rules, guidelines, and best practices</em>.
+  p.149&#8201;&#8212;&#8201;158. 2005. Pearson Education, Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+<a href="http://en.cppreference.com/w/cpp/container/vector">cppreference.com&#8201;&#8212;&#8201;<code>std::vector</code></a>
+</p>
+</li>
+<li>
+<p>
+<a href="http://en.cppreference.com/w/cpp/container/vector_bool">cppreference.com&#8201;&#8212;&#8201;<code>std::vector&lt;bool&gt;</code></a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rsl-arrays">CppCoreGuidelines
+ &#8201;&#8212;&#8201;SL.con.1: Prefer using STL <code>array</code> or <code>vector</code> instead of a C array</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rsl-vector">CppCoreGuidelines
+ &#8201;&#8212;&#8201;SL.con.2: Prefer using STL <code>vector</code> by default unless you have a reason to use a different container</a>
+</p>
+</li>
+</ul></div>
+</td>
+</tr></table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_array">array</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+Fixed-sized array container.
+</p>
+</li>
+<li>
+<p>
+If you must absolutely use a fixed-sized array, use <code>array</code>.
+</p>
+</li>
+<li>
+<p>
+You need to justify why a fixed-sized array is a better choice than <code>vector</code>.
+</p>
+</li>
+<li>
+<p>
+If you argue performance, measure.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+If you claim <code>array</code> is faster, write your program with a <code>vector</code>, time it, recompile with
+     <code>array</code>, and then re-time it.
+</p>
+</li>
+<li>
+<p>
+If you claim <code>vector</code> uses too much space, provide results with a profiler such as <code>memcheck</code>
+     or <code>massif</code>.
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="title">Further reading</div>
+<div class="ulist"><ul>
+<li>
+<p>
+Stroustrup, B. <em>The C++ programming language</em>. Fourth edition. p.974&#8201;&#8212;&#8201;977. 2013. Pearson
+  Education, Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+Stroustrup, B. <em>A tour of C++</em>. p.122&#8201;&#8212;&#8201;123. 2014. Pearson Education, Inc. Upper Saddle River,
+  NJ.
+</p>
+</li>
+<li>
+<p>
+Stroustrup, B. <em>Programming: principles and practice using C++</em>. Second edition. p.747&#8201;&#8212;&#8201;748. 2014.
+  Pearson Education, Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+<a href="http://en.cppreference.com/w/cpp/container/array">cppreference.com&#8201;&#8212;&#8201;<code>std::array</code></a>
+</p>
+</li>
+<li>
+<p>
+<a href="http://valgrind.org">Valgrind</a>&#8201;&#8212;&#8201;a powerful profiling tool
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Res-stack">CppCoreGuidelines
+ &#8201;&#8212;&#8201;ES.27: Use <code>std::array</code> or <code>stack_array</code> for arrays on the stack</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rsl-arrays">CppCoreGuidelines
+ &#8201;&#8212;&#8201;SL.con.1 Prefer using STL <code>array</code> or <code>vector</code> instead of a C array</a>
+</p>
+</li>
+</ul></div>
+</td>
+</tr></table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_c_style_arrays_and_code_gsl_span_code">C-style arrays and <code>gsl::span</code></h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+Don&#8217;t write C-style arrays anymore, even if you need to call code written in C.
+</p>
+</li>
+<li>
+<p>
+Both <code>vector</code> and <code>array</code> can be passed to C functions without a problem.
+</p>
+</li>
+<li>
+<p>
+If you are supporting code that already uses C-style arrays and you can&#8217;t change them, start
+  using <code>gsl::span</code>.
+</p>
+</li>
+<li>
+<p>
+<code>gsl::span</code> isn&#8217;t covered in COMP6771.
+</p>
+</li>
+</ul></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="title">Further reading (all from CppCoreGuidelines)</div>
+<div class="ulist"><ul>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Ri-array">I.13:
+  Do not pass an array as a single pointer</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#bounds1-dont-use-pointer-arithmetic-use-span-instead">Bounds.1:
+  Don&#8217;t use pointer arithmetic. Use <code>span</code> instead.</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#bounds3-no-array-to-pointer-decay">Bounds.3:
+  No array-to-pointer decay.</a>
+</p>
+</li>
+</ul></div>
+</td>
+</tr></table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_code_string_code"><code>string</code></h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+C++ introduced <code>std::string</code>, which is a dynamically-sized string type.
+</p>
+</li>
+<li>
+<p>
+Prefer it over C-style strings.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+Similarly to C-style arrays, the GSL offers <code>gsl::string_span</code> for C-style strings.
+</p>
+</li>
+<li>
+<p>
+Like <code>gsl::span</code>, <code>gsl::string_span</code> is not covered in COMP6771, and is shown for completeness
+     only.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+The string literal you are familiar with <code>"Hello, world!\n"</code>, is of type <code>const char*</code>.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+It is <code>const</code> because you cannot change a string literal at runtime.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+If you need to interface with a function that only accepts a <code>char*</code> or <code>const char*</code>, you can
+  use <code>string::c_str</code> to get a pointer to the data.
+</p>
+</li>
+<li>
+<p>
+<code>std::string</code> is a character-based <code>basic_string</code>. There are four standard types of <code>basic_string</code>:
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+<code>std::string</code> for <code>char</code>
+</p>
+</li>
+<li>
+<p>
+<code>std::wstring</code> for <code>wchar_t</code>
+</p>
+</li>
+<li>
+<p>
+<code>std::u16string</code> for <code>char16_t</code>
+</p>
+</li>
+<li>
+<p>
+<code>std::u32string</code> for <code>char32_t</code>
+</p>
+</li>
+<li>
+<p>
+Only use <code>std::string</code> unless you <em>need</em> to use one of the others.
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="title"><code>std::string</code> literals</div>
+<div class="ulist"><ul>
+<li>
+<p>
+C++11 introduced user-defined literals.
+</p>
+</li>
+<li>
+<p>
+C++14 introduced a user-defined literal for <code>string</code> so that you don&#8217;t need to go through
+  the rigmarole of writing out <code>std::string{"Hello, world!\n"}</code> to make a <code>string</code>.
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;iostream&gt;</span>
+<span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;string&gt;</span>
+
+<span style="color: #009900">int</span> <span style="font-weight: bold"><span style="color: #000000">main</span></span><span style="color: #990000">()</span>
+<span style="color: #FF0000">{</span>
+   std<span style="color: #990000">::</span>cout <span style="color: #990000">&lt;&lt;</span> <span style="color: #FF0000">"Hello, world!</span><span style="color: #CC33CC">\n</span><span style="color: #FF0000">"</span><span style="color: #990000">;</span> <span style="font-style: italic"><span style="color: #9A1900">// use of a const char*... okay</span></span>
+
+   <span style="font-style: italic"><span style="color: #9A1900">// This is not the same as using `using namespace std`, as std::literals is a namespace within</span></span>
+   <span style="font-style: italic"><span style="color: #9A1900">// namespace std. Only std::literals is introduced into the current namespace.</span></span>
+
+   <span style="font-style: italic"><span style="color: #9A1900">// Do not place this in any larger scope than you need it, and never place it in a header.</span></span>
+
+   <span style="font-style: italic"><span style="color: #9A1900">// Provided you use a user-defined literal at least once in the scope you have placed this</span></span>
+   <span style="font-style: italic"><span style="color: #9A1900">// namespace directive, I will not deduct marks for its use (as I encourage user-defined</span></span>
+   <span style="font-style: italic"><span style="color: #9A1900">// literals, and there doesn't appear to be any other way to use these).</span></span>
+   <span style="font-weight: bold"><span style="color: #0000FF">using</span></span> <span style="font-weight: bold"><span style="color: #0000FF">namespace</span></span> std<span style="color: #990000">::</span>literals<span style="color: #990000">;</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> my_name <span style="color: #990000">=</span> <span style="color: #FF0000">"hello"</span>s<span style="color: #990000">;</span> <span style="font-style: italic"><span style="color: #9A1900">// that's the same as saying `auto my_name = std::string{"hello "};`</span></span>
+   std<span style="color: #990000">::</span>cout <span style="color: #990000">&lt;&lt;</span> my_name <span style="color: #990000">&lt;&lt;</span> <span style="color: #FF0000">'</span><span style="color: #CC33CC">\n</span><span style="color: #FF0000">'</span><span style="color: #990000">;</span>
+<span style="color: #FF0000">}</span></tt></pre></div></div>
+</td>
+</tr></table>
+</div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="title">Further reading</div>
+<div class="ulist"><ul>
+<li>
+<p>
+Stroustrup, B. <em>The C++ programming language</em>. Fourth edition. p.1033&#8201;&#8212;&#8201;1050. 2013. Pearson
+  Education, Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+Stroustrup, B. <em>A tour of C++</em>. p.75&#8201;&#8212;&#8201;84. 2014. Pearson Education, Inc. Upper Saddle River,
+  NJ.
+</p>
+</li>
+<li>
+<p>
+Stroustrup, B. <em>Programming: principles and practice using C++</em>. Second edition. 2014. Pearson
+  Education, Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+Meyers, S. <em>Effective STL: 50 specific ways to improve your use of the standard template library</em>.
+  p63&#8201;&#8212;&#8201;66. 2001. Pearson Education, Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+Sutter, H. <em>Exceptional C++: 47 engineering puzzles, programming problems, and solutions</em>. p.4
+ &#8201;&#8212;&#8201;9. 2000. Pearson Education, Inc. Indianapolis, IN.
+</p>
+</li>
+<li>
+<p>
+Sutter, H. <em>Exceptional C++ style: 40 new engineering puzzles, programming problems, and
+  solutions</em>. p.286&#8201;&#8212;&#8201;314. 2005. Pearson Education, Inc. Boston, MA.
+</p>
+</li>
+<li>
+<p>
+Sutter, H. Alexandrescu, A. <em>C++ coding standards: 101 rules, guidelines, and best practices</em>.
+  p.152&#8201;&#8212;&#8201;153. 2005. Pearson Education, Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+<a href="http://en.cppreference.com/w/cpp/string/basic_string">en.cppreference.com&#8201;&#8212;&#8201;  <code>std::basic_string</code></a>
+</p>
+</li>
+</ul></div>
+</td>
+</tr></table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_functions_and_containers">Functions and containers</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+C++ offers different ways to pass parameters.
+</p>
+</li>
+<li>
+<p>
+Remember that C++ works with <em>values</em>, similarly to C, by default.
+</p>
+</li>
+<li>
+<p>
+This is opposed to Java, which works with <em>referneces</em> by default.
+</p>
+</li>
+</ul></div>
+<div class="sect2">
+<h3 id="_functions_whose_purpose_is_to_create_a_container">Functions whose purpose is to create a container</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+Should <em>pass arguments</em> that dictate the <em>creation</em> of the container.
+</p>
+</li>
+<li>
+<p>
+Should <em>return</em> the container you&#8217;ve created.
+</p>
+</li>
+<li>
+<p>
+Should start with <code>make_</code>.
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;random&gt;</span>
+<span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;vector&gt;</span>
+
+std<span style="color: #990000">::</span><span style="color: #008080">vector&lt;int&gt;</span> <span style="font-weight: bold"><span style="color: #000000">make_crowd</span></span><span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">const</span></span> <span style="color: #009900">int</span> children<span style="color: #990000">,</span> <span style="font-weight: bold"><span style="color: #0000FF">const</span></span> <span style="color: #009900">int</span> adults<span style="color: #990000">,</span> <span style="font-weight: bold"><span style="color: #0000FF">const</span></span> <span style="color: #009900">int</span> seniors<span style="color: #990000">)</span>
+<span style="color: #FF0000">{</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> crowd <span style="color: #990000">=</span> std<span style="color: #990000">::</span>vector<span style="color: #990000">&lt;</span><span style="color: #009900">int</span><span style="color: #990000">&gt;</span><span style="color: #FF0000">{}</span><span style="color: #990000">;</span>
+
+   <span style="font-style: italic"><span style="color: #9A1900">// random number generator in C++... much better than what you're used to!</span></span>
+   std<span style="color: #990000">::</span><span style="color: #008080">random_device</span> device<span style="color: #990000">;</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> generator <span style="color: #990000">=</span> std<span style="color: #990000">::</span>mt19937<span style="color: #FF0000">{</span> <span style="font-weight: bold"><span style="color: #000000">device</span></span><span style="color: #990000">()</span> <span style="color: #FF0000">}</span><span style="color: #990000">;</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> distribute <span style="color: #990000">=</span> std<span style="color: #990000">::</span>uniform_int_distribution<span style="color: #990000">&lt;&gt;</span><span style="color: #FF0000">{</span><span style="color: #993399">0</span><span style="color: #990000">,</span> <span style="color: #993399">17</span><span style="color: #FF0000">}</span><span style="color: #990000">;</span>
+
+   <span style="font-weight: bold"><span style="color: #0000FF">for</span></span> <span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> i <span style="color: #990000">=</span> <span style="color: #993399">0</span><span style="color: #990000">;</span> i <span style="color: #990000">&lt;</span> children<span style="color: #990000">;</span> <span style="color: #990000">++</span>i<span style="color: #990000">)</span>
+      crowd<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">push_back</span></span><span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #000000">distribute</span></span><span style="color: #990000">(</span>generator<span style="color: #990000">));</span>
+
+   distribute <span style="color: #990000">=</span> std<span style="color: #990000">::</span>uniform_int_distribution<span style="color: #990000">&lt;&gt;</span><span style="color: #FF0000">{</span><span style="color: #993399">18</span><span style="color: #990000">,</span> <span style="color: #993399">64</span><span style="color: #FF0000">}</span><span style="color: #990000">;</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">for</span></span> <span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> i <span style="color: #990000">=</span> <span style="color: #993399">0</span><span style="color: #990000">;</span> i <span style="color: #990000">&lt;</span> adults<span style="color: #990000">;</span> <span style="color: #990000">++</span>i<span style="color: #990000">)</span>
+      crowd<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">push_back</span></span><span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #000000">distribute</span></span><span style="color: #990000">(</span>generator<span style="color: #990000">));</span>
+
+   distribute <span style="color: #990000">=</span> std<span style="color: #990000">::</span>uniform_int_distribution<span style="color: #990000">&lt;&gt;</span><span style="color: #FF0000">{</span><span style="color: #993399">65</span><span style="color: #990000">,</span> <span style="color: #993399">128</span><span style="color: #FF0000">}</span><span style="color: #990000">;</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">for</span></span> <span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> i <span style="color: #990000">=</span> <span style="color: #993399">0</span><span style="color: #990000">;</span> i <span style="color: #990000">&lt;</span> seniors<span style="color: #990000">;</span> <span style="color: #990000">++</span>i<span style="color: #990000">)</span>
+      crowd<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">push_back</span></span><span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #000000">distribute</span></span><span style="color: #990000">(</span>generator<span style="color: #990000">));</span>
+
+   <span style="font-weight: bold"><span style="color: #0000FF">return</span></span> crowd<span style="color: #990000">;</span>
+<span style="color: #FF0000">}</span></tt></pre></div></div>
+</div>
+<div class="sect2">
+<h3 id="_passing_a_parameter_by_value">Passing a parameter by value</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+Copies the object.
+</p>
+</li>
+<li>
+<p>
+Similar buying a book and photocopying every page: you now have two of everything.
+</p>
+</li>
+<li>
+<p>
+Usually what you want for fundamental types.
+</p>
+</li>
+<li>
+<p>
+Usually not what you want for user-defined types.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+If you do want to pass a user-defined type by value, document it, explaining why a <em>copy</em> is
+     necessary.
+</p>
+</li>
+<li>
+<p>
+Passing a user-defined type by value is usually done when you want to make local changes to an
+     object that should not be handed back to the caller.
+</p>
+</li>
+<li>
+<p>
+Putting <code>const</code> in front of a user-defined type that has been passed by value is probably a
+     very bad idea, and would require even further justification. I cannot think of any reasons why
+     this would be a good idea.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+When passing by value, you do not (and should not) put <code>const</code> in a function prototype: only the
+  function itself.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+Putting <code>const</code> in the prototype means nothing because it can be left out of the function
+     header.
+</p>
+</li>
+<li>
+<p>
+Leaving it out of the prototype reduces the chances for lying to the reader.
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;algorithm&gt;</span>
+<span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;vector&gt;</span>
+
+<span style="color: #009900">int</span> <span style="font-weight: bold"><span style="color: #000000">accumulate_from_keyboard</span></span><span style="color: #990000">(</span>std<span style="color: #990000">::</span>vector<span style="color: #990000">&lt;</span><span style="color: #009900">int</span><span style="color: #990000">&gt;);</span>
+<span style="color: #009900">int</span> <span style="font-weight: bold"><span style="color: #000000">sum</span></span><span style="color: #990000">(</span><span style="color: #009900">int</span><span style="color: #990000">,</span> <span style="color: #009900">int</span><span style="color: #990000">);</span>
+
+<span style="color: #009900">int</span> <span style="font-weight: bold"><span style="color: #000000">accumulate_from_keyboard</span></span><span style="color: #990000">(</span>std<span style="color: #990000">::</span><span style="color: #008080">vector&lt;int&gt;</span> v<span style="color: #990000">)</span>
+<span style="color: #FF0000">{</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">for</span></span> <span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> i <span style="color: #990000">=</span> <span style="color: #993399">0</span><span style="color: #990000">;</span> std<span style="color: #990000">::</span>cin <span style="color: #990000">&gt;&gt;</span> i<span style="color: #990000">;</span> <span style="color: #990000">)</span>
+      v<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">push_back</span></span><span style="color: #990000">(</span>i<span style="color: #990000">);</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">return</span></span> std<span style="color: #990000">::</span><span style="font-weight: bold"><span style="color: #000000">accumulate</span></span><span style="color: #990000">(</span>v<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">cbegin</span></span><span style="color: #990000">(),</span> v<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">cend</span></span><span style="color: #990000">(),</span> <span style="color: #993399">0</span><span style="color: #990000">);</span>
+<span style="color: #FF0000">}</span>
+
+<span style="color: #009900">int</span> <span style="font-weight: bold"><span style="color: #000000">sum</span></span><span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">const</span></span> <span style="color: #009900">int</span> lhs<span style="color: #990000">,</span> <span style="font-weight: bold"><span style="color: #0000FF">const</span></span> <span style="color: #009900">int</span> rhs<span style="color: #990000">)</span>
+<span style="color: #FF0000">{</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">return</span></span> lhs <span style="color: #990000">+</span> rhs<span style="color: #990000">;</span>
+<span style="color: #FF0000">}</span></tt></pre></div></div>
+</div>
+<div class="sect2">
+<h3 id="_passing_a_parameter_by_reference_to_code_const_code">Passing a parameter by reference-to-<code>const</code></h3>
+<div class="ulist"><ul>
+<li>
+<p>
+Passes an alias to the object instead of a copy.
+</p>
+</li>
+<li>
+<p>
+Think of this like a mirror.
+</p>
+</li>
+<li>
+<p>
+<code>const</code> indicates that the object cannot be modified.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+Unlike when you pass by value, passing by reference-to-<code>const</code> requires the <code>const</code> specifier
+     in function prototypes.
+</p>
+</li>
+<li>
+<p>
+This is not lying to the reader.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Usually what you want for user-defined types.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+If you don&#8217;t know how you want to pass a user-defined type, pass by reference-to-<code>const</code> until
+     you work it out.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Never what you want for fundamental types.
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;algorithm&gt;</span>
+<span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;vector&gt;</span>
+
+<span style="color: #009900">int</span> <span style="font-weight: bold"><span style="color: #000000">accumulate_int</span></span><span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">const</span></span> std<span style="color: #990000">::</span>vector<span style="color: #990000">&lt;</span><span style="color: #009900">int</span><span style="color: #990000">&gt;&amp;</span> v<span style="color: #990000">)</span>
+<span style="color: #FF0000">{</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">return</span></span> std<span style="color: #990000">::</span><span style="font-weight: bold"><span style="color: #000000">accumulate</span></span><span style="color: #990000">(</span>v<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">cbegin</span></span><span style="color: #990000">(),</span> v<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">cend</span></span><span style="color: #990000">());&lt;</span>F5<span style="color: #990000">&gt;</span>
+<span style="color: #FF0000">}</span></tt></pre></div></div>
+</div>
+<div class="sect2">
+<h3 id="_passing_a_parameter_by_reference">Passing a parameter by reference</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+Passes an alias to the object instead of a copy.
+</p>
+</li>
+<li>
+<p>
+Think of this like the object itself, just in a different scope.
+</p>
+</li>
+<li>
+<p>
+Use non-<code>const</code> references for out-parameters.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+This is in contrast to passing by copy.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Pass by reference in two cases:
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+When you know that modifications to an object must persist outside of the function, or
+</p>
+</li>
+<li>
+<p>
+When you cannot pass by reference-to-<code>const</code>, but also do not intend to create a copy.
+</p>
+</li>
+<li>
+<p>
+Both reasons deserve explicit documentation.
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;algorithm&gt;</span>
+<span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;vector&gt;</span>
+
+<span style="color: #009900">void</span> <span style="font-weight: bold"><span style="color: #000000">fill_from_keyboard</span></span><span style="color: #990000">(</span>vector<span style="color: #990000">&lt;</span><span style="color: #009900">int</span><span style="color: #990000">&gt;&amp;</span> v<span style="color: #990000">)</span>
+<span style="color: #FF0000">{</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">for</span></span> <span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> i <span style="color: #990000">=</span> <span style="color: #993399">0</span><span style="color: #990000">;</span> std<span style="color: #990000">::</span>cin <span style="color: #990000">&gt;&gt;</span> i<span style="color: #990000">;</span> <span style="color: #990000">)</span>
+      v<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">push_back</span></span><span style="color: #990000">(</span>i<span style="color: #990000">);</span>
+<span style="color: #FF0000">}</span></tt></pre></div></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="title">Further reading</div>
+<div class="ulist"><ul>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rf-in">CppCoreGuidelines
+ &#8201;&#8212;&#8201;F.16: For "in" parameters, pass cheaply-copied types by value and others by reference to <code>const</code></a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rf-inout">CppCoreGuidelines
+ &#8201;&#8212;&#8201;F.17: For "in-out" parameters, pass by reference to non-<code>const</code></a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rf-consume">CppCoreGuidelines
+ &#8201;&#8212;&#8201;F.18: For "consume" parameters, pass by <code>X&amp;&amp;</code> and <code>std::move</code> the parameter</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rf-forward">CppCoreGuidelines
+ &#8201;&#8212;&#8201;F.19: For "forward" parameters, pass by <code>TP&amp;&amp;</code> and only <code>std::forward</code> the parameter</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rf-forward">CppCoreGuidelines
+ &#8201;&#8212;&#8201;F.20: For "out" output values, prefer return values to output parameters</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rf-out-multi">CppCoreGuidelines
+ &#8201;&#8212;&#8201;F.21: To return multiple "out" values, prefer returning a tuple or struct</a>
+*
+</p>
+</li>
+</ul></div>
+</td>
+</tr></table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_code_list_code"><code>list</code></h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+A doubly-linked list.
+</p>
+</li>
+<li>
+<p>
+Use when you need to insert lots of elements into the middle of a sequence.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+When inserting into the middle of small sequences, <code>vector</code> still outperforms <code>list</code>.
+</p>
+</li>
+<li>
+<p>
+Don&#8217;t take my word for it: measure my claim and try to prove me wrong!
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+If you think that you need to use a <code>list</code>, try out a <code>vector</code> first.
+</p>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+Start with <code>vector</code>.
+</p>
+</li>
+<li>
+<p>
+Measure performance with <code>vector</code>.
+</p>
+</li>
+<li>
+<p>
+Change to <code>list</code>.
+</p>
+</li>
+<li>
+<p>
+Measure performance with <code>list</code> with the same dataset.
+</p>
+</li>
+</ol></div>
+</li>
+</ul></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="title">Further reading</div>
+<div class="ulist"><ul>
+<li>
+<p>
+<a href="http://en.cppreference.com/w/cpp/container/list">en.cppreference.com&#8201;&#8212;&#8201;<code>std::list</code></a>
+</p>
+</li>
+</ul></div>
+</td>
+</tr></table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_code_forward_list_code"><code>forward_list</code></h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+A singly-linked list.
+</p>
+</li>
+<li>
+<p>
+Good for very, very small sequences (either zero elements or very close to zero).
+</p>
+</li>
+<li>
+<p>
+Size is not stored with the container.
+</p>
+</li>
+</ul></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="title">Further reading</div>
+<div class="ulist"><ul>
+<li>
+<p>
+<a href="http://en.cppreference.com/w/cpp/container/forward_list">en.cppreference.com&#8201;&#8212;&#8201;  <code>std::forward_list</code></a>
+</p>
+</li>
+</ul></div>
+</td>
+</tr></table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_code_unordered_map_code_and_code_unordered_set_code"><code>unordered_map</code> and <code>unordered_set</code></h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+An associative array.
+</p>
+</li>
+<li>
+<p>
+Employs a hash table internally.
+</p>
+</li>
+<li>
+<p>
+The average time complexity for a hash table is <code>O(1) + some distance</code> for
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+insertion,
+</p>
+</li>
+<li>
+<p>
+erasure,
+</p>
+</li>
+<li>
+<p>
+and search
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+The worst time complexity is <code>O(n)</code>.
+</p>
+</li>
+<li>
+<p>
+Avoid searching via <code>operator[]</code> for all non-fundamental key-value pairs.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+Even then, I recommend against it.
+</p>
+</li>
+<li>
+<p>
+When a key cannot be found through <code>operator[]</code>, a key-value pair is created with the default
+     value for the value.
+</p>
+</li>
+<li>
+<p>
+This is particularly bad for when you are assigning a value to a key that doesn&#8217;t already
+     exist, since the object will be default constructed, and then assigned a new value
+     immediately.
+</p>
+</li>
+<li>
+<p>
+Prefer <code>unordered_map::at</code>, which throws an exception when a key doesn&#8217;t exist, or
+</p>
+</li>
+<li>
+<p>
+a combination of <code>unordered_map::find</code> and <code>unordered_map::insert</code>/<code>unordered_map::emplace</code>,
+     or
+</p>
+</li>
+<li>
+<p>
+look into <code>unordered_map::lower_bound</code>, <code>unordered_map::upper_bound</code>, and
+     <code>unordered_map::equal_range</code>.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+When inserting/emplacing, the value will only change if the key has not previously been
+  entered.
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;iostream&gt;</span>
+<span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;unordered_map&gt;</span>
+
+<span style="color: #009900">int</span> <span style="font-weight: bold"><span style="color: #000000">main</span></span><span style="color: #990000">()</span>
+<span style="color: #FF0000">{</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> names_age <span style="color: #990000">=</span> std<span style="color: #990000">::</span>unordered_map<span style="color: #990000">&lt;</span>std<span style="color: #990000">::</span>string<span style="color: #990000">,</span> <span style="color: #009900">int</span><span style="color: #990000">&gt;</span><span style="color: #FF0000">{}</span><span style="color: #990000">;</span>
+
+   <span style="font-weight: bold"><span style="color: #0000FF">const</span></span> <span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> main_character <span style="color: #990000">=</span> <span style="color: #FF0000">"Jason Bourne"</span>s<span style="color: #990000">;</span>
+
+   <span style="font-weight: bold"><span style="color: #0000FF">using</span></span> <span style="font-weight: bold"><span style="color: #0000FF">namespace</span></span> std<span style="color: #990000">::</span>literals<span style="color: #990000">::</span>string_literals<span style="color: #990000">;</span>
+   names_ages<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">insert</span></span><span style="color: #990000">(</span><span style="color: #FF0000">{</span>main_character<span style="color: #990000">,</span> <span style="color: #993399">1970</span><span style="color: #FF0000">}</span><span style="color: #990000">);</span> <span style="font-style: italic"><span style="color: #9A1900">// notice the braces</span></span>
+   names_ages<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">emplace</span></span><span style="color: #990000">(</span><span style="color: #FF0000">"Harold Clarke"</span><span style="color: #990000">,</span> <span style="color: #993399">1982</span><span style="color: #990000">);</span> <span style="font-style: italic"><span style="color: #9A1900">// lack of braces, lack of `s' after "Harold Clarke"</span></span>
+
+   <span style="color: #FF0000">{</span>  <span style="font-style: italic"><span style="color: #9A1900">// enclosing braces to encapsulate i</span></span>
+      <span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> i <span style="color: #990000">=</span> names_ages<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">find</span></span><span style="color: #990000">(</span>main_character<span style="color: #990000">);</span>
+      <span style="font-weight: bold"><span style="color: #0000FF">if</span></span> <span style="color: #990000">(</span>i <span style="color: #990000">!=</span> names_ages<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">end</span></span><span style="color: #990000">())</span>
+      <span style="color: #FF0000">{</span>
+         std<span style="color: #990000">::</span>cout <span style="color: #990000">&lt;&lt;</span> <span style="color: #FF0000">"Altering year of birth for spy reasons...</span><span style="color: #CC33CC">\n</span><span style="color: #FF0000">"</span><span style="color: #990000">;</span>
+         i<span style="color: #990000">-&gt;</span>second <span style="color: #990000">-=</span> <span style="color: #993399">5</span><span style="color: #990000">;</span>
+         std<span style="color: #990000">::</span>cout <span style="color: #990000">&lt;&lt;</span> i<span style="color: #990000">-&gt;</span>first <span style="color: #990000">&lt;&lt;</span> <span style="color: #FF0000">" is "</span> <span style="color: #990000">&lt;&lt;</span> i<span style="color: #990000">-&gt;</span>second <span style="color: #990000">&lt;&lt;</span> <span style="color: #FF0000">" years old!</span><span style="color: #CC33CC">\n</span><span style="color: #FF0000">"</span><span style="color: #990000">;</span>
+      <span style="color: #FF0000">}</span>
+      <span style="font-weight: bold"><span style="color: #0000FF">else</span></span>
+      <span style="color: #FF0000">{</span>
+         names_ages<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">insert</span></span><span style="color: #990000">(</span><span style="color: #FF0000">{</span>main_character<span style="color: #990000">,</span> <span style="color: #993399">1965</span><span style="color: #FF0000">}</span><span style="color: #990000">);</span>
+      <span style="color: #FF0000">}</span>
+   <span style="color: #FF0000">}</span> <span style="font-style: italic"><span style="color: #9A1900">// i destroyed here and name can be recycled</span></span>
+<span style="color: #FF0000">}</span></tt></pre></div></div>
+<div class="ulist"><ul>
+<li>
+<p>
+If you only need the key of an associative array, you can use <code>std::unordered_set</code> instead.
+</p>
+</li>
+</ul></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="title">Further reading</div>
+<div class="ulist"><ul>
+<li>
+<p>
+Stroustrup, B. <em>A tour of C++</em>. p.102&#8201;&#8212;&#8201;103. 2014. Pearson Education, Inc. Upper Saddle River,
+  NJ.
+</p>
+</li>
+<li>
+<p>
+<a href="http://en.cppreference.com/w/cpp/container/unordered_map">en.cppreference.com&#8201;&#8212;&#8201;  <code>std::unordered_map</code></a>
+</p>
+</li>
+<li>
+<p>
+<a href="http://en.cppreference.com/w/cpp/container/unordered_multimap">en.cppreference.com&#8201;&#8212;&#8201;  <code>std::unordered_multimap</code></a>
+</p>
+</li>
+<li>
+<p>
+<a href="http://en.cppreference.com/w/cpp/container/unordered_set">en.cppreference.com&#8201;&#8212;&#8201;  <code>std::unordered_set</code></a>
+</p>
+</li>
+<li>
+<p>
+<a href="http://en.cppreference.com/w/cpp/container/unordered_multiset">en.cppreference.com&#8201;&#8212;&#8201;  <code>std::unordered_multiset</code></a>
+</p>
+</li>
+</ul></div>
+</td>
+</tr></table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_code_map_code_and_code_set_code"><code>map</code> and <code>set</code></h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+The difference between <code>unordered_map</code> and <code>map</code> is that <code>unordered_map</code> is hashed and <code>map</code>
+  uses a red-black binary search tree internally, which <em>orders</em> the elements, based on their
+  keys.
+</p>
+</li>
+<li>
+<p>
+Balancing binary search trees have time complexity of <code>O(lg n) + some distance</code> for
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+insertion
+</p>
+</li>
+<li>
+<p>
+erasure
+</p>
+</li>
+<li>
+<p>
+search
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Prefer the <code>unordered_</code> variants unless you need the objects to be sorted.
+</p>
+</li>
+</ul></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="title">Further reading</div>
+<div class="ulist"><ul>
+<li>
+<p>
+Stroustrup, B. <em>A tour of C++</em>. p.101&#8201;&#8212;&#8201;102. 2014. Pearson Education, Inc. Upper Saddle River,
+  NJ.
+</p>
+</li>
+<li>
+<p>
+Stroustrup, B. <em>Programming: principles and practice using C++</em>. Second edition. p.757&#8201;&#8212;&#8201;801.
+  Pearson Education, Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+<a href="http://en.cppreference.com/w/cpp/container/map">en.cppreference.com&#8201;&#8212;&#8201;<code>std::map</code></a>
+</p>
+</li>
+<li>
+<p>
+<a href="http://en.cppreference.com/w/cpp/container/multimap">en.cppreference.com&#8201;&#8212;&#8201;<code>std::multimap</code></a>
+</p>
+</li>
+<li>
+<p>
+<a href="http://en.cppreference.com/w/cpp/container/set">en.cppreference.com&#8201;&#8212;&#8201;<code>std::set</code></a>
+</p>
+</li>
+<li>
+<p>
+<a href="http://en.cppreference.com/w/cpp/container/multiset">en.cppreference.com&#8201;&#8212;&#8201;<code>std::multiset</code></a>
+</p>
+</li>
+</ul></div>
+</td>
+</tr></table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_iterating_over_containers">Iterating over containers</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+Except when an algorithm exists, the following are preferred for iterating over an entire
+  container.
+</p>
+</li>
+</ul></div>
+<div class="sect2">
+<h3 id="_range_based_code_for_code_statements">Range-based <code>for</code> statements</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+Same as a <code>foreach</code> loop in other languages.
+</p>
+</li>
+<li>
+<p>
+Iterates from a container&#8217;s <code>begin</code> to its <code>end</code>.
+</p>
+</li>
+<li>
+<p>
+Not just limited to standard containers: anything that supports <code>begin</code> and <code>end</code> is eligible.
+</p>
+</li>
+<li>
+<p>
+<strong>Always</strong> use <code>auto</code> for the type specifier.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+Change to <code>const auto</code>, <code>auto&amp;</code>, and <code>const auto&amp;</code> where appropriate: the key message here is
+     that you shouldn&#8217;t use an explicit type in a range-based <code>for</code> statement.
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="_reverse_range_code_for_code_statements">Reverse range-<code>for</code> statements</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+Lets you iterate from a container&#8217;s <code>rbegin</code> to <code>rend</code>
+</p>
+</li>
+<li>
+<p>
+Relies on Boost.Range.
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;boost/range/adaptor/reversed.hpp&gt;</span>
+<span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;iostream&gt;</span>
+<span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;vector&gt;</span>
+
+<span style="color: #009900">int</span> <span style="font-weight: bold"><span style="color: #000000">main</span></span><span style="color: #990000">()</span>
+<span style="color: #FF0000">{</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> vec <span style="color: #990000">=</span> std<span style="color: #990000">::</span>vector<span style="color: #990000">&lt;</span><span style="color: #009900">int</span><span style="color: #990000">&gt;</span><span style="color: #FF0000">{</span> <span style="color: #993399">1</span><span style="color: #990000">,</span> <span style="color: #993399">2</span><span style="color: #990000">,</span> <span style="color: #993399">3</span><span style="color: #990000">,</span> <span style="color: #993399">4</span><span style="color: #990000">,</span> <span style="color: #993399">5</span> <span style="color: #FF0000">}</span><span style="color: #990000">;</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">for</span></span> <span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> i <span style="color: #990000">:</span> boost<span style="color: #990000">::</span>adaptors<span style="color: #990000">::</span><span style="font-weight: bold"><span style="color: #000000">reverse</span></span><span style="color: #990000">(</span>vec<span style="color: #990000">))</span>
+      std<span style="color: #990000">::</span>cout <span style="color: #990000">&lt;&lt;</span> i <span style="color: #990000">+</span> <span style="color: #993399">5</span> <span style="color: #990000">&lt;&lt;</span> <span style="color: #FF0000">'</span><span style="color: #CC33CC">\n</span><span style="color: #FF0000">'</span><span style="color: #990000">;</span>
+<span style="color: #FF0000">}</span></tt></pre></div></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="title">Further reading</div>
+<div class="ulist"><ul>
+<li>
+<p>
+ISO/IEC. Working Draft, Standard for Programming Language C++, p.141&#8201;&#8212;&#8201;142. 2014. ISO/IEC,
+  Geneva Switzerland.
+</p>
+</li>
+<li>
+<p>
+Stroustrup, B. <em>The C++ programming language</em>. Fourth edition. p.233&#8201;&#8212;&#8201;234, 965. 2013.
+  Pearson Education, Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+Stroustrup, B. <em>A tour of C++</em>. p.10. 2014. Pearson Education, Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+Stroustrup, B. <em>Programming: principles and practice using C++</em>. Second edition. p.119. 2014.
+  Pearson Education, Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Res-for-range">ES.71:
+  Prefer a range-<code>for</code>-statement to a <code>for</code>-statement when there is a choice</a>
+</p>
+</li>
+<li>
+<p>
+<a href="http://en.cppreference.com/w/cpp/language/range-for">en.cppreference.com&#8201;&#8212;&#8201;Range-based <code>for</code>
+  loop</a>
+</p>
+</li>
+<li>
+<p>
+<a href="http://www.boost.org/doc/libs/1_61_0/libs/range/doc/html/range/reference/adaptors.html">Boost.Range
+  manual&#8201;&#8212;&#8201;Range Adaptors</a>
+</p>
+</li>
+</ul></div>
+</td>
+</tr></table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_iterators">Iterators</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+"Iterators are a generalisation of pointers that allow a C++ program to work with different
+  data structures (containers) in a uniform manner."[1]
+</p>
+</li>
+<li>
+<p>
+There are five forms of standard iterator:
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+<code>InputIterator</code>
+</p>
+</li>
+<li>
+<p>
+<code>ForwardIterator</code>
+</p>
+</li>
+<li>
+<p>
+<code>BidirectionalIterator</code>
+</p>
+</li>
+<li>
+<p>
+<code>RandomAccessIterator</code>
+</p>
+</li>
+<li>
+<p>
+<code>OutputIterator</code>
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Knowing the five iterator types isn&#8217;t necessary, but it will make your life a lot easier when
+  choosing standard algorithms.
+</p>
+</li>
+</ul></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="title">Further reading</div>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+ISO/IEC. Working Draft, Standard for Programming Language C++, p.852. 2014. ISO/IEC, Geneva
+   Switzerland.
+</p>
+</li>
+<li>
+<p>
+Stroustrup, B. <em>The C++ programming language. Fourth edition</em>. p.953&#8201;&#8212;&#8201;972. 2013. Pearson
+   Education, Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+Stroustrup, B. <em>A tour of C++</em>. p.107&#8201;&#8212;&#8201;113. 2014. Pearson Education, Inc. Upper Saddle
+   River, NJ.
+</p>
+</li>
+</ol></div>
+</td>
+</tr></table>
+</div>
+<div class="sect2">
+<h3 id="_code_outputiterator_code"><code>OutputIterator</code></h3>
+<div class="ulist"><ul>
+<li>
+<p>
+Writes to the element that is pointed to.
+</p>
+</li>
+<li>
+<p>
+A ForwardIterator, BidirectionalIterator, and RandomAccessIterator may satisify the requirements
+  of an OutputIterator.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+If they do, then you may write to what they point to.
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;algorithm&gt;</span>
+<span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;iostream&gt;</span>
+<span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;iterator&gt;</span>
+<span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;string&gt;</span>
+<span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;vector&gt;</span>
+
+<span style="color: #009900">int</span> <span style="font-weight: bold"><span style="color: #000000">main</span></span><span style="color: #990000">()</span>
+<span style="color: #FF0000">{</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> names <span style="color: #990000">=</span> std<span style="color: #990000">::</span>vector<span style="color: #990000">&lt;</span>std<span style="color: #990000">::</span>string<span style="color: #990000">&gt;</span><span style="color: #FF0000">{}</span><span style="color: #990000">;</span>
+
+   <span style="font-weight: bold"><span style="color: #0000FF">using</span></span> <span style="font-weight: bold"><span style="color: #0000FF">namespace</span></span> std<span style="color: #990000">::</span>literals<span style="color: #990000">;</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">for</span></span> <span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> n <span style="color: #990000">=</span> <span style="color: #FF0000">""</span>s<span style="color: #990000">;</span> std<span style="color: #990000">::</span>cin <span style="color: #990000">&gt;&gt;</span> n<span style="color: #990000">;</span> <span style="color: #990000">)</span>
+      names<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">emplace_back</span></span><span style="color: #990000">(</span>n<span style="color: #990000">);</span>
+
+   std<span style="color: #990000">::</span><span style="font-weight: bold"><span style="color: #000000">copy</span></span><span style="color: #990000">(</span>names<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">cbegin</span></span><span style="color: #990000">(),</span> names<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">cend</span></span><span style="color: #990000">(),</span> std<span style="color: #990000">::</span>ostream_iterator<span style="color: #990000">&lt;</span>std<span style="color: #990000">::</span>string<span style="color: #990000">&gt;</span><span style="color: #FF0000">{</span>std<span style="color: #990000">::</span>cout<span style="color: #990000">,</span> <span style="color: #FF0000">"</span><span style="color: #CC33CC">\n</span><span style="color: #FF0000">"</span><span style="color: #FF0000">}</span><span style="color: #990000">);</span>
+<span style="color: #FF0000">}</span></tt></pre></div></div>
+<div class="ulist"><ul>
+<li>
+<p>
+The above program prints one name per line by copying the contents of <code>names</code> to <code>cout</code> via
+  an <code>ostream_iterator</code>.
+</p>
+</li>
+<li>
+<p>
+Preferable to iterating over a container with <code>cout</code>.
+</p>
+</li>
+</ul></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="title">Further reading</div>
+<div class="ulist"><ul>
+<li>
+<p>
+<a href="http://en.cppreference.com/w/cpp/concept/OutputIterator">en.cppreference.com&#8201;&#8212;&#8201;C++
+  concepts OutputIterator</a>
+</p>
+</li>
+</ul></div>
+</td>
+</tr></table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_code_inputiterator_code"><code>InputIterator</code></h3>
+<div class="ulist"><ul>
+<li>
+<p>
+Reads from the element that is pointed to.
+</p>
+</li>
+<li>
+<p>
+"<code>InputIterators</code> are only guaranteed to be valid for single-pass algorithms"[1] such as <code>std::copy</code>.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+This means that if you choose to increment an <code>InputIterator</code>, you must test <em>all</em> copies of
+     the iterator for invalidation, <em>even if they haven&#8217;t changed position</em>.
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;algorithm&gt;</span>
+<span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;iostream&gt;</span>
+<span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;iterator&gt;</span>
+<span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;string&gt;</span>
+<span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;vector&gt;</span>
+
+<span style="color: #009900">int</span> <span style="font-weight: bold"><span style="color: #000000">main</span></span><span style="color: #990000">()</span>
+<span style="color: #FF0000">{</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> names <span style="color: #990000">=</span> std<span style="color: #990000">::</span>vector<span style="color: #990000">&lt;</span>std<span style="color: #990000">::</span>string<span style="color: #990000">&gt;</span><span style="color: #FF0000">{}</span><span style="color: #990000">;</span>
+   <span style="color: #FF0000">{</span>
+      <span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> begin <span style="color: #990000">=</span> std<span style="color: #990000">::</span>istream_iterator<span style="color: #990000">&lt;</span><span style="font-weight: bold"><span style="color: #000000">decltype</span></span><span style="color: #990000">(</span>names<span style="color: #990000">)::</span>value_type<span style="color: #990000">&gt;</span><span style="color: #FF0000">{</span>std<span style="color: #990000">::</span>cin<span style="color: #FF0000">}</span><span style="color: #990000">;</span>
+      <span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> end <span style="color: #990000">=</span> std<span style="color: #990000">::</span>istream_iterator<span style="color: #990000">&lt;</span><span style="font-weight: bold"><span style="color: #000000">decltype</span></span><span style="color: #990000">(</span>names<span style="color: #990000">)::</span>value_type<span style="color: #990000">&gt;</span><span style="color: #FF0000">{}</span><span style="color: #990000">;</span>
+      <span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> inserter <span style="color: #990000">=</span> std<span style="color: #990000">::</span>back_insert_iterator<span style="color: #990000">&lt;</span><span style="font-weight: bold"><span style="color: #000000">decltype</span></span><span style="color: #990000">(</span>names<span style="color: #990000">)&gt;</span><span style="color: #FF0000">{</span>names<span style="color: #FF0000">}</span><span style="color: #990000">;</span>
+      std<span style="color: #990000">::</span><span style="font-weight: bold"><span style="color: #000000">copy</span></span><span style="color: #990000">(</span>begin<span style="color: #990000">,</span> end<span style="color: #990000">,</span> inserter<span style="color: #990000">);</span>
+   <span style="color: #FF0000">}</span>
+
+   std<span style="color: #990000">::</span><span style="font-weight: bold"><span style="color: #000000">sort</span></span><span style="color: #990000">(</span>names<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">begin</span></span><span style="color: #990000">(),</span> names<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">end</span></span><span style="color: #990000">());</span>
+   std<span style="color: #990000">::</span><span style="font-weight: bold"><span style="color: #000000">copy</span></span><span style="color: #990000">(</span>names<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">cbegin</span></span><span style="color: #990000">(),</span> names<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">cend</span></span><span style="color: #990000">(),</span> std<span style="color: #990000">::</span>ostream_iterator<span style="color: #990000">&lt;</span><span style="font-weight: bold"><span style="color: #000000">decltype</span></span><span style="color: #990000">(</span>names<span style="color: #990000">)::</span>value_type<span style="color: #990000">&gt;</span><span style="color: #FF0000">{</span>std<span style="color: #990000">::</span>cout<span style="color: #990000">,</span> <span style="color: #FF0000">"</span><span style="color: #CC33CC">\n</span><span style="color: #FF0000">"</span><span style="color: #FF0000">}</span><span style="color: #990000">);</span>
+<span style="color: #FF0000">}</span></tt></pre></div></div>
+<div class="ulist"><ul>
+<li>
+<p>
+The above program uses two <code>istream_iterators</code>: these are `InputIterator`s.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+<code>begin</code> is the one we move, and points to the input stream.
+</p>
+</li>
+<li>
+<p>
+<code>end</code> is the one that indicates that the iterator is no longer valid (e.g. when the input
+     buffer becomes invalid).
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+<code>inserter</code> is an iterator that knows how to perform <code>vector::push_back</code>.
+</p>
+</li>
+<li>
+<p>
+We copy the input from <code>cin</code> to <code>names</code>.
+</p>
+</li>
+<li>
+<p>
+<code>decltype</code> is tells the compiler to take the type of the object inside. For example:
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+<code>decltype(names)</code> is seen by the compiler as <code>vector&lt;string&gt;</code>
+</p>
+</li>
+<li>
+<p>
+<code>decltype(1)</code> is seen by the compiler as <code>int</code>
+</p>
+</li>
+<li>
+<p>
+We use <code>decltype</code> in situations where an object&#8217;s type is a dependency: if we were to change
+     the type of <code>names</code> to <code>unordered_map&lt;string, vector&lt;int&gt;&gt;</code>, then the type of <code>decltype</code>
+     changes with it.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Many standard algorithms require an <code>InputIterator</code>.
+</p>
+</li>
+</ul></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="title">Further reading</div>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+<a href="http://en.cppreference.com/w/cpp/concept/InputIterator">en.cppreference.com&#8201;&#8212;&#8201;C++
+   concepts <code>InputIterator</code></a>
+</p>
+</li>
+</ol></div>
+</td>
+</tr></table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_code_forwarditerator_code"><code>ForwardIterator</code></h3>
+<div class="ulist"><ul>
+<li>
+<p>
+"Forward iterators satisfy all the requirements of input iterators and can be used whenever an
+  input iterator is specified"[1]
+</p>
+</li>
+<li>
+<p>
+"A <code>ForwardIterator</code> is an <code>Iterator</code> that can read data from the pointed-to element."[2]
+</p>
+</li>
+<li>
+<p>
+"Unlike <code>InputIterator</code> and <code>OutputIterator</code>, it can be used in multipass algorithms."[2]
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+This means that if you increment the value of a <code>ForwardIterator</code>, you <em>do not</em> need to check
+     all other iterators pointing to the same sequence for validity.
+</p>
+</li>
+<li>
+<p>
+It also means that you can iterate over the same sequence more than once.
+</p>
+</li>
+<li>
+<p>
+You still need to check the incremented iterator for validity.
+</p>
+</li>
+<li>
+<p>
+Finally, if <code>a</code> and <code>b</code> are both <code>ForwardIterator`s for the same sequence `S</code>, and <code>a == b</code>,
+     "then either they are both non-dereferenceable or <code>*a</code> and <code>*b</code> are references bound to the
+     same object."[1]
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+You can only iterate over a sequence that accepts a <code>ForwardIterator</code> in one direction: forward.
+</p>
+</li>
+<li>
+<p>
+A <code>ForwardIterator</code> that satisfies the requirements of <code>OutputIterator</code> is a mutable
+  <code>ForwardIterator</code>.
+</p>
+</li>
+<li>
+<p>
+Iterators that point to elements in <code>forward_list</code>, <code>unordered_map</code>, and <code>unordered_set</code> are
+  `ForwardIterator`s.
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;forward_list&gt;</span>
+<span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;iostream&gt;</span>
+<span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;iterator&gt;</span>
+
+<span style="color: #009900">int</span> <span style="font-weight: bold"><span style="color: #000000">main</span></span><span style="color: #990000">()</span>
+<span style="color: #FF0000">{</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> ages <span style="color: #990000">=</span> std<span style="color: #990000">::</span>forward_list<span style="color: #990000">&lt;</span><span style="color: #009900">int</span><span style="color: #990000">&gt;</span><span style="color: #FF0000">{</span>std<span style="color: #990000">::</span>istream_iterator<span style="color: #990000">&lt;</span><span style="color: #009900">int</span><span style="color: #990000">&gt;</span><span style="color: #FF0000">{</span>std<span style="color: #990000">::</span>cin<span style="color: #FF0000">}</span><span style="color: #990000">,</span> std<span style="color: #990000">::</span>istream_iterator<span style="color: #990000">&lt;</span><span style="color: #009900">int</span><span style="color: #990000">&gt;</span><span style="color: #FF0000">{}}</span><span style="color: #990000">;</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> size <span style="color: #990000">=</span> <span style="color: #993399">0</span><span style="color: #990000">;</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">for</span></span> <span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> i <span style="color: #990000">=</span> ages<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">cbegin</span></span><span style="color: #990000">();</span> i <span style="color: #990000">!=</span> ages<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">cend</span></span><span style="color: #990000">();</span> <span style="color: #990000">++</span>i<span style="color: #990000">)</span>
+      <span style="color: #990000">++</span>size<span style="color: #990000">;</span>
+   std<span style="color: #990000">::</span>cout <span style="color: #990000">&lt;&lt;</span> size <span style="color: #990000">&lt;&lt;</span> <span style="color: #FF0000">'</span><span style="color: #CC33CC">\n</span><span style="color: #FF0000">'</span><span style="color: #990000">;</span>
+<span style="color: #FF0000">}</span></tt></pre></div></div>
+<div class="ulist"><ul>
+<li>
+<p>
+<code>i</code> is a <code>ForwardIterator</code>.
+</p>
+</li>
+<li>
+<p>
+Standard algorithms such as linear search algorithms require `ForwardIterator`s.
+</p>
+</li>
+</ul></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Caution</div>
+</td>
+<td class="content">
+<div class="title">Incrementing iterators</div>
+<div class="ulist"><ul>
+<li>
+<p>
+C++ programmers prefer to increment using <code>++i</code> (pre-incrementation), not <code>i++</code>
+  (post-incrementation).
+</p>
+</li>
+<li>
+<p>
+This is because <code>i++</code> makes a copy of the old value and then increments.
+</p>
+</li>
+<li>
+<p>
+<code>++i</code> doesn&#8217;t do this: it just increments.
+</p>
+</li>
+<li>
+<p>
+With anything except for arithmetic types (integers and floating-point numbers),
+  post-incrementation is expensive.
+</p>
+</li>
+<li>
+<p>
+Because operators are overloaded as functions, a post-increment cannot be optimised to a
+  pre-increment if you never use the copy that the post-increment returns to you.
+</p>
+</li>
+<li>
+<p>
+<strong>tl;dr Use pre-increment operators unless you <em>need</em> to use a post-increment operator. This
+  includes for integers.</strong>
+</p>
+</li>
+<li>
+<p>
+The following is a valid use of a post-increment operation:
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;iostream&gt;</span>
+<span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;iterator&gt;</span>
+<span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;list&gt;</span>
+
+<span style="color: #009900">int</span> <span style="font-weight: bold"><span style="color: #000000">main</span></span><span style="color: #990000">()</span>
+<span style="color: #FF0000">{</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> ages <span style="color: #990000">=</span> std<span style="color: #990000">::</span>list<span style="color: #990000">&lt;</span><span style="color: #009900">int</span><span style="color: #990000">&gt;</span><span style="color: #FF0000">{</span>std<span style="color: #990000">::</span>istream_iterator<span style="color: #990000">&lt;</span><span style="color: #009900">int</span><span style="color: #990000">&gt;</span><span style="color: #FF0000">{</span>std<span style="color: #990000">::</span>cin<span style="color: #FF0000">}</span><span style="color: #990000">,</span> std<span style="color: #990000">::</span>istream_iterator<span style="color: #990000">&lt;</span><span style="color: #009900">int</span><span style="color: #990000">&gt;</span><span style="color: #FF0000">{}}</span><span style="color: #990000">;</span>
+   <span style="color: #FF0000">{</span>
+      <span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> i <span style="color: #990000">=</span> std<span style="color: #990000">::</span><span style="font-weight: bold"><span style="color: #000000">find</span></span><span style="color: #990000">(</span>ages<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">cbegin</span></span><span style="color: #990000">(),</span> ages<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">end</span></span><span style="color: #990000">(),</span> <span style="color: #993399">42</span><span style="color: #990000">);</span>
+      <span style="font-weight: bold"><span style="color: #0000FF">if</span></span> <span style="color: #990000">(</span>i <span style="color: #990000">!=</span> ages<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">end</span></span><span style="color: #990000">())</span>
+         ages<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">erase</span></span><span style="color: #990000">(</span>i<span style="color: #990000">++);</span>
+   <span style="color: #FF0000">}</span>
+
+<span style="color: #FF0000">}</span></tt></pre></div></div>
+<div class="ulist"><ul>
+<li>
+<p>
+We will look at why this is so when we consider <a href="#invalid-iterator">iterator invalidation</a>.
+</p>
+</li>
+</ul></div>
+</td>
+</tr></table>
+</div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="title">Further reading</div>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+ISO/IEC. Working Draft, Standard for Programming Language C++, p.852. 2014. ISO/IEC, Geneva
+   Switzerland.
+</p>
+</li>
+<li>
+<p>
+<a href="http://en.cppreference.com/w/cpp/concept/ForwardIterator">en.cppreference.com&#8201;&#8212;&#8201;C++
+   concepts: <code>ForwardIterator</code></a>
+</p>
+</li>
+<li>
+<p>
+Meyers, S. <em>More effective C++: 35 new ways to improve your programs and designs</em>. p.31&#8201;&#8212;&#8201;34. 1996.
+   Addison Wesley. Westford, MA.
+</p>
+</li>
+<li>
+<p>
+Sutter, H. <em>Exceptional C++: 47 engineering puzzlies, programming problems, and solutions</em>.
+   p18&#8201;&#8212;&#8201;22. 2000. Pearson Education, Inc. Indianapolis, IN.
+</p>
+</li>
+<li>
+<p>
+Sutter, H. <em>Exceptional C++ style: 40 new engineering puzzles, programming problems, and
+   solutions</em>. p.6. 2005. Boston, MA.
+</p>
+</li>
+</ol></div>
+</td>
+</tr></table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_code_bidirectionaliterator_code"><code>BidirectionalIterator</code></h3>
+<div class="ulist"><ul>
+<li>
+<p>
+"Bidirectional iterators also satisfy the requirements of forward iterators and can be used
+  whenever a forward iterator is specified"[1]
+</p>
+</li>
+<li>
+<p>
+"A <code>BidirectionalIterator</code> is a <code>ForwardIterator</code> that can be moved in both directions (i.e.
+  incremented and decremented)."[2]
+</p>
+</li>
+<li>
+<p>
+The same rules that apply to incrementation are also applicable to decrementation.
+</p>
+</li>
+<li>
+<p>
+<code>list</code>, <code>map</code>, and <code>set</code> all use a <code>BidirectionalIterator</code>:
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;iostream&gt;</span>
+<span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;iterator&gt;</span>
+<span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;list&gt;</span>
+
+<span style="color: #009900">int</span> <span style="font-weight: bold"><span style="color: #000000">main</span></span><span style="color: #990000">()</span>
+<span style="color: #FF0000">{</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> ages <span style="color: #990000">=</span> std<span style="color: #990000">::</span>list<span style="color: #990000">&lt;</span><span style="color: #009900">int</span><span style="color: #990000">&gt;</span><span style="color: #FF0000">{</span>std<span style="color: #990000">::</span>istream_iterator<span style="color: #990000">&lt;</span><span style="color: #009900">int</span><span style="color: #990000">&gt;</span><span style="color: #FF0000">{</span>std<span style="color: #990000">::</span>cin<span style="color: #FF0000">}</span><span style="color: #990000">,</span> std<span style="color: #990000">::</span>istream_iterator<span style="color: #990000">&lt;</span><span style="color: #009900">int</span><span style="color: #990000">&gt;</span><span style="color: #FF0000">{}}</span><span style="color: #990000">;</span>
+   ages<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">sort</span></span><span style="color: #990000">();</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">for</span></span> <span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> i <span style="color: #990000">=</span> ages<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">cbegin</span></span><span style="color: #990000">();</span> i <span style="color: #990000">!=</span> ages<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">end</span></span><span style="color: #990000">();</span> <span style="color: #990000">++</span>i<span style="color: #990000">)</span>
+   <span style="color: #FF0000">{</span>
+      std<span style="color: #990000">::</span>cout <span style="color: #990000">&lt;&lt;</span> <span style="color: #FF0000">"A person of "</span> <span style="color: #990000">&lt;&lt;</span> <span style="color: #990000">*</span>i <span style="color: #990000">&lt;&lt;</span> <span style="color: #FF0000">" years can"</span><span style="color: #990000">;</span>
+      <span style="font-weight: bold"><span style="color: #0000FF">if</span></span> <span style="color: #990000">(*</span>i <span style="color: #990000">&lt;</span> <span style="color: #993399">15</span><span style="color: #990000">)</span>
+         std<span style="color: #990000">::</span>cout <span style="color: #990000">&lt;&lt;</span> <span style="color: #FF0000">"not"</span>
+      std<span style="color: #990000">::</span>cout <span style="color: #990000">&lt;&lt;</span> <span style="color: #FF0000">" watch an MA15+ movie alone.</span><span style="color: #CC33CC">\n</span><span style="color: #FF0000">"</span><span style="color: #990000">;</span>
+   <span style="color: #FF0000">}</span>
+<span style="color: #FF0000">}</span></tt></pre></div></div>
+<div class="ulist"><ul>
+<li>
+<p>
+Any algorithm that moves backwards, such as <code>copy_backward</code> requires a <code>BidirectionalIterator</code>.
+</p>
+</li>
+</ul></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="title">Further reading</div>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+ISO/IEC. Working Draft, Standard for Programming Language C++, p.852. 2014. ISO/IEC, Geneva
+   Switzerland.
+</p>
+</li>
+<li>
+<p>
+<a href="http://en.cppreference.com/w/cpp/concept/BidirectionalIterator">en.cppreference.com&#8201;&#8212;&#8201;C++
+   concepts: <code>BidirectionalIterator</code></a>
+</p>
+</li>
+</ol></div>
+</td>
+</tr></table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_code_randomaccessiterator_code"><code>RandomAccessIterator</code></h3>
+<div class="ulist"><ul>
+<li>
+<p>
+"Random access iterators also satisfy all the requirements of bidirectional iterators and can be
+  used whenever a bidirectional iterator is specified."[1]
+</p>
+</li>
+<li>
+<p>
+"A <code>RandomAccessIterator</code> is a <code>BidirectionalIterator</code> that can be moved to point to any element
+  in constant time."[2]
+</p>
+</li>
+<li>
+<p>
+<code>vector</code>, <code>array</code>, <code>deque</code> all use <code>RandomAccessIterators</code>.
+</p>
+</li>
+<li>
+<p>
+In addition to supporting all of the <code>Bidirectional</code> operations, <code>RandomAccessIterators</code> support
+  the following operations:
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+Addition, on integral types
+</p>
+</li>
+<li>
+<p>
+Subtraction, on integral types (returns an iterator)
+</p>
+</li>
+<li>
+<p>
+Subtraction, on an iterator to the same sequence (returns an integral value)
+</p>
+</li>
+<li>
+<p>
+Subscription
+</p>
+</li>
+<li>
+<p>
+Less than/less than or equal
+</p>
+</li>
+<li>
+<p>
+Greater than/greater than or equal
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="title">Further reading</div>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+ISO/IEC. Working Draft, Standard for Programming Language C++, p.852. 2014. ISO/IEC, Geneva
+   Switzerland.
+</p>
+</li>
+<li>
+<p>
+<a href="http://en.cppreference.com/w/cpp/concept/RandomAccessIterator">en.cppreference.com&#8201;&#8212;&#8201;C++
+   concepts: <code>RandomAccessIterator</code></a>
+</p>
+</li>
+</ol></div>
+</td>
+</tr></table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_code_iterator_code_and_code_const_iterator_code"><code>iterator</code> and <code>const_iterator</code></h3>
+<div class="ulist"><ul>
+<li>
+<p>
+All sequence and associative standard library containers have at least two iterator types:
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+<code>iterator</code>, which is a mutable <code>ForwardIterator</code> or better
+</p>
+</li>
+<li>
+<p>
+<code>const_iterator</code>, which is a non-mutable <code>ForwardIterator</code> or better
+</p>
+</li>
+<li>
+<p>
+A <code>const_iterator</code> is like <code>const auto*</code>: you can change what is being pointed to, but you
+     can&#8217;t change the value of the pointee.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Like with everything else, unless you <em>know that you indend</em> to change the pointee&#8217;s value, stick
+  with `const_iterator`s.
+</p>
+</li>
+<li>
+<p>
+While using <code>cbegin</code> is a good way to express that you intend to use a <code>const_iterator</code> (in fact,
+  with <code>auto</code>, it&#8217;s the only way), <code>cend</code> is sometimes a poor choice for iterating over containers.
+  Use it judiciously.
+</p>
+</li>
+</ul></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Caution</div>
+</td>
+<td class="content">
+<div class="title">Item not relevant for modern C++</div>
+<div class="ulist"><ul>
+<li>
+<p>
+In Scott Meyers' <em>Effective STL</em>, <em>Item 26</em> advises you to use <code>iterator</code> over all other forms of
+  standard iterator.
+</p>
+</li>
+<li>
+<p>
+This is advice for C++98, as the book was published in 2001.
+</p>
+</li>
+<li>
+<p>
+Meyers' final book, <em>Effective Modern C++</em> addresses this in <em>Item 13</em>.
+</p>
+</li>
+<li>
+<p>
+<em>Effective Modern C++</em> has been written with C++11 and C++14 in mind.
+</p>
+</li>
+<li>
+<p>
+This doesn&#8217;t mean that <em>Effective STL</em> is outdated: it means that Item 26 is outdated.
+</p>
+</li>
+<li>
+<p>
+You might need to work with a C++98 codebase (like I do), so none of that content is actually
+  obsolete.
+</p>
+</li>
+</ul></div>
+</td>
+</tr></table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_code_reverse_iterator_code_and_code_const_reverse_iterator_code"><code>reverse_iterator</code> and <code>const_reverse_iterator</code></h3>
+<div class="ulist"><ul>
+<li>
+<p>
+All standard library containers that support <code>BidirectionalIterator`s also have a
+  `reverse_iterator</code> and a <code>const_reverse_iterator</code>.
+</p>
+</li>
+<li>
+<p>
+A <code>reverse_iterator</code> is an iterator that has been adapted so that increment is actually
+  decrement, and decrement is actually increment.
+</p>
+</li>
+<li>
+<p>
+We use `reverse_iterator`s to start at the end of a sequence and iterate over the sequence
+  <em>backwards</em>.
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-style: italic"><span style="color: #9A1900">// prints a sequence of numbers in reverse order</span></span>
+<span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;algorithm&gt;</span>
+<span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;iostream&gt;</span>
+<span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;iterator&gt;</span>
+<span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;vector&gt;</span>
+
+<span style="color: #009900">int</span> <span style="font-weight: bold"><span style="color: #000000">main</span></span><span style="color: #990000">()</span>
+<span style="color: #FF0000">{</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> ages <span style="color: #990000">=</span> std<span style="color: #990000">::</span>vector<span style="color: #990000">&lt;</span><span style="color: #009900">int</span><span style="color: #990000">&gt;</span><span style="color: #FF0000">{</span>std<span style="color: #990000">::</span>istream_iterator<span style="color: #990000">&lt;</span><span style="color: #009900">int</span><span style="color: #990000">&gt;</span><span style="color: #FF0000">{</span>std<span style="color: #990000">::</span>cin<span style="color: #FF0000">}</span><span style="color: #990000">,</span> std<span style="color: #990000">::</span>istream_iterator<span style="color: #990000">&lt;</span><span style="color: #009900">int</span><span style="color: #990000">&gt;</span><span style="color: #FF0000">{}}</span><span style="color: #990000">;</span>
+   std<span style="color: #990000">::</span><span style="font-weight: bold"><span style="color: #000000">sort</span></span><span style="color: #990000">(</span>ages<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">begin</span></span><span style="color: #990000">(),</span> ages<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">end</span></span><span style="color: #990000">());</span>
+   std<span style="color: #990000">::</span><span style="font-weight: bold"><span style="color: #000000">copy</span></span><span style="color: #990000">(</span>ages<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">crbegin</span></span><span style="color: #990000">(),</span> ages<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">rend</span></span><span style="color: #990000">(),</span> std<span style="color: #990000">::</span>ostream_iterator<span style="color: #990000">&lt;</span><span style="font-weight: bold"><span style="color: #000000">decltype</span></span><span style="color: #990000">(</span>ages<span style="color: #990000">)::</span>value_type<span style="color: #990000">&gt;</span><span style="color: #FF0000">{</span>std<span style="color: #990000">::</span>cout<span style="color: #990000">,</span> <span style="color: #FF0000">" "</span><span style="color: #FF0000">}</span><span style="color: #990000">);</span>
+   std<span style="color: #990000">::</span>cout <span style="color: #990000">&lt;&lt;</span> <span style="color: #FF0000">'</span><span style="color: #CC33CC">\n</span><span style="color: #FF0000">'</span><span style="color: #990000">;</span>
+<span style="color: #FF0000">}</span></tt></pre></div></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="title">Further reading</div>
+<div class="ulist"><ul>
+<li>
+<p>
+Meyers, S. <em>Effective STL: 50 specific ways to improve your use of the standard template
+  library</em>. p.123&#8201;&#8212;&#8201;125. 2001. Pearson Education, Inc. Upper Saddle River, NJ.
+</p>
+</li>
+</ul></div>
+</td>
+</tr></table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="invalid-iterator">Iterator invalidation</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+An invalid iterator is an iterator that doesn&#8217;t point to a valid region of memory.
+</p>
+</li>
+<li>
+<p>
+"The effect of dereferencing an iterator that has been invalidated is undefined."[1]
+</p>
+</li>
+<li>
+<p>
+Beyond experience and human evaluation, there is no way to detect an invalid iterator.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+A compiler will not generate an error or warn you.
+</p>
+</li>
+<li>
+<p>
+A lint tool <em>might</em> warn you of possible iterator invalidation if you are very lucky.
+</p>
+</li>
+<li>
+<p>
+A static analyser <em>might</em> warn you if you are very lucky.
+</p>
+</li>
+<li>
+<p>
+A profiler <em>might</em> warn you if you are very lucky.
+</p>
+</li>
+<li>
+<p>
+A debugger will not warn you, but a stepping through your code with a debugger is one of the
+     fastest ways to track down an invalid iterator.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Iterators that point to elements in sequence containers become invalidated whenever the elements
+  are relocated, even if the region of memory doesn&#8217;t change.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+This means that inserting into the middle of a sequence invalidates <em>all</em> iterators that point
+     to elements after the newly inserted element, even if they were valid immediately prior to the
+     insertion.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Associative containers are a little bit more forgiving: iterators pointing to elements in a <code>map</code>
+  for example, only become invalidated when they are removed from the container.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+I do not believe this is true for <code>multimap</code>, <code>multiset</code>, <code>unordered_multimap</code> or
+     <code>unordered_multiset</code>.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+The course textbook goes into detail about the operations on containers that can cause iterator
+  invalidation.
+</p>
+</li>
+<li>
+<p>
+An iterator range is invalid if <code>last &lt; first</code> for many algorithms.
+</p>
+</li>
+</ul></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Caution</div>
+</td>
+<td class="content">
+<div class="title">For example:</div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;iostream&gt;</span>
+<span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;vector&gt;</span>
+
+<span style="color: #009900">int</span> <span style="font-weight: bold"><span style="color: #000000">main</span></span><span style="color: #990000">()</span>
+<span style="color: #FF0000">{</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> ages <span style="color: #990000">=</span> std<span style="color: #990000">::</span>vector<span style="color: #990000">&lt;</span><span style="color: #009900">int</span><span style="color: #990000">&gt;</span><span style="color: #FF0000">{</span><span style="color: #993399">0</span><span style="color: #990000">,</span> <span style="color: #993399">1</span><span style="color: #990000">,</span> <span style="color: #993399">2</span><span style="color: #990000">,</span> <span style="color: #993399">3</span><span style="color: #990000">,</span> <span style="color: #993399">4</span><span style="color: #990000">,</span> <span style="color: #993399">5</span><span style="color: #FF0000">}</span><span style="color: #990000">;</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">for</span></span> <span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> i <span style="color: #990000">=</span> ages<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">cbegin</span></span><span style="color: #990000">();</span> i <span style="color: #990000">!=</span> ages<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">end</span></span><span style="color: #990000">()</span> <span style="color: #990000">&amp;&amp;</span> ages<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">size</span></span><span style="color: #990000">()</span> <span style="color: #990000">&lt;</span> <span style="color: #993399">10</span><span style="color: #FF0000">'000'</span><span style="color: #993399">000</span><span style="color: #990000">;</span> <span style="color: #990000">++</span>i<span style="color: #990000">)</span>
+      ages<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">push_back</span></span><span style="color: #990000">(</span><span style="color: #993399">100</span><span style="color: #990000">);</span>
+<span style="color: #FF0000">}</span></tt></pre></div></div>
+<div class="ulist"><ul>
+<li>
+<p>
+The above program is undefined due to iterator invalidation.
+</p>
+</li>
+<li>
+<p>
+Hopefully, the worst that happens is that the program crashes.
+</p>
+</li>
+<li>
+<p>
+Recall that a <code>vector</code> is a dynamically sized array, and needs to reallocate when you reach a
+  certain capacity.
+</p>
+</li>
+<li>
+<p>
+Once this capacity is reached, the region of memory that your iterator points to is no longer
+  where all the elements are.
+</p>
+</li>
+<li>
+<p>
+The correct way to do the above code is to revalidate the iterator:
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>ages<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">reserve</span></span><span style="color: #990000">(</span>ages<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">size</span></span><span style="color: #990000">()</span> <span style="color: #990000">+</span> <span style="color: #993399">512</span><span style="color: #990000">);</span>
+<span style="font-weight: bold"><span style="color: #0000FF">for</span></span> <span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> i <span style="color: #990000">=</span> ages<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">cbegin</span></span><span style="color: #990000">();</span> i <span style="color: #990000">!=</span> ages<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">end</span></span><span style="color: #990000">()</span> <span style="color: #990000">&amp;&amp;</span> ages<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">size</span></span><span style="color: #990000">()</span> <span style="color: #990000">&lt;</span> <span style="color: #993399">10</span><span style="color: #FF0000">'000'</span><span style="color: #993399">000</span><span style="color: #990000">;</span> <span style="color: #990000">++</span>i<span style="color: #990000">)</span>
+   i <span style="color: #990000">=</span> ages<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">insert</span></span><span style="color: #990000">(</span>ages<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">crbegin</span></span><span style="color: #990000">(),</span> <span style="color: #993399">100</span><span style="color: #990000">);</span></tt></pre></div></div>
+</td>
+</tr></table>
+</div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="title">Recall this code from before:</div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;iostream&gt;</span>
+<span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;vector&gt;</span>
+
+<span style="color: #009900">int</span> <span style="font-weight: bold"><span style="color: #000000">main</span></span><span style="color: #990000">()</span>
+<span style="color: #FF0000">{</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> ages <span style="color: #990000">=</span> std<span style="color: #990000">::</span>vector<span style="color: #990000">&lt;</span><span style="color: #009900">int</span><span style="color: #990000">&gt;</span><span style="color: #FF0000">{</span><span style="color: #993399">0</span><span style="color: #990000">,</span> <span style="color: #993399">1</span><span style="color: #990000">,</span> <span style="color: #993399">2</span><span style="color: #990000">,</span> <span style="color: #993399">3</span><span style="color: #990000">,</span> <span style="color: #993399">4</span><span style="color: #990000">,</span> <span style="color: #993399">5</span><span style="color: #FF0000">}</span><span style="color: #990000">;</span>
+   <span style="color: #FF0000">{</span>
+      <span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> i <span style="color: #990000">=</span> std<span style="color: #990000">::</span><span style="font-weight: bold"><span style="color: #000000">find</span></span><span style="color: #990000">(</span>ages<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">cbegin</span></span><span style="color: #990000">(),</span> ages<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">end</span></span><span style="color: #990000">(),</span> <span style="color: #993399">42</span><span style="color: #990000">);</span>
+      <span style="font-weight: bold"><span style="color: #0000FF">if</span></span> <span style="color: #990000">(</span>i <span style="color: #990000">!=</span> ages<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">end</span></span><span style="color: #990000">())</span>
+         ages<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">erase</span></span><span style="color: #990000">(</span>i<span style="color: #990000">++);</span>
+   <span style="color: #FF0000">}</span>
+
+<span style="color: #FF0000">}</span></tt></pre></div></div>
+<div class="ulist"><ul>
+<li>
+<p>
+This is a valid use of the post-increment iterator because erase will remove the copy returned by
+  the post-increment operator, while <code>i</code> gets away.
+</p>
+</li>
+<li>
+<p>
+The following code yields undefined behaviour:
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;iostream&gt;</span>
+<span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;vector&gt;</span>
+
+<span style="color: #009900">int</span> <span style="font-weight: bold"><span style="color: #000000">main</span></span><span style="color: #990000">()</span>
+<span style="color: #FF0000">{</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> ages <span style="color: #990000">=</span> std<span style="color: #990000">::</span>vector<span style="color: #990000">&lt;</span><span style="color: #009900">int</span><span style="color: #990000">&gt;</span><span style="color: #FF0000">{</span><span style="color: #993399">0</span><span style="color: #990000">,</span> <span style="color: #993399">1</span><span style="color: #990000">,</span> <span style="color: #993399">2</span><span style="color: #990000">,</span> <span style="color: #993399">3</span><span style="color: #990000">,</span> <span style="color: #993399">4</span><span style="color: #990000">,</span> <span style="color: #993399">5</span><span style="color: #FF0000">}</span><span style="color: #990000">;</span>
+   <span style="color: #FF0000">{</span>
+      <span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> i <span style="color: #990000">=</span> std<span style="color: #990000">::</span><span style="font-weight: bold"><span style="color: #000000">find</span></span><span style="color: #990000">(</span>ages<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">cbegin</span></span><span style="color: #990000">(),</span> ages<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">end</span></span><span style="color: #990000">(),</span> <span style="color: #993399">42</span><span style="color: #990000">);</span>
+      <span style="font-weight: bold"><span style="color: #0000FF">if</span></span> <span style="color: #990000">(</span>i <span style="color: #990000">!=</span> ages<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">end</span></span><span style="color: #990000">())</span>
+      <span style="color: #FF0000">{</span>
+         ages<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">erase</span></span><span style="color: #990000">(</span>i<span style="color: #990000">);</span>
+         <span style="color: #990000">++</span>i<span style="color: #990000">;</span>           <span style="font-style: italic"><span style="color: #9A1900">// i was just erased and doesn't exist, remember?</span></span>
+      <span style="color: #FF0000">}</span>
+   <span style="color: #FF0000">}</span>
+
+<span style="color: #FF0000">}</span></tt></pre></div></div>
+<div class="ulist"><ul>
+<li>
+<p>
+We can&#8217;t do <code>i = ages.erase(i)</code>, because that would cause us to skip an element.
+</p>
+</li>
+</ul></div>
+</td>
+</tr></table>
+</div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="title">Further reading</div>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+ISO/IEC. Working Draft, Standard for Programming Language C++, p.852. 2014. ISO/IEC, Geneva
+   Switzerland.
+</p>
+</li>
+<li>
+<p>
+Stroustrup, B. <em>The C++ programming language</em>. Fourth edition. p898. 2013. Pearson Education,
+   Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+Sutter, H. <em>Exceptional C++: 47 engineering puzzles, programming problems, and solutions}</em>.
+   p2&#8201;&#8212;&#8201;3. 2000. Pearson Education, Inc. Indianapolis, IN.
+</p>
+</li>
+<li>
+<p>
+Sutter, H. <em>More exceptional C++: 40 new engineering puzzles, programming problems, and
+   solutions</em>. p62&#8201;&#8212;&#8201;64. 2002. Pearson Education, Inc. Boston, MA.
+</p>
+</li>
+<li>
+<p>
+Lippman, S. et al. <em>C++ primer</em>. 5th edition. p353&#8201;&#8212;&#8201;355. 2012. Pearson Education, Inc. Upper
+   Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+<a href="http://stackoverflow.com/a/6442829/4097528">http://stackoverflow.com/a/6442829/4097528</a>
+</p>
+</li>
+</ol></div>
+</td>
+</tr></table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_code_algorithm_code_code_numeric_code_code_memory_code_and_code_utility_code"><code>algorithm</code>, <code>numeric</code>, <code>memory</code>, and <code>utility</code></h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+Define a series of highly optimised, generic algorithms.
+</p>
+</li>
+<li>
+<p>
+They can be used on varying containers (provided they meet the iterator requirements).
+</p>
+</li>
+<li>
+<p>
+Prefer using standard library algorithms to code that you write yourself.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+"Every line of code you don&#8217;t write is bug free!"&#8201;&#8212;&#8201;Yi Lu, 2012
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Are not limited to standard containers: you can use them on your own types if you also define an
+  iterator type for your container.
+</p>
+</li>
+<li>
+<p>
+<code>algorithm</code> contains things like
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+searches (e.g. <code>find</code>, <code>find_if</code>, <code>lower_bound</code>, etc.),
+</p>
+</li>
+<li>
+<p>
+sorts (e.g. <code>is_sorted</code>, <code>sort</code>, <code>partial_sort</code>, <code>stable_sort</code>, etc.),
+</p>
+</li>
+<li>
+<p>
+min/max algorithms,
+</p>
+</li>
+<li>
+<p>
+partitioning,
+</p>
+</li>
+<li>
+<p>
+transforms (e.g. <code>copy</code>, <code>fill</code>, <code>reverse</code>, etc.),
+</p>
+</li>
+<li>
+<p>
+more
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+<code>numeric</code> contains things like
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+<code>accumulate</code>
+</p>
+</li>
+<li>
+<p>
+<code>partial_sum</code>
+</p>
+</li>
+<li>
+<p>
+more
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+<code>utility</code> is a smaller library that is home to
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+<code>std::swap</code>
+</p>
+</li>
+<li>
+<p>
+<code>std::move</code>
+</p>
+</li>
+<li>
+<p>
+<code>std::forward</code>
+</p>
+</li>
+<li>
+<p>
+<code>std::exchange</code>
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="title">Further reading</div>
+<div class="ulist"><ul>
+<li>
+<p>
+Stroustrup, B. <em>The C++ programming language</em>. Fourth edition. p.927&#8201;&#8212;&#8201;952, 1159&#8201;&#8212;&#8201;1190.
+  Pearson Education, Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+Stroustrup, B. <em>A tour of C++</em>. p.107&#8201;&#8212;&#8201;116, 133&#8201;&#8212;&#8201;139. 2014. Pearson Education, Inc. Upper
+  Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+Stroustrup, B. <em>Programming: principles and practice using C++</em>. Second edition. p.757&#8201;&#8212;&#8201;801.
+  Pearson Education, Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+Meyers, S. <em>Effective STL: 50 specific ways to improve your use of the standard template
+  library</em>. p.128&#8201;&#8212;&#8201;161, 181&#8201;&#8212;&#8201;201, 206&#8201;&#8212;&#8201;217. 2001. Pearson Education, Inc. Upper Saddle River,
+  NJ.
+</p>
+</li>
+<li>
+<p>
+Sutter, H. <em>Exceptional C++: 47 engineering puzzles, programming progblems, and solutions</em>.
+  p.23&#8201;&#8212;&#8201;24. 2000. Pearson Education, Inc. Indianapolis, IN.
+</p>
+</li>
+<li>
+<p>
+Sutter, H. Alexandrescu, A. <em>C++ coding standards: 101 rules, guidelines, and best practices</em>.
+  p.159&#8201;&#8212;&#8201;172. 2005. Pearson Education, Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+<a href="http://en.cppreference.com/w/cpp/algorithm">en.cppreference.com&#8201;&#8212;&#8201;Algorithms library</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#es1-prefer-the-standard-library-to-other-libraries-and-to-handcrafted-code">CppCoreGuidelines&#8201;&#8212;&#8201;  ES.1: Prefer the standard library to other libraries and to "handcrafted code"</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://youtu.be/nesCaocNjtQ?t=22m28s">CppCon 2014: Bjarne Stroustrup "Make Simple Tasks Simple!"</a>
+</p>
+</li>
+</ul></div>
+</td>
+</tr></table>
+</div>
+</div>
+</div>
+</div>
+<div id="footnotes"><hr /></div>
+<div id="footer">
+<div id="footer-text">
+Version 1<br />
+Last updated 2016-08-14 00:44:02 AEST
+</div>
+</div>
+</body>
+</html>

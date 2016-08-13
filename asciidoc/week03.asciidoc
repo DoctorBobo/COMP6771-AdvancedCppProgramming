@@ -1,0 +1,1092 @@
+Week 3 tutorial postscript
+==========================
+:Author: Christopher Di Bella
+:Email: cjdb.ns@gmail.com
+:Date: TBA
+:Revision: 1
+:cpp: C++
+
+== Conversions
+* A conversion is when we change on object of type T to type U.
+   - For example, converting a `char` to an `int`.
+* Conversions may be implicit or explicit.
+
+=== Narrowing conversions
+* Narrowing conversions happen when we try to fit more information into an object than is allowed.
+* Examples of narrowing conversions include:
+   - `int` to `char`
+   - `int` to `float`
+   - `int` to `unsigned int`
+   - `long` to `int`, even if `sizeof(int) == sizeof(long)`
+   - `float` to `int`
+
+=== Promotions
+* A promotion is when we 'upgrade' the type of an object.
+* Examples of promotions include:
+   - `bool` to `int`
+   - `char` to `int`
+   - `float` to `double`
+
+=== Implicit conversions
+* An implicit conversion is when the compiler performs a conversion without us telling it to do so.
+* Since we didn't say that the conversion should happen, did we actually mean it?
+* With the exception of promotions and conversion-to-`bool`, we should avoid implicit conversions.
+
+[source,cpp]
+------------
+auto i = 100;
+i = 42.5; // an implicit narrowing conversion to 42, avoid me
+
+auto b = true;
+i = true; // a promotion, okay
+------------
+
+* Not everything can be implicitly converted. For example:
+
+[source,cpp]
+------------
+auto v = std::vector<int>{};
+v = 1; // error, can't convert int to vector<int>
+------------
+
+=== Explicit conversions
+* An explicit conversion is when the programmer tells the compiler (and other programmers) that a
+  conversion _needs_ to happen.
+* There are C-style casts and {cpp}-style casts.
+
+==== C-style casting
+* Very simple.
+* Perform three out of four {cpp}-style casts in one.
+* You never know which cast is actually happening.
+* Prefer {cpp}-style casts to C-style casts.
+
+[source,cpp]
+------------
+auto i = 0;
+i = (int)42.5; // don't do this
+------------
+
+==== `static_cast`
+* One form of standard {cpp}-style cast.
+* Used to convert from type-to-type.
+* The above C-style cast is supposed to mean `static_cast`, but it might mean a different cast.
+* If you have a reason to cast, but you don't have a reason not to use `static_cast`, use `static_cast`.
+
+[source,cpp]
+------------
+auto i = 0;
+i = static_cast<int>(42.5); // explicitly converts 42.5 to an int
+------------
+
+==== `dynamic_cast`
+* Another standard {cpp}-style cast.
+* Used with runtime polymorphism.
+* We will explore this later.
+* There are good reasons to use `dynamic_cast` over `static_cast`.
+
+==== `reinterpret_cast`
+* Another standard {cpp}-style cast.
+* This conversion essentially takes the bit pattern of an object and injects it into a new type.
+* You need a _very_ good reason to use `reinterpret_cast`.
+
+==== `const_cast`
+* Another standard {cpp}-style cast.
+* Casts away the `const`ness of an object for an expression.
+* Writing to an object that has had its `const`ness cast away might yield undefined behaviour.
+* Do not use `const_cast`.
+
+==== `gsl::narrow_cast`
+* A way of signalling that you are performing a narrowing conversion.
+* Identical to `static_cast`
+* Not a standard {cpp}-stlye cast.
+* Found in the Guideline Support Library.
+
+[source,cpp]
+------------
+#include "gsl.h"
+
+int main()
+{
+   auto i = 0;
+   i = gsl::narrow_cast<int>(42.5); // helps to explain why we are casting
+   std::cout << i << '\n';
+}
+------------
+
+.Further reading
+[TIP]
+=====
+* Stroustrup, B. _The {cpp} programming language_. Fourth edition. p.298 -- 303. 2013. Pearson
+  Education, Inc. Upper Saddle River, NJ.
+* Stroustrup, B. _A tour of {cpp}_. p.47, 161. 2014. Pearson Education, Inc. Upper Saddle River, NJ.
+* Stroustrup, B. _Programming: principles and practice using {cpp}_. Second edition. p.78 -- 83. 2014.
+  Pearson Education, Inc. Upper Saddle River, NJ.
+* Meyers, S. _More effective {cpp}: 35 new ways to improve your programs and designs_. p.12 -- 16. 1996.
+  Addison Wesley. Westford, MA.
+* Sutter, H. _Exceptional {cpp} style: 40 new engineering puzzles, programming problems, and
+  solutions_. p.184 -- 189. 2005. Pearson Education, Inc. Boston, MA.
+* Sutter, H. Alexandrescu, A. _{cpp} coding standards: 101 rules, guidelines, and best practices_.
+  p.176 -- 181. 2005. Pearson Education, Inc. Upper Saddle River, NJ.
+* link:http://en.cppreference.com/w/cpp/language/static_cast[cppreference.com -- `static_cast`
+  conversion]
+* link:http://en.cppreference.com/w/cpp/language/dynamic_cast[cppreference.com -- `dynamic_cast`
+  conversion]
+* link:http://en.cppreference.com/w/cpp/language/reinterpret_cast[cppreference.com --
+  `reinterpret_cast` conversion]
+* http://en.cppreference.com/w/cpp/language/const_cast[cppreference.com -- `const_cast` conversion]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rp-what[CppCoreGuidelines
+  -- P.3: Express intent]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rp-typesafe[CppCoreGuidelines
+  -- P.4: Ideally, a program should be statically type safe]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Res-narrowing[CppCoreGuidelines
+  -- ES.46: Avoid lossy (narrowing, truncating) arithmetic conversions]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Res-casts[CppCoreGuidelines
+  -- ES.48: Avoid casts]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Res-casts-named[CppCoreGuidelines
+  -- ES.49: If you must use a cast, use a named cast]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Res-casts-const[CppCoreGuidelines
+  -- ES.50: Don't cast away `const`]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Pro-type-reinterpretcast[CppCoreGuidelines
+  -- Type.1: Don't use `reinterpret_cast`]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Pro-type-constcast[CppCoreGuidelines
+  -- Type.3: Don't use `const_cast` to cast away `const` (i.e., at all)]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Pro-type-cstylecast[CppCoreGuidelines
+  -- Type.4: Don't use C-style `(T)expression` casts that would perform a `static_cast` downcast,
+  `const_cast`, or `reinterpret_cast`]
+=====
+
+== vector
+* Dynamically sized array container.
+* `vector` should be your default container.
+* You should justify why you _need_ to use something other than `vector`.
+* Don't use `vector<bool>`. Prefer `deque<bool>`.
+
+.Further reading
+[TIP]
+=====
+* Stroustrup, B. _The {cpp} programming language_. Fourth edition. p.902 -- 906, 981 -- 982.
+  Pearson Education, Inc. Upper Saddle River, NJ.
+* Stroustrup, B. _A tour of {cpp}_. p.96 -- 99. Pearson Education, Inc. Upper Saddle River, NJ.
+* Stroustrup, B. _Programming: principles and practice using {cpp}_. Second edition. 2014. Pearson
+  Education, Inc. Upper Saddle River, NJ.
+* Meyers, S. _Effective STL: 50 specific ways to improve your use of the standard template
+  library_. p.63 -- 66, 79 -- 82. 2001. Pearson Education, Inc. Upper Saddle River, NJ.
+* Sutter, H. _More exceptional {cpp}: 40 new engineering puzzles, programming problems, and
+  solutions_. p.36 -- 53. 2002. Pearson Education, Inc. Boston, MA.
+* Sutter, H. _Exceptional {cpp} style: 40 new engineering puzzles, programming problems, and
+  solutions_. p.2 -- 9. 2005. Pearson Education, Inc. Boston, MA.
+* Sutter, H. Alexandrescu, A. _{cpp} coding standards: 101 rules, guidelines, and best practices_.
+  p.149 -- 158. 2005. Pearson Education, Inc. Upper Saddle River, NJ.
+* link:http://en.cppreference.com/w/cpp/container/vector[cppreference.com -- `std::vector`]
+* link:http://en.cppreference.com/w/cpp/container/vector_bool[cppreference.com -- `std::vector<bool>`]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rsl-arrays[CppCoreGuidelines
+  -- SL.con.1: Prefer using STL `array` or `vector` instead of a C array]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rsl-vector[CppCoreGuidelines
+  -- SL.con.2: Prefer using STL `vector` by default unless you have a reason to use a different container]
+=====
+
+== array
+* Fixed-sized array container.
+* If you must absolutely use a fixed-sized array, use `array`.
+* You need to justify why a fixed-sized array is a better choice than `vector`.
+* If you argue performance, measure.
+   - If you claim `array` is faster, write your program with a `vector`, time it, recompile with
+     `array`, and then re-time it.
+   - If you claim `vector` uses too much space, provide results with a profiler such as `memcheck`
+     or `massif`.
+
+.Further reading
+[TIP]
+=====
+* Stroustrup, B. _The {cpp} programming language_. Fourth edition. p.974 -- 977. 2013. Pearson
+  Education, Inc. Upper Saddle River, NJ.
+* Stroustrup, B. _A tour of {cpp}_. p.122 -- 123. 2014. Pearson Education, Inc. Upper Saddle River,
+  NJ.
+* Stroustrup, B. _Programming: principles and practice using {cpp}_. Second edition. p.747 -- 748. 2014.
+  Pearson Education, Inc. Upper Saddle River, NJ.
+* link:http://en.cppreference.com/w/cpp/container/array[cppreference.com -- `std::array`]
+* link:http://valgrind.org[Valgrind] -- a powerful profiling tool
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Res-stack[CppCoreGuidelines
+  -- ES.27: Use `std::array` or `stack_array` for arrays on the stack]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rsl-arrays[CppCoreGuidelines
+  -- SL.con.1 Prefer using STL `array` or `vector` instead of a C array]
+=====
+
+== C-style arrays and `gsl::span`
+* Don't write C-style arrays anymore, even if you need to call code written in C.
+* Both `vector` and `array` can be passed to C functions without a problem.
+* If you are supporting code that already uses C-style arrays and you can't change them, start
+  using `gsl::span`.
+* `gsl::span` isn't covered in COMP6771.
+
+.Further reading (all from CppCoreGuidelines)
+[TIP]
+=====
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Ri-array[I.13:
+  Do not pass an array as a single pointer]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#bounds1-dont-use-pointer-arithmetic-use-span-instead[Bounds.1:
+  Don't use pointer arithmetic. Use `span` instead.]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#bounds3-no-array-to-pointer-decay[Bounds.3:
+  No array-to-pointer decay.]
+=====
+
+== `string`
+* {cpp} introduced `std::string`, which is a dynamically-sized string type.
+* Prefer it over C-style strings.
+   - Similarly to C-style arrays, the GSL offers `gsl::string_span` for C-style strings.
+   - Like `gsl::span`, `gsl::string_span` is not covered in COMP6771, and is shown for completeness
+     only.
+* The string literal you are familiar with `"Hello, world!\n"`, is of type `const char*`.
+   - It is `const` because you cannot change a string literal at runtime.
+* If you need to interface with a function that only accepts a `char*` or `const char*`, you can
+  use `string::c_str` to get a pointer to the data.
+* `std::string` is a character-based `basic_string`. There are four standard types of `basic_string`:
+   - `std::string` for `char`
+   - `std::wstring` for `wchar_t`
+   - `std::u16string` for `char16_t`
+   - `std::u32string` for `char32_t`
+   - Only use `std::string` unless you _need_ to use one of the others.
+
+.`std::string` literals
+[TIP]
+=====
+* {cpp}11 introduced user-defined literals.
+* {cpp}14 introduced a user-defined literal for `string` so that you don't need to go through
+  the rigmarole of writing out `std::string{"Hello, world!\n"}` to make a `string`.
+
+[source,cpp]
+------------
+#include <iostream>
+#include <string>
+
+int main()
+{
+   std::cout << "Hello, world!\n"; // use of a const char*... okay
+
+   // This is not the same as using `using namespace std`, as std::literals is a namespace within
+   // namespace std. Only std::literals is introduced into the current namespace.
+
+   // Do not place this in any larger scope than you need it, and never place it in a header.
+
+   // Provided you use a user-defined literal at least once in the scope you have placed this
+   // namespace directive, I will not deduct marks for its use (as I encourage user-defined
+   // literals, and there doesn't appear to be any other way to use these).
+   using namespace std::literals;
+   auto my_name = "hello"s; // that's the same as saying `auto my_name = std::string{"hello "};`
+   std::cout << my_name << '\n';
+}
+------------
+=====
+
+.Further reading
+[TIP]
+=====
+* Stroustrup, B. _The {cpp} programming language_. Fourth edition. p.1033 -- 1050. 2013. Pearson
+  Education, Inc. Upper Saddle River, NJ.
+* Stroustrup, B. _A tour of {cpp}_. p.75 -- 84. 2014. Pearson Education, Inc. Upper Saddle River,
+  NJ.
+* Stroustrup, B. _Programming: principles and practice using {cpp}_. Second edition. 2014. Pearson
+  Education, Inc. Upper Saddle River, NJ.
+* Meyers, S. _Effective STL: 50 specific ways to improve your use of the standard template library_.
+  p63 -- 66. 2001. Pearson Education, Inc. Upper Saddle River, NJ.
+* Sutter, H. _Exceptional {cpp}: 47 engineering puzzles, programming problems, and solutions_. p.4
+  -- 9. 2000. Pearson Education, Inc. Indianapolis, IN.
+* Sutter, H. _Exceptional {cpp} style: 40 new engineering puzzles, programming problems, and
+  solutions_. p.286 -- 314. 2005. Pearson Education, Inc. Boston, MA.
+* Sutter, H. Alexandrescu, A. _{cpp} coding standards: 101 rules, guidelines, and best practices_.
+  p.152 -- 153. 2005. Pearson Education, Inc. Upper Saddle River, NJ.
+* link:http://en.cppreference.com/w/cpp/string/basic_string[en.cppreference.com --
+  `std::basic_string`]
+=====
+
+== Functions and containers
+* {cpp} offers different ways to pass parameters.
+* Remember that {cpp} works with _values_, similarly to C, by default.
+* This is opposed to Java, which works with _referneces_ by default.
+
+=== Functions whose purpose is to create a container
+* Should _pass arguments_ that dictate the _creation_ of the container.
+* Should _return_ the container you've created.
+* Should start with `make_`.
+
+[source,cpp]
+------------
+#include <random>
+#include <vector>
+
+std::vector<int> make_crowd(const int children, const int adults, const int seniors)
+{
+   auto crowd = std::vector<int>{};
+
+   // random number generator in C++... much better than what you're used to!
+   std::random_device device;
+   auto generator = std::mt19937{ device() };
+   auto distribute = std::uniform_int_distribution<>{0, 17};
+
+   for (auto i = 0; i < children; ++i)
+      crowd.push_back(distribute(generator));
+
+   distribute = std::uniform_int_distribution<>{18, 64};
+   for (auto i = 0; i < adults; ++i)
+      crowd.push_back(distribute(generator));
+
+   distribute = std::uniform_int_distribution<>{65, 128};
+   for (auto i = 0; i < seniors; ++i)
+      crowd.push_back(distribute(generator));
+
+   return crowd;
+}
+------------
+
+=== Passing a parameter by value
+* Copies the object.
+* Similar buying a book and photocopying every page: you now have two of everything.
+* Usually what you want for fundamental types.
+* Usually not what you want for user-defined types.
+   - If you do want to pass a user-defined type by value, document it, explaining why a _copy_ is
+     necessary.
+   - Passing a user-defined type by value is usually done when you want to make local changes to an
+     object that should not be handed back to the caller.
+   - Putting `const` in front of a user-defined type that has been passed by value is probably a
+     very bad idea, and would require even further justification. I cannot think of any reasons why
+     this would be a good idea.
+* When passing by value, you do not (and should not) put `const` in a function prototype: only the
+  function itself.
+   - Putting `const` in the prototype means nothing because it can be left out of the function
+     header.
+   - Leaving it out of the prototype reduces the chances for lying to the reader.
+
+[source,cpp]
+------------
+#include <algorithm>
+#include <vector>
+
+int accumulate_from_keyboard(std::vector<int>);
+int sum(int, int);
+
+int accumulate_from_keyboard(std::vector<int> v)
+{
+   for (auto i = 0; std::cin >> i; )
+      v.push_back(i);
+   return std::accumulate(v.cbegin(), v.cend(), 0);
+}
+
+int sum(const int lhs, const int rhs)
+{
+   return lhs + rhs;
+}
+------------
+
+=== Passing a parameter by reference-to-`const`
+* Passes an alias to the object instead of a copy.
+* Think of this like a mirror.
+* `const` indicates that the object cannot be modified.
+   - Unlike when you pass by value, passing by reference-to-`const` requires the `const` specifier
+     in function prototypes.
+   - This is not lying to the reader.
+* Usually what you want for user-defined types.
+   - If you don't know how you want to pass a user-defined type, pass by reference-to-`const` until
+     you work it out.
+* Never what you want for fundamental types.
+
+[source,cpp]
+------------
+#include <algorithm>
+#include <vector>
+
+int accumulate_int(const std::vector<int>& v)
+{
+   return std::accumulate(v.cbegin(), v.cend());<F5>
+}
+------------
+
+=== Passing a parameter by reference
+* Passes an alias to the object instead of a copy.
+* Think of this like the object itself, just in a different scope.
+* Use non-`const` references for out-parameters.
+   - This is in contrast to passing by copy.
+* Pass by reference in two cases:
+   - When you know that modifications to an object must persist outside of the function, or
+   - When you cannot pass by reference-to-`const`, but also do not intend to create a copy.
+   - Both reasons deserve explicit documentation.
+
+[source,cpp]
+------------
+#include <algorithm>
+#include <vector>
+
+void fill_from_keyboard(vector<int>& v)
+{
+   for (auto i = 0; std::cin >> i; )
+      v.push_back(i);
+}
+------------
+
+.Further reading
+[TIP]
+=====
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rf-in[CppCoreGuidelines
+  -- F.16: For "in" parameters, pass cheaply-copied types by value and others by reference to `const`]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rf-inout[CppCoreGuidelines
+  -- F.17: For "in-out" parameters, pass by reference to non-`const`]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rf-consume[CppCoreGuidelines
+  -- F.18: For "consume" parameters, pass by `X&&` and `std::move` the parameter]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rf-forward[CppCoreGuidelines
+  -- F.19: For "forward" parameters, pass by `TP&&` and only `std::forward` the parameter]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rf-forward[CppCoreGuidelines
+  -- F.20: For "out" output values, prefer return values to output parameters]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rf-out-multi[CppCoreGuidelines
+  -- F.21: To return multiple "out" values, prefer returning a tuple or struct]
+* 
+=====
+
+== `list`
+* A doubly-linked list.
+* Use when you need to insert lots of elements into the middle of a sequence.
+   - When inserting into the middle of small sequences, `vector` still outperforms `list`.
+   - Don't take my word for it: measure my claim and try to prove me wrong!
+* If you think that you need to use a `list`, try out a `vector` first.
+   1. Start with `vector`.
+   2. Measure performance with `vector`.
+   3. Change to `list`.
+   4. Measure performance with `list` with the same dataset.
+
+.Further reading
+[TIP]
+=====
+* link:http://en.cppreference.com/w/cpp/container/list[en.cppreference.com -- `std::list`]
+=====
+== `forward_list`
+* A singly-linked list.
+* Good for very, very small sequences (either zero elements or very close to zero).
+* Size is not stored with the container.
+
+.Further reading
+[TIP]
+=====
+* link:http://en.cppreference.com/w/cpp/container/forward_list[en.cppreference.com --
+  `std::forward_list`]
+=====
+
+== `unordered_map` and `unordered_set`
+* An associative array.
+* Employs a hash table internally.
+* The average time complexity for a hash table is `O(1) + some distance` for
+   - insertion,
+   - erasure,
+   - and search
+* The worst time complexity is `O(n)`.
+* Avoid searching via `operator[]` for all non-fundamental key-value pairs.
+   - Even then, I recommend against it.
+   - When a key cannot be found through `operator[]`, a key-value pair is created with the default
+     value for the value.
+   - This is particularly bad for when you are assigning a value to a key that doesn't already
+     exist, since the object will be default constructed, and then assigned a new value
+     immediately.
+   - Prefer `unordered_map::at`, which throws an exception when a key doesn't exist, or
+   - a combination of `unordered_map::find` and `unordered_map::insert`/`unordered_map::emplace`,
+     or
+   - look into `unordered_map::lower_bound`, `unordered_map::upper_bound`, and
+     `unordered_map::equal_range`.
+* When inserting/emplacing, the value will only change if the key has not previously been
+  entered.
+
+[source,cpp]
+------------
+#include <iostream>
+#include <unordered_map>
+
+int main()
+{
+   auto names_age = std::unordered_map<std::string, int>{};
+
+   const auto main_character = "Jason Bourne"s;
+
+   using namespace std::literals::string_literals;
+   names_ages.insert({main_character, 1970}); // notice the braces
+   names_ages.emplace("Harold Clarke", 1982); // lack of braces, lack of `s' after "Harold Clarke"
+
+   {  // enclosing braces to encapsulate i
+      auto i = names_ages.find(main_character);
+      if (i != names_ages.end())
+      {
+         std::cout << "Altering year of birth for spy reasons...\n";
+         i->second -= 5;
+         std::cout << i->first << " is " << i->second << " years old!\n";
+      }
+      else
+      {
+         names_ages.insert({main_character, 1965});
+      }
+   } // i destroyed here and name can be recycled
+}
+------------
+
+* If you only need the key of an associative array, you can use `std::unordered_set` instead.
+
+.Further reading
+[TIP]
+=====
+* Stroustrup, B. _A tour of {cpp}_. p.102 -- 103. 2014. Pearson Education, Inc. Upper Saddle River,
+  NJ.
+* link:http://en.cppreference.com/w/cpp/container/unordered_map[en.cppreference.com --
+  `std::unordered_map`]
+* link:http://en.cppreference.com/w/cpp/container/unordered_multimap[en.cppreference.com --
+  `std::unordered_multimap`]
+* link:http://en.cppreference.com/w/cpp/container/unordered_set[en.cppreference.com --
+  `std::unordered_set`]
+* link:http://en.cppreference.com/w/cpp/container/unordered_multiset[en.cppreference.com --
+  `std::unordered_multiset`]
+=====
+
+== `map` and `set`
+* The difference between `unordered_map` and `map` is that `unordered_map` is hashed and `map`
+  uses a red-black binary search tree internally, which _orders_ the elements, based on their
+  keys.
+* Balancing binary search trees have time complexity of `O(lg n) + some distance` for
+   - insertion
+   - erasure
+   - search
+* Prefer the `unordered_` variants unless you need the objects to be sorted.
+
+.Further reading
+[TIP]
+=====
+* Stroustrup, B. _A tour of {cpp}_. p.101 -- 102. 2014. Pearson Education, Inc. Upper Saddle River,
+  NJ.
+* Stroustrup, B. _Programming: principles and practice using {cpp}_. Second edition. p.757 -- 801.
+  Pearson Education, Inc. Upper Saddle River, NJ.
+* link:http://en.cppreference.com/w/cpp/container/map[en.cppreference.com -- `std::map`]
+* link:http://en.cppreference.com/w/cpp/container/multimap[en.cppreference.com -- `std::multimap`]
+* link:http://en.cppreference.com/w/cpp/container/set[en.cppreference.com -- `std::set`]
+* link:http://en.cppreference.com/w/cpp/container/multiset[en.cppreference.com -- `std::multiset`]
+=====
+
+== Iterating over containers
+* Except when an algorithm exists, the following are preferred for iterating over an entire
+  container.
+
+=== Range-based `for` statements
+* Same as a `foreach` loop in other languages.
+* Iterates from a container's `begin` to its `end`.
+* Not just limited to standard containers: anything that supports `begin` and `end` is eligible.
+* **Always** use `auto` for the type specifier.
+   - Change to `const auto`, `auto&`, and `const auto&` where appropriate: the key message here is
+     that you shouldn't use an explicit type in a range-based `for` statement.
+
+=== Reverse range-`for` statements
+* Lets you iterate from a container's `rbegin` to `rend`
+* Relies on Boost.Range.
+[source,cpp]
+------------
+#include <boost/range/adaptor/reversed.hpp>
+#include <iostream>
+#include <vector>
+
+int main()
+{
+   auto vec = std::vector<int>{ 1, 2, 3, 4, 5 };
+   for (auto i : boost::adaptors::reverse(vec))
+      std::cout << i + 5 << '\n';
+}
+------------
+
+.Further reading
+[TIP]
+=====
+* ISO/IEC. Working Draft, Standard for Programming Language {cpp}, p.141 -- 142. 2014. ISO/IEC,
+  Geneva Switzerland.
+* Stroustrup, B. _The {cpp} programming language_. Fourth edition. p.233 -- 234, 965. 2013.
+  Pearson Education, Inc. Upper Saddle River, NJ.
+* Stroustrup, B. _A tour of {cpp}_. p.10. 2014. Pearson Education, Inc. Upper Saddle River, NJ.
+* Stroustrup, B. _Programming: principles and practice using {cpp}_. Second edition. p.119. 2014.
+  Pearson Education, Inc. Upper Saddle River, NJ.
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Res-for-range[ES.71:
+  Prefer a range-`for`-statement to a `for`-statement when there is a choice]
+* link:http://en.cppreference.com/w/cpp/language/range-for[en.cppreference.com -- Range-based `for`
+  loop]
+* link:http://www.boost.org/doc/libs/1_61_0/libs/range/doc/html/range/reference/adaptors.html[Boost.Range
+  manual -- Range Adaptors]
+=====
+
+== Iterators
+* "Iterators are a generalisation of pointers that allow a {cpp} program to work with different
+  data structures (containers) in a uniform manner."[1]
+* There are five forms of standard iterator:
+   - `InputIterator`
+   - `ForwardIterator`
+   - `BidirectionalIterator`
+   - `RandomAccessIterator`
+   - `OutputIterator`
+* Knowing the five iterator types isn't necessary, but it will make your life a lot easier when
+  choosing standard algorithms.
+
+.Further reading
+[TIP]
+=====
+1. ISO/IEC. Working Draft, Standard for Programming Language {cpp}, p.852. 2014. ISO/IEC, Geneva
+   Switzerland.
+2. Stroustrup, B. _The {cpp} programming language. Fourth edition_. p.953 -- 972. 2013. Pearson
+   Education, Inc. Upper Saddle River, NJ.
+3. Stroustrup, B. _A tour of {cpp}_. p.107 -- 113. 2014. Pearson Education, Inc. Upper Saddle
+   River, NJ.
+=====
+
+=== `OutputIterator`
+* Writes to the element that is pointed to.
+* A ForwardIterator, BidirectionalIterator, and RandomAccessIterator may satisify the requirements
+  of an OutputIterator.
+   - If they do, then you may write to what they point to.
+
+[source,cpp]
+------------
+#include <algorithm>
+#include <iostream>
+#include <iterator>
+#include <string>
+#include <vector>
+
+int main()
+{
+   auto names = std::vector<std::string>{};
+
+   using namespace std::literals;
+   for (auto n = ""s; std::cin >> n; )
+      names.emplace_back(n);
+
+   std::copy(names.cbegin(), names.cend(), std::ostream_iterator<std::string>{std::cout, "\n"});
+}
+------------
+
+* The above program prints one name per line by copying the contents of `names` to `cout` via
+  an `ostream_iterator`.
+* Preferable to iterating over a container with `cout`.
+
+.Further reading
+[TIP]
+=====
+* link:http://en.cppreference.com/w/cpp/concept/OutputIterator[en.cppreference.com -- {cpp}
+  concepts OutputIterator]
+=====
+
+=== `InputIterator`
+* Reads from the element that is pointed to.
+* "`InputIterators` are only guaranteed to be valid for single-pass algorithms"[1] such as `std::copy`.
+   - This means that if you choose to increment an `InputIterator`, you must test _all_ copies of
+     the iterator for invalidation, _even if they haven't changed position_.
+[source,cpp]
+------------
+#include <algorithm>
+#include <iostream>
+#include <iterator>
+#include <string>
+#include <vector>
+
+int main()
+{
+   auto names = std::vector<std::string>{};
+   {
+      auto begin = std::istream_iterator<decltype(names)::value_type>{std::cin};
+      auto end = std::istream_iterator<decltype(names)::value_type>{};
+      auto inserter = std::back_insert_iterator<decltype(names)>{names};
+      std::copy(begin, end, inserter);
+   }
+
+   std::sort(names.begin(), names.end());
+   std::copy(names.cbegin(), names.cend(), std::ostream_iterator<decltype(names)::value_type>{std::cout, "\n"});
+}
+------------
+
+* The above program uses two `istream_iterators`: these are `InputIterator`s.
+   - `begin` is the one we move, and points to the input stream.
+   - `end` is the one that indicates that the iterator is no longer valid (e.g. when the input
+     buffer becomes invalid).
+* `inserter` is an iterator that knows how to perform `vector::push_back`.
+* We copy the input from `cin` to `names`.
+* `decltype` is tells the compiler to take the type of the object inside. For example:
+   - `decltype(names)` is seen by the compiler as `vector<string>`
+   - `decltype(1)` is seen by the compiler as `int`
+   - We use `decltype` in situations where an object's type is a dependency: if we were to change
+     the type of `names` to `unordered_map<string, vector<int>>`, then the type of `decltype`
+     changes with it.
+* Many standard algorithms require an `InputIterator`.
+
+.Further reading
+[TIP]
+=====
+1. link:http://en.cppreference.com/w/cpp/concept/InputIterator[en.cppreference.com -- {cpp}
+   concepts `InputIterator`]
+=====
+
+=== `ForwardIterator`
+* "Forward iterators satisfy all the requirements of input iterators and can be used whenever an
+  input iterator is specified"[1]
+* "A `ForwardIterator` is an `Iterator` that can read data from the pointed-to element."[2]
+* "Unlike `InputIterator` and `OutputIterator`, it can be used in multipass algorithms."[2]
+   - This means that if you increment the value of a `ForwardIterator`, you _do not_ need to check
+     all other iterators pointing to the same sequence for validity.
+   - It also means that you can iterate over the same sequence more than once.
+   - You still need to check the incremented iterator for validity.
+   - Finally, if `a` and `b` are both `ForwardIterator`s for the same sequence `S`, and `a == b`,
+     "then either they are both non-dereferenceable or `*a` and `*b` are references bound to the
+     same object."[1]
+* You can only iterate over a sequence that accepts a `ForwardIterator` in one direction: forward.
+* A `ForwardIterator` that satisfies the requirements of `OutputIterator` is a mutable
+  `ForwardIterator`.
+* Iterators that point to elements in `forward_list`, `unordered_map`, and `unordered_set` are
+  `ForwardIterator`s.
+
+[source,cpp]
+------------
+#include <forward_list>
+#include <iostream>
+#include <iterator>
+
+int main()
+{
+   auto ages = std::forward_list<int>{std::istream_iterator<int>{std::cin}, std::istream_iterator<int>{}};
+   auto size = 0;
+   for (auto i = ages.cbegin(); i != ages.cend(); ++i)
+      ++size;
+   std::cout << size << '\n';
+}
+------------
+
+* `i` is a `ForwardIterator`.
+* Standard algorithms such as linear search algorithms require `ForwardIterator`s.
+
+.Incrementing iterators
+[CAUTION]
+=========
+* {cpp} programmers prefer to increment using `++i` (pre-incrementation), not `i++`
+  (post-incrementation).
+* This is because `i++` makes a copy of the old value and then increments.
+* `++i` doesn't do this: it just increments.
+* With anything except for arithmetic types (integers and floating-point numbers),
+  post-incrementation is expensive.
+* Because operators are overloaded as functions, a post-increment cannot be optimised to a
+  pre-increment if you never use the copy that the post-increment returns to you.
+* **tl;dr Use pre-increment operators unless you _need_ to use a post-increment operator. This
+  includes for integers.**
+* The following is a valid use of a post-increment operation:
+
+[source,cpp]
+------------
+#include <iostream>
+#include <iterator>
+#include <list>
+
+int main()
+{
+   auto ages = std::list<int>{std::istream_iterator<int>{std::cin}, std::istream_iterator<int>{}};
+   {
+      auto i = std::find(ages.cbegin(), ages.end(), 42);
+      if (i != ages.end())
+         ages.erase(i++);
+   }
+
+}
+------------
+
+* We will look at why this is so when we consider xref:invalid-iterator[iterator invalidation].
+=========
+
+.Further reading
+[TIP]
+=====
+1. ISO/IEC. Working Draft, Standard for Programming Language {cpp}, p.852. 2014. ISO/IEC, Geneva
+   Switzerland.
+2. link:http://en.cppreference.com/w/cpp/concept/ForwardIterator[en.cppreference.com -- {cpp}
+   concepts: `ForwardIterator`]
+3. Meyers, S. _More effective {cpp}: 35 new ways to improve your programs and designs_. p.31 -- 34. 1996.
+   Addison Wesley. Westford, MA.
+4. Sutter, H. _Exceptional {cpp}: 47 engineering puzzlies, programming problems, and solutions_.
+   p18 -- 22. 2000. Pearson Education, Inc. Indianapolis, IN.
+5. Sutter, H. _Exceptional {cpp} style: 40 new engineering puzzles, programming problems, and
+   solutions_. p.6. 2005. Boston, MA.
+=====
+
+=== `BidirectionalIterator`
+* "Bidirectional iterators also satisfy the requirements of forward iterators and can be used
+  whenever a forward iterator is specified"[1]
+* "A `BidirectionalIterator` is a `ForwardIterator` that can be moved in both directions (i.e.
+  incremented and decremented)."[2]
+* The same rules that apply to incrementation are also applicable to decrementation.
+* `list`, `map`, and `set` all use a `BidirectionalIterator`:
+
+[source,cpp]
+------------
+#include <iostream>
+#include <iterator>
+#include <list>
+
+int main()
+{
+   auto ages = std::list<int>{std::istream_iterator<int>{std::cin}, std::istream_iterator<int>{}};
+   ages.sort();
+   for (auto i = ages.cbegin(); i != ages.end(); ++i)
+   {
+      std::cout << "A person of " << *i << " years can";
+      if (*i < 15)
+         std::cout << "not"
+      std::cout << " watch an MA15+ movie alone.\n";
+   }
+}
+------------
+
+* Any algorithm that moves backwards, such as `copy_backward` requires a `BidirectionalIterator`.
+
+.Further reading
+[TIP]
+=====
+1. ISO/IEC. Working Draft, Standard for Programming Language {cpp}, p.852. 2014. ISO/IEC, Geneva
+   Switzerland.
+2. link:http://en.cppreference.com/w/cpp/concept/BidirectionalIterator[en.cppreference.com -- {cpp}
+   concepts: `BidirectionalIterator`]
+=====
+
+=== `RandomAccessIterator`
+* "Random access iterators also satisfy all the requirements of bidirectional iterators and can be
+  used whenever a bidirectional iterator is specified."[1]
+* "A `RandomAccessIterator` is a `BidirectionalIterator` that can be moved to point to any element
+  in constant time."[2]
+* `vector`, `array`, `deque` all use `RandomAccessIterators`.
+* In addition to supporting all of the `Bidirectional` operations, `RandomAccessIterators` support
+  the following operations:
+   - Addition, on integral types
+   - Subtraction, on integral types (returns an iterator)
+   - Subtraction, on an iterator to the same sequence (returns an integral value)
+   - Subscription
+   - Less than/less than or equal
+   - Greater than/greater than or equal
+
+.Further reading
+[TIP]
+=====
+1. ISO/IEC. Working Draft, Standard for Programming Language {cpp}, p.852. 2014. ISO/IEC, Geneva
+   Switzerland.
+2. link:http://en.cppreference.com/w/cpp/concept/RandomAccessIterator[en.cppreference.com -- {cpp}
+   concepts: `RandomAccessIterator`]
+=====
+
+=== `iterator` and `const_iterator`
+* All sequence and associative standard library containers have at least two iterator types:
+   - `iterator`, which is a mutable `ForwardIterator` or better
+   - `const_iterator`, which is a non-mutable `ForwardIterator` or better
+   - A `const_iterator` is like `const auto*`: you can change what is being pointed to, but you
+     can't change the value of the pointee.
+* Like with everything else, unless you _know that you indend_ to change the pointee's value, stick
+  with `const_iterator`s.
+* While using `cbegin` is a good way to express that you intend to use a `const_iterator` (in fact,
+  with `auto`, it's the only way), `cend` is sometimes a poor choice for iterating over containers.
+  Use it judiciously.
+
+.Item not relevant for modern {cpp}
+[CAUTION]
+=========
+* In Scott Meyers' _Effective STL_, 'Item 26' advises you to use `iterator` over all other forms of
+  standard iterator.
+* This is advice for {cpp}98, as the book was published in 2001.
+* Meyers' final book, _Effective Modern {cpp}_ addresses this in 'Item 13'.
+* _Effective Modern {cpp}_ has been written with {cpp}11 and {cpp}14 in mind.
+* This doesn't mean that _Effective STL_ is outdated: it means that Item 26 is outdated.
+* You might need to work with a {cpp}98 codebase (like I do), so none of that content is actually
+  obsolete.
+=========
+
+=== `reverse_iterator` and `const_reverse_iterator`
+* All standard library containers that support `BidirectionalIterator`s also have a
+  `reverse_iterator` and a `const_reverse_iterator`.
+* A `reverse_iterator` is an iterator that has been adapted so that increment is actually
+  decrement, and decrement is actually increment.
+* We use `reverse_iterator`s to start at the end of a sequence and iterate over the sequence
+  _backwards_.
+
+[source,cpp]
+------------
+// prints a sequence of numbers in reverse order
+#include <algorithm>
+#include <iostream>
+#include <iterator>
+#include <vector>
+
+int main()
+{
+   auto ages = std::vector<int>{std::istream_iterator<int>{std::cin}, std::istream_iterator<int>{}};
+   std::sort(ages.begin(), ages.end());
+   std::copy(ages.crbegin(), ages.rend(), std::ostream_iterator<decltype(ages)::value_type>{std::cout, " "});
+   std::cout << '\n';
+}
+------------
+
+.Further reading
+[TIP]
+=====
+* Meyers, S. _Effective STL: 50 specific ways to improve your use of the standard template
+  library_. p.123 -- 125. 2001. Pearson Education, Inc. Upper Saddle River, NJ.
+=====
+
+[[invalid-iterator]]
+=== Iterator invalidation
+* An invalid iterator is an iterator that doesn't point to a valid region of memory.
+* "The effect of dereferencing an iterator that has been invalidated is undefined."[1]
+* Beyond experience and human evaluation, there is no way to detect an invalid iterator.
+   - A compiler will not generate an error or warn you.
+   - A lint tool _might_ warn you of possible iterator invalidation if you are very lucky.
+   - A static analyser _might_ warn you if you are very lucky.
+   - A profiler _might_ warn you if you are very lucky.
+   - A debugger will not warn you, but a stepping through your code with a debugger is one of the
+     fastest ways to track down an invalid iterator.
+* Iterators that point to elements in sequence containers become invalidated whenever the elements
+  are relocated, even if the region of memory doesn't change.
+   - This means that inserting into the middle of a sequence invalidates _all_ iterators that point
+     to elements after the newly inserted element, even if they were valid immediately prior to the
+     insertion.
+* Associative containers are a little bit more forgiving: iterators pointing to elements in a `map`
+  for example, only become invalidated when they are removed from the container.
+   - I do not believe this is true for `multimap`, `multiset`, `unordered_multimap` or
+     `unordered_multiset`.
+* The course textbook goes into detail about the operations on containers that can cause iterator
+  invalidation.
+* An iterator range is invalid if `last < first` for many algorithms.
+
+.For example:
+[CAUTION]
+=========
+[source,cpp]
+------------
+#include <iostream>
+#include <vector>
+
+int main()
+{
+   auto ages = std::vector<int>{0, 1, 2, 3, 4, 5};
+   for (auto i = ages.cbegin(); i != ages.end() && ages.size() < 10'000'000; ++i)
+      ages.push_back(100);
+}
+------------
+
+* The above program is undefined due to iterator invalidation.
+* Hopefully, the worst that happens is that the program crashes.
+* Recall that a `vector` is a dynamically sized array, and needs to reallocate when you reach a
+  certain capacity.
+* Once this capacity is reached, the region of memory that your iterator points to is no longer
+  where all the elements are.
+* The correct way to do the above code is to revalidate the iterator:
+
+[source,cpp]
+------------
+ages.reserve(ages.size() + 512);
+for (auto i = ages.cbegin(); i != ages.end() && ages.size() < 10'000'000; ++i)
+   i = ages.insert(ages.crbegin(), 100);
+------------
+=========
+
+.Recall this code from before:
+[TIP]
+=====
+[source,cpp]
+------------
+#include <iostream>
+#include <vector>
+
+int main()
+{
+   auto ages = std::vector<int>{0, 1, 2, 3, 4, 5};
+   {
+      auto i = std::find(ages.cbegin(), ages.end(), 42);
+      if (i != ages.end())
+         ages.erase(i++);
+   }
+
+}
+------------
+
+* This is a valid use of the post-increment iterator because erase will remove the copy returned by
+  the post-increment operator, while `i` gets away.
+* The following code yields undefined behaviour:
+
+[source,cpp]
+------------
+#include <iostream>
+#include <vector>
+
+int main()
+{
+   auto ages = std::vector<int>{0, 1, 2, 3, 4, 5};
+   {
+      auto i = std::find(ages.cbegin(), ages.end(), 42);
+      if (i != ages.end())
+      {
+         ages.erase(i);
+         ++i;           // i was just erased and doesn't exist, remember?
+      }
+   }
+
+}
+------------
+
+* We can't do `i = ages.erase(i)`, because that would cause us to skip an element.
+=====
+
+.Further reading
+[TIP]
+=====
+1. ISO/IEC. Working Draft, Standard for Programming Language {cpp}, p.852. 2014. ISO/IEC, Geneva
+   Switzerland.
+2. Stroustrup, B. _The {cpp} programming language_. Fourth edition. p898. 2013. Pearson Education,
+   Inc. Upper Saddle River, NJ.
+3. Sutter, H. _Exceptional {cpp}: 47 engineering puzzles, programming problems, and solutions}_.
+   p2 -- 3. 2000. Pearson Education, Inc. Indianapolis, IN.
+4. Sutter, H. _More exceptional {cpp}: 40 new engineering puzzles, programming problems, and
+   solutions_. p62 -- 64. 2002. Pearson Education, Inc. Boston, MA.
+5. Lippman, S. et al. _{cpp} primer_. 5th edition. p353 -- 355. 2012. Pearson Education, Inc. Upper
+   Saddle River, NJ.
+6. http://stackoverflow.com/a/6442829/4097528
+=====
+
+== `algorithm`, `numeric`, `memory`, and `utility`
+* Define a series of highly optimised, generic algorithms.
+* They can be used on varying containers (provided they meet the iterator requirements).
+* Prefer using standard library algorithms to code that you write yourself.
+   - "Every line of code you don't write is bug free!" -- Yi Lu, 2012
+* Are not limited to standard containers: you can use them on your own types if you also define an
+  iterator type for your container.
+* `algorithm` contains things like
+   - searches (e.g. `find`, `find_if`, `lower_bound`, etc.),
+   - sorts (e.g. `is_sorted`, `sort`, `partial_sort`, `stable_sort`, etc.),
+   - min/max algorithms,
+   - partitioning,
+   - transforms (e.g. `copy`, `fill`, `reverse`, etc.),
+   - more
+* `numeric` contains things like
+   - `accumulate`
+   - `partial_sum`
+   - more
+* `utility` is a smaller library that is home to
+   - `std::swap`
+   - `std::move`
+   - `std::forward`
+   - `std::exchange`
+
+.Further reading
+[TIP]
+=====
+* Stroustrup, B. _The {cpp} programming language_. Fourth edition. p.927 -- 952, 1159 -- 1190.
+  Pearson Education, Inc. Upper Saddle River, NJ.
+* Stroustrup, B. _A tour of {cpp}_. p.107 -- 116, 133 -- 139. 2014. Pearson Education, Inc. Upper
+  Saddle River, NJ.
+* Stroustrup, B. _Programming: principles and practice using {cpp}_. Second edition. p.757 -- 801.
+  Pearson Education, Inc. Upper Saddle River, NJ.
+* Meyers, S. _Effective STL: 50 specific ways to improve your use of the standard template
+  library_. p.128 -- 161, 181 -- 201, 206 -- 217. 2001. Pearson Education, Inc. Upper Saddle River,
+  NJ.
+* Sutter, H. _Exceptional {cpp}: 47 engineering puzzles, programming progblems, and solutions_.
+  p.23 -- 24. 2000. Pearson Education, Inc. Indianapolis, IN.
+* Sutter, H. Alexandrescu, A. _{cpp} coding standards: 101 rules, guidelines, and best practices_.
+  p.159 -- 172. 2005. Pearson Education, Inc. Upper Saddle River, NJ.
+* link:http://en.cppreference.com/w/cpp/algorithm[en.cppreference.com -- Algorithms library]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#es1-prefer-the-standard-library-to-other-libraries-and-to-handcrafted-code[CppCoreGuidelines --
+  ES.1: Prefer the standard library to other libraries and to "handcrafted code"]
+* link:https://youtu.be/nesCaocNjtQ?t=22m28s[CppCon 2014: Bjarne Stroustrup "Make Simple Tasks Simple!"]
+=====
