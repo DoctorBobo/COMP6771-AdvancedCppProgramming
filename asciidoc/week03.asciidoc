@@ -969,7 +969,7 @@ int main()
 =========
 
 === `reverse_iterator` and `const_reverse_iterator`
-* All standard library containers that support `BidirectionalIterator`s also have a
+* All standard library containers that support `BidirectionalIterator` also have a
   `reverse_iterator` and a `const_reverse_iterator`.
 * A `reverse_iterator` is an iterator that has been adapted so that increment is actually
   decrement, and decrement is actually increment.
