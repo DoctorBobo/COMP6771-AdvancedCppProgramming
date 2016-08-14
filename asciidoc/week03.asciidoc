@@ -359,12 +359,12 @@ int main()
 * Copies the object.
 * Similar buying a book and photocopying every page: you now have two of everything.
 * Usually what you want for fundamental types.
-* Usually not what you want for user-defined types.
-   - If you do want to pass a user-defined type by value, document it, explaining why a _copy_ is
+* Usually not what you want for composite types.
+   - If you do want to pass a composite type by value, document it, explaining why a _copy_ is
      necessary.
-   - Passing a user-defined type by value is usually done when you want to make local changes to an
+   - Passing a composite type by value is usually done when you want to make local changes to an
      object that should not be handed back to the caller.
-   - Putting `const` in front of a user-defined type that has been passed by value is probably a
+   - Putting `const` in front of a composite type that has been passed by value is probably a
      very bad idea, and would require even further justification. I cannot think of any reasons why
      this would be a good idea.
 * When passing by value, you do not (and should not) put `const` in a function prototype: only the
@@ -400,8 +400,8 @@ int sum(const int lhs, const int rhs) // notice const here
    - Unlike when you pass by value, passing by reference-to-`const` requires the `const` specifier
      in function prototypes.
    - This is not lying to the reader.
-* Usually what you want for user-defined types.
-   - If you don't know how you want to pass a user-defined type, pass by reference-to-`const` until
+* Usually what you want for composite types.
+   - If you don't know how you want to pass a composite type, pass by reference-to-`const` until
      you work it out.
 * Never what you want for fundamental types.
 

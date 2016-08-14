@@ -1755,24 +1755,24 @@ Usually what you want for fundamental types.
 </li>
 <li>
 <p>
-Usually not what you want for user-defined types.
+Usually not what you want for composite types.
 </p>
 <div class="ulist"><ul>
 <li>
 <p>
-If you do want to pass a user-defined type by value, document it, explaining why a <em>copy</em> is
+If you do want to pass a composite type by value, document it, explaining why a <em>copy</em> is
      necessary.
 </p>
 </li>
 <li>
 <p>
-Passing a user-defined type by value is usually done when you want to make local changes to an
+Passing a composite type by value is usually done when you want to make local changes to an
      object that should not be handed back to the caller.
 </p>
 </li>
 <li>
 <p>
-Putting <code>const</code> in front of a user-defined type that has been passed by value is probably a
+Putting <code>const</code> in front of a composite type that has been passed by value is probably a
      very bad idea, and would require even further justification. I cannot think of any reasons why
      this would be a good idea.
 </p>
@@ -1854,12 +1854,12 @@ This is not lying to the reader.
 </li>
 <li>
 <p>
-Usually what you want for user-defined types.
+Usually what you want for composite types.
 </p>
 <div class="ulist"><ul>
 <li>
 <p>
-If you don&#8217;t know how you want to pass a user-defined type, pass by reference-to-<code>const</code> until
+If you don&#8217;t know how you want to pass a composite type, pass by reference-to-<code>const</code> until
      you work it out.
 </p>
 </li>
@@ -2182,7 +2182,7 @@ As with all the other containers, you need to have a valid reason to use <code>d
 <div class="ulist"><ul>
 <li>
 <p>
-Wanting a container of <code>bool`s is a valid reason to use a `deque</code> over a <code>vector</code>.
+Wanting a container of <code>bool</code> is a valid reason to use a <code>deque</code> over a <code>vector</code>.
 </p>
 </li>
 </ul></div>
@@ -3977,7 +3977,7 @@ Sutter, H. Alexandrescu, A. <em>C++ coding standards: 101 rules, guidelines, and
 <div id="footer">
 <div id="footer-text">
 Version 1<br />
-Last updated 2016-08-14 14:09:23 AEST
+Last updated 2016-08-14 14:18:19 AEST
 </div>
 </div>
 </body>
