@@ -71,6 +71,7 @@ i = (int)42.5; // don't do this
 * Used to convert from type-to-type.
 * The above C-style cast is supposed to mean `static_cast`, but it might mean a different cast.
 * If you have a reason to cast, but you don't have a reason not to use `static_cast`, use `static_cast`.
+* Note that `static_cast` will create a temporary. Depending on the type, this _might_ be expensive.
 
 [source,cpp]
 ------------
@@ -127,13 +128,17 @@ int main()
   solutions_. p.184 -- 189. 2005. Pearson Education, Inc. Boston, MA.
 * Sutter, H. Alexandrescu, A. _{cpp} coding standards: 101 rules, guidelines, and best practices_.
   p.176 -- 181. 2005. Pearson Education, Inc. Upper Saddle River, NJ.
-* link:http://en.cppreference.com/w/cpp/language/static_cast[cppreference.com -- `static_cast`
+* link:http://en.cppreference.com/w/cpp/language/implicit_conversion[cppreference -- Implicit
+  conversions]
+* link:http://en.cppreference.com/w/cpp/language/explicit_cast[cppreference -- Explicit type
   conversion]
-* link:http://en.cppreference.com/w/cpp/language/dynamic_cast[cppreference.com -- `dynamic_cast`
+* link:http://en.cppreference.com/w/cpp/language/static_cast[cppreference -- `static_cast`
   conversion]
-* link:http://en.cppreference.com/w/cpp/language/reinterpret_cast[cppreference.com --
+* link:http://en.cppreference.com/w/cpp/language/dynamic_cast[cppreference -- `dynamic_cast`
+  conversion]
+* link:http://en.cppreference.com/w/cpp/language/reinterpret_cast[cppreference --
   `reinterpret_cast` conversion]
-* http://en.cppreference.com/w/cpp/language/const_cast[cppreference.com -- `const_cast` conversion]
+* http://en.cppreference.com/w/cpp/language/const_cast[cppreference -- `const_cast` conversion]
 * link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rp-what[CppCoreGuidelines
   -- P.3: Express intent]
 * link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rp-typesafe[CppCoreGuidelines
@@ -177,8 +182,8 @@ int main()
   solutions_. p.2 -- 9. 2005. Pearson Education, Inc. Boston, MA.
 * Sutter, H. Alexandrescu, A. _{cpp} coding standards: 101 rules, guidelines, and best practices_.
   p.149 -- 158. 2005. Pearson Education, Inc. Upper Saddle River, NJ.
-* link:http://en.cppreference.com/w/cpp/container/vector[cppreference.com -- `std::vector`]
-* link:http://en.cppreference.com/w/cpp/container/vector_bool[cppreference.com -- `std::vector<bool>`]
+* link:http://en.cppreference.com/w/cpp/container/vector[cppreference -- `std::vector`]
+* link:http://en.cppreference.com/w/cpp/container/vector_bool[cppreference -- `std::vector<bool>`]
 * link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rsl-arrays[CppCoreGuidelines
   -- SL.con.1: Prefer using STL `array` or `vector` instead of a C array]
 * link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rsl-vector[CppCoreGuidelines
@@ -204,7 +209,7 @@ int main()
   NJ.
 * Stroustrup, B. _Programming: principles and practice using {cpp}_. Second edition. p.747 -- 748. 2014.
   Pearson Education, Inc. Upper Saddle River, NJ.
-* link:http://en.cppreference.com/w/cpp/container/array[cppreference.com -- `std::array`]
+* link:http://en.cppreference.com/w/cpp/container/array[cppreference -- `std::array`]
 * link:http://valgrind.org[Valgrind] -- a powerful profiling tool
 * link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Res-stack[CppCoreGuidelines
   -- ES.27: Use `std::array` or `stack_array` for arrays on the stack]
@@ -295,8 +300,10 @@ int main()
   solutions_. p.286 -- 314. 2005. Pearson Education, Inc. Boston, MA.
 * Sutter, H. Alexandrescu, A. _{cpp} coding standards: 101 rules, guidelines, and best practices_.
   p.152 -- 153. 2005. Pearson Education, Inc. Upper Saddle River, NJ.
-* link:http://en.cppreference.com/w/cpp/string/basic_string[en.cppreference.com --
+* link:http://en.cppreference.com/w/cpp/string/basic_string[cppreference --
   `std::basic_string`]
+* link:http://en.cppreference.com/w/cpp/string/basic_string/operator%22%22s[cppreference --
+  `std::literals::string_literals::operator""s`]
 =====
 
 == Functions and containers
@@ -311,6 +318,9 @@ int main()
 
 [source,cpp]
 ------------
+#include <algorithm>
+#include <iostream>
+#include <iterator>
 #include <random>
 #include <vector>
 
@@ -319,8 +329,7 @@ std::vector<int> make_crowd(const int children, const int adults, const int seni
    auto crowd = std::vector<int>{};
 
    // random number generator in C++... much better than what you're used to!
-   std::random_device device;
-   auto generator = std::mt19937{ device() };
+   auto generator = std::mt19937{std::random_device{}()};
    auto distribute = std::uniform_int_distribution<>{0, 17};
 
    for (auto i = 0; i < children; ++i)
@@ -335,6 +344,14 @@ std::vector<int> make_crowd(const int children, const int adults, const int seni
       crowd.push_back(distribute(generator));
 
    return crowd;
+}
+
+int main()
+{
+   auto crowd = make_crowd(100, 1'000, 50);
+   std::copy(crowd.cbegin(),
+             crowd.cend(),
+             std::ostream_iterator<decltype(crowd)::value_type>{ std::cout, "\n" });
 }
 ------------
 
@@ -358,20 +375,19 @@ std::vector<int> make_crowd(const int children, const int adults, const int seni
 
 [source,cpp]
 ------------
-#include <algorithm>
-#include <vector>
+template <typename T>
+T accumulate_from_keyboard(std::vector<T>);
+int sum(int, int); // notice no const here
 
-int accumulate_from_keyboard(std::vector<int>);
-int sum(int, int);
-
-int accumulate_from_keyboard(std::vector<int> v)
+template <typename T>
+T accumulate_from_keyboard(std::vector<T> v)
 {
    for (auto i = 0; std::cin >> i; )
       v.push_back(i);
    return std::accumulate(v.cbegin(), v.cend(), 0);
 }
 
-int sum(const int lhs, const int rhs)
+int sum(const int lhs, const int rhs) // notice const here
 {
    return lhs + rhs;
 }
@@ -391,12 +407,10 @@ int sum(const int lhs, const int rhs)
 
 [source,cpp]
 ------------
-#include <algorithm>
-#include <vector>
-
-int accumulate_int(const std::vector<int>& v)
+template <typename T>
+T accumulate_int(const std::vector<T>& v)
 {
-   return std::accumulate(v.cbegin(), v.cend());<F5>
+   return std::accumulate(v.cbegin(), v.cend());
 }
 ------------
 
@@ -412,10 +426,8 @@ int accumulate_int(const std::vector<int>& v)
 
 [source,cpp]
 ------------
-#include <algorithm>
-#include <vector>
-
-void fill_from_keyboard(vector<int>& v)
+template <typename T>
+void fill_from_keyboard(vector<T>& v)
 {
    for (auto i = 0; std::cin >> i; )
       v.push_back(i);
@@ -425,6 +437,7 @@ void fill_from_keyboard(vector<int>& v)
 .Further reading
 [TIP]
 =====
+* link:http://en.cppreference.com/w/cpp/numeric/random[cppreference -- Pseudo-random number generation]
 * link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rf-in[CppCoreGuidelines
   -- F.16: For "in" parameters, pass cheaply-copied types by value and others by reference to `const`]
 * link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rf-inout[CppCoreGuidelines
@@ -450,12 +463,20 @@ void fill_from_keyboard(vector<int>& v)
    2. Measure performance with `vector`.
    3. Change to `list`.
    4. Measure performance with `list` with the same dataset.
+* I have never used a `list` outside of uni work.
 
 .Further reading
 [TIP]
 =====
-* link:http://en.cppreference.com/w/cpp/container/list[en.cppreference.com -- `std::list`]
+* Stroustrup, B. _The {cpp} programming language_. Fourth edition. p.906 -- 908. 2013.
+  Pearson Education, Inc. Upper Saddle River, NJ.
+* Stroustrup, B. _A tour of {cpp}_. p.100 -- 101. 2014. Pearson Education, Inc. Upper Saddle
+  River, NJ.
+* link:http://en.cppreference.com/w/cpp/container/list[cppreference -- `std::list`]
+* link:https://isocpp.org/blog/2014/06/stroustrup-lists[isocpp -- Are lists evil? -- Bjarne
+  Stroustrup]
 =====
+
 == `forward_list`
 * A singly-linked list.
 * Good for very, very small sequences (either zero elements or very close to zero).
@@ -464,8 +485,32 @@ void fill_from_keyboard(vector<int>& v)
 .Further reading
 [TIP]
 =====
-* link:http://en.cppreference.com/w/cpp/container/forward_list[en.cppreference.com --
-  `std::forward_list`]
+* Stroustrup, B. _The {cpp} programming language_. Fourth edition. p.906 -- 908. 2013.
+  Pearson Education, Inc. Upper Saddle River, NJ.
+* Stroustrup, B. _A tour of {cpp}_. p.104. 2014. Pearson Education, Inc. Upper Saddle River, NJ.
+* link:http://en.cppreference.com/w/cpp/container/forward_list[cppreference -- `std::forward_list`]
+=====
+
+== `deque`
+* A double-ended queue.
+* Memory layout is not guaranteed to be contiguous.
+* Most students seemed confused when I mentioned it, so I don't think it's a focus.
+   - Please confirm with Jingling, Brad, or Hayden about its assessability.
+   - I don't mind you using it in assignments provided...
+* As with all the other containers, you need to have a valid reason to use `deque` over `vector`.
+   - Wanting a container of `bool`s is a valid reason to use a `deque` over a `vector`.
+* Understand that the `queue` adaptor (not in these notes) wraps around a `deque` _by default_.
+* I have not used a raw `deque` in years, as I rarely need to use anything other than `vector`.
+
+.Further reading
+[TIP]
+=====
+* Meyers, S. _Effective STL: 50 specific ways to improve your use of the standard template
+  library_. p.79 -- 82. 2001. Pearson Education, Inc. Upper Saddle River, NJ.
+* Sutter, H. _More exceptional {cpp}: 40 new engineering puzzles, programming problems, and
+  solutions_. p.36 -- 53. 2002. Pearson Education, Inc. Boston, MA.
+* link:http://en.cppreference.com/w/cpp/container/deque[cppreference -- `std::deque`]
+* link:http://en.cppreference.com/w/cpp/container/queue[cppreference -- `std::queue`]
 =====
 
 == `unordered_map` and `unordered_set`
@@ -529,13 +574,13 @@ int main()
 =====
 * Stroustrup, B. _A tour of {cpp}_. p.102 -- 103. 2014. Pearson Education, Inc. Upper Saddle River,
   NJ.
-* link:http://en.cppreference.com/w/cpp/container/unordered_map[en.cppreference.com --
+* link:http://en.cppreference.com/w/cpp/container/unordered_map[cppreference --
   `std::unordered_map`]
-* link:http://en.cppreference.com/w/cpp/container/unordered_multimap[en.cppreference.com --
+* link:http://en.cppreference.com/w/cpp/container/unordered_multimap[cppreference --
   `std::unordered_multimap`]
-* link:http://en.cppreference.com/w/cpp/container/unordered_set[en.cppreference.com --
+* link:http://en.cppreference.com/w/cpp/container/unordered_set[cppreference --
   `std::unordered_set`]
-* link:http://en.cppreference.com/w/cpp/container/unordered_multiset[en.cppreference.com --
+* link:http://en.cppreference.com/w/cpp/container/unordered_multiset[cppreference --
   `std::unordered_multiset`]
 =====
 
@@ -556,10 +601,31 @@ int main()
   NJ.
 * Stroustrup, B. _Programming: principles and practice using {cpp}_. Second edition. p.757 -- 801.
   Pearson Education, Inc. Upper Saddle River, NJ.
-* link:http://en.cppreference.com/w/cpp/container/map[en.cppreference.com -- `std::map`]
-* link:http://en.cppreference.com/w/cpp/container/multimap[en.cppreference.com -- `std::multimap`]
-* link:http://en.cppreference.com/w/cpp/container/set[en.cppreference.com -- `std::set`]
-* link:http://en.cppreference.com/w/cpp/container/multiset[en.cppreference.com -- `std::multiset`]
+* link:http://en.cppreference.com/w/cpp/container/map[cppreference -- `std::map`]
+* link:http://en.cppreference.com/w/cpp/container/multimap[cppreference -- `std::multimap`]
+* link:http://en.cppreference.com/w/cpp/container/set[cppreference -- `std::set`]
+* link:http://en.cppreference.com/w/cpp/container/multiset[cppreference -- `std::multiset`]
+=====
+
+== Insertion and emplacement
+* {cpp}11 introduced a new type of insertion for all of its containers called emplacement.
+* Rather than creating extra copies of an object like an insertion or push_back, emplacement will
+  take a list of parameters and create an object in the container for you.
+* This can reduce the amount of copying (potentially eliminating it).
+* Emplacement isn't always the best thing to use.
+* Scott Meyers gives three conditions for using emplacement:
+   1. The value being added is constructed into the container, not assigned,
+   2. The argument type(s) being passed differ from the type held by the container, and
+   3. The container is unlikely to reject the new value as a duplicate.
+   -  If even one of these conditions remains unsatisfied, you should not use emplacement.
+   -  See Meyers' book (referenced below) for the details on his conditions.
+
+.Further reading
+[TIP]
+=====
+* Meyers, S. _Effective modern {cpp}_. p.292 -- 301. 2014. O'Rielly Media, Inc. Sebastopol, CA.
+* link:http://stackoverflow.com/a/17174245/4097528[StackOverflow -- David Rodriguez answer to
+  `insert` vs `emplace` vs `operator[\]` in c++ `map`]
 =====
 
 == Iterating over containers
@@ -601,10 +667,9 @@ int main()
 * Stroustrup, B. _A tour of {cpp}_. p.10. 2014. Pearson Education, Inc. Upper Saddle River, NJ.
 * Stroustrup, B. _Programming: principles and practice using {cpp}_. Second edition. p.119. 2014.
   Pearson Education, Inc. Upper Saddle River, NJ.
-* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Res-for-range[ES.71:
-  Prefer a range-`for`-statement to a `for`-statement when there is a choice]
-* link:http://en.cppreference.com/w/cpp/language/range-for[en.cppreference.com -- Range-based `for`
-  loop]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Res-for-range[CppCoreGuidelines --
+  ES.71: Prefer a range-`for`-statement to a `for`-statement when there is a choice]
+* link:http://en.cppreference.com/w/cpp/language/range-for[cppreference -- Range-based `for` loop]
 * link:http://www.boost.org/doc/libs/1_61_0/libs/range/doc/html/range/reference/adaptors.html[Boost.Range
   manual -- Range Adaptors]
 =====
@@ -630,6 +695,8 @@ int main()
    Education, Inc. Upper Saddle River, NJ.
 3. Stroustrup, B. _A tour of {cpp}_. p.107 -- 113. 2014. Pearson Education, Inc. Upper Saddle
    River, NJ.
+4. link:http://en.cppreference.com/w/cpp/iterator[cppreference -- Iterator library]
+5. link:http://en.cppreference.com/w/cpp/concept/Iterator[cppreference -- {cpp} concepts: Iterator]
 =====
 
 === `OutputIterator`
@@ -654,7 +721,9 @@ int main()
    for (auto n = ""s; std::cin >> n; )
       names.emplace_back(n);
 
-   std::copy(names.cbegin(), names.cend(), std::ostream_iterator<std::string>{std::cout, "\n"});
+   std::copy(names.cbegin(),
+             names.cend(),
+             std::ostream_iterator<decltype(names)::value_type>{std::cout, "\n"});
 }
 ------------
 
@@ -665,8 +734,8 @@ int main()
 .Further reading
 [TIP]
 =====
-* link:http://en.cppreference.com/w/cpp/concept/OutputIterator[en.cppreference.com -- {cpp}
-  concepts OutputIterator]
+* link:http://en.cppreference.com/w/cpp/concept/OutputIterator[cppreference -- {cpp} concepts
+  `OutputIterator`]
 =====
 
 === `InputIterator`
@@ -693,7 +762,9 @@ int main()
    }
 
    std::sort(names.begin(), names.end());
-   std::copy(names.cbegin(), names.cend(), std::ostream_iterator<decltype(names)::value_type>{std::cout, "\n"});
+   std::copy(names.cbegin(),
+             names.cend(),
+             std::ostream_iterator<decltype(names)::value_type>{std::cout, "\n"});
 }
 ------------
 
@@ -714,8 +785,10 @@ int main()
 .Further reading
 [TIP]
 =====
-1. link:http://en.cppreference.com/w/cpp/concept/InputIterator[en.cppreference.com -- {cpp}
-   concepts `InputIterator`]
+1. link:http://en.cppreference.com/w/cpp/concept/InputIterator[cppreference -- {cpp} concepts
+   `InputIterator`]
+2. Sutter, H. _Exceptional {cpp} style: 40 new engineering puzzles, programming problems, and
+   solutions_. p.221 -- 226. 2005. Pearson Education, Inc. Boston, MA.
 =====
 
 === `ForwardIterator`
@@ -744,7 +817,8 @@ int main()
 
 int main()
 {
-   auto ages = std::forward_list<int>{std::istream_iterator<int>{std::cin}, std::istream_iterator<int>{}};
+   auto ages = std::forward_list<int>{std::istream_iterator<int>{std::cin},
+                                      std::istream_iterator<int>{}};
    auto size = 0;
    for (auto i = ages.cbegin(); i != ages.cend(); ++i)
       ++size;
@@ -796,8 +870,8 @@ int main()
 =====
 1. ISO/IEC. Working Draft, Standard for Programming Language {cpp}, p.852. 2014. ISO/IEC, Geneva
    Switzerland.
-2. link:http://en.cppreference.com/w/cpp/concept/ForwardIterator[en.cppreference.com -- {cpp}
-   concepts: `ForwardIterator`]
+2. link:http://en.cppreference.com/w/cpp/concept/ForwardIterator[cppreference -- {cpp} concepts:
+   `ForwardIterator`]
 3. Meyers, S. _More effective {cpp}: 35 new ways to improve your programs and designs_. p.31 -- 34. 1996.
    Addison Wesley. Westford, MA.
 4. Sutter, H. _Exceptional {cpp}: 47 engineering puzzlies, programming problems, and solutions_.
@@ -841,8 +915,8 @@ int main()
 =====
 1. ISO/IEC. Working Draft, Standard for Programming Language {cpp}, p.852. 2014. ISO/IEC, Geneva
    Switzerland.
-2. link:http://en.cppreference.com/w/cpp/concept/BidirectionalIterator[en.cppreference.com -- {cpp}
-   concepts: `BidirectionalIterator`]
+2. link:http://en.cppreference.com/w/cpp/concept/BidirectionalIterator[cppreference -- {cpp} concepts:
+   `BidirectionalIterator`]
 =====
 
 === `RandomAccessIterator`
@@ -865,8 +939,8 @@ int main()
 =====
 1. ISO/IEC. Working Draft, Standard for Programming Language {cpp}, p.852. 2014. ISO/IEC, Geneva
    Switzerland.
-2. link:http://en.cppreference.com/w/cpp/concept/RandomAccessIterator[en.cppreference.com -- {cpp}
-   concepts: `RandomAccessIterator`]
+2. link:http://en.cppreference.com/w/cpp/concept/RandomAccessIterator[cppreference -- {cpp} concepts:
+   `RandomAccessIterator`]
 =====
 
 === `iterator` and `const_iterator`
@@ -881,7 +955,7 @@ int main()
   with `auto`, it's the only way), `cend` is sometimes a poor choice for iterating over containers.
   Use it judiciously.
 
-.Item not relevant for modern {cpp}
+.Item 26 not relevant for modern {cpp}
 [CAUTION]
 =========
 * In Scott Meyers' _Effective STL_, 'Item 26' advises you to use `iterator` over all other forms of
@@ -912,9 +986,12 @@ int main()
 
 int main()
 {
-   auto ages = std::vector<int>{std::istream_iterator<int>{std::cin}, std::istream_iterator<int>{}};
+   auto ages = std::vector<int>{std::istream_iterator<int>{std::cin},
+                                std::istream_iterator<int>{}};
    std::sort(ages.begin(), ages.end());
-   std::copy(ages.crbegin(), ages.rend(), std::ostream_iterator<decltype(ages)::value_type>{std::cout, " "});
+   std::copy(ages.crbegin(),
+             ages.rend(),
+             std::ostream_iterator<decltype(ages)::value_type>{std::cout, " "});
    std::cout << '\n';
 }
 ------------
@@ -1085,7 +1162,7 @@ int main()
   p.23 -- 24. 2000. Pearson Education, Inc. Indianapolis, IN.
 * Sutter, H. Alexandrescu, A. _{cpp} coding standards: 101 rules, guidelines, and best practices_.
   p.159 -- 172. 2005. Pearson Education, Inc. Upper Saddle River, NJ.
-* link:http://en.cppreference.com/w/cpp/algorithm[en.cppreference.com -- Algorithms library]
+* link:http://en.cppreference.com/w/cpp/algorithm[cppreference -- Algorithms library]
 * link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#es1-prefer-the-standard-library-to-other-libraries-and-to-handcrafted-code[CppCoreGuidelines --
   ES.1: Prefer the standard library to other libraries and to "handcrafted code"]
 * link:https://youtu.be/nesCaocNjtQ?t=22m28s[CppCon 2014: Bjarne Stroustrup "Make Simple Tasks Simple!"]
