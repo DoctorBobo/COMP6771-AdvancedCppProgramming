@@ -1227,6 +1227,11 @@ Dynamically sized array container.
 </li>
 <li>
 <p>
+The <code>priority_queue</code> adaptor adapts <code>vector</code> by default.
+</p>
+</li>
+<li>
+<p>
 You should justify why you <em>need</em> to use something other than <code>vector</code>.
 </p>
 </li>
@@ -1288,6 +1293,11 @@ Sutter, H. Alexandrescu, A. <em>C++ coding standards: 101 rules, guidelines, and
 <li>
 <p>
 <a href="http://en.cppreference.com/w/cpp/container/vector">cppreference&#8201;&#8212;&#8201;<code>std::vector</code></a>
+</p>
+</li>
+<li>
+<p>
+<a href="http://en.cppreference.com/w/cpp/container/priority_queue">cppreference&#8201;&#8212;&#8201;  <code>std::priority_queue</code></a>
 </p>
 </li>
 <li>
@@ -2189,7 +2199,8 @@ Wanting a container of <code>bool</code> is a valid reason to use a <code>deque<
 </li>
 <li>
 <p>
-Understand that the <code>queue</code> adaptor (not in these notes) wraps around a <code>deque</code> <em>by default</em>.
+Understand that both the <code>stack</code> and <code>queue</code> adaptors (not in these notes) wraps around a <code>deque</code>
+  <em>by default</em>.
 </p>
 </li>
 <li>
@@ -2221,6 +2232,11 @@ Sutter, H. <em>More exceptional C++: 40 new engineering puzzles, programming pro
 <li>
 <p>
 <a href="http://en.cppreference.com/w/cpp/container/deque">cppreference&#8201;&#8212;&#8201;<code>std::deque</code></a>
+</p>
+</li>
+<li>
+<p>
+<a href="http://en.cppreference.com/w/cpp/container/stack">cppreference&#8201;&#8212;&#8201;<code>std::stack</code></a>
 </p>
 </li>
 <li>
@@ -2373,6 +2389,12 @@ If you only need the key of an associative array, you can use <code>std::unorder
 <div class="ulist"><ul>
 <li>
 <p>
+Stroustrup, B. <em>The C++ programming language</em>. Fourth edition. p.913&#8201;&#8212;&#8201;920. Pearson Education,
+  Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
 Stroustrup, B. <em>A tour of C++</em>. p.102&#8201;&#8212;&#8201;103. 2014. Pearson Education, Inc. Upper Saddle River,
   NJ.
 </p>
@@ -2452,6 +2474,12 @@ Prefer the <code>unordered_</code> variants unless you need the objects to be so
 <div class="ulist"><ul>
 <li>
 <p>
+Stroustrup, B. <em>The C++ programming language</em>. Fourth edition. p.909&#8201;&#8212;&#8201;913. Pearson Education,
+  Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
 Stroustrup, B. <em>A tour of C++</em>. p.101&#8201;&#8212;&#8201;102. 2014. Pearson Education, Inc. Upper Saddle River,
   NJ.
 </p>
@@ -2460,6 +2488,12 @@ Stroustrup, B. <em>A tour of C++</em>. p.101&#8201;&#8212;&#8201;102. 2014. Pear
 <p>
 Stroustrup, B. <em>Programming: principles and practice using C++</em>. Second edition. p.757&#8201;&#8212;&#8201;801.
   Pearson Education, Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+Sutter, H. <em>More exceptional C++: 40 new engineering puzzles, programming problems, and
+  solutions</em>. p.53&#8201;&#8212;&#8201;59. 2002. Pearson Education, Inc. Boston, MA.
 </p>
 </li>
 <li>
@@ -2489,7 +2523,7 @@ Stroustrup, B. <em>Programming: principles and practice using C++</em>. Second e
 </div>
 </div>
 <div class="sect1">
-<h2 id="_insertion_and_emplacement">Insertion and emplacement</h2>
+<h2 id="_insertion_versus_emplacement">Insertion versus emplacement</h2>
 <div class="sectionbody">
 <div class="ulist"><ul>
 <li>
@@ -2515,7 +2549,7 @@ Emplacement isn&#8217;t always the best thing to use.
 </li>
 <li>
 <p>
-Scott Meyers gives three conditions for using emplacement:
+Scott Meyers gives three conditions for using emplacement without benchmarking:
 </p>
 <div class="olist arabic"><ol class="arabic">
 <li>
@@ -2532,20 +2566,20 @@ The argument type(s) being passed differ from the type held by the container, an
 <p>
 The container is unlikely to reject the new value as a duplicate.
 </p>
-<div class="ulist"><ul>
+</li>
+</ol></div>
+</li>
 <li>
 <p>
-If even one of these conditions remains unsatisfied, you should not use emplacement.
+If you cannot satisfy all three of his conditions, you will need to benchmark by writing code
+  with emplacement, and then changing it to insertion (<code>push_back</code> and <code>push_front</code> are both
+  insertion).
 </p>
 </li>
 <li>
 <p>
 See Meyers' book (referenced below) for the details on his conditions.
 </p>
-</li>
-</ul></div>
-</li>
-</ol></div>
 </li>
 </ul></div>
 <div class="admonitionblock">
@@ -3977,7 +4011,7 @@ Sutter, H. Alexandrescu, A. <em>C++ coding standards: 101 rules, guidelines, and
 <div id="footer">
 <div id="footer-text">
 Version 1<br />
-Last updated 2016-08-14 14:24:38 AEST
+Last updated 2016-08-14 23:17:28 AEST
 </div>
 </div>
 </body>

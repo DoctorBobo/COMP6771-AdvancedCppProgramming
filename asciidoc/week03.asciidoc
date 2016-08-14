@@ -163,6 +163,7 @@ int main()
 == vector
 * Dynamically sized array container.
 * `vector` should be your default container.
+* The `priority_queue` adaptor adapts `vector` by default.
 * You should justify why you _need_ to use something other than `vector`.
 * Don't use `vector<bool>`. Prefer `deque<bool>`.
 
@@ -183,6 +184,8 @@ int main()
 * Sutter, H. Alexandrescu, A. _{cpp} coding standards: 101 rules, guidelines, and best practices_.
   p.149 -- 158. 2005. Pearson Education, Inc. Upper Saddle River, NJ.
 * link:http://en.cppreference.com/w/cpp/container/vector[cppreference -- `std::vector`]
+* link:http://en.cppreference.com/w/cpp/container/priority_queue[cppreference --
+  `std::priority_queue`]
 * link:http://en.cppreference.com/w/cpp/container/vector_bool[cppreference -- `std::vector<bool>`]
 * link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rsl-arrays[CppCoreGuidelines
   -- SL.con.1: Prefer using STL `array` or `vector` instead of a C array]
@@ -499,7 +502,8 @@ void fill_from_keyboard(vector<T>& v)
    - I don't mind you using it in assignments provided...
 * As with all the other containers, you need to have a valid reason to use `deque` over `vector`.
    - Wanting a container of `bool` is a valid reason to use a `deque` over a `vector`.
-* Understand that the `queue` adaptor (not in these notes) wraps around a `deque` _by default_.
+* Understand that both the `stack` and `queue` adaptors (not in these notes) wraps around a `deque`
+  _by default_.
 * I have not used a raw `deque` in years, as I rarely need to use anything other than `vector`.
 
 .Further reading
@@ -510,6 +514,7 @@ void fill_from_keyboard(vector<T>& v)
 * Sutter, H. _More exceptional {cpp}: 40 new engineering puzzles, programming problems, and
   solutions_. p.36 -- 53. 2002. Pearson Education, Inc. Boston, MA.
 * link:http://en.cppreference.com/w/cpp/container/deque[cppreference -- `std::deque`]
+* link:http://en.cppreference.com/w/cpp/container/stack[cppreference -- `std::stack`]
 * link:http://en.cppreference.com/w/cpp/container/queue[cppreference -- `std::queue`]
 =====
 
@@ -572,6 +577,8 @@ int main()
 .Further reading
 [TIP]
 =====
+* Stroustrup, B. _The {cpp} programming language_. Fourth edition. p.913 -- 920. Pearson Education,
+  Inc. Upper Saddle River, NJ.
 * Stroustrup, B. _A tour of {cpp}_. p.102 -- 103. 2014. Pearson Education, Inc. Upper Saddle River,
   NJ.
 * link:http://en.cppreference.com/w/cpp/container/unordered_map[cppreference --
@@ -597,28 +604,34 @@ int main()
 .Further reading
 [TIP]
 =====
+* Stroustrup, B. _The {cpp} programming language_. Fourth edition. p.909 -- 913. Pearson Education,
+  Inc. Upper Saddle River, NJ.
 * Stroustrup, B. _A tour of {cpp}_. p.101 -- 102. 2014. Pearson Education, Inc. Upper Saddle River,
   NJ.
 * Stroustrup, B. _Programming: principles and practice using {cpp}_. Second edition. p.757 -- 801.
   Pearson Education, Inc. Upper Saddle River, NJ.
+* Sutter, H. _More exceptional {cpp}: 40 new engineering puzzles, programming problems, and
+  solutions_. p.53 -- 59. 2002. Pearson Education, Inc. Boston, MA.
 * link:http://en.cppreference.com/w/cpp/container/map[cppreference -- `std::map`]
 * link:http://en.cppreference.com/w/cpp/container/multimap[cppreference -- `std::multimap`]
 * link:http://en.cppreference.com/w/cpp/container/set[cppreference -- `std::set`]
 * link:http://en.cppreference.com/w/cpp/container/multiset[cppreference -- `std::multiset`]
 =====
 
-== Insertion and emplacement
+== Insertion versus emplacement
 * {cpp}11 introduced a new type of insertion for all of its containers called emplacement.
 * Rather than creating extra copies of an object like an insertion or push_back, emplacement will
   take a list of parameters and create an object in the container for you.
 * This can reduce the amount of copying (potentially eliminating it).
 * Emplacement isn't always the best thing to use.
-* Scott Meyers gives three conditions for using emplacement:
+* Scott Meyers gives three conditions for using emplacement without benchmarking:
    1. The value being added is constructed into the container, not assigned,
    2. The argument type(s) being passed differ from the type held by the container, and
    3. The container is unlikely to reject the new value as a duplicate.
-   -  If even one of these conditions remains unsatisfied, you should not use emplacement.
-   -  See Meyers' book (referenced below) for the details on his conditions.
+* If you cannot satisfy all three of his conditions, you will need to benchmark by writing code
+  with emplacement, and then changing it to insertion (`push_back` and `push_front` are both
+  insertion).
+* See Meyers' book (referenced below) for the details on his conditions.
 
 .Further reading
 [TIP]
