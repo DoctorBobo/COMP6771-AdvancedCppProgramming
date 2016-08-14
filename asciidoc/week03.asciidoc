@@ -841,7 +841,7 @@ int main()
 * Because operators are overloaded as functions, a post-increment cannot be optimised to a
   pre-increment if you never use the copy that the post-increment returns to you.
 * **tl;dr Use pre-increment operators unless you _need_ to use a post-increment operator. This
-  includes for integers.**
+  includes arithmetic types.**
 * The following is a valid use of a post-increment operation:
 
 [source,cpp]
