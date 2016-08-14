@@ -2,7 +2,7 @@ Week 3 tutorial postscript
 ==========================
 :Author: Christopher Di Bella
 :Email: cjdb.ns@gmail.com
-:Date: TBA
+:Date: 2016/08/14
 :Revision: 1
 :cpp: C++
 
