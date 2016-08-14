@@ -498,7 +498,7 @@ void fill_from_keyboard(vector<T>& v)
    - Please confirm with Jingling, Brad, or Hayden about its assessability.
    - I don't mind you using it in assignments provided...
 * As with all the other containers, you need to have a valid reason to use `deque` over `vector`.
-   - Wanting a container of `bool`s is a valid reason to use a `deque` over a `vector`.
+   - Wanting a container of `bool` is a valid reason to use a `deque` over a `vector`.
 * Understand that the `queue` adaptor (not in these notes) wraps around a `deque` _by default_.
 * I have not used a raw `deque` in years, as I rarely need to use anything other than `vector`.
 
