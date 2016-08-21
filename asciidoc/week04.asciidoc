@@ -1,0 +1,339 @@
+Week 4 tutorial postscript
+==========================
+
+== `class` and `struct`
+* Allows you to define your own types.
+* Support both data members and member functions.
+* Declare your member functions as `const` until you have a reason not to.
+* Make data members private until you have a reason not to.
+
+.Quiz
+[NOTE]
+=====
+1. What is the difference between class and struct?
+2. What are the three access modifiers available?
+=====
+
+=== <<norm-ctor,Constructors>>
+* A special function that does not return.
+* Responsible for creating the object.
+* There are three different kinds of constructor:
+   - xref:norm-ctor[Constructor]
+   - xref:copy-ctor[Copy constructor]
+   - xref:move-ctor[Move constructor]
+* If you don't need to define a copy constructor or a move constructor, _don't_ define them.
+
+[source,cpp]
+============
+class film
+{
+public:
+   film(std::string title, std::string director, std::vector<std::string> cast, const std::int64_t revenue);
+private:
+   std::string title_;
+   std::string director_;
+   std::vector<std::string> cast_;
+   std::int64_t revenue_;
+};
+
+film::film(std::string title, std::string director, std::vector<std::string> cast, const std::int64_t revenue);
+   : title_{title}, director_{director}, cast_{cast}, revenue_{revenue}
+{
+}
+============
+
+.Quiz
+[NOTE]
+=====
+1. What happens when you don't define a constructor at all?
+2. What happens when you don't define a default constructor?
+3. What is a delegating constructor?
+4. Why is the body of the above constructor empty?
+5. Why are we passing strings by value? (hint: this is answered below)
+=====
+
+=== `const` member functions
+* Promise that the function won't modify any non-`mutable` data members.
+* Can only call other `const` member functions.
+* Objects specified to be `const` can only call `const` member functions.
+
+[source,cpp]
+============
+class film
+{
+public:
+   film(std::string title, std::string director, std::vector<std::string> cast, const std::int64_t revenue);
+   const std::string& title() const;
+private:
+   std::string title_;
+   std::string director_;
+   std::vector<std::string> cast_;
+   std::int64_t revenue_;
+};
+
+film::film(std::string title, std::string director, std::vector<std::string> cast, const std::int64_t revenue);
+   : title_{title}, director_{director}, cast_{cast}, revenue_{revenue}
+{
+}
+
+const std::string& film::title() const
+{
+   title_ = "Star Wars: The Empire Strikes Back"; // error: title_ is immutable in this function
+   return title_; // okay
+}
+============
+
+.Quiz
+[NOTE]
+=====
+1. How should you be returning data members by default?
+2. When should you not be returning data members this way?
+=====
+
+=== `mutable` data members
+* The exception to the `const` rule: you can modify a `mutable` data member inside a `const`
+  function.
+* Sounds shady, right?
+* Only very carefully chosen members should be `mutable` (e.g. a cache).
+
+[source,cpp]
+============
+class cinema
+{
+public:
+   // ...
+   const film& top_grossing_film() const;
+private:
+   std::vector<film> films_;
+   mutable bool cache_invalidated_; // set to true in some insertion function
+   mutable film* top_film_;
+};
+
+const film& cinema::top_grossing_film() const
+{
+   std::
+}
+============
+
+=== `friend` functions
+* Have access to a class's privates.
+* Are free-form functions or other classes that have the _same_ access as any function within the
+  class.
+* Avoid them if you can.
+* Prefer non-member, non-friend functions when possible.
+
+== Resource Acquisition is Initialisation (or as it's called in lectures, "Copy Control")
+* The _single_ most powerful feature C++ has to offer.
+* More important than object-oriented programming and generic programming.
+* It's not just a language feature, but a programming idiom.
+   1. You allocate a resource.
+   2. You use the resource.
+   3. You clean up the resource yourself, but the compiler decides when it happens.
+   4. That's the general idea!
+
+.What is a resource?
+[options="header,footer"]
+=========================
+|Example                                                                                  |Do we ned to worry about it (in modern C++)?                                                                                                                       |
+|A file handle.                                                                           |`ofstream` and `ifstream` already worry about cleaning up file handles, so unless you have some reason not to use them, you don't need to worry about file handles.|
+|An _owning_ pointer, or a pointer that is responsible for deallocating free store memory.|All owning pointers should be smart pointers where possible, so this is rarely a concern.                                                                          |
+|A mutex.                                                                                 |We'll cover mutexes another day, but there's stuff for them too.                                                                                                   |
+|Some other system-related stuff...                                                       |You'll need to inspect the standard library and GSL to see for yourself.                                                                                           |
+=========================
+
+* You've been using it a lot already without knowing:
+   - `vector` employs it (it dynamically allocates memory, but you never clean it up)
+   - `ifstream` employs it (you open the file handle, but you never close it)
+
+.It's not garbage collection.
+[options="header,footer"]
+=========================
+|Garbage collection                                                                      |RAII                                                             |
+|is a fire and forget tool employed by a runtime.                                        |is a programming idiom actively employed by vigilant programmers.|
+|can happen at any point _from_ the end of an object's life to the program's termination.|is guaranteed to happen _at_ the end of an object's life.        |
+=========================
+
+=== Destructor, copy constructor, copy assignment, and the rule of three
+* The destructor is a function that's (usually) automatically called at the end of an object's
+  lifetime.
+   - If you don't define one, it'll be synthesised for you.
+   - It is responsible for cleaning up any members, but it doesn't clean up resources that you
+     reserve.
+   - It is specified to be `noexcept` by default, and you shouldn't throw an exception from inside
+     one unless you want all kinds of trouble.
+   - Creating a destructor to clear a `vector` or set an `int` to 0 is redundant and should not be
+     done.
+* A copy constructor is responsible for copying resources from a pre-exiting object into an object
+  that is about to be constructed.
+   - If you don't define one, it'll be synthesised for you.
+   - You are responsible for ensuring that resources you reserve are correctly copied.
+   - Creating a copy constructor just to copy a `vector` is redundant, and shouldn't be done.
+* A copy assignment operator is responsible for copying resources from one pre-existing object A
+  into another pre-existing object B _and_ cleaning up the resources in B.
+   - If you don't define one, it'll be synthesised for you.
+   - You are responsible for ensuring that any resources that B currently holds are appropriately
+     cleaned up, and then properly copying the resources across from A.
+   - Creating a copy assignment operator just to copy a `vector`, or 'ensure' that your objects have
+     the same values is redundant, and shouldn't be done.
+
+.Be aware for self-assignment
+[WARNING]
+=====
+* If you perform `a = a;`, the state of `a` must remain the same.
+* There are three copy assignment operators below, one is incorrect, one is recommended, and one
+  should only be used with good reason.
+[source,cpp]
+------------
+template <typename T>
+smart_ptr<T>& smart_ptr<T>::operator=(const smart_ptr<T>& d)
+{
+   delete data_;
+   data_ = new T{*d.data_};
+   return *this;
+}
+------------
+
+* What can go wrong with the above?
+   - If we perform `a = a`, then we have just deleted the data we wish to copy.
+   - We are also dereferencing a dangling pointer. The result of this is undefined.
+   - This should be rejected by compiler warnings, lint tools, a static analysers, _and_ code
+     reviews, but don't expect compiler warnings alone to stop you.
+   - This is the not-recommended one.
+
+[source,cpp]
+------------
+template <typename T>
+smart_ptr<T>& smart_ptr<T>::operator=(const smart_ptr<T>& d)
+{
+   if (this != &d)
+   {
+      delete data_;
+      data_ = new T{*d.data_};
+   }
+
+   return *this;
+}
+------------
+
+* This is better, but there's still a few things to consider:
+   - If we perform `a = a`, then the resources are preserved.
+   - This is production-okay code.
+   - This shouldn't be rejected by lint tools and static analysers, but might be rejected by a
+     strict code review team.
+   - The key problem is that we need to explicitly release any held resources and then allocate new
+     resources, and we might forget to do it.
+   - We've also already done both of these in our copy constructor and our destructor, so there's
+     now some code duplication.
+   - If only there were a way to reduce code duplication...
+
+[source,cpp]
+------------
+template <typename T>
+smart_ptr<T>& smart_ptr<T>::operator=(const smart_ptr<T>& d)
+{
+   auto t = smart_ptr{d}; // copy constructor call
+   std::swap(*this, t);   // resources of our old smart_ptr go into t
+   return *this;
+} // t cleaned up here by definition
+------------
+
+* ...which we can do by invoking the copy constructor and the destructor.
+   - Credit goes to Scott Meyers.
+   - This is the recommended one, unless you have some reason to use the above one.
+=====
+
+* **The rule of three states that if you have a need to implement one of these, you must implement
+  all of them.**
+[WARNING]
+=========
+* There is no compiler check to see if you do or do not implement all three.
+* There is also no compiler check to see if you have correctly implemented any of them.
+* A static analyser may help, but do not expect it to catch everything you've missed.
+* This is a part of the RAII programming idiom, and is up to you to enforce.
+=========
+
+=== Rvalue references, move constructor, move assignment, and the rule of five
+* A fax machine scans your document and replicates it. This is akin to copying.
+* Handing a document to another person means that you no longer have the document, and only one
+  document is in circulation. This is akin to moving.
+* Moving things happens at the end of an object's lifetime.
+* A temporary, which is about to die, is automatically moved.
+* When we want to work with something that we'd like to move, we need to work with _rvalue
+  references_.
+   - Syntactically, an rvalue reference looks like `T&&`.
+   - A `const T&&` is pointless, and completely defeats the benefits that rvalue references offer.
+* An object that has been moved is left in a destructible state, but is an empty shell.
+
+==== Move constructors
+* Move constructors are responsible for moving all of an object's resources from a preexisting
+  object to an object that is just being constructed.
+   - If you do not define one, _and_ you do not define anthing from the rule of three, _and_ you do
+     not define a copy assignment operator, one is synthesised for you.
+   - Similarly to the above, defining your own to explicitly move anything other than a resource is
+     redundant.
+   - Similarly to all other constructors, make sure that you use your initialiser list.
+
+[source,cpp]
+------------
+template <typename T>
+smart_ptr<T>::smart_ptr(smart_ptr<T>&& o)
+   : data_{o.data_}
+{
+   o.data_ = nullptr; // o.data_ is no longer an owner of the
+                      // object, and cannot point to the resource.
+}
+------------
+
+* If you'd like to move something other than a built-in type, you'll need to use a special function
+  called `std::move`.
+   - _Never_ dequalify `std::move`, not even with `using std::move`.
+   - It is a very important function, and has a common name. Mixing it up with some other function
+     is very, _very_ bad.
+
+[source,cpp]
+------------
+template <typename T>
+record<T>::record(record<T>&& o)
+   : data_{std::move(o.data_)}, // data_ is a vector<T>
+     resource_{o.resource_} // resource_ is a pointer pointing to something on the free store
+{
+   o.resource_ = nullptr;
+}
+------------
+
+[TIP]
+=====
+* Notice that we didn't do anything with `o.data_`, like we did with `o.resource_`. This is because
+  `vector` has a move constructor that does all of that for us.
+   - If we weren't explicitly managing `resource_`, then we wouldn't bother defining the any of the
+     five.
+=====
+
+==== Move assignment operators
+* Similarly to copy assignment, move assignment is responsible for moving resources from an object A
+  to a prexisting object B, after having released the resources that B holds.
+
+[CAUTION]
+=========
+* The standard implies that self-assignment with a move assignment operator is unspecified.
+   - It could be a no-op (i.e. optimised out)
+   - It could clear out the object (same as xoring with itself)
+=========
+
+* **The rule of five states that if you need to move a resource, then you need to implement the rule
+  of three, _and_ the move constructor, _and_ the move assignment operator.**
+[WARNING]
+=========
+* Not everything is moveable (built-in types, stack-allocated arrays, etc.).
+* Some things that can be moved can be copied (e.g. `unique_ptr`). These are an exception to the
+  rule of five.
+* Similarly to the rule of three, tools may help, but they probably won't. Be vigilant.
+=========
+
+=== The rule of zero
+* Don't define any!
+* If your type doesn't personally manage a resource, don't bother with _any_ of the five.
+* The compiler will synthesise a perfectly working copy constructor, move constructor, copy
+  assignment operator, move assignment operator, and destructor for you.
+   - These will call the appropriate constructors for all of your members.
+
