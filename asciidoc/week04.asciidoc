@@ -24,11 +24,14 @@ Week 4 tutorial postscript
 * If you don't need to define a copy constructor or a move constructor, _don't_ define them.
 
 [source,cpp]
-============
+------------
 class film
 {
 public:
-   film(std::string title, std::string director, std::vector<std::string> cast, const std::int64_t revenue);
+   film(const std::string& title,
+        const std::string& director,
+        const std::vector<std::string>& cast,
+        std::int64_t revenue);
 private:
    std::string title_;
    std::string director_;
@@ -36,11 +39,14 @@ private:
    std::int64_t revenue_;
 };
 
-film::film(std::string title, std::string director, std::vector<std::string> cast, const std::int64_t revenue);
+film::film(const std::string& title,
+           const std::string& director,
+           const std::vector<std::string>& cast,
+           const std::int64_t revenue)
    : title_{title}, director_{director}, cast_{cast}, revenue_{revenue}
 {
 }
-============
+------------
 
 .Quiz
 [NOTE]
@@ -49,7 +55,6 @@ film::film(std::string title, std::string director, std::vector<std::string> cas
 2. What happens when you don't define a default constructor?
 3. What is a delegating constructor?
 4. Why is the body of the above constructor empty?
-5. Why are we passing strings by value? (hint: this is answered below)
 =====
 
 === `const` member functions
@@ -58,7 +63,7 @@ film::film(std::string title, std::string director, std::vector<std::string> cas
 * Objects specified to be `const` can only call `const` member functions.
 
 [source,cpp]
-============
+------------
 class film
 {
 public:
@@ -81,7 +86,7 @@ const std::string& film::title() const
    title_ = "Star Wars: The Empire Strikes Back"; // error: title_ is immutable in this function
    return title_; // okay
 }
-============
+------------
 
 .Quiz
 [NOTE]
@@ -97,7 +102,7 @@ const std::string& film::title() const
 * Only very carefully chosen members should be `mutable` (e.g. a cache).
 
 [source,cpp]
-============
+------------
 class cinema
 {
 public:
@@ -113,7 +118,7 @@ const film& cinema::top_grossing_film() const
 {
    std::
 }
-============
+------------
 
 === `friend` functions
 * Have access to a class's privates.
@@ -132,26 +137,26 @@ const film& cinema::top_grossing_film() const
    4. That's the general idea!
 
 .What is a resource?
-[options="header,footer"]
-=========================
-|Example                                                                                  |Do we ned to worry about it (in modern C++)?                                                                                                                       |
-|A file handle.                                                                           |`ofstream` and `ifstream` already worry about cleaning up file handles, so unless you have some reason not to use them, you don't need to worry about file handles.|
-|An _owning_ pointer, or a pointer that is responsible for deallocating free store memory.|All owning pointers should be smart pointers where possible, so this is rarely a concern.                                                                          |
-|A mutex.                                                                                 |We'll cover mutexes another day, but there's stuff for them too.                                                                                                   |
-|Some other system-related stuff...                                                       |You'll need to inspect the standard library and GSL to see for yourself.                                                                                           |
-=========================
+[options="header"]
+|========================
+|Example                                                                                  |Do we ned to worry about it (in modern C++)?                                                                                                                       
+|A file handle.                                                                           |`ofstream` and `ifstream` already worry about cleaning up file handles, so unless you have some reason not to use them, you don't need to worry about file handles.
+|An _owning_ pointer, or a pointer that is responsible for deallocating free store memory.|All owning pointers should be smart pointers where possible, so this is rarely a concern.                                                                          
+|A mutex.                                                                                 |We'll cover mutexes another day, but there's stuff for them too.                                                                                                   
+|Some other system-related stuff...                                                       |You'll need to inspect the standard library and GSL to see for yourself.                                                                                           
+|========================
 
 * You've been using it a lot already without knowing:
-   - `vector` employs it (it dynamically allocates memory, but you never clean it up)
-   - `ifstream` employs it (you open the file handle, but you never close it)
+   - `vector` employs it (it dynamically allocates memory, but you never personally clean it up)
+   - `ifstream` employs it (you open the file handle, but you never personally close it)
 
 .It's not garbage collection.
-[options="header,footer"]
-=========================
-|Garbage collection                                                                      |RAII                                                             |
-|is a fire and forget tool employed by a runtime.                                        |is a programming idiom actively employed by vigilant programmers.|
-|can happen at any point _from_ the end of an object's life to the program's termination.|is guaranteed to happen _at_ the end of an object's life.        |
-=========================
+[options="header"]
+|=========================
+|Garbage collection                                                                      |RAII                                                             
+|is a fire and forget tool employed by a runtime.                                        |is a programming idiom actively employed by vigilant programmers.
+|can happen at any point _from_ the end of an object's life to the program's termination.|is guaranteed to happen _at_ the end of an object's life.        
+|=========================
 
 === Destructor, copy constructor, copy assignment, and the rule of three
 * The destructor is a function that's (usually) automatically called at the end of an object's
@@ -163,13 +168,13 @@ const film& cinema::top_grossing_film() const
      one unless you want all kinds of trouble.
    - Creating a destructor to clear a `vector` or set an `int` to 0 is redundant and should not be
      done.
-* A copy constructor is responsible for copying resources from a pre-exiting object into an object
-  that is about to be constructed.
+* A copy constructor is responsible for copying resources from an object into an object that is
+  being constructed.
    - If you don't define one, it'll be synthesised for you.
    - You are responsible for ensuring that resources you reserve are correctly copied.
    - Creating a copy constructor just to copy a `vector` is redundant, and shouldn't be done.
-* A copy assignment operator is responsible for copying resources from one pre-existing object A
-  into another pre-existing object B _and_ cleaning up the resources in B.
+* A copy assignment operator is responsible for copying resources from an object A into a
+  pre-existing variable B, _and_ cleaning up the original resources in B.
    - If you don't define one, it'll be synthesised for you.
    - You are responsible for ensuring that any resources that B currently holds are appropriately
      cleaned up, and then properly copying the resources across from A.
@@ -252,26 +257,57 @@ smart_ptr<T>& smart_ptr<T>::operator=(const smart_ptr<T>& d)
 * This is a part of the RAII programming idiom, and is up to you to enforce.
 =========
 
-=== Rvalue references, move constructor, move assignment, and the rule of five
+=== Rvalue references
+* We learned about _lvalue_ references in week 1.
+* An lvalue reference refers to some lvalue (a function or object).
+* You cannot bind an lvalue reference to an rvalue, but you may bind an lvalue reference-to-`const`
+  to an rvalue.
+
+[source,cpp]
+------------
+auto& reference_to_int = 0; // error: can't bind an lvalue reference to an rvalue
+const auto& reference_to_const_int = 0; // okay
+------------
+
+* Rvalue references refer to rvalues.
+   - Rvalue references cannot bind to lvalues.
+* They may bind to temporaries, which are a form of rvalue.
+   - A temporary is an object without a name.
+   - A temporary is destroyed at the end of the full expression it is constructed in.
+* They may also bind to lvalues that are nearing the end of their lifetime.
+   - We need to explicitly tell the compiler about this, but more on this later.
+* Rvalue references are used for _destructive_ reads.
+   - An rvalue reference-to-`const` is thus pointless.
+
+[source,cpp]
+------------
+auto&& rvalue_reference = 0; // okay
+const auto&& rvalue_reference_to_const = 0; // legal, but the rvalue reference is now useless.
+------------
+
+=== Move constructor, move assignment, and the rule of five
 * A fax machine scans your document and replicates it. This is akin to copying.
 * Handing a document to another person means that you no longer have the document, and only one
   document is in circulation. This is akin to moving.
-* Moving things happens at the end of an object's lifetime.
-* A temporary, which is about to die, is automatically moved.
-* When we want to work with something that we'd like to move, we need to work with _rvalue
-  references_.
-   - Syntactically, an rvalue reference looks like `T&&`.
-   - A `const T&&` is pointless, and completely defeats the benefits that rvalue references offer.
+* Moving things happens at the near of an object's lifetime.
+   - Does that sound familiar?
+   - Moving works with rvalue references.
 * An object that has been moved is left in a destructible state, but is an empty shell.
 
 ==== Move constructors
 * Move constructors are responsible for moving all of an object's resources from a preexisting
   object to an object that is just being constructed.
-   - If you do not define one, _and_ you do not define anthing from the rule of three, _and_ you do
-     not define a copy assignment operator, one is synthesised for you.
-   - Similarly to the above, defining your own to explicitly move anything other than a resource is
+* The rules for a synthesised move constructor are stricter than those for a copy constructor.
+  Namely, you must not have defined a custom:
+   1. Copy constructor
+   2. Copy assignment operator
+   3. Destructor
+   4. Move constructor (no point synthesising one if you already made it -- you know better than
+      the compiler, after all!)
+   5. Move assignment operator
+* Similarly to the above, defining your own to explicitly move anything other than a resource is
      redundant.
-   - Similarly to all other constructors, make sure that you use your initialiser list.
+* Similarly to all other constructors, make sure that you use your initialiser list.
 
 [source,cpp]
 ------------
@@ -309,23 +345,55 @@ record<T>::record(record<T>&& o)
      five.
 =====
 
+[TIP]
+=====
+* `std::move` doesn't actually move anything on its own.
+* It is a wrapper for a `static_cast<T&&>`, where `T` is the type you pass to `std::move`.
+* All the moving happens in the constructor we've just spoken about, and the assignment operator
+  below.
+* `std::move` is a trick to get the compiler to let us move an lvalue.
+=====
+
 ==== Move assignment operators
 * Similarly to copy assignment, move assignment is responsible for moving resources from an object A
   to a prexisting object B, after having released the resources that B holds.
 
+.Self-assignment with the move constructor
 [CAUTION]
 =========
 * The standard implies that self-assignment with a move assignment operator is unspecified.
+   - It could clear out the object (same as xoring with itself), or
    - It could be a no-op (i.e. optimised out)
-   - It could clear out the object (same as xoring with itself)
+* If you want the former to happen, don't check for self-assignment: a correctly written move
+  assignment operator will cause this to happen automatically.
+* If you prefer the latter to happen, you cannot employ the copy-and-swap method used in the copy
+  assignment operator.
+* You must use the check-for-self method, like so:
+
+[source,cpp]
+------------
+template <typename T>
+record<T>& record<T>::operator=(record<T>&& r)
+{
+   if (this != &r)
+   {
+      delete[] resource_;
+      data_ = std::move(r.data_);
+      resource_ = r.resource_;
+      r.resource_ = nullptr;
+   }
+
+   return *this;
+}
+------------
 =========
 
-* **The rule of five states that if you need to move a resource, then you need to implement the rule
-  of three, _and_ the move constructor, _and_ the move assignment operator.**
+* **The rule of five states that if you need to move a resource, then you need to implement the
+  rule of three, _and_ the move constructor, _and_ the move assignment operator.**
 [WARNING]
 =========
 * Not everything is moveable (built-in types, stack-allocated arrays, etc.).
-* Some things that can be moved can be copied (e.g. `unique_ptr`). These are an exception to the
+* Some things that can be moved can't be copied (e.g. `unique_ptr`). These are an exception to the
   rule of five.
 * Similarly to the rule of three, tools may help, but they probably won't. Be vigilant.
 =========
