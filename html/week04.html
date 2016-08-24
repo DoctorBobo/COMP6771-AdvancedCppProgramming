@@ -2008,13 +2008,7 @@ Do not, under any circumstances, return by wrapping your object in <code>std::mo
 </li>
 <li>
 <p>
-Compilers are already aware that returning a local variable can be <em>moved</em>, <em>without</em> the need
-  for <code>std::move</code>.
-</p>
-</li>
-<li>
-<p>
-This is known as <em>copy elision</em>.
+The compiler is allowed to perform an optimisation known as <em>copy elision</em>.
 </p>
 <div class="ulist"><ul>
 <li>
@@ -2023,12 +2017,13 @@ Under certain conditions, the compiler is allowed to eliminate the need for call
      copy constructor and the move constructor.
 </p>
 </li>
+</ul></div>
+</li>
 <li>
 <p>
-When these conditions aren&#8217;t met, the compiler will automatically perform a move anyway.
+When these conditions aren&#8217;t met, or if the compiler doesn&#8217;t perform the optimisation, the
+  compiler will automatically perform a move anyway.
 </p>
-</li>
-</ul></div>
 </li>
 <li>
 <p>
@@ -2368,7 +2363,7 @@ If it doesn&#8217;t matter between the two, choose list-initialisation.
 <div id="footnotes"><hr /></div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-08-24 23:23:14 AEST
+Last updated 2016-08-24 23:30:56 AEST
 </div>
 </div>
 </body>
