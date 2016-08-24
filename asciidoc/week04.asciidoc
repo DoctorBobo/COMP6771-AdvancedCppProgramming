@@ -471,12 +471,11 @@ std::vector<int> make_school(const int children)
 * Did you write a test to check that it's more efficient?
    - If you did, and still came to that conclusion, you'd be lying.
 * Do not, under any circumstances, return by wrapping your object in `std::move`.
-* Compilers are already aware that returning a local variable can be 'moved', _without_ the need
-  for `std::move`.
-* This is known as _copy elision_.
+* The compiler is allowed to perform an optimisation known as _copy elision_.
    - Under certain conditions, the compiler is allowed to eliminate the need for calling both the
      copy constructor and the move constructor.
-   - When these conditions aren't met, the compiler will automatically perform a move anyway.
+* When these conditions aren't met, or if the compiler doesn't perform the optimisation, the
+  compiler will automatically perform a move anyway.
 * By adding `std::move`, you will:
    - At best, do nothing
    - At worst, trick the compiler into not doing the copy/move constructor elimination.
