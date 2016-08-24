@@ -1972,7 +1972,7 @@ http://www.gnu.org/software/src-highlite -->
    <span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> generator <span style="color: #990000">=</span> std<span style="color: #990000">::</span>mt19937<span style="color: #FF0000">{</span>std<span style="color: #990000">::</span>random_device<span style="color: #FF0000">{}</span><span style="color: #990000">()</span><span style="color: #FF0000">}</span><span style="color: #990000">;</span>
    <span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> distribute <span style="color: #990000">=</span> std<span style="color: #990000">::</span>uniform_int_distribution<span style="color: #990000">&lt;&gt;</span><span style="color: #FF0000">{</span><span style="color: #993399">12</span><span style="color: #990000">,</span> <span style="color: #993399">19</span><span style="color: #FF0000">}</span><span style="color: #990000">;</span>
 
-   std<span style="color: #990000">::</span><span style="font-weight: bold"><span style="color: #000000">generate_n</span></span><span style="color: #990000">(</span>std<span style="color: #990000">::</span>back_insert_iterator<span style="color: #990000">&lt;</span><span style="font-weight: bold"><span style="color: #000000">decltype</span></span><span style="color: #990000">(</span>crowd<span style="color: #990000">)&gt;</span><span style="color: #FF0000">{</span>v<span style="color: #FF0000">}</span><span style="color: #990000">,</span> children<span style="color: #990000">,</span>
+   std<span style="color: #990000">::</span><span style="font-weight: bold"><span style="color: #000000">generate_n</span></span><span style="color: #990000">(</span>std<span style="color: #990000">::</span>back_insert_iterator<span style="color: #990000">&lt;</span><span style="font-weight: bold"><span style="color: #000000">decltype</span></span><span style="color: #990000">(</span>crowd<span style="color: #990000">)&gt;</span><span style="color: #FF0000">{</span>crowd<span style="color: #FF0000">}</span><span style="color: #990000">,</span> children<span style="color: #990000">,</span>
                    <span style="color: #990000">[&amp;]</span><span style="color: #FF0000">{</span> <span style="font-weight: bold"><span style="color: #0000FF">return</span></span> <span style="font-weight: bold"><span style="color: #000000">distribute</span></span><span style="color: #990000">(</span>generator<span style="color: #990000">);</span> <span style="color: #FF0000">}</span><span style="color: #990000">);</span>
 
    <span style="font-weight: bold"><span style="color: #0000FF">return</span></span> std<span style="color: #990000">::</span><span style="font-weight: bold"><span style="color: #000000">move</span></span><span style="color: #990000">(</span>crowd<span style="color: #990000">);</span>
@@ -2363,7 +2363,7 @@ If it doesn&#8217;t matter between the two, choose list-initialisation.
 <div id="footnotes"><hr /></div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-08-24 23:30:56 AEST
+Last updated 2016-08-24 23:32:21 AEST
 </div>
 </div>
 </body>

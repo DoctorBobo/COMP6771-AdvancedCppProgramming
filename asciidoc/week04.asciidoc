@@ -458,7 +458,7 @@ std::vector<int> make_school(const int children)
    auto generator = std::mt19937{std::random_device{}()};
    auto distribute = std::uniform_int_distribution<>{12, 19};
 
-   std::generate_n(std::back_insert_iterator<decltype(crowd)>{v}, children,
+   std::generate_n(std::back_insert_iterator<decltype(crowd)>{crowd}, children,
                    [&]{ return distribute(generator); });
 
    return std::move(crowd);
