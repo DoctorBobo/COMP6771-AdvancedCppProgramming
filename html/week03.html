@@ -2880,7 +2880,50 @@ The above program prints one name per line by copying the contents of <code>name
 Preferable to iterating over a container with <code>cout</code>.
 </p>
 </li>
+<li>
+<p>
+Another type of <code>OutputIterator</code> that you should become familiar with is the <code>back_insert_iterator</code>.
+</p>
+</li>
+<li>
+<p>
+We can simplify our <code>make_crowd</code> function above to the following:
+</p>
+</li>
 </ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;algorithm&gt;</span>
+<span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;iostream&gt;</span>
+<span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;iterator&gt;</span>
+<span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;random&gt;</span>
+<span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;vector&gt;</span>
+
+std<span style="color: #990000">::</span><span style="color: #008080">vector&lt;int&gt;</span> <span style="font-weight: bold"><span style="color: #000000">make_crowd</span></span><span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">const</span></span> <span style="color: #009900">int</span> children<span style="color: #990000">,</span> <span style="font-weight: bold"><span style="color: #0000FF">const</span></span> <span style="color: #009900">int</span> adults<span style="color: #990000">,</span> <span style="font-weight: bold"><span style="color: #0000FF">const</span></span> <span style="color: #009900">int</span> seniors<span style="color: #990000">)</span>
+<span style="color: #FF0000">{</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> crowd <span style="color: #990000">=</span> std<span style="color: #990000">::</span>vector<span style="color: #990000">&lt;</span><span style="color: #009900">int</span><span style="color: #990000">&gt;</span><span style="color: #FF0000">{}</span><span style="color: #990000">;</span>
+
+   <span style="font-style: italic"><span style="color: #9A1900">// random number generator in C++... much better than what you're used to!</span></span>
+   <span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> generator <span style="color: #990000">=</span> std<span style="color: #990000">::</span>mt19937<span style="color: #FF0000">{</span>std<span style="color: #990000">::</span>random_device<span style="color: #FF0000">{}</span><span style="color: #990000">()</span><span style="color: #FF0000">}</span><span style="color: #990000">;</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> distribute <span style="color: #990000">=</span> std<span style="color: #990000">::</span>uniform_int_distribution<span style="color: #990000">&lt;&gt;</span><span style="color: #FF0000">{</span><span style="color: #993399">0</span><span style="color: #990000">,</span> <span style="color: #993399">17</span><span style="color: #FF0000">}</span><span style="color: #990000">;</span>
+
+   std<span style="color: #990000">::</span><span style="font-weight: bold"><span style="color: #000000">generate_n</span></span><span style="color: #990000">(</span>std<span style="color: #990000">::</span>back_insert_iterator<span style="color: #990000">&lt;</span><span style="font-weight: bold"><span style="color: #000000">decltype</span></span><span style="color: #990000">(</span>crowd<span style="color: #990000">)&gt;</span><span style="color: #FF0000">{</span>v<span style="color: #FF0000">}</span><span style="color: #990000">,</span> children<span style="color: #990000">,</span>
+                   <span style="color: #990000">[&amp;]</span><span style="color: #FF0000">{</span> <span style="font-weight: bold"><span style="color: #0000FF">return</span></span> <span style="font-weight: bold"><span style="color: #000000">distribute</span></span><span style="color: #990000">(</span>generator<span style="color: #990000">);</span> <span style="color: #FF0000">}</span><span style="color: #990000">);</span>
+
+   distribute <span style="color: #990000">=</span> std<span style="color: #990000">::</span>uniform_int_distribution<span style="color: #990000">&lt;&gt;</span><span style="color: #FF0000">{</span><span style="color: #993399">18</span><span style="color: #990000">,</span> <span style="color: #993399">64</span><span style="color: #FF0000">}</span><span style="color: #990000">;</span>
+   std<span style="color: #990000">::</span><span style="font-weight: bold"><span style="color: #000000">generate_n</span></span><span style="color: #990000">(</span>std<span style="color: #990000">::</span>back_insert_iterator<span style="color: #990000">&lt;</span><span style="font-weight: bold"><span style="color: #000000">decltype</span></span><span style="color: #990000">(</span>crowd<span style="color: #990000">)&gt;</span><span style="color: #FF0000">{</span>v<span style="color: #FF0000">}</span><span style="color: #990000">,</span> adults<span style="color: #990000">,</span>
+                   <span style="color: #990000">[&amp;]</span><span style="color: #FF0000">{</span> <span style="font-weight: bold"><span style="color: #0000FF">return</span></span> <span style="font-weight: bold"><span style="color: #000000">distribute</span></span><span style="color: #990000">(</span>generator<span style="color: #990000">);</span> <span style="color: #FF0000">}</span><span style="color: #990000">);</span>
+
+   distribute <span style="color: #990000">=</span> std<span style="color: #990000">::</span>uniform_int_distribution<span style="color: #990000">&lt;&gt;</span><span style="color: #FF0000">{</span><span style="color: #993399">65</span><span style="color: #990000">,</span> <span style="color: #993399">128</span><span style="color: #FF0000">}</span><span style="color: #990000">;</span>
+   std<span style="color: #990000">::</span><span style="font-weight: bold"><span style="color: #000000">generate_n</span></span><span style="color: #990000">(</span>std<span style="color: #990000">::</span>back_insert_iterator<span style="color: #990000">&lt;</span><span style="font-weight: bold"><span style="color: #000000">decltype</span></span><span style="color: #990000">(</span>crowd<span style="color: #990000">)&gt;</span><span style="color: #FF0000">{</span>v<span style="color: #FF0000">}</span><span style="color: #990000">,</span> seniors<span style="color: #990000">,</span>
+                   <span style="color: #990000">[&amp;]</span><span style="color: #FF0000">{</span> <span style="font-weight: bold"><span style="color: #0000FF">return</span></span> <span style="font-weight: bold"><span style="color: #000000">distribute</span></span><span style="color: #990000">(</span>generator<span style="color: #990000">);</span> <span style="color: #FF0000">}</span><span style="color: #990000">);</span>
+
+
+   <span style="font-weight: bold"><span style="color: #0000FF">return</span></span> crowd<span style="color: #990000">;</span>
+<span style="color: #FF0000">}</span></tt></pre></div></div>
 <div class="admonitionblock">
 <table><tr>
 <td class="icon">
@@ -4011,7 +4054,7 @@ Sutter, H. Alexandrescu, A. <em>C++ coding standards: 101 rules, guidelines, and
 <div id="footer">
 <div id="footer-text">
 Version 1<br />
-Last updated 2016-08-14 23:17:28 AEST
+Last updated 2016-08-24 22:40:19 AEST
 </div>
 </div>
 </body>

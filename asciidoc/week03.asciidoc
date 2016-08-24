@@ -743,6 +743,40 @@ int main()
 * The above program prints one name per line by copying the contents of `names` to `cout` via
   an `ostream_iterator`.
 * Preferable to iterating over a container with `cout`.
+* Another type of `OutputIterator` that you should become familiar with is the `back_insert_iterator`.
+* We can simplify our `make_crowd` function above to the following:
+
+[source,cpp]
+------------
+#include <algorithm>
+#include <iostream>
+#include <iterator>
+#include <random>
+#include <vector>
+
+std::vector<int> make_crowd(const int children, const int adults, const int seniors)
+{
+   auto crowd = std::vector<int>{};
+
+   // random number generator in C++... much better than what you're used to!
+   auto generator = std::mt19937{std::random_device{}()};
+   auto distribute = std::uniform_int_distribution<>{0, 17};
+
+   std::generate_n(std::back_insert_iterator<decltype(crowd)>{v}, children,
+                   [&]{ return distribute(generator); });
+
+   distribute = std::uniform_int_distribution<>{18, 64};
+   std::generate_n(std::back_insert_iterator<decltype(crowd)>{v}, adults,
+                   [&]{ return distribute(generator); });
+
+   distribute = std::uniform_int_distribution<>{65, 128};
+   std::generate_n(std::back_insert_iterator<decltype(crowd)>{v}, seniors,
+                   [&]{ return distribute(generator); });
+
+
+   return crowd;
+}
+------------
 
 .Further reading
 [TIP]
