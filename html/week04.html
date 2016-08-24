@@ -1,0 +1,2375 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
+<meta name="generator" content="AsciiDoc 8.6.9" />
+<title>Week 4 tutorial postscript</title>
+<style type="text/css">
+/* Shared CSS for AsciiDoc xhtml11 and html5 backends */
+
+/* Default font. */
+body {
+  font-family: Georgia,serif;
+}
+
+/* Title font. */
+h1, h2, h3, h4, h5, h6,
+div.title, caption.title,
+thead, p.table.header,
+#toctitle,
+#author, #revnumber, #revdate, #revremark,
+#footer {
+  font-family: Arial,Helvetica,sans-serif;
+}
+
+body {
+  margin: 1em 5% 1em 5%;
+}
+
+a {
+  color: blue;
+  text-decoration: underline;
+}
+a:visited {
+  color: fuchsia;
+}
+
+em {
+  font-style: italic;
+  color: navy;
+}
+
+strong {
+  font-weight: bold;
+  color: #083194;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #527bbd;
+  margin-top: 1.2em;
+  margin-bottom: 0.5em;
+  line-height: 1.3;
+}
+
+h1, h2, h3 {
+  border-bottom: 2px solid silver;
+}
+h2 {
+  padding-top: 0.5em;
+}
+h3 {
+  float: left;
+}
+h3 + * {
+  clear: left;
+}
+h5 {
+  font-size: 1.0em;
+}
+
+div.sectionbody {
+  margin-left: 0;
+}
+
+hr {
+  border: 1px solid silver;
+}
+
+p {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+ul, ol, li > p {
+  margin-top: 0;
+}
+ul > li     { color: #aaa; }
+ul > li > * { color: black; }
+
+.monospaced, code, pre {
+  font-family: "Courier New", Courier, monospace;
+  font-size: inherit;
+  color: navy;
+  padding: 0;
+  margin: 0;
+}
+pre {
+  white-space: pre-wrap;
+}
+
+#author {
+  color: #527bbd;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+#email {
+}
+#revnumber, #revdate, #revremark {
+}
+
+#footer {
+  font-size: small;
+  border-top: 2px solid silver;
+  padding-top: 0.5em;
+  margin-top: 4.0em;
+}
+#footer-text {
+  float: left;
+  padding-bottom: 0.5em;
+}
+#footer-badges {
+  float: right;
+  padding-bottom: 0.5em;
+}
+
+#preamble {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+div.imageblock, div.exampleblock, div.verseblock,
+div.quoteblock, div.literalblock, div.listingblock, div.sidebarblock,
+div.admonitionblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.admonitionblock {
+  margin-top: 2.0em;
+  margin-bottom: 2.0em;
+  margin-right: 10%;
+  color: #606060;
+}
+
+div.content { /* Block element content. */
+  padding: 0;
+}
+
+/* Block element titles. */
+div.title, caption.title {
+  color: #527bbd;
+  font-weight: bold;
+  text-align: left;
+  margin-top: 1.0em;
+  margin-bottom: 0.5em;
+}
+div.title + * {
+  margin-top: 0;
+}
+
+td div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content + div.title {
+  margin-top: 0.0em;
+}
+
+div.sidebarblock > div.content {
+  background: #ffffee;
+  border: 1px solid #dddddd;
+  border-left: 4px solid #f0f0f0;
+  padding: 0.5em;
+}
+
+div.listingblock > div.content {
+  border: 1px solid #dddddd;
+  border-left: 5px solid #f0f0f0;
+  background: #f8f8f8;
+  padding: 0.5em;
+}
+
+div.quoteblock, div.verseblock {
+  padding-left: 1.0em;
+  margin-left: 1.0em;
+  margin-right: 10%;
+  border-left: 5px solid #f0f0f0;
+  color: #888;
+}
+
+div.quoteblock > div.attribution {
+  padding-top: 0.5em;
+  text-align: right;
+}
+
+div.verseblock > pre.content {
+  font-family: inherit;
+  font-size: inherit;
+}
+div.verseblock > div.attribution {
+  padding-top: 0.75em;
+  text-align: left;
+}
+/* DEPRECATED: Pre version 8.2.7 verse style literal block. */
+div.verseblock + div.attribution {
+  text-align: left;
+}
+
+div.admonitionblock .icon {
+  vertical-align: top;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-decoration: underline;
+  color: #527bbd;
+  padding-right: 0.5em;
+}
+div.admonitionblock td.content {
+  padding-left: 0.5em;
+  border-left: 3px solid #dddddd;
+}
+
+div.exampleblock > div.content {
+  border-left: 3px solid #dddddd;
+  padding-left: 0.5em;
+}
+
+div.imageblock div.content { padding-left: 0; }
+span.image img { border-style: none; vertical-align: text-bottom; }
+a.image:visited { color: white; }
+
+dl {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+dt {
+  margin-top: 0.5em;
+  margin-bottom: 0;
+  font-style: normal;
+  color: navy;
+}
+dd > *:first-child {
+  margin-top: 0.1em;
+}
+
+ul, ol {
+    list-style-position: outside;
+}
+ol.arabic {
+  list-style-type: decimal;
+}
+ol.loweralpha {
+  list-style-type: lower-alpha;
+}
+ol.upperalpha {
+  list-style-type: upper-alpha;
+}
+ol.lowerroman {
+  list-style-type: lower-roman;
+}
+ol.upperroman {
+  list-style-type: upper-roman;
+}
+
+div.compact ul, div.compact ol,
+div.compact p, div.compact p,
+div.compact div, div.compact div {
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+}
+
+tfoot {
+  font-weight: bold;
+}
+td > div.verse {
+  white-space: pre;
+}
+
+div.hdlist {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+div.hdlist tr {
+  padding-bottom: 15px;
+}
+dt.hdlist1.strong, td.hdlist1.strong {
+  font-weight: bold;
+}
+td.hdlist1 {
+  vertical-align: top;
+  font-style: normal;
+  padding-right: 0.8em;
+  color: navy;
+}
+td.hdlist2 {
+  vertical-align: top;
+}
+div.hdlist.compact tr {
+  margin: 0;
+  padding-bottom: 0;
+}
+
+.comment {
+  background: yellow;
+}
+
+.footnote, .footnoteref {
+  font-size: 0.8em;
+}
+
+span.footnote, span.footnoteref {
+  vertical-align: super;
+}
+
+#footnotes {
+  margin: 20px 0 20px 0;
+  padding: 7px 0 0 0;
+}
+
+#footnotes div.footnote {
+  margin: 0 0 5px 0;
+}
+
+#footnotes hr {
+  border: none;
+  border-top: 1px solid silver;
+  height: 1px;
+  text-align: left;
+  margin-left: 0;
+  width: 20%;
+  min-width: 100px;
+}
+
+div.colist td {
+  padding-right: 0.5em;
+  padding-bottom: 0.3em;
+  vertical-align: top;
+}
+div.colist td img {
+  margin-top: 0.3em;
+}
+
+@media print {
+  #footer-badges { display: none; }
+}
+
+#toc {
+  margin-bottom: 2.5em;
+}
+
+#toctitle {
+  color: #527bbd;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-top: 1.0em;
+  margin-bottom: 0.1em;
+}
+
+div.toclevel0, div.toclevel1, div.toclevel2, div.toclevel3, div.toclevel4 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+div.toclevel2 {
+  margin-left: 2em;
+  font-size: 0.9em;
+}
+div.toclevel3 {
+  margin-left: 4em;
+  font-size: 0.9em;
+}
+div.toclevel4 {
+  margin-left: 6em;
+  font-size: 0.9em;
+}
+
+span.aqua { color: aqua; }
+span.black { color: black; }
+span.blue { color: blue; }
+span.fuchsia { color: fuchsia; }
+span.gray { color: gray; }
+span.green { color: green; }
+span.lime { color: lime; }
+span.maroon { color: maroon; }
+span.navy { color: navy; }
+span.olive { color: olive; }
+span.purple { color: purple; }
+span.red { color: red; }
+span.silver { color: silver; }
+span.teal { color: teal; }
+span.white { color: white; }
+span.yellow { color: yellow; }
+
+span.aqua-background { background: aqua; }
+span.black-background { background: black; }
+span.blue-background { background: blue; }
+span.fuchsia-background { background: fuchsia; }
+span.gray-background { background: gray; }
+span.green-background { background: green; }
+span.lime-background { background: lime; }
+span.maroon-background { background: maroon; }
+span.navy-background { background: navy; }
+span.olive-background { background: olive; }
+span.purple-background { background: purple; }
+span.red-background { background: red; }
+span.silver-background { background: silver; }
+span.teal-background { background: teal; }
+span.white-background { background: white; }
+span.yellow-background { background: yellow; }
+
+span.big { font-size: 2em; }
+span.small { font-size: 0.6em; }
+
+span.underline { text-decoration: underline; }
+span.overline { text-decoration: overline; }
+span.line-through { text-decoration: line-through; }
+
+div.unbreakable { page-break-inside: avoid; }
+
+
+/*
+ * xhtml11 specific
+ *
+ * */
+
+div.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.tableblock > table {
+  border: 3px solid #527bbd;
+}
+thead, p.table.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.table {
+  margin-top: 0;
+}
+/* Because the table frame attribute is overriden by CSS in most browsers. */
+div.tableblock > table[frame="void"] {
+  border-style: none;
+}
+div.tableblock > table[frame="hsides"] {
+  border-left-style: none;
+  border-right-style: none;
+}
+div.tableblock > table[frame="vsides"] {
+  border-top-style: none;
+  border-bottom-style: none;
+}
+
+
+/*
+ * html5 specific
+ *
+ * */
+
+table.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+thead, p.tableblock.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.tableblock {
+  margin-top: 0;
+}
+table.tableblock {
+  border-width: 3px;
+  border-spacing: 0px;
+  border-style: solid;
+  border-color: #527bbd;
+  border-collapse: collapse;
+}
+th.tableblock, td.tableblock {
+  border-width: 1px;
+  padding: 4px;
+  border-style: solid;
+  border-color: #527bbd;
+}
+
+table.tableblock.frame-topbot {
+  border-left-style: hidden;
+  border-right-style: hidden;
+}
+table.tableblock.frame-sides {
+  border-top-style: hidden;
+  border-bottom-style: hidden;
+}
+table.tableblock.frame-none {
+  border-style: hidden;
+}
+
+th.tableblock.halign-left, td.tableblock.halign-left {
+  text-align: left;
+}
+th.tableblock.halign-center, td.tableblock.halign-center {
+  text-align: center;
+}
+th.tableblock.halign-right, td.tableblock.halign-right {
+  text-align: right;
+}
+
+th.tableblock.valign-top, td.tableblock.valign-top {
+  vertical-align: top;
+}
+th.tableblock.valign-middle, td.tableblock.valign-middle {
+  vertical-align: middle;
+}
+th.tableblock.valign-bottom, td.tableblock.valign-bottom {
+  vertical-align: bottom;
+}
+
+
+/*
+ * manpage specific
+ *
+ * */
+
+body.manpage h1 {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  border-top: 2px solid silver;
+  border-bottom: 2px solid silver;
+}
+body.manpage h2 {
+  border-style: none;
+}
+body.manpage div.sectionbody {
+  margin-left: 3em;
+}
+
+@media print {
+  body.manpage div#toc { display: none; }
+}
+
+
+</style>
+<script type="text/javascript">
+/*<![CDATA[*/
+var asciidoc = {  // Namespace.
+
+/////////////////////////////////////////////////////////////////////
+// Table Of Contents generator
+/////////////////////////////////////////////////////////////////////
+
+/* Author: Mihai Bazon, September 2002
+ * http://students.infoiasi.ro/~mishoo
+ *
+ * Table Of Content generator
+ * Version: 0.4
+ *
+ * Feel free to use this script under the terms of the GNU General Public
+ * License, as long as you do not remove or alter this notice.
+ */
+
+ /* modified by Troy D. Hanson, September 2006. License: GPL */
+ /* modified by Stuart Rackham, 2006, 2009. License: GPL */
+
+// toclevels = 1..4.
+toc: function (toclevels) {
+
+  function getText(el) {
+    var text = "";
+    for (var i = el.firstChild; i != null; i = i.nextSibling) {
+      if (i.nodeType == 3 /* Node.TEXT_NODE */) // IE doesn't speak constants.
+        text += i.data;
+      else if (i.firstChild != null)
+        text += getText(i);
+    }
+    return text;
+  }
+
+  function TocEntry(el, text, toclevel) {
+    this.element = el;
+    this.text = text;
+    this.toclevel = toclevel;
+  }
+
+  function tocEntries(el, toclevels) {
+    var result = new Array;
+    var re = new RegExp('[hH]([1-'+(toclevels+1)+'])');
+    // Function that scans the DOM tree for header elements (the DOM2
+    // nodeIterator API would be a better technique but not supported by all
+    // browsers).
+    var iterate = function (el) {
+      for (var i = el.firstChild; i != null; i = i.nextSibling) {
+        if (i.nodeType == 1 /* Node.ELEMENT_NODE */) {
+          var mo = re.exec(i.tagName);
+          if (mo && (i.getAttribute("class") || i.getAttribute("className")) != "float") {
+            result[result.length] = new TocEntry(i, getText(i), mo[1]-1);
+          }
+          iterate(i);
+        }
+      }
+    }
+    iterate(el);
+    return result;
+  }
+
+  var toc = document.getElementById("toc");
+  if (!toc) {
+    return;
+  }
+
+  // Delete existing TOC entries in case we're reloading the TOC.
+  var tocEntriesToRemove = [];
+  var i;
+  for (i = 0; i < toc.childNodes.length; i++) {
+    var entry = toc.childNodes[i];
+    if (entry.nodeName.toLowerCase() == 'div'
+     && entry.getAttribute("class")
+     && entry.getAttribute("class").match(/^toclevel/))
+      tocEntriesToRemove.push(entry);
+  }
+  for (i = 0; i < tocEntriesToRemove.length; i++) {
+    toc.removeChild(tocEntriesToRemove[i]);
+  }
+
+  // Rebuild TOC entries.
+  var entries = tocEntries(document.getElementById("content"), toclevels);
+  for (var i = 0; i < entries.length; ++i) {
+    var entry = entries[i];
+    if (entry.element.id == "")
+      entry.element.id = "_toc_" + i;
+    var a = document.createElement("a");
+    a.href = "#" + entry.element.id;
+    a.appendChild(document.createTextNode(entry.text));
+    var div = document.createElement("div");
+    div.appendChild(a);
+    div.className = "toclevel" + entry.toclevel;
+    toc.appendChild(div);
+  }
+  if (entries.length == 0)
+    toc.parentNode.removeChild(toc);
+},
+
+
+/////////////////////////////////////////////////////////////////////
+// Footnotes generator
+/////////////////////////////////////////////////////////////////////
+
+/* Based on footnote generation code from:
+ * http://www.brandspankingnew.net/archive/2005/07/format_footnote.html
+ */
+
+footnotes: function () {
+  // Delete existing footnote entries in case we're reloading the footnodes.
+  var i;
+  var noteholder = document.getElementById("footnotes");
+  if (!noteholder) {
+    return;
+  }
+  var entriesToRemove = [];
+  for (i = 0; i < noteholder.childNodes.length; i++) {
+    var entry = noteholder.childNodes[i];
+    if (entry.nodeName.toLowerCase() == 'div' && entry.getAttribute("class") == "footnote")
+      entriesToRemove.push(entry);
+  }
+  for (i = 0; i < entriesToRemove.length; i++) {
+    noteholder.removeChild(entriesToRemove[i]);
+  }
+
+  // Rebuild footnote entries.
+  var cont = document.getElementById("content");
+  var spans = cont.getElementsByTagName("span");
+  var refs = {};
+  var n = 0;
+  for (i=0; i<spans.length; i++) {
+    if (spans[i].className == "footnote") {
+      n++;
+      var note = spans[i].getAttribute("data-note");
+      if (!note) {
+        // Use [\s\S] in place of . so multi-line matches work.
+        // Because JavaScript has no s (dotall) regex flag.
+        note = spans[i].innerHTML.match(/\s*\[([\s\S]*)]\s*/)[1];
+        spans[i].innerHTML =
+          "[<a id='_footnoteref_" + n + "' href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+        spans[i].setAttribute("data-note", note);
+      }
+      noteholder.innerHTML +=
+        "<div class='footnote' id='_footnote_" + n + "'>" +
+        "<a href='#_footnoteref_" + n + "' title='Return to text'>" +
+        n + "</a>. " + note + "</div>";
+      var id =spans[i].getAttribute("id");
+      if (id != null) refs["#"+id] = n;
+    }
+  }
+  if (n == 0)
+    noteholder.parentNode.removeChild(noteholder);
+  else {
+    // Process footnoterefs.
+    for (i=0; i<spans.length; i++) {
+      if (spans[i].className == "footnoteref") {
+        var href = spans[i].getElementsByTagName("a")[0].getAttribute("href");
+        href = href.match(/#.*/)[0];  // Because IE return full URL.
+        n = refs[href];
+        spans[i].innerHTML =
+          "[<a href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+      }
+    }
+  }
+},
+
+install: function(toclevels) {
+  var timerId;
+
+  function reinstall() {
+    asciidoc.footnotes();
+    if (toclevels) {
+      asciidoc.toc(toclevels);
+    }
+  }
+
+  function reinstallAndRemoveTimer() {
+    clearInterval(timerId);
+    reinstall();
+  }
+
+  timerId = setInterval(reinstall, 500);
+  if (document.addEventListener)
+    document.addEventListener("DOMContentLoaded", reinstallAndRemoveTimer, false);
+  else
+    window.onload = reinstallAndRemoveTimer;
+}
+
+}
+asciidoc.install();
+/*]]>*/
+</script>
+</head>
+<body class="article">
+<div id="header">
+<h1>Week 4 tutorial postscript</h1>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="_code_class_code_and_code_struct_code"><code>class</code> and <code>struct</code></h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+Allows you to define your own types.
+</p>
+</li>
+<li>
+<p>
+Support both data members and member functions.
+</p>
+</li>
+<li>
+<p>
+Declare your member functions as <code>const</code> until you have a reason not to.
+</p>
+</li>
+<li>
+<p>
+Make data members private until you have a reason not to.
+</p>
+</li>
+</ul></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="title">Quiz</div>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+What is the difference between class and struct?
+</p>
+</li>
+<li>
+<p>
+What are the three access modifiers available?
+</p>
+</li>
+</ol></div>
+</td>
+</tr></table>
+</div>
+<div class="sect2">
+<h3 id="_a_href_norm_ctor_constructors_a"><a href="#norm-ctor">Constructors</a></h3>
+<div class="ulist"><ul>
+<li>
+<p>
+A special function that does not return.
+</p>
+</li>
+<li>
+<p>
+Responsible for creating the object.
+</p>
+</li>
+<li>
+<p>
+There are three different kinds of constructor:
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+<a href="#norm-ctor">Constructor</a>
+</p>
+</li>
+<li>
+<p>
+<a href="#copy-ctor">Copy constructor</a>
+</p>
+</li>
+<li>
+<p>
+<a href="#move-ctor">Move constructor</a>
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+If you don&#8217;t need to define a copy constructor or a move constructor, <em>don&#8217;t</em> define them.
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #0000FF">class</span></span> <span style="color: #008080">film</span>
+<span style="color: #FF0000">{</span>
+<span style="font-weight: bold"><span style="color: #0000FF">public</span></span><span style="color: #990000">:</span>
+   <span style="font-weight: bold"><span style="color: #000000">film</span></span><span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">const</span></span> std<span style="color: #990000">::</span>string<span style="color: #990000">&amp;</span> title<span style="color: #990000">,</span>
+        <span style="font-weight: bold"><span style="color: #0000FF">const</span></span> std<span style="color: #990000">::</span>string<span style="color: #990000">&amp;</span> director<span style="color: #990000">,</span>
+        <span style="font-weight: bold"><span style="color: #0000FF">const</span></span> std<span style="color: #990000">::</span>vector<span style="color: #990000">&lt;</span>std<span style="color: #990000">::</span>string<span style="color: #990000">&gt;&amp;</span> cast<span style="color: #990000">,</span>
+        std<span style="color: #990000">::</span><span style="color: #008080">int64_t</span> revenue<span style="color: #990000">);</span>
+<span style="font-weight: bold"><span style="color: #0000FF">private</span></span><span style="color: #990000">:</span>
+   std<span style="color: #990000">::</span><span style="color: #008080">string</span> title_<span style="color: #990000">;</span>
+   std<span style="color: #990000">::</span><span style="color: #008080">string</span> director_<span style="color: #990000">;</span>
+   std<span style="color: #990000">::</span><span style="color: #008080">vector&lt;std::string&gt;</span> cast_<span style="color: #990000">;</span>
+   std<span style="color: #990000">::</span><span style="color: #008080">int64_t</span> revenue_<span style="color: #990000">;</span>
+<span style="color: #FF0000">}</span><span style="color: #990000">;</span>
+
+film<span style="color: #990000">::</span><span style="font-weight: bold"><span style="color: #000000">film</span></span><span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">const</span></span> std<span style="color: #990000">::</span>string<span style="color: #990000">&amp;</span> title<span style="color: #990000">,</span>
+           <span style="font-weight: bold"><span style="color: #0000FF">const</span></span> std<span style="color: #990000">::</span>string<span style="color: #990000">&amp;</span> director<span style="color: #990000">,</span>
+           <span style="font-weight: bold"><span style="color: #0000FF">const</span></span> std<span style="color: #990000">::</span>vector<span style="color: #990000">&lt;</span>std<span style="color: #990000">::</span>string<span style="color: #990000">&gt;&amp;</span> cast<span style="color: #990000">,</span>
+           <span style="font-weight: bold"><span style="color: #0000FF">const</span></span> std<span style="color: #990000">::</span><span style="color: #008080">int64_t</span> revenue<span style="color: #990000">)</span>
+   <span style="color: #990000">:</span> title_<span style="color: #FF0000">{</span>title<span style="color: #FF0000">}</span><span style="color: #990000">,</span> director_<span style="color: #FF0000">{</span>director<span style="color: #FF0000">}</span><span style="color: #990000">,</span> cast_<span style="color: #FF0000">{</span>cast<span style="color: #FF0000">}</span><span style="color: #990000">,</span> revenue_<span style="color: #FF0000">{</span>revenue<span style="color: #FF0000">}</span>
+<span style="color: #FF0000">{</span>
+<span style="color: #FF0000">}</span></tt></pre></div></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="title">Quiz</div>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+What happens when you don&#8217;t define a constructor at all?
+</p>
+</li>
+<li>
+<p>
+What happens when you don&#8217;t define a default constructor?
+</p>
+</li>
+<li>
+<p>
+What is a delegating constructor?
+</p>
+</li>
+<li>
+<p>
+Why is the body of the above constructor empty?
+</p>
+</li>
+<li>
+<p>
+What is an explicit constructor?
+</p>
+</li>
+<li>
+<p>
+Why do we like explicit constructors?
+</p>
+</li>
+</ol></div>
+</td>
+</tr></table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_code_const_code_member_functions"><code>const</code> member functions</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+Promise that the function won&#8217;t modify any non-<code>mutable</code> data members.
+</p>
+</li>
+<li>
+<p>
+Can only call other <code>const</code> member functions.
+</p>
+</li>
+<li>
+<p>
+Objects specified to be <code>const</code> can only call <code>const</code> member functions.
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #0000FF">class</span></span> <span style="color: #008080">film</span>
+<span style="color: #FF0000">{</span>
+<span style="font-weight: bold"><span style="color: #0000FF">public</span></span><span style="color: #990000">:</span>
+   <span style="font-weight: bold"><span style="color: #000000">film</span></span><span style="color: #990000">(</span>std<span style="color: #990000">::</span><span style="color: #008080">string</span> title<span style="color: #990000">,</span> std<span style="color: #990000">::</span><span style="color: #008080">string</span> director<span style="color: #990000">,</span> std<span style="color: #990000">::</span><span style="color: #008080">vector&lt;std::string&gt;</span> cast<span style="color: #990000">,</span> <span style="font-weight: bold"><span style="color: #0000FF">const</span></span> std<span style="color: #990000">::</span><span style="color: #008080">int64_t</span> revenue<span style="color: #990000">);</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">const</span></span> std<span style="color: #990000">::</span>string<span style="color: #990000">&amp;</span> <span style="font-weight: bold"><span style="color: #000000">title</span></span><span style="color: #990000">()</span> <span style="font-weight: bold"><span style="color: #0000FF">const</span></span><span style="color: #990000">;</span>
+<span style="font-weight: bold"><span style="color: #0000FF">private</span></span><span style="color: #990000">:</span>
+   std<span style="color: #990000">::</span><span style="color: #008080">string</span> title_<span style="color: #990000">;</span>
+   std<span style="color: #990000">::</span><span style="color: #008080">string</span> director_<span style="color: #990000">;</span>
+   std<span style="color: #990000">::</span><span style="color: #008080">vector&lt;std::string&gt;</span> cast_<span style="color: #990000">;</span>
+   std<span style="color: #990000">::</span><span style="color: #008080">int64_t</span> revenue_<span style="color: #990000">;</span>
+<span style="color: #FF0000">}</span><span style="color: #990000">;</span>
+
+film<span style="color: #990000">::</span><span style="font-weight: bold"><span style="color: #000000">film</span></span><span style="color: #990000">(</span>std<span style="color: #990000">::</span><span style="color: #008080">string</span> title<span style="color: #990000">,</span> std<span style="color: #990000">::</span><span style="color: #008080">string</span> director<span style="color: #990000">,</span> std<span style="color: #990000">::</span><span style="color: #008080">vector&lt;std::string&gt;</span> cast<span style="color: #990000">,</span> <span style="font-weight: bold"><span style="color: #0000FF">const</span></span> std<span style="color: #990000">::</span><span style="color: #008080">int64_t</span> revenue<span style="color: #990000">);</span>
+   <span style="color: #990000">:</span> title_<span style="color: #FF0000">{</span>title<span style="color: #FF0000">}</span><span style="color: #990000">,</span> director_<span style="color: #FF0000">{</span>director<span style="color: #FF0000">}</span><span style="color: #990000">,</span> cast_<span style="color: #FF0000">{</span>cast<span style="color: #FF0000">}</span><span style="color: #990000">,</span> revenue_<span style="color: #FF0000">{</span>revenue<span style="color: #FF0000">}</span>
+<span style="color: #FF0000">{</span>
+<span style="color: #FF0000">}</span>
+
+<span style="font-weight: bold"><span style="color: #0000FF">const</span></span> std<span style="color: #990000">::</span>string<span style="color: #990000">&amp;</span> film<span style="color: #990000">::</span><span style="font-weight: bold"><span style="color: #000000">title</span></span><span style="color: #990000">()</span> <span style="font-weight: bold"><span style="color: #0000FF">const</span></span>
+<span style="color: #FF0000">{</span>
+   title_ <span style="color: #990000">=</span> <span style="color: #FF0000">"Star Wars: The Empire Strikes Back"</span><span style="color: #990000">;</span> <span style="font-style: italic"><span style="color: #9A1900">// error: title_ is immutable in this function</span></span>
+   <span style="font-weight: bold"><span style="color: #0000FF">return</span></span> title_<span style="color: #990000">;</span> <span style="font-style: italic"><span style="color: #9A1900">// okay</span></span>
+<span style="color: #FF0000">}</span></tt></pre></div></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="title">Quiz</div>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+How should you be returning data members by default?
+</p>
+</li>
+<li>
+<p>
+When should you not be returning data members this way?
+</p>
+</li>
+</ol></div>
+</td>
+</tr></table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_code_mutable_code_data_members"><code>mutable</code> data members</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+The exception to the <code>const</code> rule: you can modify a <code>mutable</code> data member inside a <code>const</code>
+  function.
+</p>
+</li>
+<li>
+<p>
+Sounds shady, right?
+</p>
+</li>
+<li>
+<p>
+Only very carefully chosen members should be <code>mutable</code> (e.g. a cache).
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #0000FF">class</span></span> <span style="color: #008080">cinema</span>
+<span style="color: #FF0000">{</span>
+<span style="font-weight: bold"><span style="color: #0000FF">public</span></span><span style="color: #990000">:</span>
+   <span style="font-style: italic"><span style="color: #9A1900">// ...</span></span>
+   <span style="font-weight: bold"><span style="color: #0000FF">const</span></span> film<span style="color: #990000">&amp;</span> <span style="font-weight: bold"><span style="color: #000000">top_grossing_film</span></span><span style="color: #990000">()</span> <span style="font-weight: bold"><span style="color: #0000FF">const</span></span><span style="color: #990000">;</span>
+<span style="font-weight: bold"><span style="color: #0000FF">private</span></span><span style="color: #990000">:</span>
+   std<span style="color: #990000">::</span><span style="color: #008080">vector&lt;film&gt;</span> films_<span style="color: #990000">;</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">mutable</span></span> <span style="color: #009900">bool</span> cache_invalidated_<span style="color: #990000">;</span> <span style="font-style: italic"><span style="color: #9A1900">// set to true in some insertion function</span></span>
+   <span style="font-weight: bold"><span style="color: #0000FF">mutable</span></span> film<span style="color: #990000">*</span> top_film_<span style="color: #990000">;</span>
+<span style="color: #FF0000">}</span><span style="color: #990000">;</span>
+
+<span style="font-weight: bold"><span style="color: #0000FF">const</span></span> film<span style="color: #990000">&amp;</span> cinema<span style="color: #990000">::</span><span style="font-weight: bold"><span style="color: #000000">top_grossing_film</span></span><span style="color: #990000">()</span> <span style="font-weight: bold"><span style="color: #0000FF">const</span></span>
+<span style="color: #FF0000">{</span>
+   std<span style="color: #990000">::</span>
+<span style="color: #FF0000">}</span></tt></pre></div></div>
+</div>
+<div class="sect2">
+<h3 id="_code_friend_code_functions"><code>friend</code> functions</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+Have access to a class&#8217;s privates.
+</p>
+</li>
+<li>
+<p>
+Are free-form functions or other classes that have the <em>same</em> access as any function within the
+  class.
+</p>
+</li>
+<li>
+<p>
+Avoid them if you can.
+</p>
+</li>
+<li>
+<p>
+Prefer non-member, non-friend functions when possible.
+</p>
+</li>
+</ul></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_resource_acquisition_is_initialisation_or_as_it_8217_s_called_in_lectures_copy_control">Resource Acquisition is Initialisation (or as it&#8217;s called in lectures, "Copy Control")</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+The <em>single</em> most powerful feature C++ has to offer.
+</p>
+</li>
+<li>
+<p>
+More important than object-oriented programming and generic programming.
+</p>
+</li>
+<li>
+<p>
+It&#8217;s not just a language feature, but a programming idiom.
+</p>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+You allocate a resource.
+</p>
+</li>
+<li>
+<p>
+You use the resource.
+</p>
+</li>
+<li>
+<p>
+You clean up the resource yourself, but the compiler decides when it happens.
+</p>
+</li>
+<li>
+<p>
+That&#8217;s the general idea!
+</p>
+</li>
+</ol></div>
+</li>
+</ul></div>
+<div class="tableblock">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<caption class="title">Table 1. What is a resource?</caption>
+<col width="50%" />
+<col width="50%" />
+<thead>
+<tr>
+<th align="left" valign="top">Example                                                                                  </th>
+<th align="left" valign="top">Do we ned to worry about it (in modern C++)?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">A file handle.</p></td>
+<td align="left" valign="top"><p class="table"><code>ofstream</code> and <code>ifstream</code> already worry about cleaning up file handles, so unless you have some reason not to use them, you don&#8217;t need to worry about file handles.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">An <em>owning</em> pointer, or a pointer that is responsible for deallocating free store memory.</p></td>
+<td align="left" valign="top"><p class="table">All owning pointers should be smart pointers where possible, so this is rarely a concern.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">A mutex.</p></td>
+<td align="left" valign="top"><p class="table">We&#8217;ll cover mutexes another day, but there&#8217;s stuff for them too.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Some other system-related stuff&#8230;</p></td>
+<td align="left" valign="top"><p class="table">You&#8217;ll need to inspect the standard library and GSL to see for yourself.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="ulist"><ul>
+<li>
+<p>
+You&#8217;ve been using it a lot already without knowing:
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+<code>vector</code> employs it (it dynamically allocates memory, but you never personally clean it up)
+</p>
+</li>
+<li>
+<p>
+<code>ifstream</code> employs it (you open the file handle, but you never personally close it)
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+<div class="tableblock">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<caption class="title">Table 2. It&#8217;s not garbage collection.</caption>
+<col width="50%" />
+<col width="50%" />
+<thead>
+<tr>
+<th align="left" valign="top">Garbage collection                                                                      </th>
+<th align="left" valign="top">RAII</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">is a fire and forget tool employed by a runtime.</p></td>
+<td align="left" valign="top"><p class="table">is a programming idiom actively employed by vigilant programmers.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">can happen at any point <em>from</em> the end of an object&#8217;s life to the program&#8217;s termination.</p></td>
+<td align="left" valign="top"><p class="table">is guaranteed to happen <em>at</em> the end of an object&#8217;s life.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_destructor_copy_constructor_copy_assignment_and_the_rule_of_three">Destructor, copy constructor, copy assignment, and the rule of three</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+The destructor is a function that&#8217;s (usually) automatically called at the end of an object&#8217;s
+  lifetime.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+If you don&#8217;t define one, it&#8217;ll be synthesised for you.
+</p>
+</li>
+<li>
+<p>
+It is responsible for cleaning up any members, but it doesn&#8217;t clean up resources that you
+     reserve.
+</p>
+</li>
+<li>
+<p>
+It is specified to be <code>noexcept</code> by default, and you shouldn&#8217;t throw an exception from inside
+     one unless you want all kinds of trouble.
+</p>
+</li>
+<li>
+<p>
+Creating a destructor to clear a <code>vector</code> or set an <code>int</code> to 0 is redundant and should not be
+     done.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+A copy constructor is responsible for copying resources from an object into an object that is
+  being constructed.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+If you don&#8217;t define one, it&#8217;ll be synthesised for you.
+</p>
+</li>
+<li>
+<p>
+You are responsible for ensuring that resources you reserve are correctly copied.
+</p>
+</li>
+<li>
+<p>
+Creating a copy constructor just to copy a <code>vector</code> is redundant, and shouldn&#8217;t be done.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+A copy assignment operator is responsible for copying resources from an object A into a
+  pre-existing variable B, <em>and</em> cleaning up the original resources in B.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+If you don&#8217;t define one, it&#8217;ll be synthesised for you.
+</p>
+</li>
+<li>
+<p>
+You are responsible for ensuring that any resources that B currently holds are appropriately
+     cleaned up, and then properly copying the resources across from A.
+</p>
+</li>
+<li>
+<p>
+Creating a copy assignment operator just to copy a <code>vector</code>, or <em>ensure</em> that your objects have
+     the same values is redundant, and shouldn&#8217;t be done.
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Warning</div>
+</td>
+<td class="content">
+<div class="title">Be aware for self-assignment</div>
+<div class="ulist"><ul>
+<li>
+<p>
+If you perform <code>a = a;</code>, the state of <code>a</code> must remain the same.
+</p>
+</li>
+<li>
+<p>
+There are three copy assignment operators below, one is incorrect, one is recommended, and one
+  should only be used with good reason.
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #0000FF">template</span></span> <span style="color: #990000">&lt;</span><span style="font-weight: bold"><span style="color: #0000FF">typename</span></span> <span style="color: #008080">T</span><span style="color: #990000">&gt;</span>
+smart_ptr<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;&amp;</span> smart_ptr<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;::</span><span style="font-weight: bold"><span style="color: #0000FF">operator</span></span><span style="color: #990000">=(</span><span style="font-weight: bold"><span style="color: #0000FF">const</span></span> smart_ptr<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;&amp;</span> d<span style="color: #990000">)</span>
+<span style="color: #FF0000">{</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">delete</span></span> data_<span style="color: #990000">;</span>
+   data_ <span style="color: #990000">=</span> <span style="font-weight: bold"><span style="color: #0000FF">new</span></span> T<span style="color: #FF0000">{</span><span style="color: #990000">*</span>d<span style="color: #990000">.</span>data_<span style="color: #FF0000">}</span><span style="color: #990000">;</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">return</span></span> <span style="color: #990000">*</span><span style="font-weight: bold"><span style="color: #0000FF">this</span></span><span style="color: #990000">;</span>
+<span style="color: #FF0000">}</span></tt></pre></div></div>
+<div class="ulist"><ul>
+<li>
+<p>
+What can go wrong with the above?
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+If we perform <code>a = a</code>, then we have just deleted the data we wish to copy.
+</p>
+</li>
+<li>
+<p>
+We are also dereferencing a dangling pointer. The result of this is undefined.
+</p>
+</li>
+<li>
+<p>
+This should be rejected by compiler warnings, lint tools, a static analysers, <em>and</em> code
+     reviews, but don&#8217;t expect compiler warnings alone to stop you.
+</p>
+</li>
+<li>
+<p>
+This is the not-recommended one.
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #0000FF">template</span></span> <span style="color: #990000">&lt;</span><span style="font-weight: bold"><span style="color: #0000FF">typename</span></span> <span style="color: #008080">T</span><span style="color: #990000">&gt;</span>
+smart_ptr<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;&amp;</span> smart_ptr<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;::</span><span style="font-weight: bold"><span style="color: #0000FF">operator</span></span><span style="color: #990000">=(</span><span style="font-weight: bold"><span style="color: #0000FF">const</span></span> smart_ptr<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;&amp;</span> d<span style="color: #990000">)</span>
+<span style="color: #FF0000">{</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">if</span></span> <span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">this</span></span> <span style="color: #990000">!=</span> <span style="color: #990000">&amp;</span>d<span style="color: #990000">)</span>
+   <span style="color: #FF0000">{</span>
+      <span style="font-weight: bold"><span style="color: #0000FF">delete</span></span> data_<span style="color: #990000">;</span>
+      data_ <span style="color: #990000">=</span> <span style="font-weight: bold"><span style="color: #0000FF">new</span></span> T<span style="color: #FF0000">{</span><span style="color: #990000">*</span>d<span style="color: #990000">.</span>data_<span style="color: #FF0000">}</span><span style="color: #990000">;</span>
+   <span style="color: #FF0000">}</span>
+
+   <span style="font-weight: bold"><span style="color: #0000FF">return</span></span> <span style="color: #990000">*</span><span style="font-weight: bold"><span style="color: #0000FF">this</span></span><span style="color: #990000">;</span>
+<span style="color: #FF0000">}</span></tt></pre></div></div>
+<div class="ulist"><ul>
+<li>
+<p>
+This is better, but there&#8217;s still a few things to consider:
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+If we perform <code>a = a</code>, then the resources are preserved.
+</p>
+</li>
+<li>
+<p>
+This is production-okay code.
+</p>
+</li>
+<li>
+<p>
+This shouldn&#8217;t be rejected by lint tools and static analysers, but might be rejected by a
+     strict code review team.
+</p>
+</li>
+<li>
+<p>
+The key problem is that we need to explicitly release any held resources and then allocate new
+     resources, and we might forget to do it.
+</p>
+</li>
+<li>
+<p>
+We&#8217;ve also already done both of these in our copy constructor and our destructor, so there&#8217;s
+     now some code duplication.
+</p>
+</li>
+<li>
+<p>
+If only there were a way to reduce code duplication&#8230;
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #0000FF">template</span></span> <span style="color: #990000">&lt;</span><span style="font-weight: bold"><span style="color: #0000FF">typename</span></span> <span style="color: #008080">T</span><span style="color: #990000">&gt;</span>
+smart_ptr<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;&amp;</span> smart_ptr<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;::</span><span style="font-weight: bold"><span style="color: #0000FF">operator</span></span><span style="color: #990000">=(</span><span style="font-weight: bold"><span style="color: #0000FF">const</span></span> smart_ptr<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;&amp;</span> d<span style="color: #990000">)</span>
+<span style="color: #FF0000">{</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> t <span style="color: #990000">=</span> smart_ptr<span style="color: #FF0000">{</span>d<span style="color: #FF0000">}</span><span style="color: #990000">;</span> <span style="font-style: italic"><span style="color: #9A1900">// copy constructor call</span></span>
+   std<span style="color: #990000">::</span><span style="font-weight: bold"><span style="color: #000000">swap</span></span><span style="color: #990000">(*</span><span style="font-weight: bold"><span style="color: #0000FF">this</span></span><span style="color: #990000">,</span> t<span style="color: #990000">);</span>   <span style="font-style: italic"><span style="color: #9A1900">// resources of our old smart_ptr go into t</span></span>
+   <span style="font-weight: bold"><span style="color: #0000FF">return</span></span> <span style="color: #990000">*</span><span style="font-weight: bold"><span style="color: #0000FF">this</span></span><span style="color: #990000">;</span>
+<span style="color: #FF0000">}</span> <span style="font-style: italic"><span style="color: #9A1900">// t cleaned up here by definition</span></span></tt></pre></div></div>
+<div class="ulist"><ul>
+<li>
+<p>
+&#8230;which we can do by invoking the copy constructor and the destructor.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+Credit goes to Scott Meyers.
+</p>
+</li>
+<li>
+<p>
+This is the recommended one, unless you have some reason to use the above one.
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</td>
+</tr></table>
+</div>
+<div class="ulist"><ul>
+<li>
+<p>
+<strong>The rule of three states that if you have a need to implement one of these, you must implement
+  all of them.</strong>
+</p>
+</li>
+</ul></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Warning</div>
+</td>
+<td class="content">
+<div class="ulist"><ul>
+<li>
+<p>
+There is no compiler check to see if you do or do not implement all three.
+</p>
+</li>
+<li>
+<p>
+There is also no compiler check to see if you have correctly implemented any of them.
+</p>
+</li>
+<li>
+<p>
+A static analyser may help, but do not expect it to catch everything you&#8217;ve missed.
+</p>
+</li>
+<li>
+<p>
+This is a part of the RAII programming idiom, and is up to you to enforce.
+</p>
+</li>
+</ul></div>
+</td>
+</tr></table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_rvalue_references">Rvalue references</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+We learned about <em>lvalue</em> references in week 1.
+</p>
+</li>
+<li>
+<p>
+An lvalue reference refers to some lvalue (a function or object).
+</p>
+</li>
+<li>
+<p>
+You cannot bind an lvalue reference to an rvalue, but you may bind an lvalue reference-to-<code>const</code>
+  to an rvalue.
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #0000FF">auto</span></span><span style="color: #990000">&amp;</span> reference_to_int <span style="color: #990000">=</span> <span style="color: #993399">0</span><span style="color: #990000">;</span> <span style="font-style: italic"><span style="color: #9A1900">// error: can't bind an lvalue reference to an rvalue</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">const</span></span> <span style="font-weight: bold"><span style="color: #0000FF">auto</span></span><span style="color: #990000">&amp;</span> reference_to_const_int <span style="color: #990000">=</span> <span style="color: #993399">0</span><span style="color: #990000">;</span> <span style="font-style: italic"><span style="color: #9A1900">// okay</span></span></tt></pre></div></div>
+<div class="ulist"><ul>
+<li>
+<p>
+Rvalue references refer to rvalues.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+Rvalue references cannot bind to lvalues.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+They may bind to temporaries, which are a form of rvalue.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+A temporary is an object without a name.
+</p>
+</li>
+<li>
+<p>
+A temporary is destroyed at the end of the full expression it is constructed in.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+They may also bind to lvalues that are nearing the end of their lifetime.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+We need to explicitly tell the compiler about this, but more on this later.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Rvalue references are used for <em>destructive</em> reads.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+An rvalue reference-to-<code>const</code> is thus pointless.
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #0000FF">auto</span></span><span style="color: #990000">&amp;&amp;</span> rvalue_reference <span style="color: #990000">=</span> <span style="color: #993399">0</span><span style="color: #990000">;</span> <span style="font-style: italic"><span style="color: #9A1900">// okay</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">const</span></span> <span style="font-weight: bold"><span style="color: #0000FF">auto</span></span><span style="color: #990000">&amp;&amp;</span> rvalue_reference_to_const <span style="color: #990000">=</span> <span style="color: #993399">0</span><span style="color: #990000">;</span> <span style="font-style: italic"><span style="color: #9A1900">// legal, but the rvalue reference is now useless.</span></span></tt></pre></div></div>
+</div>
+<div class="sect2">
+<h3 id="_move_constructor_move_assignment_and_the_rule_of_five">Move constructor, move assignment, and the rule of five</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+A fax machine scans your document and replicates it. This is akin to copying.
+</p>
+</li>
+<li>
+<p>
+Handing a document to another person means that you no longer have the document, and only one
+  document is in circulation. This is akin to moving.
+</p>
+</li>
+<li>
+<p>
+Moving things happens at the near of an object&#8217;s lifetime.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+Does that sound familiar?
+</p>
+</li>
+<li>
+<p>
+Moving works with rvalue references.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+An object that has been moved is left in a destructible state, but is an empty shell.
+</p>
+</li>
+</ul></div>
+<div class="sect3">
+<h4 id="_move_constructors">Move constructors</h4>
+<div class="ulist"><ul>
+<li>
+<p>
+Move constructors are responsible for moving all of an object&#8217;s resources from a preexisting
+  object to an object that is just being constructed.
+</p>
+</li>
+<li>
+<p>
+The rules for a synthesised move constructor are stricter than those for a copy constructor.
+  Namely, you must not have defined a custom:
+</p>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+Copy constructor
+</p>
+</li>
+<li>
+<p>
+Copy assignment operator
+</p>
+</li>
+<li>
+<p>
+Destructor
+</p>
+</li>
+<li>
+<p>
+Move constructor (no point synthesising one if you already made it&#8201;&#8212;&#8201;you know better than
+      the compiler, after all!)
+</p>
+</li>
+<li>
+<p>
+Move assignment operator
+</p>
+</li>
+</ol></div>
+</li>
+<li>
+<p>
+Similarly to the above, defining your own to explicitly move anything other than a resource is
+     redundant.
+</p>
+</li>
+<li>
+<p>
+Similarly to all other constructors, make sure that you use your initialiser list.
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #0000FF">template</span></span> <span style="color: #990000">&lt;</span><span style="font-weight: bold"><span style="color: #0000FF">typename</span></span> <span style="color: #008080">T</span><span style="color: #990000">&gt;</span>
+smart_ptr<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;::</span><span style="font-weight: bold"><span style="color: #000000">smart_ptr</span></span><span style="color: #990000">(</span>smart_ptr<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;&amp;&amp;</span> o<span style="color: #990000">)</span>
+   <span style="color: #990000">:</span> data_<span style="color: #FF0000">{</span>o<span style="color: #990000">.</span>data_<span style="color: #FF0000">}</span>
+<span style="color: #FF0000">{</span>
+   o<span style="color: #990000">.</span>data_ <span style="color: #990000">=</span> nullptr<span style="color: #990000">;</span> <span style="font-style: italic"><span style="color: #9A1900">// o.data_ is no longer an owner of the</span></span>
+                      <span style="font-style: italic"><span style="color: #9A1900">// object, and cannot point to the resource.</span></span>
+<span style="color: #FF0000">}</span></tt></pre></div></div>
+<div class="ulist"><ul>
+<li>
+<p>
+If you&#8217;d like to move something other than a built-in type, you&#8217;ll need to use a special function
+  called <code>std::move</code>.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+<em>Never</em> dequalify <code>std::move</code>, not even with <code>using std::move</code>.
+</p>
+</li>
+<li>
+<p>
+It is a very important function, and has a common name. Mixing it up with some other function
+     is very, <em>very</em> bad.
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #0000FF">template</span></span> <span style="color: #990000">&lt;</span><span style="font-weight: bold"><span style="color: #0000FF">typename</span></span> <span style="color: #008080">T</span><span style="color: #990000">&gt;</span>
+record<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;::</span><span style="font-weight: bold"><span style="color: #000000">record</span></span><span style="color: #990000">(</span>record<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;&amp;&amp;</span> o<span style="color: #990000">)</span>
+   <span style="color: #990000">:</span> data_<span style="color: #FF0000">{</span>std<span style="color: #990000">::</span><span style="font-weight: bold"><span style="color: #000000">move</span></span><span style="color: #990000">(</span>o<span style="color: #990000">.</span>data_<span style="color: #990000">)</span><span style="color: #FF0000">}</span><span style="color: #990000">,</span> <span style="font-style: italic"><span style="color: #9A1900">// data_ is a vector&lt;T&gt;</span></span>
+     resource_<span style="color: #FF0000">{</span>o<span style="color: #990000">.</span>resource_<span style="color: #FF0000">}</span> <span style="font-style: italic"><span style="color: #9A1900">// resource_ is a pointer pointing to something on the free store</span></span>
+<span style="color: #FF0000">{</span>
+   o<span style="color: #990000">.</span>resource_ <span style="color: #990000">=</span> nullptr<span style="color: #990000">;</span>
+<span style="color: #FF0000">}</span></tt></pre></div></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="ulist"><ul>
+<li>
+<p>
+Notice that we didn&#8217;t do anything with <code>o.data_</code>, like we did with <code>o.resource_</code>. This is because
+  <code>vector</code> has a move constructor that does all of that for us.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+If we weren&#8217;t explicitly managing <code>resource_</code>, then we wouldn&#8217;t bother defining the any of the
+     five.
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</td>
+</tr></table>
+</div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="ulist"><ul>
+<li>
+<p>
+<code>std::move</code> doesn&#8217;t actually move anything on its own.
+</p>
+</li>
+<li>
+<p>
+It is a wrapper for a <code>static_cast&lt;T&amp;&amp;&gt;</code>, where <code>T</code> is the type you pass to <code>std::move</code>.
+</p>
+</li>
+<li>
+<p>
+All the moving happens in the constructor we&#8217;ve just spoken about, and the assignment operator
+  below.
+</p>
+</li>
+<li>
+<p>
+<code>std::move</code> is a trick to get the compiler to let us move an lvalue.
+</p>
+</li>
+</ul></div>
+</td>
+</tr></table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_move_assignment_operators">Move assignment operators</h4>
+<div class="ulist"><ul>
+<li>
+<p>
+Similarly to copy assignment, move assignment is responsible for moving resources from an object A
+  to a prexisting object B, after having released the resources that B holds.
+</p>
+</li>
+</ul></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Caution</div>
+</td>
+<td class="content">
+<div class="title">Self-assignment with the move constructor</div>
+<div class="ulist"><ul>
+<li>
+<p>
+The standard implies that self-assignment with a move assignment operator is unspecified.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+It could clear out the object (same as xoring with itself), or
+</p>
+</li>
+<li>
+<p>
+It could be a no-op (i.e. optimised out)
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+If you want the former to happen, don&#8217;t check for self-assignment: a correctly written move
+  assignment operator will cause this to happen automatically.
+</p>
+</li>
+<li>
+<p>
+If you prefer the latter to happen, you cannot employ the copy-and-swap method used in the copy
+  assignment operator.
+</p>
+</li>
+<li>
+<p>
+You must use the check-for-self method, like so:
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #0000FF">template</span></span> <span style="color: #990000">&lt;</span><span style="font-weight: bold"><span style="color: #0000FF">typename</span></span> <span style="color: #008080">T</span><span style="color: #990000">&gt;</span>
+record<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;&amp;</span> record<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;::</span><span style="font-weight: bold"><span style="color: #0000FF">operator</span></span><span style="color: #990000">=(</span>record<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;&amp;&amp;</span> r<span style="color: #990000">)</span>
+<span style="color: #FF0000">{</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">if</span></span> <span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">this</span></span> <span style="color: #990000">!=</span> <span style="color: #990000">&amp;</span>r<span style="color: #990000">)</span>
+   <span style="color: #FF0000">{</span>
+      <span style="font-weight: bold"><span style="color: #0000FF">delete</span></span><span style="color: #990000">[]</span> resource_<span style="color: #990000">;</span>
+      data_ <span style="color: #990000">=</span> std<span style="color: #990000">::</span><span style="font-weight: bold"><span style="color: #000000">move</span></span><span style="color: #990000">(</span>r<span style="color: #990000">.</span>data_<span style="color: #990000">);</span>
+      resource_ <span style="color: #990000">=</span> r<span style="color: #990000">.</span>resource_<span style="color: #990000">;</span>
+      r<span style="color: #990000">.</span>resource_ <span style="color: #990000">=</span> nullptr<span style="color: #990000">;</span>
+   <span style="color: #FF0000">}</span>
+
+   <span style="font-weight: bold"><span style="color: #0000FF">return</span></span> <span style="color: #990000">*</span><span style="font-weight: bold"><span style="color: #0000FF">this</span></span><span style="color: #990000">;</span>
+<span style="color: #FF0000">}</span></tt></pre></div></div>
+</td>
+</tr></table>
+</div>
+<div class="ulist"><ul>
+<li>
+<p>
+<strong>The rule of five states that if you need to move a resource, then you need to implement the
+  rule of three, <em>and</em> the move constructor, <em>and</em> the move assignment operator.</strong>
+</p>
+</li>
+</ul></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Warning</div>
+</td>
+<td class="content">
+<div class="ulist"><ul>
+<li>
+<p>
+Not everything is moveable (built-in types, stack-allocated arrays, etc.).
+</p>
+</li>
+<li>
+<p>
+Some things that can be moved can&#8217;t be copied (e.g. <code>unique_ptr</code>). These are an exception to the
+  rule of five.
+</p>
+</li>
+<li>
+<p>
+Similarly to the rule of three, tools may help, but they probably won&#8217;t. Be vigilant.
+</p>
+</li>
+</ul></div>
+</td>
+</tr></table>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_the_rule_of_zero">The rule of zero</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+Don&#8217;t define any!
+</p>
+</li>
+<li>
+<p>
+If your type doesn&#8217;t personally manage a resource, don&#8217;t bother with <em>any</em> of the five.
+</p>
+</li>
+<li>
+<p>
+The compiler will synthesise a perfectly working copy constructor, move constructor, copy
+  assignment operator, move assignment operator, and destructor for you.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+These will call the appropriate constructors for all of your members.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+The rule of zero often isn&#8217;t applicable to library developers.
+</p>
+</li>
+<li>
+<p>
+Why is the rule of zero recommended?
+</p>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+You don&#8217;t need to write five functions&#8201;&#8212;&#8201;less to write
+</p>
+</li>
+<li>
+<p>
+You don&#8217;t need to write five <em>complex</em> functions&#8201;&#8212;&#8201;less to think about
+</p>
+</li>
+<li>
+<p>
+You don&#8217;t need to <em>test</em> five complex functions&#8201;&#8212;&#8201;less to test
+</p>
+</li>
+<li>
+<p>
+Someone has already done the work&#8230; just elsewhere! Don&#8217;t reinvent the wheel!
+</p>
+</li>
+</ol></div>
+</li>
+<li>
+<p>
+Unless I&#8217;m implementing library code, I stick to the rule of zero.
+</p>
+</li>
+<li>
+<p>
+What about if you want something to be moveable, but not copyable? Check out this:
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #0000FF">template</span></span> <span style="color: #990000">&lt;</span><span style="font-weight: bold"><span style="color: #0000FF">typename</span></span> <span style="color: #008080">T</span><span style="color: #990000">&gt;</span>
+<span style="font-weight: bold"><span style="color: #0000FF">class</span></span> <span style="color: #008080">record</span>
+<span style="color: #FF0000">{</span>
+<span style="font-weight: bold"><span style="color: #0000FF">public</span></span><span style="color: #990000">:</span>
+   <span style="font-weight: bold"><span style="color: #000000">record</span></span><span style="color: #990000">()</span> <span style="color: #990000">=</span> <span style="font-weight: bold"><span style="color: #0000FF">default</span></span><span style="color: #990000">;</span>
+   <span style="font-weight: bold"><span style="color: #000000">record</span></span><span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">const</span></span> T<span style="color: #990000">&amp;</span> t<span style="color: #990000">);</span>
+
+   <span style="font-weight: bold"><span style="color: #000000">record</span></span><span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">const</span></span> record<span style="color: #990000">&amp;)</span> <span style="color: #990000">=</span> <span style="font-weight: bold"><span style="color: #0000FF">delete</span></span><span style="color: #990000">;</span>
+   <span style="font-weight: bold"><span style="color: #000000">record</span></span><span style="color: #990000">(</span>record<span style="color: #990000">&amp;&amp;)</span> <span style="color: #990000">=</span> <span style="font-weight: bold"><span style="color: #0000FF">default</span></span><span style="color: #990000">;</span>
+   <span style="color: #990000">~</span><span style="font-weight: bold"><span style="color: #000000">record</span></span><span style="color: #990000">()</span> <span style="color: #990000">=</span> <span style="font-weight: bold"><span style="color: #0000FF">default</span></span><span style="color: #990000">;</span>
+
+   record<span style="color: #990000">&amp;</span> <span style="font-weight: bold"><span style="color: #0000FF">operator</span></span><span style="color: #990000">=(</span><span style="font-weight: bold"><span style="color: #0000FF">const</span></span> record<span style="color: #990000">&amp;)</span> <span style="color: #990000">=</span> <span style="font-weight: bold"><span style="color: #0000FF">delete</span></span><span style="color: #990000">;</span>
+   record<span style="color: #990000">&amp;</span> <span style="font-weight: bold"><span style="color: #0000FF">operator</span></span><span style="color: #990000">=(</span>record<span style="color: #990000">&amp;&amp;)</span> <span style="color: #990000">=</span> <span style="font-weight: bold"><span style="color: #0000FF">default</span></span><span style="color: #990000">;</span>
+<span style="font-weight: bold"><span style="color: #0000FF">private</span></span><span style="color: #990000">:</span>
+   std<span style="color: #990000">::</span><span style="color: #008080">vector&lt;T&gt;</span> data_<span style="color: #990000">;</span>
+   resource_t<span style="color: #990000">*</span> resource_<span style="color: #990000">;</span>
+<span style="color: #FF0000">}</span><span style="color: #990000">;</span></tt></pre></div></div>
+<div class="ulist"><ul>
+<li>
+<p>
+The functions that are <code>= default</code> are still synthesised by the compiler.
+</p>
+</li>
+<li>
+<p>
+The functions that are <code>= delete</code> are not implemented.
+</p>
+</li>
+<li>
+<p>
+This is how you communicate to programmers that a particular function isn&#8217;t implemented in
+</p>
+</li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="_copy_elision">Copy elision</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+So, we&#8217;ve looked at both copy control and move semantics, or more formally known as RAII.
+</p>
+</li>
+<li>
+<p>
+We&#8217;ve learned about shallow (cheap) copies and deep (expensive) copies, and how moving <em>can</em> be
+  cheap for some types.
+</p>
+</li>
+<li>
+<p>
+"<em>Chris! Does this mean you&#8217;ve been lying to us this whole time? That we should be returning
+  local variables via <code>std::move</code>?</em>" you might ask at this point.
+</p>
+</li>
+<li>
+<p>
+Do you mean like <em>this</em> code, shown below?
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>std<span style="color: #990000">::</span><span style="color: #008080">vector&lt;int&gt;</span> <span style="font-weight: bold"><span style="color: #000000">make_school</span></span><span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">const</span></span> <span style="color: #009900">int</span> children<span style="color: #990000">)</span>
+<span style="color: #FF0000">{</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> crowd <span style="color: #990000">=</span> std<span style="color: #990000">::</span>vector<span style="color: #990000">&lt;</span><span style="color: #009900">int</span><span style="color: #990000">&gt;</span><span style="color: #FF0000">{}</span><span style="color: #990000">;</span>
+
+   <span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> generator <span style="color: #990000">=</span> std<span style="color: #990000">::</span>mt19937<span style="color: #FF0000">{</span>std<span style="color: #990000">::</span>random_device<span style="color: #FF0000">{}</span><span style="color: #990000">()</span><span style="color: #FF0000">}</span><span style="color: #990000">;</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> distribute <span style="color: #990000">=</span> std<span style="color: #990000">::</span>uniform_int_distribution<span style="color: #990000">&lt;&gt;</span><span style="color: #FF0000">{</span><span style="color: #993399">12</span><span style="color: #990000">,</span> <span style="color: #993399">19</span><span style="color: #FF0000">}</span><span style="color: #990000">;</span>
+
+   std<span style="color: #990000">::</span><span style="font-weight: bold"><span style="color: #000000">generate_n</span></span><span style="color: #990000">(</span>std<span style="color: #990000">::</span>back_insert_iterator<span style="color: #990000">&lt;</span><span style="font-weight: bold"><span style="color: #000000">decltype</span></span><span style="color: #990000">(</span>crowd<span style="color: #990000">)&gt;</span><span style="color: #FF0000">{</span>v<span style="color: #FF0000">}</span><span style="color: #990000">,</span> children<span style="color: #990000">,</span>
+                   <span style="color: #990000">[&amp;]</span><span style="color: #FF0000">{</span> <span style="font-weight: bold"><span style="color: #0000FF">return</span></span> <span style="font-weight: bold"><span style="color: #000000">distribute</span></span><span style="color: #990000">(</span>generator<span style="color: #990000">);</span> <span style="color: #FF0000">}</span><span style="color: #990000">);</span>
+
+   <span style="font-weight: bold"><span style="color: #0000FF">return</span></span> std<span style="color: #990000">::</span><span style="font-weight: bold"><span style="color: #000000">move</span></span><span style="color: #990000">(</span>crowd<span style="color: #990000">);</span>
+<span style="color: #FF0000">}</span></tt></pre></div></div>
+<div class="ulist"><ul>
+<li>
+<p>
+"Yes! That&#8217;s exactly what I mean! Won&#8217;t that force the compiler not to make a copy, thus making
+  my code more efficient?"
+</p>
+</li>
+<li>
+<p>
+<strong><span class="big">NO!</span></strong>
+</p>
+</li>
+<li>
+<p>
+Did you write a test to check that it&#8217;s more efficient?
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+If you did, and still came to that conclusion, you&#8217;d be lying.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Do not, under any circumstances, return by wrapping your object in <code>std::move</code>.
+</p>
+</li>
+<li>
+<p>
+Compilers are already aware that returning a local variable can be <em>moved</em>, <em>without</em> the need
+  for <code>std::move</code>.
+</p>
+</li>
+<li>
+<p>
+This is known as <em>copy elision</em>.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+Under certain conditions, the compiler is allowed to eliminate the need for calling both the
+     copy constructor and the move constructor.
+</p>
+</li>
+<li>
+<p>
+When these conditions aren&#8217;t met, the compiler will automatically perform a move anyway.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+By adding <code>std::move</code>, you will:
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+At best, do nothing
+</p>
+</li>
+<li>
+<p>
+At worst, trick the compiler into not doing the copy/move constructor elimination.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+This is one of the <em>very few</em> hard and fast rules that I assert.
+</p>
+</li>
+</ul></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_most_vexing_parse">Most vexing parse</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+Pop quiz: does this code compile?
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+Why or why not?
+</p>
+</li>
+<li>
+<p>
+If it does compile, what is its output?
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;algorithm&gt;</span>
+<span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;iostream&gt;</span>
+<span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;iterator&gt;</span>
+<span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;vector&gt;</span>
+
+<span style="color: #009900">int</span> <span style="font-weight: bold"><span style="color: #000000">main</span></span><span style="color: #990000">()</span>
+<span style="color: #FF0000">{</span>
+   constexpr <span style="color: #008080">auto</span> size  <span style="color: #990000">=</span> <span style="color: #993399">8</span><span style="color: #990000">;</span>
+   constexpr <span style="color: #008080">auto</span> value <span style="color: #990000">=</span> <span style="color: #993399">20</span><span style="color: #990000">;</span>
+   std<span style="color: #990000">::</span><span style="color: #008080">vector&lt;double&gt;</span> <span style="font-weight: bold"><span style="color: #000000">foo</span></span><span style="color: #990000">(</span>size<span style="color: #990000">,</span> value<span style="color: #990000">);</span>
+   std<span style="color: #990000">::</span><span style="font-weight: bold"><span style="color: #000000">copy</span></span><span style="color: #990000">(</span>foo<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">cbegin</span></span><span style="color: #990000">(),</span> foo<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">cend</span></span><span style="color: #990000">(),</span>
+             std<span style="color: #990000">::</span>ostream_iterator<span style="color: #990000">&lt;</span><span style="font-weight: bold"><span style="color: #000000">decltype</span></span><span style="color: #990000">(</span>foo<span style="color: #990000">)::</span>value_type<span style="color: #990000">&gt;</span><span style="color: #FF0000">{</span>std<span style="color: #990000">::</span>cout<span style="color: #990000">,</span> <span style="color: #FF0000">" "</span><span style="color: #FF0000">}</span><span style="color: #990000">);</span>
+
+   std<span style="color: #990000">::</span>cout <span style="color: #990000">&lt;&lt;</span> <span style="color: #FF0000">'</span><span style="color: #CC33CC">\n</span><span style="color: #FF0000">'</span><span style="color: #990000">;</span>
+<span style="color: #FF0000">}</span></tt></pre></div></div>
+<div class="ulist"><ul>
+<li>
+<p>
+Yes, it compiles!
+</p>
+</li>
+<li>
+<p>
+The output is the number 20, printed eight times, each print on a separate line.
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="color: #993399">20</span> <span style="color: #993399">20</span> <span style="color: #993399">20</span> <span style="color: #993399">20</span> <span style="color: #993399">20</span> <span style="color: #993399">20</span> <span style="color: #993399">20</span> <span style="color: #993399">20</span></tt></pre></div></div>
+<div class="ulist"><ul>
+<li>
+<p>
+How about this code?
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;algorithm&gt;</span>
+<span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;iostream&gt;</span>
+<span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;iterator&gt;</span>
+<span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;vector&gt;</span>
+
+<span style="color: #009900">int</span> <span style="font-weight: bold"><span style="color: #000000">main</span></span><span style="color: #990000">()</span>
+<span style="color: #FF0000">{</span>
+   constexpr <span style="color: #008080">auto</span> size <span style="color: #990000">=</span> <span style="color: #993399">8</span><span style="color: #990000">;</span>
+   constexpr <span style="color: #008080">auto</span> value <span style="color: #990000">=</span> <span style="color: #993399">20</span><span style="color: #990000">;</span>
+   std<span style="color: #990000">::</span><span style="color: #008080">vector&lt;double&gt;</span> <span style="font-weight: bold"><span style="color: #000000">foo</span></span><span style="color: #990000">(</span>std<span style="color: #990000">::</span><span style="font-weight: bold"><span style="color: #000000">size_t</span></span><span style="color: #990000">(</span>size<span style="color: #990000">),</span> <span style="color: #009900">double</span><span style="color: #990000">(</span>value<span style="color: #990000">));</span>
+   std<span style="color: #990000">::</span><span style="font-weight: bold"><span style="color: #000000">copy</span></span><span style="color: #990000">(</span>foo<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">cbegin</span></span><span style="color: #990000">(),</span> foo<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">cend</span></span><span style="color: #990000">(),</span>
+             std<span style="color: #990000">::</span>ostream_iterator<span style="color: #990000">&lt;</span><span style="font-weight: bold"><span style="color: #000000">decltype</span></span><span style="color: #990000">(</span>foo<span style="color: #990000">)::</span>value_type<span style="color: #990000">&gt;</span><span style="color: #FF0000">{</span>std<span style="color: #990000">::</span>cout<span style="color: #990000">,</span> <span style="color: #FF0000">" "</span><span style="color: #FF0000">}</span><span style="color: #990000">);</span>
+
+   std<span style="color: #990000">::</span>cout <span style="color: #990000">&lt;&lt;</span> <span style="color: #FF0000">'</span><span style="color: #CC33CC">\n</span><span style="color: #FF0000">'</span><span style="color: #990000">;</span>
+<span style="color: #FF0000">}</span></tt></pre></div></div>
+<div class="ulist"><ul>
+<li>
+<p>
+No, this code doesn&#8217;t compile!
+</p>
+</li>
+<li>
+<p>
+What&#8217;s the error?
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>cjdb<span style="color: #990000">:</span> g<span style="color: #990000">++</span> <span style="color: #990000">-</span>Wall <span style="color: #990000">-</span>Wextra <span style="color: #990000">-</span>Werror <span style="color: #990000">-</span>pedantic <span style="color: #990000">-</span>std<span style="color: #990000">=</span>c<span style="color: #990000">++</span><span style="color: #993399">14</span> <span style="color: #990000">-</span>o <span style="color: #008080">mvp</span> mvp<span style="color: #990000">.</span>cpp
+mvp<span style="color: #990000">.</span>cpp<span style="color: #990000">:</span> In function ‘<span style="color: #008080">int</span> <span style="font-weight: bold"><span style="color: #000000">main</span></span><span style="color: #990000">()</span>’<span style="color: #990000">:</span>
+mvp<span style="color: #990000">.</span>cpp<span style="color: #990000">:</span><span style="color: #993399">11</span><span style="color: #990000">:</span><span style="color: #993399">18</span><span style="color: #990000">:</span> error<span style="color: #990000">:</span> request <span style="font-weight: bold"><span style="color: #0000FF">for</span></span> member ‘cbegin’ in ‘foo’<span style="color: #990000">,</span> which is <span style="color: #008080">of</span> non<span style="color: #990000">-</span><span style="font-weight: bold"><span style="color: #0000FF">class</span></span> <span style="color: #008080">type</span> ‘std<span style="color: #990000">::</span>vector<span style="color: #990000">&lt;</span><span style="color: #009900">double</span><span style="color: #990000">&gt;(</span>std<span style="color: #990000">::</span>size_t<span style="color: #990000">,</span> <span style="color: #009900">double</span><span style="color: #990000">)</span> <span style="color: #FF0000">{</span><span style="color: #008080">aka</span> std<span style="color: #990000">::</span>vector<span style="color: #990000">&lt;</span><span style="color: #009900">double</span><span style="color: #990000">&gt;(</span><span style="color: #009900">long</span> <span style="color: #009900">long</span> <span style="color: #009900">unsigned</span> <span style="color: #009900">int</span><span style="color: #990000">,</span> <span style="color: #009900">double</span><span style="color: #990000">)</span><span style="color: #FF0000">}</span>’
+    std<span style="color: #990000">::</span><span style="font-weight: bold"><span style="color: #000000">copy</span></span><span style="color: #990000">(</span>foo<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">cbegin</span></span><span style="color: #990000">(),</span> foo<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">cend</span></span><span style="color: #990000">(),</span>
+                  <span style="color: #990000">^</span>
+mvp<span style="color: #990000">.</span>cpp<span style="color: #990000">:</span><span style="color: #993399">11</span><span style="color: #990000">:</span><span style="color: #993399">32</span><span style="color: #990000">:</span> error<span style="color: #990000">:</span> request <span style="font-weight: bold"><span style="color: #0000FF">for</span></span> member ‘cend’ in ‘foo’<span style="color: #990000">,</span> which is <span style="color: #008080">of</span> non<span style="color: #990000">-</span><span style="font-weight: bold"><span style="color: #0000FF">class</span></span> <span style="color: #008080">type</span> ‘std<span style="color: #990000">::</span>vector<span style="color: #990000">&lt;</span><span style="color: #009900">double</span><span style="color: #990000">&gt;(</span>std<span style="color: #990000">::</span>size_t<span style="color: #990000">,</span> <span style="color: #009900">double</span><span style="color: #990000">)</span> <span style="color: #FF0000">{</span><span style="color: #008080">aka</span> std<span style="color: #990000">::</span>vector<span style="color: #990000">&lt;</span><span style="color: #009900">double</span><span style="color: #990000">&gt;(</span><span style="color: #009900">long</span> <span style="color: #009900">long</span> <span style="color: #009900">unsigned</span> <span style="color: #009900">int</span><span style="color: #990000">,</span> <span style="color: #009900">double</span><span style="color: #990000">)</span><span style="color: #FF0000">}</span>’
+    std<span style="color: #990000">::</span><span style="font-weight: bold"><span style="color: #000000">copy</span></span><span style="color: #990000">(</span>foo<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">cbegin</span></span><span style="color: #990000">(),</span> foo<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">cend</span></span><span style="color: #990000">(),</span>
+                                <span style="color: #990000">^</span>
+cc1plus<span style="color: #990000">:</span> all warnings being treated as errors</tt></pre></div></div>
+<div class="ulist"><ul>
+<li>
+<p>
+That&#8217;s odd&#8230; foo was clearly defined in the second line of <code>main</code>&#8230;
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+There&#8217;s a few more errors that have been omitted because they aren&#8217;t relevant.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+The problem is with the line <code>std::vector&lt;int&gt; foo(std::size_t(i));</code>
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+We tried to convert <code>size</code> an unsigned integer type, because the previous program had a
+     narrowing conversion.
+</p>
+</li>
+<li>
+<p>
+We also tried to convert <code>value</code> to a floating-point number type, because the previous program
+     had another narrowing conversion.
+</p>
+</li>
+<li>
+<p>
+</p>
+</li>
+<li>
+<p>
+What about the <code>size_t(size)</code>, you ask?
+</p>
+</li>
+<li>
+<p>
+That&#8217;s a parameter of type <code>std::size_t</code>, and is named <code>size</code> in this declaration.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+He&#8217;s da real MVP!
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+So, how do we stop MVP?
+</p>
+</li>
+<li>
+<p>
+Two ways, and you should already be employing the second way.
+</p>
+</li>
+<li>
+<p>
+The first way is to use list-initialisation (with <code>{}</code> instead of <code>()</code>):
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;algorithm&gt;</span>
+<span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;iostream&gt;</span>
+<span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;iterator&gt;</span>
+<span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;vector&gt;</span>
+
+<span style="color: #009900">int</span> <span style="font-weight: bold"><span style="color: #000000">main</span></span><span style="color: #990000">()</span>
+<span style="color: #FF0000">{</span>
+   constexpr <span style="color: #008080">auto</span> size <span style="color: #990000">=</span> <span style="color: #993399">8</span><span style="color: #990000">;</span>
+   constexpr <span style="color: #008080">auto</span> value <span style="color: #990000">=</span> <span style="color: #993399">20</span><span style="color: #990000">;</span>
+   std<span style="color: #990000">::</span><span style="color: #008080">vector&lt;double&gt;</span> foo<span style="color: #FF0000">{</span>std<span style="color: #990000">::</span><span style="font-weight: bold"><span style="color: #000000">size_t</span></span><span style="color: #990000">(</span>size<span style="color: #990000">),</span> <span style="color: #009900">double</span><span style="color: #990000">(</span>value<span style="color: #990000">)</span><span style="color: #FF0000">}</span><span style="color: #990000">;</span> <span style="font-style: italic"><span style="color: #9A1900">// notice the braces, not the parentheses</span></span>
+   std<span style="color: #990000">::</span><span style="font-weight: bold"><span style="color: #000000">copy</span></span><span style="color: #990000">(</span>foo<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">cbegin</span></span><span style="color: #990000">(),</span> foo<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">cend</span></span><span style="color: #990000">(),</span>
+             std<span style="color: #990000">::</span>ostream_iterator<span style="color: #990000">&lt;</span><span style="font-weight: bold"><span style="color: #000000">decltype</span></span><span style="color: #990000">(</span>foo<span style="color: #990000">)::</span>value_type<span style="color: #990000">&gt;</span><span style="color: #FF0000">{</span>std<span style="color: #990000">::</span>cout<span style="color: #990000">,</span> <span style="color: #FF0000">" "</span><span style="color: #FF0000">}</span><span style="color: #990000">);</span>
+
+   std<span style="color: #990000">::</span>cout <span style="color: #990000">&lt;&lt;</span> <span style="color: #FF0000">'</span><span style="color: #CC33CC">\n</span><span style="color: #FF0000">'</span><span style="color: #990000">;</span>
+<span style="color: #FF0000">}</span></tt></pre></div></div>
+<div class="ulist"><ul>
+<li>
+<p>
+Let&#8217;s run the program:
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="color: #993399">8</span> <span style="color: #993399">20</span></tt></pre></div></div>
+<div class="ulist"><ul>
+<li>
+<p>
+The output isn&#8217;t the same!
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+"Initializer-list constructors are favored over other constructors in list-initialization"&#8201;&#8212;&#8201;     Working Draft for Standard C++.
+</p>
+</li>
+<li>
+<p>
+This means that the vector takes two doubles, rather than a <code>size_t</code> and a <code>double</code>.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+The second way, which is preferable, is via <code>auto</code>:
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;algorithm&gt;</span>
+<span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;iostream&gt;</span>
+<span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;iterator&gt;</span>
+<span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;vector&gt;</span>
+
+<span style="color: #009900">int</span> <span style="font-weight: bold"><span style="color: #000000">main</span></span><span style="color: #990000">()</span>
+<span style="color: #FF0000">{</span>
+   constexpr <span style="color: #008080">auto</span> size <span style="color: #990000">=</span> <span style="color: #993399">8</span><span style="color: #990000">;</span>
+   constexpr <span style="color: #008080">auto</span> value <span style="color: #990000">=</span> <span style="color: #993399">20</span><span style="color: #990000">;</span>
+
+   <span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> foo <span style="color: #990000">=</span> std<span style="color: #990000">::</span>vector<span style="color: #990000">&lt;</span><span style="color: #009900">int</span><span style="color: #990000">&gt;(</span>std<span style="color: #990000">::</span><span style="font-weight: bold"><span style="color: #000000">size_t</span></span><span style="color: #990000">(</span>size<span style="color: #990000">),</span> <span style="color: #009900">double</span><span style="color: #990000">(</span>value<span style="color: #990000">));</span>
+   std<span style="color: #990000">::</span><span style="font-weight: bold"><span style="color: #000000">copy</span></span><span style="color: #990000">(</span>foo<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">cbegin</span></span><span style="color: #990000">(),</span> foo<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">cend</span></span><span style="color: #990000">(),</span>
+             std<span style="color: #990000">::</span>ostream_iterator<span style="color: #990000">&lt;</span><span style="font-weight: bold"><span style="color: #000000">decltype</span></span><span style="color: #990000">(</span>foo<span style="color: #990000">)::</span>value_type<span style="color: #990000">&gt;</span><span style="color: #FF0000">{</span>std<span style="color: #990000">::</span>cout<span style="color: #990000">,</span> <span style="color: #FF0000">" "</span><span style="color: #FF0000">}</span><span style="color: #990000">);</span>
+
+   std<span style="color: #990000">::</span>cout <span style="color: #990000">&lt;&lt;</span> <span style="color: #FF0000">'</span><span style="color: #CC33CC">\n</span><span style="color: #FF0000">'</span><span style="color: #990000">;</span>
+<span style="color: #FF0000">}</span></tt></pre></div></div>
+<div class="ulist"><ul>
+<li>
+<p>
+That works, even though it <em>looks</em> like the previous one.
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="color: #993399">20</span> <span style="color: #993399">20</span> <span style="color: #993399">20</span> <span style="color: #993399">20</span> <span style="color: #993399">20</span> <span style="color: #993399">20</span> <span style="color: #993399">20</span> <span style="color: #993399">20</span></tt></pre></div></div>
+<div class="ulist"><ul>
+<li>
+<p>
+An even better solution is to choose your types correctly.
+</p>
+</li>
+<li>
+<p>
+Prefer a combination of automatic type deduction <em>and</em> list-initialisation.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+That is, always put <code>auto</code> on the left-hand side (even for fundamental types).
+</p>
+</li>
+<li>
+<p>
+On the right-hand side, choose based on whether you need list-initalisation or a constructor.
+</p>
+</li>
+<li>
+<p>
+If it doesn&#8217;t matter between the two, choose list-initialisation.
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</div>
+</div>
+</div>
+<div id="footnotes"><hr /></div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2016-08-24 23:23:14 AEST
+</div>
+</div>
+</body>
+</html>

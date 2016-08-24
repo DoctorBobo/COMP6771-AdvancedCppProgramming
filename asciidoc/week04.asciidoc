@@ -415,45 +415,6 @@ record<T>& record<T>::operator=(record<T>&& r)
 * Unless I'm implementing library code, I stick to the rule of zero.
 * What about if you want something to be moveable, but not copyable? Check out this:
 
-=== Copy elision
-* So, we've looked at both copy control and move semantics, or more formally known as RAII.
-* We've learned about shallow (cheap) copies and deep (expensive) copies, and how moving _can_ be
-  cheap for some types.
-* "_Chris! Does this mean you've been lying to us this whole time? That we should be returning via
-   `std::move`?_" you might ask at this point.
-* Do you mean like _this_ code, shown below?
-
-[source,cpp]
-------------
-std::vector<int> make_crowd(const int children, const int adults, const int seniors)
-{
-   auto crowd = std::vector<int>{};
-
-   // random number generator in C++... much better than what you're used to!
-   auto generator = std::mt19937{std::random_device{}()};
-   auto distribute = std::uniform_int_distribution<>{0, 17};
-
-   for (auto i = 0; i < children; ++i)
-      crowd.push_back(distribute(generator));
-
-   distribute = std::uniform_int_distribution<>{18, 64};
-   for (auto i = 0; i < adults; ++i)
-      crowd.push_back(distribute(generator));
-
-   distribute = std::uniform_int_distribution<>{65, 128};
-   for (auto i = 0; i < seniors; ++i)
-      crowd.push_back(distribute(generator));
-
-   return std::move(crowd);
-}
-------------
-
-* "Yes! That's exactly what I mean! Won't that make my code more efficient?"
-
-[big]#NO!#
-
-
-
 [source,cpp]
 ------------
 template <typename T>
@@ -480,7 +441,48 @@ private:
 * This is how you communicate to programmers that a particular function isn't implemented in
   _modern_ {cpp}.
 
-== {cpp}'s most vexing parse
+=== Copy elision
+* So, we've looked at both copy control and move semantics, or more formally known as RAII.
+* We've learned about shallow (cheap) copies and deep (expensive) copies, and how moving _can_ be
+  cheap for some types.
+* "_Chris! Does this mean you've been lying to us this whole time? That we should be returning
+  local variables via `std::move`?_" you might ask at this point.
+* Do you mean like _this_ code, shown below?
+
+[source,cpp]
+------------
+std::vector<int> make_school(const int children)
+{
+   auto crowd = std::vector<int>{};
+
+   auto generator = std::mt19937{std::random_device{}()};
+   auto distribute = std::uniform_int_distribution<>{12, 19};
+
+   std::generate_n(std::back_insert_iterator<decltype(crowd)>{v}, children,
+                   [&]{ return distribute(generator); });
+
+   return std::move(crowd);
+}
+------------
+
+* "Yes! That's exactly what I mean! Won't that force the compiler not to make a copy, thus making
+  my code more efficient?"
+* [big]*NO!*
+* Did you write a test to check that it's more efficient?
+   - If you did, and still came to that conclusion, you'd be lying.
+* Do not, under any circumstances, return by wrapping your object in `std::move`.
+* Compilers are already aware that returning a local variable can be 'moved', _without_ the need
+  for `std::move`.
+* This is known as _copy elision_.
+   - Under certain conditions, the compiler is allowed to eliminate the need for calling both the
+     copy constructor and the move constructor.
+   - When these conditions aren't met, the compiler will automatically perform a move anyway.
+* By adding `std::move`, you will:
+   - At best, do nothing
+   - At worst, trick the compiler into not doing the copy/move constructor elimination.
+* This is one of the _very few_ hard and fast rules that I assert.
+
+== Most vexing parse
 * Pop quiz: does this code compile?
    - Why or why not?
    - If it does compile, what is its output?
@@ -507,7 +509,7 @@ int main()
 * Yes, it compiles!
 * The output is the number 20, printed eight times, each print on a separate line.
 
-[source]
+[source,cpp]
 --------
 20 20 20 20 20 20 20 20 
 --------
@@ -536,7 +538,7 @@ int main()
 * No, this code doesn't compile!
 * What's the error?
 
-[source]
+[source,cpp]
 -------------
 cjdb: g++ -Wall -Wextra -Werror -pedantic -std=c++14 -o mvp mvp.cpp
 mvp.cpp: In function ‘int main()’:
@@ -586,7 +588,7 @@ int main()
 
 * Let's run the program:
 
-[source]
+[source,cpp]
 --------
 8 20 
 --------
