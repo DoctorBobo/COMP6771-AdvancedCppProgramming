@@ -762,15 +762,15 @@ std::vector<int> make_crowd(const int children, const int adults, const int seni
    auto generator = std::mt19937{std::random_device{}()};
    auto distribute = std::uniform_int_distribution<>{0, 17};
 
-   std::generate_n(std::back_insert_iterator<decltype(crowd)>{v}, children,
+   std::generate_n(std::back_insert_iterator<decltype(crowd)>{crowd}, children,
                    [&]{ return distribute(generator); });
 
    distribute = std::uniform_int_distribution<>{18, 64};
-   std::generate_n(std::back_insert_iterator<decltype(crowd)>{v}, adults,
+   std::generate_n(std::back_insert_iterator<decltype(crowd)>{crowd}, adults,
                    [&]{ return distribute(generator); });
 
    distribute = std::uniform_int_distribution<>{65, 128};
-   std::generate_n(std::back_insert_iterator<decltype(crowd)>{v}, seniors,
+   std::generate_n(std::back_insert_iterator<decltype(crowd)>{crowd}, seniors,
                    [&]{ return distribute(generator); });
 
 
