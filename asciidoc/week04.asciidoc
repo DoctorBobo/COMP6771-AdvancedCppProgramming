@@ -1,5 +1,10 @@
 Week 4 tutorial postscript
 ==========================
+:Author: Christopher Di Bella
+:Email: cjdb.ns@gmail.com
+:Revision: 1
+:Date:
+:cpp: C++
 
 == `class` and `struct`
 * Allows you to define your own types.
@@ -69,7 +74,7 @@ film::film(const std::string& title,
 class film
 {
 public:
-   film(std::string title, std::string director, std::vector<std::string> cast, const std::int64_t revenue);
+   film(const std::string&, const std::string&, const std::vector<std::string>&, const std::int64_t);
    const std::string& title() const;
 private:
    std::string title_;
@@ -78,8 +83,14 @@ private:
    std::int64_t revenue_;
 };
 
-film::film(std::string title, std::string director, std::vector<std::string> cast, const std::int64_t revenue);
-   : title_{title}, director_{director}, cast_{cast}, revenue_{revenue}
+film::film(const std::string& title,
+           const std::string& director,
+           const std::vector<std::string>& cast,
+           const std::int64_t revenue);
+   : title_{title},
+     director_{director},
+     cast_{cast},
+     revenue_{revenue}
 {
 }
 
@@ -113,12 +124,24 @@ public:
 private:
    std::vector<film> films_;
    mutable bool cache_invalidated_; // set to true in some insertion function
-   mutable film* top_film_;
+   mutable const film* top_film_;
 };
 
 const film& cinema::top_grossing_film() const
 {
-   std::
+   if (films_.empty())
+   {
+      top_film_ = nullptr;
+   }
+   else if (cache_invalidated_)
+   {
+      top_film_ = &films_[0]; // reset top_film_ so it isn't a dangling pointer
+      for (const auto& f : films_)
+         top_film_ = &std::max(f, *top_film_);
+      cache_invalidated_ = false;
+   }
+
+   return *top_film_;
 }
 ------------
 
@@ -481,7 +504,63 @@ std::vector<int> make_school(const int children)
    - At worst, trick the compiler into not doing the copy/move constructor elimination.
 * This is one of the _very few_ hard and fast rules that I assert.
 
-== Most vexing parse
+=== Passing by parameters revisited
+* You might be wondering whether or not what the rules are regarding pass by rvalue reference, since
+  there are rules for passing by value, passing by reference, and passing by reference-to-`const`.
+* Since there's two types of reference, should we be writing:
+   - one function that passes by reference-to-`const` for non-destructive reads, and
+   - one function that passes by rvalue reference for destructive reads?
+* If you think about that for long enough, you should conclude that you'll have a combinatorial
+  number of functions to write, based on the number of parameters:
+   - 1 parameter -> 2 functions
+   - 2 parameters -> 4 functions
+   - 3 parameters -> 8 functions
+   - so on...
+* You'll be relieved to hear that for most people, you _don't_ need to pass by rvalue reference,
+  most of the time.
+* Library writers need to be more aware of passing by rvalue reference, but only in certain sections
+  of their code.
+* Passing by value can invoke either the copy constructor or the move constructor based on the
+  context.
+* In 2009, people started getting excited about move semantics, and started pathologically passing
+  by value much more often.
+* You will probably make things much slower by passing by value (you can see tests in the video
+  linked below).
+   - So pass by reference-to-`const`, as normal.
+* The last point applies to all functions except for constructors, and _only_ constructors.
+* Only after performance testing that proves the following is _undoubtedly_ faster than passing by
+  reference-to-`const`, should you consider the following:
+
+[source,cpp]
+------------
+class film
+{
+public:
+   film(std::string, std::string, std::vector<std::string>, const std::int64_t);
+   const std::string& title() const;
+private:
+   std::string title_;
+   std::string director_;
+   std::vector<std::string> cast_;
+   std::int64_t revenue_;
+};
+
+film::film(std::string title, std::string director, std::vector<std::string> cast, std::int64_t revenue);
+   : title_{std::move(title)},
+     director_{std::move(director)},
+     cast_{std::move(cast)},
+     revenue_{revenue}
+{
+}
+
+const std::string& film::title() const
+{
+   title_ = "Star Wars: The Empire Strikes Back"; // error: title_ is immutable in this function
+   return title_; // okay
+}
+------------
+
+== {cpp}'s most vexing parse
 * Pop quiz: does this code compile?
    - Why or why not?
    - If it does compile, what is its output?
