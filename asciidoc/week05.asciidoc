@@ -1,0 +1,105 @@
+Week 5 tutorial postscript
+==========================
+:Author: Christopher Di Bella
+:Email: cjdb.ns@gmail.com
+:Revision: 1
+:Date:
+:cpp: C++
+
+== Operator overloading
+* Treats the operator in question as a function for specified types.
+* At least one of the parameters must be a user-defined type.
+   - Otherwise you could redefine what `2 + 2` means!
+* All built-in rules are lost when you overload an operator.
+* Overload operators for their _intended_ definition. For example:
+   - `operator+` is addition (concatenation is 'adding' a letter or string, etc.)
+   - `operator*=` is multiplication-and-assign
+   - `operator!` is negation
+
+=== Member-only operators
+* Certain operators need to be member functions.
+* These include:
+   - `operator->`
+   - `operator[]`
+   - `operator()`
+   - `operator new`, `operator new[]` (expert only)
+   - `operator delete`, `operator delete[]` (expert only)
+
+=== Operators that should be member functions
+* These operators are responsible for directly modifying the internals of an object:
+   - `operator+=`, `operator-=`, `operator*=`, `operator/=`, `operator%=`, `operator&=`
+   - `operator|=`, `operator^=`, `operator<<=`, `operator>>=`
+   - `operator++`, `operator--` (prefix increment/decrement)
+   - `operator*` (dereference operator)
+
+=== Operators that should be non-members
+* Anything that doesn't need to directly modify the internals of an object.
+* Examples include:
+   - `operator==`, `operator!=`, `operator<`, `operator<=`, `operator>=`, `operator>`
+   - `operator+`
+   - `operator-` (both subtraction and inverse)
+   - `operator*` (the multiplication operator)
+   - `operator/`, `operator%`,
+   - `operator&`, `operator|`, `operator^`, `operator~`,
+   - `operator<<` (left-shift, not the put-to operator)
+   - `operator>>` (right-shift, not the get-from operator)
+   - `operator++(your_type_here, int)` (postfix increment)
+   - `operator--(your_type_here, int)` (postfix decrement)
+
+* Try to implement as many operators in terms of as many other operators as possible. For example:
+
+[source,cpp]
+------------
+const big_int operator+(big_int a, const big_int& b)
+{
+   return a += b;
+}
+------------
+
+=== Operators that need to be non-members
+* Some operators need to be non-members because the left-hand side of the operation is
+  a different object.
+* Some examples include:
+   - `ostream& operator<<(ostream&, const your_type_here&);`
+   - `istream& operator>>(istream&, const your_type_here&);`
+   - `operator new`, `operator new[]` (expert only)
+   - `operator delete`, `operator delete[]` (expert only)
+
+.Should non-member operators be `friend` functions?
+[TIP]
+=====
+* Ask yourself: are you accessing or modifying the members inside?
+* If you are accessing the members, is there an appropriate accessor that you could use instead?
+   - Is there a good reason the accessor doesn't exist?
+* If you are modifying the members, is there an appropriate mutator that you could use instead?
+   - Is there a good reason the mutator doesn't exist?
+* If you can't provide sound reasons for not providing an accessor or a mutator, it's probably best
+  not to specify the function as a `friend`.
+* This helps improve encapsulation.
+=====
+
+=== Operators you should avoid overloading (preferably _never_ overload)
+* `operator&&`
+* `operator||`
+* `operator,`
+* Except for `operator,` and parameter passing, the order of expression evaluation for these three
+  operators is guaranteed to be sequenced from left-to-right.
+* When you overload one of these, the built-in meaning is lost, and is replaced by a user-defined
+  function, such as `operator&&(foo, bar)`.
+   - The order of evaluation for foo and bar is not guaranteed to be left-to-right.
+   - Therefore, you lose the short-circuit evaluation.
+   - This has _serious_ implications for `operator,`, which is the sequence operator: in the
+     expression `x, y`, `y` is sequenced after `x`, so you can make certain guarantees about this
+     expression.
+   - In `operator,(x, y)`, `y` might happen before `x`, and so that guarantee is lost.
+
+== User-defined conversions
+
+=== Implicit user-defined conversion
+
+=== Explicit user-defined conversion and intentions
+
+== Lambdas
+
+== User-defined literals
+* Recall in Week 2, we learnt that it was possible to put an `s` at the 
