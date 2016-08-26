@@ -214,21 +214,21 @@ fizz = nullptr; // error: fizz is a const pointer and cannot be changed
 * `wcout` is the wide character output stream.
 * `wcerr` is the wide character error stream. It is automatically flushed.
 
+.Avoid `std::endl`
 [CAUTION]
 =========
 * Many students asked why I choose to use `'\n'` over `endl` in tutorials.
 * They pointed out that `endl` is a platform-independent version of `'\n'`, and becomes `"\r\n"` on
   Windows systems, and `'\n'` on Unix systems such as Linux.
-* Many textbooks and online sources state this, but it is a red herring (myth, etc.).
+* Many textbooks and online sources state this, but it is **not true**.
 * `endl` does two things: it puts `'\n'` to the output/error stream, and then flushes the buffer.
 * This means that other than flushing the stream, it is literally no different to using `'\n'`.
 * Flushing a buffer is slow, so your program might suffer a performance hit.
 * If you're sceptical, take a look through any of the textbooks I mentioned above, or any of the
   references below.
 * link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#slio50-avoid-endl[The CppCoreGuidelines recommend against using `endl`] unless you _need_ to print `'\n'` and then
-  flush the buffer.
-* Provided that you understand the first five points, it is not a hard-and-fast rule, but my
-  recommendation, based off programmers such as Stroustrup, Sutter, Zubkov, etc.
+  flush the buffer immediately afterward.
+* If flushing is critical, consider using `std::cerr` or `std::unitbuf` instead.
 * The following code examples all do exactly the same thing on _every_ system.
 [source,cpp]
 ------------

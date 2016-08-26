@@ -6,6 +6,88 @@ Week 4 tutorial postscript
 :Date:
 :cpp: C++
 
+== Some important terms
+* These should have been in the first postscript notes.
+* These terms are _probably_ not directly assessable, but their implications are.
+   - That means that you _probably_ won't be asked to define them in the final exam, but
+     understanding them is critical to writing good software in {cpp}.
+
+=== Implementation-defined behaviour
+* Behaviour that depends on the implementation for all well-formed programs with correct data.
+* The implementation (compiler) is required to document implementation-defined behaviour.
+* Some examples of implementation-defined behaviour include:
+   - excluding `char`, `unsigned char`, and `signed char`, the size of fundamental types (this is
+     one reason why we use `auto` to determine the type: because it can change on another
+     compiler!),
+   - type of `std::size_t`,
+   - parameters to `main`,
+   - whether or not `char` is signed,
+   - lots more...
+
+* You can think of this like the oil required for a car:
+   - Each car requires oil
+   - Some cars have require a different grade of oil to other cars
+   - The car manufacturer tells you which types of oil your car can use
+
+=== Unspecified behaviour
+* Exactly the same as implementation-defined behaviour, except:
+   - The implementation is _not_ required to document the behaviour that occurs, and
+   - The range of possible behaviours is often dictated by the standard.
+* Examples of unspecified behaviour include:
+   - the order in which an expression is evaluated for two expressions that are not sequenced
+   - 
+
+=== Undefined behaviour
+* The standard imposes no restrictions on what the program is allowed to do.
+* Your program could:
+   - do nothing,
+   - loop indefinitely and then terminate when it 'feels' like it,
+   - terminate immediately,
+   - randomly delete files,
+   - launch nuclear missiles,
+   - create a wormhole that transports you, and only you, to Andromeda,
+   - or anything else
+* There is no 'but the program will usually do...' when it comes to undefined behaviour.
+* The compiler isn't required to alert you to the fact you might permit undefined behaviour in your
+  program.
+* Some examples of undefined behaviour include:
+   - accessing memory outside of the bounds of an array
+   - letting a signed integer overflow or underflow
+   - dereferencing a null pointer,
+   - writing to the same scalar multiple times in the same expression without sequencing,
+   - deleting an object twice,
+   - much, much more...
+* A program that allows undefined behaviour is undefined at all points in the program: from the
+  very beginning until the very end.
+
+.Why?
+[source,cpp]
+------------
+#include <limits>
+#include <random>
+
+int bomb()
+{
+   auto generator = std::mt19937{std::random_device{}()};
+   auto distribute = std::uniform_int_distribution<>{1, std::numeric_limits<int>::max()};
+
+   auto tick = 0;
+   for (auto i = generator(); i != 0; ++tick)
+      ++i;
+}
+------------
+
+* Can you predict when `i` is going to overflow?
+   - No, the PRNG makes it impossible to predict.
+   - This entire function is thus undefined.
+   - Therefore, the code calling `bomb` is undefined, and so on.
+* Think of undefined behaviour as driving while under the influence of a _lot_ of alcohol.
+   - You can't predict what's going to happen
+   - You can't predict when it's going to happen
+   - Sometimes you might get home safely
+   - Sometimes you might crash and hurt someone (including yourself)
+   - Sometimes you might crash and kill someone (including yourself)
+
 == `class` and `struct`
 * Allows you to define your own types.
 * Support both data members and member functions.

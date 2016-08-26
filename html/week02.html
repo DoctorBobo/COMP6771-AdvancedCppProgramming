@@ -1296,6 +1296,7 @@ Lots of the
 <div class="title">Caution</div>
 </td>
 <td class="content">
+<div class="title">Avoid <code>std::endl</code></div>
 <div class="ulist"><ul>
 <li>
 <p>
@@ -1310,7 +1311,7 @@ They pointed out that <code>endl</code> is a platform-independent version of <co
 </li>
 <li>
 <p>
-Many textbooks and online sources state this, but it is a red herring (myth, etc.).
+Many textbooks and online sources state this, but it is <strong>not true</strong>.
 </p>
 </li>
 <li>
@@ -1337,13 +1338,12 @@ If you&#8217;re sceptical, take a look through any of the textbooks I mentioned 
 <li>
 <p>
 <a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#slio50-avoid-endl">The CppCoreGuidelines recommend against using <code>endl</code></a> unless you <em>need</em> to print <code>'\n'</code> and then
-  flush the buffer.
+  flush the buffer immediately afterward.
 </p>
 </li>
 <li>
 <p>
-Provided that you understand the first five points, it is not a hard-and-fast rule, but my
-  recommendation, based off programmers such as Stroustrup, Sutter, Zubkov, etc.
+If flushing is critical, consider using <code>std::cerr</code> or <code>std::unitbuf</code> instead.
 </p>
 </li>
 <li>
@@ -2043,7 +2043,7 @@ Stroustrup, B. <em>The C++ programming language</em> 4th Edition. p1073&#8201;&#
 <div id="footer">
 <div id="footer-text">
 Version 1<br />
-Last updated 2016-08-08 12:29:40 AEST
+Last updated 2016-08-26 22:04:34 AEST
 </div>
 </div>
 </body>
