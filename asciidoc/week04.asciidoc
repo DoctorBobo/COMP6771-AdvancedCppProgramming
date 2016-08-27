@@ -36,8 +36,8 @@ Week 4 tutorial postscript
    - whether or not a reference requires storage
    - the order in which function arguments are evaluated
 * Unspecified behaviour is similar to a police officer's threshold for speeding:
-   - They have a threshold, and it could be `your_speed * 1.1 + 3`
-   - Another officer's threshold might be `your_speed * 1.1`
+   - They have a threshold, and it could be `speed_limit * 1.1 + 3`
+   - Another officer's threshold might be `speed_limit * 1.1`
    - They aren't required to tell you what their threshold is.
 
 === Undefined behaviour
