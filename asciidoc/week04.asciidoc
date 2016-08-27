@@ -718,6 +718,9 @@ std::vector<int> make_school(const int children)
    - so on...
 * You'll be relieved to hear that for most people, you _don't_ need to pass by rvalue reference,
   most of the time.
+      ** You can probably get away without calling `std::move` on a regular basis.
+      ** I've only rarely called `std::move` outside of a move constructor/assignment operator,
+         because I rely on moving temporaries.
 * Library writers need to be more aware of passing by rvalue reference, but only in certain sections
   of their code.
 * Passing by value can invoke either the copy constructor or the move constructor based on the
