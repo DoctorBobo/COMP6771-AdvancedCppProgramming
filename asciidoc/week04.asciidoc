@@ -285,7 +285,8 @@ const film& cinema::top_grossing_film() const
 * We declare inline functions to hint to the compiler that it should replace function calls with the
   body of the function.
    ** This can potentially improve performance, as the call overhead is lost, and other
-      optimisations might be possible (key word to is "_might_" -- Jingling can better answer this).
+      optimisations might be possible (key word is "_might_" -- as an expert in compilers,
+      Jingling can better answer this).
    ** Remember to test for performance before making performance claims.
    ** We often inline small functions, such as accessors, simple mutators, and constructors without
       bodies.
