@@ -549,11 +549,14 @@ inline book read_file(const std::string& filename)
 * Stroustrup, B. _Programming: principles and practice using {cpp}_. 2nd Edition. p.1221, 303
   -- 341. 2014. Pearson Education Inc. Upper Saddle River, NJ.
 * Stroustrup, B. _A tour of {cpp}_. p.118. Pearson Education, Inc. Upper Saddle River, NJ.
+* Sutter, H. _Exceptional {cpp}: 47 engineering puzzlies, programming problems, and solutions_.
+  p.25 -- 68, 167 -- 174. 2000. Pearson Education, Inc. Indianapolis, IN.
 * Sutter, H. _More exceptional {cpp}: 40 new engineering puzzles, programming problems, and
   solutions_. p.115 -- 126. 2002. Pearson Education, Inc. Boston, MA.
 * link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rr-raii[CppCoreGuidelines
   -- R.1: Manage resources automatically using resource handles and RAII (Resource Acquisition Is
   Initialization)]
+* link:http://en.cppreference.com/w/cpp/language/raii[cppreference -- RAII]
 =====
 
 === Destructor, copy constructor, copy assignment, and the rule of three
@@ -656,6 +659,47 @@ smart_ptr<T>& smart_ptr<T>::operator=(const smart_ptr<T>& d)
 * A static analyser may help, but do not expect it to catch everything you've missed.
 * This is a part of the RAII programming idiom, and is up to you to enforce.
 =========
+
+.References
+[TIP]
+=====
+* Meyers, S. _More effective {cpp}: 35 new ways to improve your programs and designs_. p.41 -- 68. 1996.
+  Addison Wesley. Westford, MA.
+* Meyers, S. _Effective {cpp}: 55 specific ways to improve your programs and designs_.
+  Third edition. p.44 -- 60, 66 -- 73. 2005. Pearson Education, Inc. Upper Saddle River, NJ.
+* Sutter, H. _Exceptional {cpp}: 47 engineering puzzlies, programming problems, and solutions_.
+  p.9 -- 17, 25 -- 68. 2000. Pearson Education, Inc. Indianapolis, IN.
+* link:http://en.cppreference.com/w/cpp/language/rule_of_three[cppreference -- The rule of
+  three/five/zero]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#cctor-constructors-assignments-and-destructors[CppCoreGuidelines
+  -- C.ctor: Constructors, assignments, and destructors]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rc-zero[CppCoreGuidelines
+  -- C.20: If you can avoid defining default operations, do]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rc-matched[CppCoreGuidelines
+  -- C.22: Make default operations consistent]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rc-copy-assignment[CppCoreGuidelines
+  -- C.60: Make copy assignment non-virtual, take the parameter by `const&`, and return by `non-const&`]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#c61-a-copy-operation-should-copy[CppCoreGuidelines
+  -- C.61: A copy operation should copy]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rc-copy-self[CppCoreGuidelines
+  -- C.62: Make copy assignment safe for self-assignment]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rc-dtor[CppCoreGuidelines
+  -- C.30: Define a destructor if a class needs an explicit action at object destruction]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rc-dtor-release[CppCoreGuidelines
+  -- C.31: All resources acquired by a class must be released by the class's destructor]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rc-dtor-ptr[CppCoreGuidelines
+  -- C.32: If a class has a raw pointer (`T*`) or reference (`T&`), consider whether it might be owning]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rc-dtor-ptr2[CppCoreGuidelines
+  -- C.33: If a class has an owning pointer member, define a destructor]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rc-dtor-ref[CppCoreGuidelines
+  -- C.34: If a class has an owning reference member, define a destructor]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rc-dtor-fail[CppCoreGuidelines
+  -- C.36: A destructor may not fail]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rc-dtor-noexcept[CppCoreGuidelines
+  -- C.37: Make destructors `noexcept`]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#define-copy-move-and-destroy-consistently[CppCoreGuidelines
+  -- Define Copy, move, and destroy consistently]
+=====
 
 === Rvalue references
 * We learned about _lvalue_ references in week 1.
@@ -878,6 +922,13 @@ std::vector<int> make_school(const int children)
    - At best, do nothing
    - At worst, trick the compiler into not doing the copy/move constructor elimination.
 * This is one of the _very few_ hard and fast rules that I assert.
+
+.References
+[TIP]
+=====
+* Meyers, S. _More effective {cpp}: 35 new ways to improve your programs and designs_. p.101 -- 4. 1996.
+  Addison Wesley. Westford, MA.
+=====
 
 === Passing by parameters revisited
 * You might be wondering whether or not what the rules are regarding pass by rvalue reference, since
