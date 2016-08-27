@@ -191,7 +191,8 @@ film::film(const std::string& title,
 3. What is a delegating constructor?
 4. Why is the body of the above constructor empty?
 5. What is an explicit constructor?
-6. Why do we like explicit constructors?
+6. When is an explicit constructor useful?
+7. Why do we like explicit constructors?
 =====
 
 === `const` member functions
