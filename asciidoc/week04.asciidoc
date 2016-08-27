@@ -59,6 +59,7 @@ Week 4 tutorial postscript
    - dereferencing a null pointer,
    - writing to the same scalar more than once in the same expression without sequencing,
    - deleting an object twice,
+   - returning a reference to a local object,
    - race conditions,
    - deadlocks,
    - much, much more...
@@ -74,7 +75,7 @@ Week 4 tutorial postscript
 int bomb()
 {
    auto generator = std::mt19937{std::random_device{}()};
-   auto distribute = std::uniform_int_distribution<>{1, std::numeric_limits<int>::max()};
+   auto distribute = std::uniform_int_distribution<>{std::numeric_limits<int>::min(), std::numeric_limits<int>::max()};
 
    auto tick = 0;
    for (auto i = generator(); i != 0; ++tick)
@@ -82,7 +83,7 @@ int bomb()
 }
 ------------
 
-* Can you predict when `i` is going to overflow?
+* Can you predict when or even _if_ `i` is going to overflow?
    - No, the PRNG makes it impossible to predict.
    - This entire function is thus undefined.
    - Therefore, the code calling `bomb` is undefined, and so on.
@@ -95,6 +96,7 @@ int bomb()
 
 === What does all this mean?
 * Guard against undefined behaviour.
+* Never rely on unspecified behaviour.
 * Code against interfaces, not against implementations.
    ** One easy way to do this is to use `auto` as much as possible.
 
@@ -136,6 +138,48 @@ int main()
    ** If it isn't possible, try to localise the reliance by encapsulating it in a function that can
       easily be changed.
 
+.References
+[TIP]
+=====
+* ISO/IEC. Working Draft, Standard for Programming Language {cpp}, p.3 -- 4. 2014. ISO/IEC,
+  Geneva Switzerland.
+* Meyers, S. _Effective STL: 50 specific ways to improve your use of the standard template
+  library_. p.209 -- 210. 2001. Pearson Education, Inc. Upper Saddle River, NJ.
+* Meyers, S. _Effective {cpp}: 55 specific ways to improve your programs and designs_.
+  Third edition. p.262 -- 263. 2005. Pearson Education, Inc. Upper Saddle River, NJ.
+* Stroustrup, B. _The {cpp} programming language_. Fourth edition. p.136 -- 137. 2013.
+  Pearson Education, Inc. Upper Saddle River, NJ.
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rp-Cplusplus[CppCoreGuidelines
+  -- P.2: Write in ISO Standard {cpp}]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Ri-except[CppCoreGuidelines
+  -- I.10: Use exceptions to signal a failure to perform a required task]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Ri-array[CppCoreGuidelines
+  -- I.13: Do not pass an array as a single pointer]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rf-value-capture[CppCoreGuidelines
+  -- F.53: Avoid capturing by reference in lambdas that will be used nonlocally, including
+  returned, stored on the heap, or passed to another thread]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Res-always[CppCoreGuidelines
+  -- ES.20: Always initialize an object]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Res-order[CppCoreGuidelines
+  -- ES.43: Avoid expressions with undefined order of evaluation]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Res-order-fct[CppCoreGuidelines
+  -- ES.44: Don't depend on order of evaluation of function arguments]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Res-arr2[CppCoreGuidelines
+  -- ES.62: Don't compare pointers into different arrays]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Res-overflow[CppCoreGuidelines
+  -- ES.103: Don't overflow]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Res-underflow[CppCoreGuidelines
+  -- ES.104: Don't underflow]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Res-zero[CppCoreGuidelines
+  -- ES.105: Don't divide by zero]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Pro-type-constcast[CppCoreGuidelines
+  -- Type.3: Don't use const_cast to cast away const (i.e., at all).]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#never-let-a-pointer-outlive-the-object-it-points-to[CppCoreGuidelines
+  -- Never let a pointer outlive the object it points to]
+* link:http://en.cppreference.com/w/cpp/language/ub[cppreference -- Undefined behaviour]
+* link:http://en.cppreference.com/w/cpp/language/eval_order[cppreference -- Order of evaluation]
+=====
+
 == `class` and `struct`
 * Allows you to define your own types.
 * Support both data members and member functions.
@@ -147,6 +191,23 @@ int main()
 =====
 1. What is the difference between class and struct?
 2. What are the three access modifiers available?
+3. When should you use a `struct`?
+4. When should you use a `class`?
+=====
+
+.Further reading
+[TIP]
+=====
+* Stroustrup, B. _The {cpp} programming language_ 4th Edition. p.201 -- 213, 449 -- 479. 2013.
+  Pearson Education Inc. Upper Saddle River, NJ.
+* Stroustrup, B. _Programming: principles and practice using {cpp}_. 2nd Edition. p.173 -- 254, 303
+  -- 341. 2014. Pearson Education Inc. Upper Saddle River, NJ.
+* Stroustrup, B. _A tour of {cpp}_. p.16 -- 18, 33 -- 57. 2014. Pearson Education Inc. Upper Saddle
+  River, NJ.
+* Sutter, H. _Exceptional {cpp} style: 40 new engineering puzzles, programming problems, and
+  solutions_. p.104 -- 128. 2005. Pearson Education, Inc. Boston, MA.
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#c-classes-and-class-hierarchies[CppCoreGuidelines
+  -- C: Classes and Class Hierarchies]
 =====
 
 === <<norm-ctor,Constructors>>
@@ -157,21 +218,23 @@ int main()
    - xref:copy-ctor[Copy constructor]
    - xref:move-ctor[Move constructor]
 * If you don't need to define a copy constructor or a move constructor, _don't_ define them.
+* Use member initialisers over default constructors wherever possible.
 
 [source,cpp]
 ------------
 class film
 {
 public:
+   film() = default;
    film(const std::string& title,
         const std::string& director,
         const std::vector<std::string>& cast,
         std::int64_t revenue);
 private:
-   std::string title_;
-   std::string director_;
-   std::vector<std::string> cast_;
-   std::int64_t revenue_;
+   std::string title_{"<title-unknown>"};
+   std::string director_{"<director-unknown>"};
+   std::vector<std::string> cast_{};
+   std::int64_t revenue_{0};
 };
 
 film::film(const std::string& title,
@@ -193,6 +256,46 @@ film::film(const std::string& title,
 5. What is an explicit constructor?
 6. When is an explicit constructor useful?
 7. Why do we like explicit constructors?
+8. What is a member initialiser?
+=====
+
+.References
+[TIP]
+=====
+* Meyers, S. _Effective {cpp}: 55 specific ways to improve your programs and designs_.
+  Third edition. p.34 -- 37. 2005. Pearson Education, Inc. Upper Saddle River, NJ.
+* Stroustrup, B. _The {cpp} programming language_ 4th Edition. p.481 -- 484, 487 -- 488, 489
+  -- 506. 2013. Pearson Education Inc. Upper Saddle River, NJ.
+* Stroustrup, B. _Programming: principles and practice using {cpp}_. 2nd Edition. p.173 -- 254, 303
+  -- 341. 2014. Pearson Education Inc. Upper Saddle River, NJ.
+* Sutter, H. _More exceptional {cpp}: 40 new engineering puzzles, programming problems, and
+  solutions_. p.115 -- 126. 2002. Pearson Education, Inc. Boston, MA.
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rc-ctor[CppCoreGuidelines
+  -- C.40: Define a constructor if a class has an invariant]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rc-complete[CppCoreGuidelines
+  -- C.41: A constructor should create a fully initialized object]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rc-throw[CppCoreGuidelines
+  -- C.42: If a constructor cannot construct a valid object, throw an exception]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rc-default0[CppCoreGuidelines
+  -- C.43: Ensure that a class has a default constructor]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rc-default00[CppCoreGuidelines
+  -- C.44: Prefer default constructors to be simple and non-throwing]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rc-default[CppCoreGuidelines
+  -- C.45: Don't define a default constructor that only initializes data members; use in-class
+  member initializers instead]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rc-explicit[CppCoreGuidelines
+  -- C.46: By default, declare single-argument constructors explicit]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rc-order[CppCoreGuidelines
+  -- C.47: Define and initialize member variables in the order of member declaration]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rc-in-class-initializer[CppCoreGuidelines
+  -- C.48: Prefer in-class initializers to member initializers in constructors for constant initializers]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rc-initialize[CppCoreGuidelines
+  -- C.49: Prefer initialization to assignment in constructors]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rc-delegating[CppCoreGuidelines
+  -- C.51: Use delegating constructors to represent common actions for all constructors of a class]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rc-inheriting[CppCoreGuidelines
+  -- C.52: Use inheriting constructors to import constructors into a derived class that does not
+  need further explicit initialization]
 =====
 
 === `const` member functions
@@ -237,6 +340,19 @@ const std::string& film::title() const
 =====
 1. How should you be returning data members by default?
 2. When should you not be returning data members this way?
+=====
+
+.References
+[TIP]
+=====
+* Meyers, S. _Effective {cpp}: 55 specific ways to improve your programs and designs_.
+  Third edition. p.19 -- 26. 2005. Pearson Education, Inc. Upper Saddle River, NJ.
+* Stroustrup, B. _The {cpp} programming language_ 4th Edition. p.461 -- 463. 2013. Pearson
+  Education Inc. Upper Saddle River, NJ.
+* Sutter, H. _Exceptional {cpp}: 47 engineering puzzles, programming problems, and solutions}_.
+  p.69 -- 75, 177 -- 184. 2000. Pearson Education, Inc. Indianapolis, IN.
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rconst-fct[CppCoreGuidelines
+  -- Con.2: By default, make member functions `const`]
 =====
 
 === `mutable` data members

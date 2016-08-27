@@ -734,8 +734,597 @@ asciidoc.install();
 <body class="article">
 <div id="header">
 <h1>Week 4 tutorial postscript</h1>
+<span id="author">Christopher Di Bella</span><br />
+<span id="email"><code>&lt;<a href="mailto:cjdb.ns@gmail.com">cjdb.ns@gmail.com</a>&gt;</code></span><br />
+<span id="revnumber">version 1,</span>
+<span id="revdate"></span>
 </div>
 <div id="content">
+<div class="sect1">
+<h2 id="_some_important_terms">Some important terms</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+These should have been in the first postscript notes.
+</p>
+</li>
+<li>
+<p>
+These terms are <em>probably</em> not directly assessable, but their implications are.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+That means that you <em>probably</em> won&#8217;t be asked to define them in the final exam, but
+     understanding them is critical to writing good software in C++.
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+<div class="sect2">
+<h3 id="_implementation_defined_behaviour">Implementation-defined behaviour</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+Behaviour that depends on the implementation for all well-formed programs with correct data.
+</p>
+</li>
+<li>
+<p>
+The implementation (compiler) is required to document implementation-defined behaviour.
+</p>
+</li>
+<li>
+<p>
+Some examples of implementation-defined behaviour include:
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+the size of fundamental types (excluding <code>char</code>, <code>unsigned char</code>, and <code>signed char</code>),
+</p>
+</li>
+<li>
+<p>
+type of <code>std::size_t</code>,
+</p>
+</li>
+<li>
+<p>
+parameters to <code>main</code>,
+</p>
+</li>
+<li>
+<p>
+whether or not <code>char</code> is signed,
+</p>
+</li>
+<li>
+<p>
+lots more&#8230;
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+You can think of this like the oil required for a car:
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+Each car requires oil
+</p>
+</li>
+<li>
+<p>
+Some cars have require a different grade of oil to other cars
+</p>
+</li>
+<li>
+<p>
+The car manufacturer tells you which types of oil your car can use
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="_unspecified_behaviour">Unspecified behaviour</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+Exactly the same as implementation-defined behaviour, except:
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+The implementation is <em>not</em> required to document the behaviour that occurs, and
+</p>
+</li>
+<li>
+<p>
+The range of possible behaviours is often dictated by the standard.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Examples of unspecified behaviour include:
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+the order in which an expression is evaluated for two expressions that are not sequenced
+</p>
+</li>
+<li>
+<p>
+whether or not a reference requires storage
+</p>
+</li>
+<li>
+<p>
+the order in which function arguments are evaluated
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Unspecified behaviour is similar to a police officer&#8217;s threshold for speeding:
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+They have a threshold, and it could be <code>speed_limit * 1.1 + 3</code>
+</p>
+</li>
+<li>
+<p>
+Another officer&#8217;s threshold might be <code>speed_limit * 1.1</code>
+</p>
+</li>
+<li>
+<p>
+They aren&#8217;t required to tell you what their threshold is.
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="_undefined_behaviour">Undefined behaviour</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+The standard imposes no restrictions on what the program is allowed to do.
+</p>
+</li>
+<li>
+<p>
+Your program could:
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+do nothing,
+</p>
+</li>
+<li>
+<p>
+loop indefinitely and then terminate when it <em>feels</em> like it,
+</p>
+</li>
+<li>
+<p>
+terminate immediately,
+</p>
+</li>
+<li>
+<p>
+randomly delete files,
+</p>
+</li>
+<li>
+<p>
+launch nuclear missiles,
+</p>
+</li>
+<li>
+<p>
+create a wormhole that transports you, and only you, to Andromeda,
+</p>
+</li>
+<li>
+<p>
+or anything else
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+There is no "but the program will usually do&#8230;" when it comes to undefined behaviour.
+</p>
+</li>
+<li>
+<p>
+The compiler isn&#8217;t required to alert you to the fact you might permit undefined behaviour in your
+  program.
+</p>
+</li>
+<li>
+<p>
+Some examples of undefined behaviour include:
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+accessing memory outside of the bounds of an array
+</p>
+</li>
+<li>
+<p>
+letting a signed integer overflow or underflow
+</p>
+</li>
+<li>
+<p>
+dereferencing a null pointer,
+</p>
+</li>
+<li>
+<p>
+writing to the same scalar more than once in the same expression without sequencing,
+</p>
+</li>
+<li>
+<p>
+deleting an object twice,
+</p>
+</li>
+<li>
+<p>
+returning a reference to a local object,
+</p>
+</li>
+<li>
+<p>
+race conditions,
+</p>
+</li>
+<li>
+<p>
+deadlocks,
+</p>
+</li>
+<li>
+<p>
+much, much more&#8230;
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+A program that allows undefined behaviour is undefined at all points in the program: from the
+  very beginning until the very end.
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="title">Why?</div>
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;limits&gt;</span>
+<span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;random&gt;</span>
+
+<span style="color: #009900">int</span> <span style="font-weight: bold"><span style="color: #000000">bomb</span></span><span style="color: #990000">()</span>
+<span style="color: #FF0000">{</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> generator <span style="color: #990000">=</span> std<span style="color: #990000">::</span>mt19937<span style="color: #FF0000">{</span>std<span style="color: #990000">::</span>random_device<span style="color: #FF0000">{}</span><span style="color: #990000">()</span><span style="color: #FF0000">}</span><span style="color: #990000">;</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> distribute <span style="color: #990000">=</span> std<span style="color: #990000">::</span>uniform_int_distribution<span style="color: #990000">&lt;&gt;</span><span style="color: #FF0000">{</span>std<span style="color: #990000">::</span>numeric_limits<span style="color: #990000">&lt;</span><span style="color: #009900">int</span><span style="color: #990000">&gt;::</span><span style="font-weight: bold"><span style="color: #000000">min</span></span><span style="color: #990000">(),</span> std<span style="color: #990000">::</span>numeric_limits<span style="color: #990000">&lt;</span><span style="color: #009900">int</span><span style="color: #990000">&gt;::</span><span style="font-weight: bold"><span style="color: #000000">max</span></span><span style="color: #990000">()</span><span style="color: #FF0000">}</span><span style="color: #990000">;</span>
+
+   <span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> tick <span style="color: #990000">=</span> <span style="color: #993399">0</span><span style="color: #990000">;</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">for</span></span> <span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> i <span style="color: #990000">=</span> <span style="font-weight: bold"><span style="color: #000000">generator</span></span><span style="color: #990000">();</span> i <span style="color: #990000">!=</span> <span style="color: #993399">0</span><span style="color: #990000">;</span> <span style="color: #990000">++</span>tick<span style="color: #990000">)</span>
+      <span style="color: #990000">++</span>i<span style="color: #990000">;</span>
+<span style="color: #FF0000">}</span></tt></pre></div></div>
+<div class="ulist"><ul>
+<li>
+<p>
+Can you predict when or even <em>if</em> <code>i</code> is going to overflow?
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+No, the PRNG makes it impossible to predict.
+</p>
+</li>
+<li>
+<p>
+This entire function is thus undefined.
+</p>
+</li>
+<li>
+<p>
+Therefore, the code calling <code>bomb</code> is undefined, and so on.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Think of undefined behaviour as driving while under the influence of a <em>lot</em> of alcohol:
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+You can&#8217;t predict what&#8217;s going to happen
+</p>
+</li>
+<li>
+<p>
+You can&#8217;t predict when it&#8217;s going to happen
+</p>
+</li>
+<li>
+<p>
+Sometimes you might get home safely
+</p>
+</li>
+<li>
+<p>
+Sometimes you might crash and hurt someone (including yourself)
+</p>
+</li>
+<li>
+<p>
+Sometimes you might crash and kill someone (including yourself)
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="_what_does_all_this_mean">What does all this mean?</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+Guard against undefined behaviour.
+</p>
+</li>
+<li>
+<p>
+Never rely on unspecified behaviour.
+</p>
+</li>
+<li>
+<p>
+Code against interfaces, not against implementations.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+One easy way to do this is to use <code>auto</code> as much as possible.
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;iostream&gt;</span>
+
+<span style="color: #009900">int</span> <span style="font-weight: bold"><span style="color: #000000">main</span></span><span style="color: #990000">()</span>
+<span style="color: #FF0000">{</span>
+   <span style="color: #009900">int</span> i <span style="color: #990000">=</span> <span style="color: #993399">10</span><span style="color: #FF0000">'000'</span><span style="color: #993399">000</span><span style="color: #FF0000">'000;</span>
+<span style="color: #FF0000">   std::cout &lt;&lt; i &lt;&lt; '</span><span style="color: #990000">\</span>n<span style="color: #FF0000">';</span>
+<span style="color: #FF0000">}</span></tt></pre></div></div>
+<div class="ulist"><ul>
+<li>
+<p>
+This is a well-formed program, but is its behaviour defined?
+</p>
+</li>
+<li>
+<p>
+Using CSE&#8217;s gcc implementation, the behaviour of this program is undefined because of the
+          signed integer overflow (<code>sizeof(int) &lt; sizeof(10'000'000'000)</code>)
+</p>
+</li>
+<li>
+<p>
+On a custom gcc implementation, the behaviour of this program is well-defined, since
+          <code>sizeof(int) == sizeof(10'000'000'000)</code>.
+</p>
+</li>
+<li>
+<p>
+Don&#8217;t expect the compiler to catch you on this!
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;iostream&gt;</span>
+
+<span style="color: #009900">int</span> <span style="font-weight: bold"><span style="color: #000000">main</span></span><span style="color: #990000">()</span>
+<span style="color: #FF0000">{</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> i <span style="color: #990000">=</span> <span style="color: #993399">10</span><span style="color: #FF0000">'000'</span><span style="color: #993399">000</span><span style="color: #FF0000">'000;</span>
+<span style="color: #FF0000">   std::cout &lt;&lt; i &lt;&lt; '</span><span style="color: #990000">\</span>n<span style="color: #FF0000">';</span>
+<span style="color: #FF0000">}</span></tt></pre></div></div>
+<div class="ulist"><ul>
+<li>
+<p>
+Now the behaviour is well-defined for all implementations, because we are trusting the
+          compiler to do its job and work out the correct type.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+Another way to combat reliance on implementations is to compile your code against two or more
+      compilers (e.g. gcc <em>and</em> clang&#8230; avoid Visual C++ and Intel C++ unless necessary as they
+      don&#8217;t fully implement C++14 just yet).
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+Don&#8217;t rely on the inner workings of a compiler if possible.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+If it isn&#8217;t possible, try to localise the reliance by encapsulating it in a function that can
+      easily be changed.
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="title">References</div>
+<div class="ulist"><ul>
+<li>
+<p>
+ISO/IEC. Working Draft, Standard for Programming Language C++, p.3&#8201;&#8212;&#8201;4. 2014. ISO/IEC,
+  Geneva Switzerland.
+</p>
+</li>
+<li>
+<p>
+Meyers, S. <em>Effective STL: 50 specific ways to improve your use of the standard template
+  library</em>. p.209&#8201;&#8212;&#8201;210. 2001. Pearson Education, Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+Meyers, S. <em>Effective C++: 55 specific ways to improve your programs and designs</em>.
+  Third edition. p.262&#8201;&#8212;&#8201;263. 2005. Pearson Education, Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+Stroustrup, B. <em>The C++ programming language</em>. Fourth edition. p.136&#8201;&#8212;&#8201;137. 2013.
+  Pearson Education, Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rp-Cplusplus">CppCoreGuidelines
+ &#8201;&#8212;&#8201;P.2: Write in ISO Standard C++</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Ri-except">CppCoreGuidelines
+ &#8201;&#8212;&#8201;I.10: Use exceptions to signal a failure to perform a required task</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Ri-array">CppCoreGuidelines
+ &#8201;&#8212;&#8201;I.13: Do not pass an array as a single pointer</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rf-value-capture">CppCoreGuidelines
+ &#8201;&#8212;&#8201;F.53: Avoid capturing by reference in lambdas that will be used nonlocally, including
+  returned, stored on the heap, or passed to another thread</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Res-always">CppCoreGuidelines
+ &#8201;&#8212;&#8201;ES.20: Always initialize an object</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Res-order">CppCoreGuidelines
+ &#8201;&#8212;&#8201;ES.43: Avoid expressions with undefined order of evaluation</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Res-order-fct">CppCoreGuidelines
+ &#8201;&#8212;&#8201;ES.44: Don&#8217;t depend on order of evaluation of function arguments</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Res-arr2">CppCoreGuidelines
+ &#8201;&#8212;&#8201;ES.62: Don&#8217;t compare pointers into different arrays</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Res-overflow">CppCoreGuidelines
+ &#8201;&#8212;&#8201;ES.103: Don&#8217;t overflow</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Res-underflow">CppCoreGuidelines
+ &#8201;&#8212;&#8201;ES.104: Don&#8217;t underflow</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Res-zero">CppCoreGuidelines
+ &#8201;&#8212;&#8201;ES.105: Don&#8217;t divide by zero</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Pro-type-constcast">CppCoreGuidelines
+ &#8201;&#8212;&#8201;Type.3: Don&#8217;t use const_cast to cast away const (i.e., at all).</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#never-let-a-pointer-outlive-the-object-it-points-to">CppCoreGuidelines
+ &#8201;&#8212;&#8201;Never let a pointer outlive the object it points to</a>
+</p>
+</li>
+<li>
+<p>
+<a href="http://en.cppreference.com/w/cpp/language/ub">cppreference&#8201;&#8212;&#8201;Undefined behaviour</a>
+</p>
+</li>
+<li>
+<p>
+<a href="http://en.cppreference.com/w/cpp/language/eval_order">cppreference&#8201;&#8212;&#8201;Order of evaluation</a>
+</p>
+</li>
+</ul></div>
+</td>
+</tr></table>
+</div>
+</div>
+</div>
+</div>
 <div class="sect1">
 <h2 id="_code_class_code_and_code_struct_code"><code>class</code> and <code>struct</code></h2>
 <div class="sectionbody">
@@ -779,7 +1368,59 @@ What is the difference between class and struct?
 What are the three access modifiers available?
 </p>
 </li>
+<li>
+<p>
+When should you use a <code>struct</code>?
+</p>
+</li>
+<li>
+<p>
+When should you use a <code>class</code>?
+</p>
+</li>
 </ol></div>
+</td>
+</tr></table>
+</div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="title">Further reading</div>
+<div class="ulist"><ul>
+<li>
+<p>
+Stroustrup, B. <em>The C++ programming language</em> 4th Edition. p.201&#8201;&#8212;&#8201;213, 449&#8201;&#8212;&#8201;479. 2013.
+  Pearson Education Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+Stroustrup, B. <em>Programming: principles and practice using C++</em>. 2nd Edition. p.173&#8201;&#8212;&#8201;254, 303
+ &#8201;&#8212;&#8201;341. 2014. Pearson Education Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+Stroustrup, B. <em>A tour of C++</em>. p.16&#8201;&#8212;&#8201;18, 33&#8201;&#8212;&#8201;57. 2014. Pearson Education Inc. Upper Saddle
+  River, NJ.
+</p>
+</li>
+<li>
+<p>
+Sutter, H. <em>Exceptional C++ style: 40 new engineering puzzles, programming problems, and
+  solutions</em>. p.104&#8201;&#8212;&#8201;128. 2005. Pearson Education, Inc. Boston, MA.
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#c-classes-and-class-hierarchies">CppCoreGuidelines
+ &#8201;&#8212;&#8201;C: Classes and Class Hierarchies</a>
+</p>
+</li>
+</ul></div>
 </td>
 </tr></table>
 </div>
@@ -823,6 +1464,11 @@ There are three different kinds of constructor:
 If you don&#8217;t need to define a copy constructor or a move constructor, <em>don&#8217;t</em> define them.
 </p>
 </li>
+<li>
+<p>
+Use member initialisers over default constructors wherever possible.
+</p>
+</li>
 </ul></div>
 <div class="listingblock">
 <div class="content"><!-- Generator: GNU source-highlight 3.1.8
@@ -832,15 +1478,16 @@ http://www.gnu.org/software/src-highlite -->
 <pre><tt><span style="font-weight: bold"><span style="color: #0000FF">class</span></span> <span style="color: #008080">film</span>
 <span style="color: #FF0000">{</span>
 <span style="font-weight: bold"><span style="color: #0000FF">public</span></span><span style="color: #990000">:</span>
+   <span style="font-weight: bold"><span style="color: #000000">film</span></span><span style="color: #990000">()</span> <span style="color: #990000">=</span> <span style="font-weight: bold"><span style="color: #0000FF">default</span></span><span style="color: #990000">;</span>
    <span style="font-weight: bold"><span style="color: #000000">film</span></span><span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">const</span></span> std<span style="color: #990000">::</span>string<span style="color: #990000">&amp;</span> title<span style="color: #990000">,</span>
         <span style="font-weight: bold"><span style="color: #0000FF">const</span></span> std<span style="color: #990000">::</span>string<span style="color: #990000">&amp;</span> director<span style="color: #990000">,</span>
         <span style="font-weight: bold"><span style="color: #0000FF">const</span></span> std<span style="color: #990000">::</span>vector<span style="color: #990000">&lt;</span>std<span style="color: #990000">::</span>string<span style="color: #990000">&gt;&amp;</span> cast<span style="color: #990000">,</span>
         std<span style="color: #990000">::</span><span style="color: #008080">int64_t</span> revenue<span style="color: #990000">);</span>
 <span style="font-weight: bold"><span style="color: #0000FF">private</span></span><span style="color: #990000">:</span>
-   std<span style="color: #990000">::</span><span style="color: #008080">string</span> title_<span style="color: #990000">;</span>
-   std<span style="color: #990000">::</span><span style="color: #008080">string</span> director_<span style="color: #990000">;</span>
-   std<span style="color: #990000">::</span><span style="color: #008080">vector&lt;std::string&gt;</span> cast_<span style="color: #990000">;</span>
-   std<span style="color: #990000">::</span><span style="color: #008080">int64_t</span> revenue_<span style="color: #990000">;</span>
+   std<span style="color: #990000">::</span><span style="color: #008080">string</span> title_<span style="color: #FF0000">{</span><span style="color: #FF0000">"&lt;title-unknown&gt;"</span><span style="color: #FF0000">}</span><span style="color: #990000">;</span>
+   std<span style="color: #990000">::</span><span style="color: #008080">string</span> director_<span style="color: #FF0000">{</span><span style="color: #FF0000">"&lt;director-unknown&gt;"</span><span style="color: #FF0000">}</span><span style="color: #990000">;</span>
+   std<span style="color: #990000">::</span><span style="color: #008080">vector&lt;std::string&gt;</span> cast_<span style="color: #FF0000">{}</span><span style="color: #990000">;</span>
+   std<span style="color: #990000">::</span><span style="color: #008080">int64_t</span> revenue_<span style="color: #FF0000">{</span><span style="color: #993399">0</span><span style="color: #FF0000">}</span><span style="color: #990000">;</span>
 <span style="color: #FF0000">}</span><span style="color: #990000">;</span>
 
 film<span style="color: #990000">::</span><span style="font-weight: bold"><span style="color: #000000">film</span></span><span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">const</span></span> std<span style="color: #990000">::</span>string<span style="color: #990000">&amp;</span> title<span style="color: #990000">,</span>
@@ -885,10 +1532,130 @@ What is an explicit constructor?
 </li>
 <li>
 <p>
+When is an explicit constructor useful?
+</p>
+</li>
+<li>
+<p>
 Why do we like explicit constructors?
 </p>
 </li>
+<li>
+<p>
+What is a member initialiser?
+</p>
+</li>
 </ol></div>
+</td>
+</tr></table>
+</div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="title">References</div>
+<div class="ulist"><ul>
+<li>
+<p>
+Meyers, S. <em>Effective C++: 55 specific ways to improve your programs and designs</em>.
+  Third edition. p.34&#8201;&#8212;&#8201;37. 2005. Pearson Education, Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+Stroustrup, B. <em>The C++ programming language</em> 4th Edition. p.481&#8201;&#8212;&#8201;484, 487&#8201;&#8212;&#8201;488, 489
+ &#8201;&#8212;&#8201;506. 2013. Pearson Education Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+Stroustrup, B. <em>Programming: principles and practice using C++</em>. 2nd Edition. p.173&#8201;&#8212;&#8201;254, 303
+ &#8201;&#8212;&#8201;341. 2014. Pearson Education Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+Sutter, H. <em>More exceptional C++: 40 new engineering puzzles, programming problems, and
+  solutions</em>. p.115&#8201;&#8212;&#8201;126. 2002. Pearson Education, Inc. Boston, MA.
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rc-ctor">CppCoreGuidelines
+ &#8201;&#8212;&#8201;C.40: Define a constructor if a class has an invariant</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rc-complete">CppCoreGuidelines
+ &#8201;&#8212;&#8201;C.41: A constructor should create a fully initialized object</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rc-throw">CppCoreGuidelines
+ &#8201;&#8212;&#8201;C.42: If a constructor cannot construct a valid object, throw an exception</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rc-default0">CppCoreGuidelines
+ &#8201;&#8212;&#8201;C.43: Ensure that a class has a default constructor</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rc-default00">CppCoreGuidelines
+ &#8201;&#8212;&#8201;C.44: Prefer default constructors to be simple and non-throwing</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rc-default">CppCoreGuidelines
+ &#8201;&#8212;&#8201;C.45: Don&#8217;t define a default constructor that only initializes data members; use in-class
+  member initializers instead</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rc-explicit">CppCoreGuidelines
+ &#8201;&#8212;&#8201;C.46: By default, declare single-argument constructors explicit</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rc-order">CppCoreGuidelines
+ &#8201;&#8212;&#8201;C.47: Define and initialize member variables in the order of member declaration</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rc-in-class-initializer">CppCoreGuidelines
+ &#8201;&#8212;&#8201;C.48: Prefer in-class initializers to member initializers in constructors for constant initializers</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rc-initialize">CppCoreGuidelines
+ &#8201;&#8212;&#8201;C.49: Prefer initialization to assignment in constructors</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rc-delegating">CppCoreGuidelines
+ &#8201;&#8212;&#8201;C.51: Use delegating constructors to represent common actions for all constructors of a class</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rc-inheriting">CppCoreGuidelines
+ &#8201;&#8212;&#8201;C.52: Use inheriting constructors to import constructors into a derived class that does not
+  need further explicit initialization</a>
+</p>
+</li>
+</ul></div>
 </td>
 </tr></table>
 </div>
@@ -920,7 +1687,7 @@ http://www.gnu.org/software/src-highlite -->
 <pre><tt><span style="font-weight: bold"><span style="color: #0000FF">class</span></span> <span style="color: #008080">film</span>
 <span style="color: #FF0000">{</span>
 <span style="font-weight: bold"><span style="color: #0000FF">public</span></span><span style="color: #990000">:</span>
-   <span style="font-weight: bold"><span style="color: #000000">film</span></span><span style="color: #990000">(</span>std<span style="color: #990000">::</span><span style="color: #008080">string</span> title<span style="color: #990000">,</span> std<span style="color: #990000">::</span><span style="color: #008080">string</span> director<span style="color: #990000">,</span> std<span style="color: #990000">::</span><span style="color: #008080">vector&lt;std::string&gt;</span> cast<span style="color: #990000">,</span> <span style="font-weight: bold"><span style="color: #0000FF">const</span></span> std<span style="color: #990000">::</span><span style="color: #008080">int64_t</span> revenue<span style="color: #990000">);</span>
+   <span style="font-weight: bold"><span style="color: #000000">film</span></span><span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">const</span></span> std<span style="color: #990000">::</span>string<span style="color: #990000">&amp;,</span> <span style="font-weight: bold"><span style="color: #0000FF">const</span></span> std<span style="color: #990000">::</span>string<span style="color: #990000">&amp;,</span> <span style="font-weight: bold"><span style="color: #0000FF">const</span></span> std<span style="color: #990000">::</span>vector<span style="color: #990000">&lt;</span>std<span style="color: #990000">::</span>string<span style="color: #990000">&gt;&amp;,</span> <span style="font-weight: bold"><span style="color: #0000FF">const</span></span> std<span style="color: #990000">::</span>int64_t<span style="color: #990000">);</span>
    <span style="font-weight: bold"><span style="color: #0000FF">const</span></span> std<span style="color: #990000">::</span>string<span style="color: #990000">&amp;</span> <span style="font-weight: bold"><span style="color: #000000">title</span></span><span style="color: #990000">()</span> <span style="font-weight: bold"><span style="color: #0000FF">const</span></span><span style="color: #990000">;</span>
 <span style="font-weight: bold"><span style="color: #0000FF">private</span></span><span style="color: #990000">:</span>
    std<span style="color: #990000">::</span><span style="color: #008080">string</span> title_<span style="color: #990000">;</span>
@@ -929,8 +1696,14 @@ http://www.gnu.org/software/src-highlite -->
    std<span style="color: #990000">::</span><span style="color: #008080">int64_t</span> revenue_<span style="color: #990000">;</span>
 <span style="color: #FF0000">}</span><span style="color: #990000">;</span>
 
-film<span style="color: #990000">::</span><span style="font-weight: bold"><span style="color: #000000">film</span></span><span style="color: #990000">(</span>std<span style="color: #990000">::</span><span style="color: #008080">string</span> title<span style="color: #990000">,</span> std<span style="color: #990000">::</span><span style="color: #008080">string</span> director<span style="color: #990000">,</span> std<span style="color: #990000">::</span><span style="color: #008080">vector&lt;std::string&gt;</span> cast<span style="color: #990000">,</span> <span style="font-weight: bold"><span style="color: #0000FF">const</span></span> std<span style="color: #990000">::</span><span style="color: #008080">int64_t</span> revenue<span style="color: #990000">);</span>
-   <span style="color: #990000">:</span> title_<span style="color: #FF0000">{</span>title<span style="color: #FF0000">}</span><span style="color: #990000">,</span> director_<span style="color: #FF0000">{</span>director<span style="color: #FF0000">}</span><span style="color: #990000">,</span> cast_<span style="color: #FF0000">{</span>cast<span style="color: #FF0000">}</span><span style="color: #990000">,</span> revenue_<span style="color: #FF0000">{</span>revenue<span style="color: #FF0000">}</span>
+film<span style="color: #990000">::</span><span style="font-weight: bold"><span style="color: #000000">film</span></span><span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">const</span></span> std<span style="color: #990000">::</span>string<span style="color: #990000">&amp;</span> title<span style="color: #990000">,</span>
+           <span style="font-weight: bold"><span style="color: #0000FF">const</span></span> std<span style="color: #990000">::</span>string<span style="color: #990000">&amp;</span> director<span style="color: #990000">,</span>
+           <span style="font-weight: bold"><span style="color: #0000FF">const</span></span> std<span style="color: #990000">::</span>vector<span style="color: #990000">&lt;</span>std<span style="color: #990000">::</span>string<span style="color: #990000">&gt;&amp;</span> cast<span style="color: #990000">,</span>
+           <span style="font-weight: bold"><span style="color: #0000FF">const</span></span> std<span style="color: #990000">::</span><span style="color: #008080">int64_t</span> revenue<span style="color: #990000">);</span>
+   <span style="color: #990000">:</span> title_<span style="color: #FF0000">{</span>title<span style="color: #FF0000">}</span><span style="color: #990000">,</span>
+     director_<span style="color: #FF0000">{</span>director<span style="color: #FF0000">}</span><span style="color: #990000">,</span>
+     cast_<span style="color: #FF0000">{</span>cast<span style="color: #FF0000">}</span><span style="color: #990000">,</span>
+     revenue_<span style="color: #FF0000">{</span>revenue<span style="color: #FF0000">}</span>
 <span style="color: #FF0000">{</span>
 <span style="color: #FF0000">}</span>
 
@@ -958,6 +1731,42 @@ When should you not be returning data members this way?
 </p>
 </li>
 </ol></div>
+</td>
+</tr></table>
+</div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="title">References</div>
+<div class="ulist"><ul>
+<li>
+<p>
+Meyers, S. <em>Effective C++: 55 specific ways to improve your programs and designs</em>.
+  Third edition. p.19&#8201;&#8212;&#8201;26. 2005. Pearson Education, Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+Stroustrup, B. <em>The C++ programming language</em> 4th Edition. p.461&#8201;&#8212;&#8201;463. 2013. Pearson
+  Education Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+Sutter, H. <em>Exceptional C++: 47 engineering puzzles, programming problems, and solutions}</em>.
+  p.69&#8201;&#8212;&#8201;75, 177&#8201;&#8212;&#8201;184. 2000. Pearson Education, Inc. Indianapolis, IN.
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rconst-fct">CppCoreGuidelines
+ &#8201;&#8212;&#8201;Con.2: By default, make member functions <code>const</code></a>
+</p>
+</li>
+</ul></div>
 </td>
 </tr></table>
 </div>
@@ -992,15 +1801,174 @@ http://www.gnu.org/software/src-highlite -->
 <span style="font-weight: bold"><span style="color: #0000FF">public</span></span><span style="color: #990000">:</span>
    <span style="font-style: italic"><span style="color: #9A1900">// ...</span></span>
    <span style="font-weight: bold"><span style="color: #0000FF">const</span></span> film<span style="color: #990000">&amp;</span> <span style="font-weight: bold"><span style="color: #000000">top_grossing_film</span></span><span style="color: #990000">()</span> <span style="font-weight: bold"><span style="color: #0000FF">const</span></span><span style="color: #990000">;</span>
+   <span style="color: #009900">void</span> <span style="font-weight: bold"><span style="color: #000000">push_back</span></span><span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">const</span></span> film<span style="color: #990000">&amp;);</span> <span style="font-style: italic"><span style="color: #9A1900">// inserts film and sets top_film_ to nullptr</span></span>
+   <span style="color: #009900">void</span> <span style="font-weight: bold"><span style="color: #000000">erase</span></span><span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">const</span></span> std<span style="color: #990000">::</span><span style="color: #008080">size_t</span> i<span style="color: #990000">);</span> <span style="font-style: italic"><span style="color: #9A1900">// erases film and sets top_film_ to nullptr</span></span>
+   <span style="color: #009900">void</span> <span style="font-weight: bold"><span style="color: #000000">clear</span></span><span style="color: #990000">();</span> <span style="font-style: italic"><span style="color: #9A1900">// erases all films and sets top_film_ to nullptr</span></span>
 <span style="font-weight: bold"><span style="color: #0000FF">private</span></span><span style="color: #990000">:</span>
    std<span style="color: #990000">::</span><span style="color: #008080">vector&lt;film&gt;</span> films_<span style="color: #990000">;</span>
-   <span style="font-weight: bold"><span style="color: #0000FF">mutable</span></span> <span style="color: #009900">bool</span> cache_invalidated_<span style="color: #990000">;</span> <span style="font-style: italic"><span style="color: #9A1900">// set to true in some insertion function</span></span>
-   <span style="font-weight: bold"><span style="color: #0000FF">mutable</span></span> film<span style="color: #990000">*</span> top_film_<span style="color: #990000">;</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">mutable</span></span> <span style="font-weight: bold"><span style="color: #000000">decltype</span></span><span style="color: #990000">(</span>films_<span style="color: #990000">)::</span><span style="color: #008080">const_pointer</span> top_film_<span style="color: #990000">;</span>
 <span style="color: #FF0000">}</span><span style="color: #990000">;</span>
 
 <span style="font-weight: bold"><span style="color: #0000FF">const</span></span> film<span style="color: #990000">&amp;</span> cinema<span style="color: #990000">::</span><span style="font-weight: bold"><span style="color: #000000">top_grossing_film</span></span><span style="color: #990000">()</span> <span style="font-weight: bold"><span style="color: #0000FF">const</span></span>
 <span style="color: #FF0000">{</span>
-   std<span style="color: #990000">::</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">if</span></span> <span style="color: #990000">(!</span>top_film_<span style="color: #990000">)</span>
+   <span style="color: #FF0000">{</span>
+      top_film_ <span style="color: #990000">=</span> <span style="color: #990000">&amp;</span>films_<span style="color: #990000">[</span><span style="color: #993399">0</span><span style="color: #990000">];</span> <span style="font-style: italic"><span style="color: #9A1900">// reset top_film_ so it isn't a dangling pointer</span></span>
+      <span style="font-weight: bold"><span style="color: #0000FF">for</span></span> <span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">const</span></span> <span style="font-weight: bold"><span style="color: #0000FF">auto</span></span><span style="color: #990000">&amp;</span> f <span style="color: #990000">:</span> films_<span style="color: #990000">)</span>
+         top_film_ <span style="color: #990000">=</span> <span style="color: #990000">&amp;</span>std<span style="color: #990000">::</span><span style="font-weight: bold"><span style="color: #000000">max</span></span><span style="color: #990000">(</span>f<span style="color: #990000">,</span> <span style="color: #990000">*</span>top_film_<span style="color: #990000">);</span>
+      cache_invalidated_ <span style="color: #990000">=</span> <span style="font-weight: bold"><span style="color: #0000FF">false</span></span><span style="color: #990000">;</span>
+   <span style="color: #FF0000">}</span>
+
+   <span style="font-weight: bold"><span style="color: #0000FF">return</span></span> <span style="color: #990000">*</span>top_film_<span style="color: #990000">;</span>
+<span style="color: #FF0000">}</span></tt></pre></div></div>
+</div>
+<div class="sect2">
+<h3 id="_code_inline_code_functions"><code>inline</code> functions</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+A function that is prefixed with the <code>inline</code> specifier declares an inline function, which allows
+  it to be defined multiple times.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+Each definition must be identical (including the <code>inline</code> specifier), and
+</p>
+</li>
+<li>
+<p>
+the function must be defined in every file it is call.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+The most common way to enforce these two requirements is to write an inline function once in a
+  header, and to simply include that header whenever you need to call the function.
+</p>
+</li>
+<li>
+<p>
+Functions that are declared inside a class body are implicitly <code>inline</code>: putting the <code>inline</code>
+  specifier in front of the function signature is superfluous.
+</p>
+</li>
+<li>
+<p>
+We declare inline functions to hint to the compiler that it should replace function calls with the
+  body of the function.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+This can potentially improve performance, as the call overhead is lost, and other
+      optimisations might be possible (key word is "<em>might</em>"&#8201;&#8212;&#8201;as an expert in compilers,
+      Jingling can better answer this).
+</p>
+</li>
+<li>
+<p>
+Remember to test for performance before making performance claims.
+</p>
+</li>
+<li>
+<p>
+We often inline small functions, such as accessors, simple mutators, and constructors without
+      bodies.
+</p>
+</li>
+<li>
+<p>
+Just because a function has been specified as <code>inline</code> does not mean that the compiler will
+      listen to your recommendation and actually inline the function body.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+If you are concerned about revealing your implementation to clients and this breaking
+  encapsulation, understand that:
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+C++ encapsulation guards against mistakes, not fraud or espionage.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+Provided no one acts upon the encapsulated code, it doesn&#8217;t really matter if they can see
+          your implementation.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Splitting code into headers and implementation files makes compilation easier (faster).
+</p>
+</li>
+<li>
+<p>
+Stick to the small functions that don&#8217;t reveal too much.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+<code>main</code> may not be declared as an inline function.
+</p>
+</li>
+<li>
+<p>
+Prefer <code>inline</code> functions to <code>#define</code> macros.
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-style: italic"><span style="color: #9A1900">// An inline example</span></span>
+<span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;fstream&gt;</span>
+<span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;iostream&gt;</span>
+<span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;string&gt;</span>
+<span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;vector&gt;</span>
+
+<span style="font-weight: bold"><span style="color: #0000FF">class</span></span> <span style="color: #008080">book</span>
+<span style="color: #FF0000">{</span>
+<span style="font-weight: bold"><span style="color: #0000FF">public</span></span><span style="color: #990000">:</span>
+   <span style="font-weight: bold"><span style="color: #000000">book</span></span><span style="color: #990000">(</span>std<span style="color: #990000">::</span>istream<span style="color: #990000">&amp;);</span> <span style="font-style: italic"><span style="color: #9A1900">// not an inline function... defined elsewhere</span></span>
+
+   <span style="font-weight: bold"><span style="color: #0000FF">const</span></span> std<span style="color: #990000">::</span>string<span style="color: #990000">&amp;</span> <span style="font-weight: bold"><span style="color: #000000">author</span></span><span style="color: #990000">()</span> <span style="font-weight: bold"><span style="color: #0000FF">const</span></span> <span style="color: #FF0000">{</span> <span style="font-weight: bold"><span style="color: #0000FF">return</span></span> author_<span style="color: #990000">;</span> <span style="color: #FF0000">}</span> <span style="font-style: italic"><span style="color: #9A1900">// implicit inline function</span></span>
+   <span style="color: #009900">void</span> <span style="font-weight: bold"><span style="color: #000000">author</span></span><span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">const</span></span> std<span style="color: #990000">::</span>string<span style="color: #990000">&amp;</span> s<span style="color: #990000">)</span> <span style="color: #FF0000">{</span> author_ <span style="color: #990000">=</span> s<span style="color: #990000">;</span> <span style="color: #FF0000">}</span>    <span style="font-style: italic"><span style="color: #9A1900">// another implicit inline function</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">private</span></span><span style="color: #990000">:</span>
+   std<span style="color: #990000">::</span><span style="color: #008080">string</span> author_<span style="color: #990000">;</span>
+<span style="color: #FF0000">}</span><span style="color: #990000">;</span>
+
+<span style="font-style: italic"><span style="color: #9A1900">// freestanding functions _need_ to be declared as inline</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">inline</span></span> <span style="color: #008080">book</span> <span style="font-weight: bold"><span style="color: #000000">read_file</span></span><span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">const</span></span> std<span style="color: #990000">::</span>string<span style="color: #990000">&amp;</span> filename<span style="color: #990000">);</span>
+
+<span style="color: #009900">int</span> <span style="font-weight: bold"><span style="color: #000000">main</span></span><span style="color: #990000">()</span>
+<span style="color: #FF0000">{</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">using</span></span> <span style="font-weight: bold"><span style="color: #0000FF">namespace</span></span> std<span style="color: #990000">::</span>literals<span style="color: #990000">;</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> library <span style="color: #990000">=</span> std<span style="color: #990000">::</span>vector<span style="color: #990000">&lt;</span>book<span style="color: #990000">&gt;</span><span style="color: #FF0000">{</span><span style="font-weight: bold"><span style="color: #000000">read_file</span></span><span style="color: #990000">(</span><span style="color: #FF0000">"tour++.book"</span><span style="color: #990000">),</span> <span style="font-weight: bold"><span style="color: #000000">read_file</span></span><span style="color: #990000">(</span><span style="color: #FF0000">"pppuc++.book"</span><span style="color: #990000">)</span><span style="color: #FF0000">}</span><span style="color: #990000">;</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">for</span></span> <span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> filename <span style="color: #990000">=</span> <span style="color: #FF0000">""</span>s<span style="color: #990000">;</span> std<span style="color: #990000">::</span>cin <span style="color: #990000">&gt;&gt;</span> filename<span style="color: #990000">;</span> <span style="color: #990000">)</span>
+      library<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">push_back</span></span><span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #000000">read_file</span></span><span style="color: #990000">(</span>filename<span style="color: #990000">));</span>
+<span style="color: #FF0000">}</span>
+
+<span style="font-weight: bold"><span style="color: #0000FF">inline</span></span> <span style="color: #008080">book</span> <span style="font-weight: bold"><span style="color: #000000">read_file</span></span><span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">const</span></span> std<span style="color: #990000">::</span>string<span style="color: #990000">&amp;</span> filename<span style="color: #990000">)</span>
+<span style="color: #FF0000">{</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">using</span></span> <span style="font-weight: bold"><span style="color: #0000FF">namespace</span></span> std<span style="color: #990000">::</span>literals<span style="color: #990000">;</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">if</span></span> <span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> in <span style="color: #990000">=</span> std<span style="color: #990000">::</span>ifstream<span style="color: #FF0000">{</span>filename<span style="color: #FF0000">}</span><span style="color: #990000">)</span>
+      <span style="font-weight: bold"><span style="color: #0000FF">return</span></span> book<span style="color: #FF0000">{</span>in<span style="color: #FF0000">}</span><span style="color: #990000">;</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">else</span></span>
+      <span style="font-weight: bold"><span style="color: #0000FF">throw</span></span> std<span style="color: #990000">::</span>runtime_error<span style="color: #FF0000">{</span><span style="color: #FF0000">"Cannot open file "</span>s <span style="color: #990000">+</span> filename<span style="color: #FF0000">}</span><span style="color: #990000">;</span>
 <span style="color: #FF0000">}</span></tt></pre></div></div>
 </div>
 <div class="sect2">
@@ -1026,6 +1994,13 @@ Avoid them if you can.
 <p>
 Prefer non-member, non-friend functions when possible.
 </p>
+<div class="ulist"><ul>
+<li>
+<p>
+Non-member, non-friend functions help to improve encapsulation.
+</p>
+</li>
+</ul></div>
 </li>
 </ul></div>
 </div>
@@ -1168,20 +2143,28 @@ If you don&#8217;t define one, it&#8217;ll be synthesised for you.
 </li>
 <li>
 <p>
-It is responsible for cleaning up any members, but it doesn&#8217;t clean up resources that you
-     reserve.
+It is responsible for cleaning up any members, but it doesn&#8217;t automatically clean up resources
+      that you reserve.
 </p>
+<div class="ulist"><ul>
+<li>
+<p>
+If you reserve resources, you will need to define a destructor and manually specify how
+          the resources are to be cleaned up.
+</p>
+</li>
+</ul></div>
 </li>
 <li>
 <p>
-It is specified to be <code>noexcept</code> by default, and you shouldn&#8217;t throw an exception from inside
-     one unless you want all kinds of trouble.
+It is specified to be <code>noexcept</code> by default, and you shouldn&#8217;t allow an exception to leave the
+      destructor unless you want all kinds of trouble.
 </p>
 </li>
 <li>
 <p>
 Creating a destructor to clear a <code>vector</code> or set an <code>int</code> to 0 is redundant and should not be
-     done.
+      done.
 </p>
 </li>
 </ul></div>
@@ -1212,7 +2195,7 @@ Creating a copy constructor just to copy a <code>vector</code> is redundant, and
 <li>
 <p>
 A copy assignment operator is responsible for copying resources from an object A into a
-  pre-existing variable B, <em>and</em> cleaning up the original resources in B.
+  pre-existing object B, <em>and</em> cleaning up the original resources in B.
 </p>
 <div class="ulist"><ul>
 <li>
@@ -1370,7 +2353,7 @@ smart_ptr<span style="color: #990000">&lt;</span>T<span style="color: #990000">&
 <div class="ulist"><ul>
 <li>
 <p>
-&#8230;which we can do by invoking the copy constructor and the destructor.
+&#8230;which we can do by invoking the copy constructor and the destructor!
 </p>
 <div class="ulist"><ul>
 <li>
@@ -1380,7 +2363,7 @@ Credit goes to Scott Meyers.
 </li>
 <li>
 <p>
-This is the recommended one, unless you have some reason to use the above one.
+This is the recommended one, unless you have some reason to use the second one.
 </p>
 </li>
 </ul></div>
@@ -1552,7 +2535,7 @@ Moving works with rvalue references.
 </li>
 <li>
 <p>
-An object that has been moved is left in a destructible state, but is an empty shell.
+An object that has been moved is left in a destructible state, but should not be read from.
 </p>
 </li>
 </ul></div>
@@ -1791,8 +2774,8 @@ record<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;
 <div class="ulist"><ul>
 <li>
 <p>
-<strong>The rule of five states that if you need to move a resource, then you need to implement the
-  rule of three, <em>and</em> the move constructor, <em>and</em> the move assignment operator.</strong>
+<strong>The rule of five is an extension to the rule of three, requiring you to supply a user-defined
+     move constructor, <em>and</em> a user-defined move assignment operator.</strong>
 </p>
 </li>
 </ul></div>
@@ -1810,9 +2793,16 @@ Not everything is moveable (built-in types, stack-allocated arrays, etc.).
 </li>
 <li>
 <p>
-Some things that can be moved can&#8217;t be copied (e.g. <code>unique_ptr</code>). These are an exception to the
-  rule of five.
+Some things that can be moved can&#8217;t be copied (e.g. <code>unique_ptr</code>).
 </p>
+<div class="ulist"><ul>
+<li>
+<p>
+These do not fall under the rule of three, but should still have user-defined move constructors
+     and user-defined move assignment operators.
+</p>
+</li>
+</ul></div>
 </li>
 <li>
 <p>
@@ -1830,7 +2820,7 @@ Similarly to the rule of three, tools may help, but they probably won&#8217;t. B
 <div class="ulist"><ul>
 <li>
 <p>
-Don&#8217;t define any!
+Don&#8217;t provide a custom copy/move constructor, or a custom copy/move assignment operator!
 </p>
 </li>
 <li>
@@ -1853,7 +2843,8 @@ These will call the appropriate constructors for all of your members.
 </li>
 <li>
 <p>
-The rule of zero often isn&#8217;t applicable to library developers.
+The rule of zero often isn&#8217;t applicable to library developers (which is why you need to write all
+  five in the second assignment).
 </p>
 </li>
 <li>
@@ -1907,10 +2898,10 @@ http://www.gnu.org/software/src-highlite -->
    <span style="font-weight: bold"><span style="color: #000000">record</span></span><span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">const</span></span> T<span style="color: #990000">&amp;</span> t<span style="color: #990000">);</span>
 
    <span style="font-weight: bold"><span style="color: #000000">record</span></span><span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">const</span></span> record<span style="color: #990000">&amp;)</span> <span style="color: #990000">=</span> <span style="font-weight: bold"><span style="color: #0000FF">delete</span></span><span style="color: #990000">;</span>
-   <span style="font-weight: bold"><span style="color: #000000">record</span></span><span style="color: #990000">(</span>record<span style="color: #990000">&amp;&amp;)</span> <span style="color: #990000">=</span> <span style="font-weight: bold"><span style="color: #0000FF">default</span></span><span style="color: #990000">;</span>
+   record<span style="color: #990000">&amp;</span> <span style="font-weight: bold"><span style="color: #0000FF">operator</span></span><span style="color: #990000">=(</span><span style="font-weight: bold"><span style="color: #0000FF">const</span></span> record<span style="color: #990000">&amp;)</span> <span style="color: #990000">=</span> <span style="font-weight: bold"><span style="color: #0000FF">delete</span></span><span style="color: #990000">;</span>
    <span style="color: #990000">~</span><span style="font-weight: bold"><span style="color: #000000">record</span></span><span style="color: #990000">()</span> <span style="color: #990000">=</span> <span style="font-weight: bold"><span style="color: #0000FF">default</span></span><span style="color: #990000">;</span>
 
-   record<span style="color: #990000">&amp;</span> <span style="font-weight: bold"><span style="color: #0000FF">operator</span></span><span style="color: #990000">=(</span><span style="font-weight: bold"><span style="color: #0000FF">const</span></span> record<span style="color: #990000">&amp;)</span> <span style="color: #990000">=</span> <span style="font-weight: bold"><span style="color: #0000FF">delete</span></span><span style="color: #990000">;</span>
+   <span style="font-weight: bold"><span style="color: #000000">record</span></span><span style="color: #990000">(</span>record<span style="color: #990000">&amp;&amp;)</span> <span style="color: #990000">=</span> <span style="font-weight: bold"><span style="color: #0000FF">default</span></span><span style="color: #990000">;</span>
    record<span style="color: #990000">&amp;</span> <span style="font-weight: bold"><span style="color: #0000FF">operator</span></span><span style="color: #990000">=(</span>record<span style="color: #990000">&amp;&amp;)</span> <span style="color: #990000">=</span> <span style="font-weight: bold"><span style="color: #0000FF">default</span></span><span style="color: #990000">;</span>
 <span style="font-weight: bold"><span style="color: #0000FF">private</span></span><span style="color: #990000">:</span>
    std<span style="color: #990000">::</span><span style="color: #008080">vector&lt;T&gt;</span> data_<span style="color: #990000">;</span>
@@ -1925,11 +2916,6 @@ The functions that are <code>= default</code> are still synthesised by the compi
 <li>
 <p>
 The functions that are <code>= delete</code> are not implemented.
-</p>
-</li>
-<li>
-<p>
-This is how you communicate to programmers that a particular function isn&#8217;t implemented in
 </p>
 </li>
 </ul></div>
@@ -2049,10 +3035,151 @@ This is one of the <em>very few</em> hard and fast rules that I assert.
 </li>
 </ul></div>
 </div>
+<div class="sect2">
+<h3 id="_passing_by_parameters_revisited">Passing by parameters revisited</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+You might be wondering whether or not what the rules are regarding pass by rvalue reference, since
+  there are rules for passing by value, passing by reference, and passing by reference-to-<code>const</code>.
+</p>
+</li>
+<li>
+<p>
+Since there&#8217;s two types of reference, should we be writing:
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+one function that passes by reference-to-<code>const</code> for non-destructive reads, and
+</p>
+</li>
+<li>
+<p>
+one function that passes by rvalue reference for destructive reads?
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+If you think about that for long enough, you should conclude that you&#8217;ll have a combinatorial
+  number of functions to write, based on the number of parameters:
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+1 parameter &#8594; 2 functions
+</p>
+</li>
+<li>
+<p>
+2 parameters &#8594; 4 functions
+</p>
+</li>
+<li>
+<p>
+3 parameters &#8594; 8 functions
+</p>
+</li>
+<li>
+<p>
+so on&#8230;
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+You&#8217;ll be relieved to hear that for most people, you <em>don&#8217;t</em> need to pass by rvalue reference,
+  most of the time.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+You can probably get away without calling <code>std::move</code> on a regular basis.
+</p>
+</li>
+<li>
+<p>
+I&#8217;ve only rarely called <code>std::move</code> outside of a move constructor/assignment operator,
+         because I rely on moving temporaries.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Library writers need to be more aware of passing by rvalue reference, but only in certain sections
+  of their code.
+</p>
+</li>
+<li>
+<p>
+Passing by value can invoke either the copy constructor or the move constructor based on the
+  context.
+</p>
+</li>
+<li>
+<p>
+In 2009, people started getting excited about move semantics, and started pathologically passing
+  by value much more often.
+</p>
+</li>
+<li>
+<p>
+You will probably make things much slower by passing by value (you can see tests in the video
+  linked below).
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+So pass by reference-to-<code>const</code>, as normal.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+The last point applies to all functions except for constructors, and <em>only</em> constructors.
+</p>
+</li>
+<li>
+<p>
+Only after performance testing that proves the following is <em>undoubtedly</em> faster than passing by
+  reference-to-<code>const</code>, should you consider the following:
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #0000FF">class</span></span> <span style="color: #008080">film</span>
+<span style="color: #FF0000">{</span>
+<span style="font-weight: bold"><span style="color: #0000FF">public</span></span><span style="color: #990000">:</span>
+   <span style="font-weight: bold"><span style="color: #000000">film</span></span><span style="color: #990000">(</span>std<span style="color: #990000">::</span>string<span style="color: #990000">,</span> std<span style="color: #990000">::</span>string<span style="color: #990000">,</span> std<span style="color: #990000">::</span>vector<span style="color: #990000">&lt;</span>std<span style="color: #990000">::</span>string<span style="color: #990000">&gt;,</span> <span style="font-weight: bold"><span style="color: #0000FF">const</span></span> std<span style="color: #990000">::</span>int64_t<span style="color: #990000">);</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">const</span></span> std<span style="color: #990000">::</span>string<span style="color: #990000">&amp;</span> <span style="font-weight: bold"><span style="color: #000000">title</span></span><span style="color: #990000">()</span> <span style="font-weight: bold"><span style="color: #0000FF">const</span></span><span style="color: #990000">;</span>
+<span style="font-weight: bold"><span style="color: #0000FF">private</span></span><span style="color: #990000">:</span>
+   std<span style="color: #990000">::</span><span style="color: #008080">string</span> title_<span style="color: #990000">;</span>
+   std<span style="color: #990000">::</span><span style="color: #008080">string</span> director_<span style="color: #990000">;</span>
+   std<span style="color: #990000">::</span><span style="color: #008080">vector&lt;std::string&gt;</span> cast_<span style="color: #990000">;</span>
+   std<span style="color: #990000">::</span><span style="color: #008080">int64_t</span> revenue_<span style="color: #990000">;</span>
+<span style="color: #FF0000">}</span><span style="color: #990000">;</span>
+
+film<span style="color: #990000">::</span><span style="font-weight: bold"><span style="color: #000000">film</span></span><span style="color: #990000">(</span>std<span style="color: #990000">::</span><span style="color: #008080">string</span> title<span style="color: #990000">,</span> std<span style="color: #990000">::</span><span style="color: #008080">string</span> director<span style="color: #990000">,</span> std<span style="color: #990000">::</span><span style="color: #008080">vector&lt;std::string&gt;</span> cast<span style="color: #990000">,</span> std<span style="color: #990000">::</span><span style="color: #008080">int64_t</span> revenue<span style="color: #990000">);</span>
+   <span style="color: #990000">:</span> title_<span style="color: #FF0000">{</span>std<span style="color: #990000">::</span><span style="font-weight: bold"><span style="color: #000000">move</span></span><span style="color: #990000">(</span>title<span style="color: #990000">)</span><span style="color: #FF0000">}</span><span style="color: #990000">,</span>
+     director_<span style="color: #FF0000">{</span>std<span style="color: #990000">::</span><span style="font-weight: bold"><span style="color: #000000">move</span></span><span style="color: #990000">(</span>director<span style="color: #990000">)</span><span style="color: #FF0000">}</span><span style="color: #990000">,</span>
+     cast_<span style="color: #FF0000">{</span>std<span style="color: #990000">::</span><span style="font-weight: bold"><span style="color: #000000">move</span></span><span style="color: #990000">(</span>cast<span style="color: #990000">)</span><span style="color: #FF0000">}</span><span style="color: #990000">,</span>
+     revenue_<span style="color: #FF0000">{</span>revenue<span style="color: #FF0000">}</span>
+<span style="color: #FF0000">{</span>
+<span style="color: #FF0000">}</span></tt></pre></div></div>
+</div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_most_vexing_parse">Most vexing parse</h2>
+<h2 id="_c_s_most_vexing_parse">C++'s most vexing parse</h2>
 <div class="sectionbody">
 <div class="ulist"><ul>
 <li>
@@ -2179,7 +3306,7 @@ There&#8217;s a few more errors that have been omitted because they aren&#8217;t
 </li>
 <li>
 <p>
-The problem is with the line <code>std::vector&lt;int&gt; foo(std::size_t(i));</code>
+The problem is with the line <code>std::vector&lt;int&gt; foo(std::size_t(size));</code>
 </p>
 <div class="ulist"><ul>
 <li>
@@ -2196,6 +3323,7 @@ We also tried to convert <code>value</code> to a floating-point number type, bec
 </li>
 <li>
 <p>
+The problem is that based on C++'s parsing rules, <code>foo</code> is a function declaration!
 </p>
 </li>
 <li>
@@ -2212,6 +3340,7 @@ That&#8217;s a parameter of type <code>std::size_t</code>, and is named <code>si
 </li>
 <li>
 <p>
+This problem has been titled "C++'s Most Vexing Parse" by Scott Meyers.
 </p>
 <div class="ulist"><ul>
 <li>
@@ -2318,7 +3447,7 @@ http://www.gnu.org/software/src-highlite -->
 <div class="ulist"><ul>
 <li>
 <p>
-That works, even though it <em>looks</em> like the previous one.
+That works, even though it "looks" like the previous one.
 </p>
 </li>
 </ul></div>
@@ -2331,7 +3460,7 @@ http://www.gnu.org/software/src-highlite -->
 <div class="ulist"><ul>
 <li>
 <p>
-An even better solution is to choose your types correctly.
+An even better solution is to choose your types correctly, and not requiring conversion.
 </p>
 </li>
 <li>
@@ -2363,7 +3492,8 @@ If it doesn&#8217;t matter between the two, choose list-initialisation.
 <div id="footnotes"><hr /></div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-08-24 23:32:21 AEST
+Version 1<br />
+Last updated 2016-08-27 19:03:57 AEST
 </div>
 </div>
 </body>
