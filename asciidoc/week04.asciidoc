@@ -828,12 +828,12 @@ cc1plus: all warnings being treated as errors
 
 * That's odd... foo was clearly defined in the second line of `main`...
    - There's a few more errors that have been omitted because they aren't relevant.
-* The problem is with the line `std::vector<int> foo(std::size_t(i));`
+* The problem is with the line `std::vector<int> foo(std::size_t(size));`
    - We tried to convert `size` an unsigned integer type, because the previous program had a
      narrowing conversion.
    - We also tried to convert `value` to a floating-point number type, because the previous program
      had another narrowing conversion.
-   - The problem is that based on {cpp}'s parsing rules, foo is a function declaration!
+   - The problem is that based on {cpp}'s parsing rules, `foo` is a function declaration!
    - What about the `size_t(size)`, you ask?
    - That's a parameter of type `std::size_t`, and is named `size` in this declaration.
 * This problem has been titled "{cpp}'s Most Vexing Parse" by Scott Meyers.
@@ -895,14 +895,14 @@ int main()
 }
 ------------
 
-* That works, even though it 'looks' like the previous one.
+* That works, even though it "looks" like the previous one.
 
 [source,cpp]
 ------------
 20 20 20 20 20 20 20 20 
 ------------
 
-* An even better solution is to choose your types correctly.
+* An even better solution is to choose your types correctly, and not requiring conversion.
 * Prefer a combination of automatic type deduction _and_ list-initialisation.
    - That is, always put `auto` on the left-hand side (even for fundamental types).
    - On the right-hand side, choose based on whether you need list-initalisation or a constructor.
