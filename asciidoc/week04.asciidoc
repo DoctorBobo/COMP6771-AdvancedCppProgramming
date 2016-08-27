@@ -251,19 +251,17 @@ class cinema
 public:
    // ...
    const film& top_grossing_film() const;
+   void push_back(const film&); // inserts film and sets top_film_ to nullptr
+   void erase(const std::size_t i); // erases film and sets top_film_ to nullptr
+   void clear(); // erases all films and sets top_film_ to nullptr
 private:
    std::vector<film> films_;
-   mutable bool cache_invalidated_; // set to true in some insertion function
-   mutable const film* top_film_;
+   mutable decltype(films_)::const_pointer top_film_;
 };
 
 const film& cinema::top_grossing_film() const
 {
-   if (films_.empty())
-   {
-      top_film_ = nullptr;
-   }
-   else if (cache_invalidated_)
+   if (!top_film_)
    {
       top_film_ = &films_[0]; // reset top_film_ so it isn't a dangling pointer
       for (const auto& f : films_)
