@@ -613,23 +613,25 @@ record<T>& record<T>::operator=(record<T>&& r)
 ------------
 =========
 
-* **The rule of five states that if you need to move a resource, then you need to implement the
-  rule of three, _and_ the move constructor, _and_ the move assignment operator.**
+* **The rule of five is an extension to the rule of three, requiring you to supply a user-defined
+     move constructor, _and_ a user-defined move assignment operator.**
 [WARNING]
 =========
 * Not everything is moveable (built-in types, stack-allocated arrays, etc.).
-* Some things that can be moved can't be copied (e.g. `unique_ptr`). These are an exception to the
-  rule of five.
+* Some things that can be moved can't be copied (e.g. `unique_ptr`).
+   - These do not fall under the rule of three, but should still have user-defined move constructors
+     and user-defined move assignment operators.
 * Similarly to the rule of three, tools may help, but they probably won't. Be vigilant.
 =========
 
 === The rule of zero
-* Don't define any!
+* Don't provide a custom copy/move constructor, or a custom copy/move assignment operator!
 * If your type doesn't personally manage a resource, don't bother with _any_ of the five.
 * The compiler will synthesise a perfectly working copy constructor, move constructor, copy
   assignment operator, move assignment operator, and destructor for you.
    - These will call the appropriate constructors for all of your members.
-* The rule of zero often isn't applicable to library developers.
+* The rule of zero often isn't applicable to library developers (which is why you need to write all
+  five in the second assignment).
 * Why is the rule of zero recommended?
    1. You don't need to write five functions -- less to write
    2. You don't need to write five _complex_ functions -- less to think about
@@ -648,10 +650,10 @@ public:
    record(const T& t);
 
    record(const record&) = delete;
-   record(record&&) = default;
+   record& operator=(const record&) = delete;
    ~record() = default;
 
-   record& operator=(const record&) = delete;
+   record(record&&) = default;
    record& operator=(record&&) = default;
 private:
    std::vector<T> data_;
@@ -661,8 +663,6 @@ private:
 
 * The functions that are `= default` are still synthesised by the compiler.
 * The functions that are `= delete` are not implemented.
-* This is how you communicate to programmers that a particular function isn't implemented in
-  _modern_ {cpp}.
 
 === Copy elision
 * So, we've looked at both copy control and move semantics, or more formally known as RAII.
