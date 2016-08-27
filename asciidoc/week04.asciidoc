@@ -16,9 +16,7 @@ Week 4 tutorial postscript
 * Behaviour that depends on the implementation for all well-formed programs with correct data.
 * The implementation (compiler) is required to document implementation-defined behaviour.
 * Some examples of implementation-defined behaviour include:
-   - excluding `char`, `unsigned char`, and `signed char`, the size of fundamental types (this is
-     one reason why we use `auto` to determine the type: because it can change on another
-     compiler!),
+   - the size of fundamental types (excluding `char`, `unsigned char`, and `signed char`),
    - type of `std::size_t`,
    - parameters to `main`,
    - whether or not `char` is signed,
