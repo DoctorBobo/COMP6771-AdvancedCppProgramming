@@ -35,7 +35,12 @@ Week 4 tutorial postscript
    - The range of possible behaviours is often dictated by the standard.
 * Examples of unspecified behaviour include:
    - the order in which an expression is evaluated for two expressions that are not sequenced
-   - 
+   - whether or not a reference requires storage
+   - the order in which function arguments are evaluated
+* Unspecified behaviour is similar to a police officer's threshold for speeding:
+   - They have a threshold, and it could be `your_speed * 0.1 + 3`
+   - It might also be `your_speed * 0.1`
+   - They aren't required to tell you what their threshold is.
 
 === Undefined behaviour
 * The standard imposes no restrictions on what the program is allowed to do.
@@ -54,8 +59,10 @@ Week 4 tutorial postscript
    - accessing memory outside of the bounds of an array
    - letting a signed integer overflow or underflow
    - dereferencing a null pointer,
-   - writing to the same scalar multiple times in the same expression without sequencing,
+   - writing to the same scalar more than once in the same expression without sequencing,
    - deleting an object twice,
+   - race conditions,
+   - deadlocks,
    - much, much more...
 * A program that allows undefined behaviour is undefined at all points in the program: from the
   very beginning until the very end.
@@ -81,12 +88,55 @@ int bomb()
    - No, the PRNG makes it impossible to predict.
    - This entire function is thus undefined.
    - Therefore, the code calling `bomb` is undefined, and so on.
-* Think of undefined behaviour as driving while under the influence of a _lot_ of alcohol.
+* Think of undefined behaviour as driving while under the influence of a _lot_ of alcohol:
    - You can't predict what's going to happen
    - You can't predict when it's going to happen
    - Sometimes you might get home safely
    - Sometimes you might crash and hurt someone (including yourself)
    - Sometimes you might crash and kill someone (including yourself)
+
+=== What does all this mean?
+* Guard against undefined behaviour.
+* Code against interfaces, not against implementations.
+   ** One easy way to do this is to use `auto` as much as possible.
+
+[source,cpp]
+------------
+#include <iostream>
+
+int main()
+{
+   int i = 10'000'000'000;
+   std::cout << i << '\n';
+}
+------------
+
+      *** This is a well-formed program, but is its behaviour defined?
+      *** Using CSE's gcc implementation, the behaviour of this program is undefined because of the
+          signed integer overflow (`sizeof(int) < sizeof(10'000'000'000)`)
+      *** On a custom gcc implementation, the behaviour of this program is well-defined, since
+          `sizeof(int) == sizeof(10'000'000'000)`.
+      *** Don't expect the compiler to catch you on this!
+
+[source,cpp]
+------------
+#include <iostream>
+
+int main()
+{
+   auto i = 10'000'000'000;
+   std::cout << i << '\n';
+}
+------------
+
+      *** Now the behaviour is well-defined for all implementations, because we are trusting the
+          compiler to do its job and work out the correct type.
+   ** Another way to combat reliance on implementations is to compile your code against two or more
+      compilers (e.g. gcc _and_ clang... avoid Visual {cpp} and Intel {cpp} unless necessary as they
+      don't fully implement {cpp}14 just yet).
+* Don't rely on the inner workings of a compiler if possible.
+   ** If it isn't possible, try to localise the reliance by encapsulating it in a function that can
+      easily be changed.
 
 == `class` and `struct`
 * Allows you to define your own types.
@@ -227,12 +277,81 @@ const film& cinema::top_grossing_film() const
 }
 ------------
 
+=== `inline` functions
+* A function that is prefixed with the `inline` specifier declares an inline function, which allows
+  it to be defined multiple times.
+   ** Each definition must be identical (including the `inline` specifier), and
+   ** the function must be defined in every file it is call.
+* The most common way to enforce these two requirements is to write an inline function once in a
+  header, and to simply include that header whenever you need to call the function.
+* Functions that are declared inside a class body are implicitly `inline`: putting the `inline`
+  specifier in front of the function signature is superfluous.
+* We declare inline functions to hint to the compiler that it should replace function calls with the
+  body of the function.
+   ** This can potentially improve performance, as the call overhead is lost, and other
+      optimisations might be possible (key word to is "_might_" -- Jingling can better answer this).
+   ** Remember to test for performance before making performance claims.
+   ** We often inline small functions, such as accessors, simple mutators, and constructors without
+      bodies.
+   ** Just because a function has been specified as `inline` does not mean that the compiler will
+      listen to your recommendation and actually inline the function body.
+* If you are concerned about revealing your implementation to clients and this breaking
+  encapsulation, understand that:
+   ** {cpp} encapsulation guards against mistakes, not fraud or espionage.
+      *** Provided no one acts upon the encapsulated code, it doesn't really matter if they can see
+          your implementation.
+   ** Splitting code into headers and implementation files makes compilation easier (faster).
+   ** Stick to the small functions that don't reveal too much.
+* `main` may not be declared as an inline function.
+* Prefer `inline` functions to `#define` macros.
+
+[source,cpp]
+------------
+// An inline example
+#include <fstream>
+#include <iostream>
+#include <string>
+#include <vector>
+
+class book
+{
+public:
+   book(std::istream&); // not an inline function... defined elsewhere
+
+   const std::string& author() const { return author_; } // implicit inline function
+   void author(const std::string& s) { author_ = s; }    // another implicit inline function
+private:
+   std::string author_;
+};
+
+// freestanding functions _need_ to be declared as inline
+inline book read_file(const std::string& filename);
+
+int main()
+{
+   using namespace std::literals;
+   auto library = std::vector<book>{read_file("tour++.book"), read_file("pppuc++.book")};
+   for (auto filename = ""s; std::cin >> filename; )
+      library.push_back(read_file(filename));
+}
+
+inline book read_file(const std::string& filename)
+{
+   using namespace std::literals;
+   if (auto in = std::ifstream{filename})
+      return book{in};
+   else
+      throw std::runtime_error{"Cannot open file "s + filename};
+}
+------------
+
 === `friend` functions
 * Have access to a class's privates.
 * Are free-form functions or other classes that have the _same_ access as any function within the
   class.
 * Avoid them if you can.
 * Prefer non-member, non-friend functions when possible.
+   - Non-member, non-friend functions help to improve encapsulation.
 
 == Resource Acquisition is Initialisation (or as it's called in lectures, "Copy Control")
 * The _single_ most powerful feature C++ has to offer.
@@ -633,12 +752,6 @@ film::film(std::string title, std::string director, std::vector<std::string> cas
      cast_{std::move(cast)},
      revenue_{revenue}
 {
-}
-
-const std::string& film::title() const
-{
-   title_ = "Star Wars: The Empire Strikes Back"; // error: title_ is immutable in this function
-   return title_; // okay
 }
 ------------
 
