@@ -270,6 +270,10 @@ film::film(const std::string& title,
   -- 341. 2014. Pearson Education Inc. Upper Saddle River, NJ.
 * Sutter, H. _More exceptional {cpp}: 40 new engineering puzzles, programming problems, and
   solutions_. p.115 -- 126. 2002. Pearson Education, Inc. Boston, MA.
+* link:http://en.cppreference.com/w/cpp/language/initializer_list[cppreference -- Constructors and
+  member initializer lists]
+* link:http://en.cppreference.com/w/cpp/language/default_constructor[cppreference -- Default
+  constructors]
 * link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rc-ctor[CppCoreGuidelines
   -- C.40: Define a constructor if a class has an invariant]
 * link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rc-complete[CppCoreGuidelines
@@ -342,19 +346,6 @@ const std::string& film::title() const
 2. When should you not be returning data members this way?
 =====
 
-.References
-[TIP]
-=====
-* Meyers, S. _Effective {cpp}: 55 specific ways to improve your programs and designs_.
-  Third edition. p.19 -- 26. 2005. Pearson Education, Inc. Upper Saddle River, NJ.
-* Stroustrup, B. _The {cpp} programming language_ 4th Edition. p.461 -- 463. 2013. Pearson
-  Education Inc. Upper Saddle River, NJ.
-* Sutter, H. _Exceptional {cpp}: 47 engineering puzzles, programming problems, and solutions}_.
-  p.69 -- 75, 177 -- 184. 2000. Pearson Education, Inc. Indianapolis, IN.
-* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rconst-fct[CppCoreGuidelines
-  -- Con.2: By default, make member functions `const`]
-=====
-
 === `mutable` data members
 * The exception to the `const` rule: you can modify a `mutable` data member inside a `const`
   function.
@@ -390,6 +381,25 @@ const film& cinema::top_grossing_film() const
 }
 ------------
 
+.References for `const` member functions and `mutable` data members
+[TIP]
+=====
+* Meyers, S. _Effective {cpp}: 55 specific ways to improve your programs and designs_.
+  Third edition. p.19 -- 26. 2005. Pearson Education, Inc. Upper Saddle River, NJ.
+* Stroustrup, B. _The {cpp} programming language_ 4th Edition. p.461 -- 464. 2013. Pearson
+  Education Inc. Upper Saddle River, NJ.
+* Sutter, H. _Exceptional {cpp}: 47 engineering puzzles, programming problems, and solutions}_.
+  p.69 -- 75, 177 -- 184. 2000. Pearson Education, Inc. Indianapolis, IN.
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Res-casts-const[CppCoreGuidelines
+  -- ES.50: Don't cast away `const`]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rconst-fct[CppCoreGuidelines
+  -- Con.2: By default, make member functions `const`]
+* link:http://en.cppreference.com/w/cpp/language/member_functions#const-.2C_volatile-.2C_and_ref-qualified_member_functions[cppreference
+  -- Non-static member functions: const-, volatile-, and ref-qualified member functions]
+* link:http://en.cppreference.com/w/cpp/language/cv[cppreference -- cv (`const` and `volatile`)
+  type qualifiers]
+=====
+
 === `inline` functions
 * A function that is prefixed with the `inline` specifier declares an inline function, which allows
   it to be defined multiple times.
@@ -401,10 +411,10 @@ const film& cinema::top_grossing_film() const
   specifier in front of the function signature is superfluous.
 * We declare inline functions to hint to the compiler that it should replace function calls with the
   body of the function.
-   ** This can potentially improve performance, as the call overhead is lost, and other
-      optimisations might be possible (key word is "_might_" -- as an expert in compilers,
-      Jingling can better answer this).
-   ** Remember to test for performance before making performance claims.
+   ** This can potentially improve performance, as the call overhead is lost.
+   ** You could also bloat the size of your code, which might pessimise your code too.
+   ** **Remember to test for performance before making performance claims.**
+   ** You can always inline a function later, if necessary.
    ** We often inline small functions, such as accessors, simple mutators, and constructors without
       bodies.
    ** Just because a function has been specified as `inline` does not mean that the compiler will
@@ -459,13 +469,45 @@ inline book read_file(const std::string& filename)
 }
 ------------
 
-=== `friend` functions
+.References
+[TIP]
+=====
+* ISO/IEC. Working Draft, Standard for Programming Language {cpp}, p.151 -- 152. 2014. ISO/IEC,
+  Geneva Switzerland.
+* Meyers, S. _Effective {cpp}: 55 specific ways to improve your programs and designs_.
+  Third edition. p.13 -- 17, 134 -- 139. 2005. Pearson Education, Inc. Upper Saddle River, NJ.
+* Stroustrup, B. _The {cpp} programming language_ 4th Edition. p.307, 310 -- 311. 2013. Pearson
+  Education Inc. Upper Saddle River, NJ.
+* Sutter, H. _More exceptional {cpp}: 40 new engineering puzzles, programming problems, and
+  solutions_. p.83 -- 85. 2002. Pearson Education, Inc. Boston, MA.
+* Sutter, H. _Exceptional {cpp} style: 40 new engineering puzzles, programming problems, and
+  solutions_. p.190 -- 198. 2005. Pearson Education, Inc. Boston, MA.
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rf-inline[CppCoreGuidelines
+  -- F.5: If a function is very small and time-critical, declare it `inline`]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rs-inline[CppCoreGuidelines
+  -- SF.2: A .h file may not contain object definitions or non-inline function definitions]
+* link:http://en.cppreference.com/w/cpp/language/inline[cppreference -- `inline` specifier]
+=====
+
+=== `friend`s
 * Have access to a class's privates.
-* Are free-form functions or other classes that have the _same_ access as any function within the
+* Are functions or even whole classes that have the _same_ access as any function within the
   class.
 * Avoid them if you can.
 * Prefer non-member, non-friend functions when possible.
    - Non-member, non-friend functions help to improve encapsulation.
+
+.Reference
+[TIP]
+=====
+* Stroustrup, B. _The {cpp} programming language_ 4th Edition. p.571 -- 576. 2013. Pearson
+  Education Inc. Upper Saddle River, NJ.
+* Meyers, S. _Effective {cpp}: 55 specific ways to improve your programs and designs_.
+  Third edition. p.98 -- 102. 2005. Pearson Education, Inc. Upper Saddle River, NJ.
+* link:http://en.cppreference.com/w/cpp/language/friend[cppreference -- `friend` declaration]
+=====
+
+.References
 
 == Resource Acquisition is Initialisation (or as it's called in lectures, "Copy Control")
 * The _single_ most powerful feature C++ has to offer.
@@ -497,6 +539,22 @@ inline book read_file(const std::string& filename)
 |is a fire and forget tool employed by a runtime.                                        |is a programming idiom actively employed by vigilant programmers.
 |can happen at any point _from_ the end of an object's life to the program's termination.|is guaranteed to happen _at_ the end of an object's life.        
 |=========================
+
+.References
+[TIP]
+=====
+* Meyers, S. _Effective {cpp}: 55 specific ways to improve your programs and designs_.
+  Third edition. p.61--6, 69 -- 73. 2005. Pearson Education, Inc. Upper Saddle River, NJ.
+* Stroustrup, B. _The {cpp} programming language_ 4th Edition. p.354--7. 2013. Pearson Education Inc. Upper Saddle River, NJ.
+* Stroustrup, B. _Programming: principles and practice using {cpp}_. 2nd Edition. p.1221, 303
+  -- 341. 2014. Pearson Education Inc. Upper Saddle River, NJ.
+* Stroustrup, B. _A tour of {cpp}_. p.118. Pearson Education, Inc. Upper Saddle River, NJ.
+* Sutter, H. _More exceptional {cpp}: 40 new engineering puzzles, programming problems, and
+  solutions_. p.115 -- 126. 2002. Pearson Education, Inc. Boston, MA.
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rr-raii[CppCoreGuidelines
+  -- R.1: Manage resources automatically using resource handles and RAII (Resource Acquisition Is
+  Initialization)]
+=====
 
 === Destructor, copy constructor, copy assignment, and the rule of three
 * The destructor is a function that's (usually) automatically called at the end of an object's
