@@ -50,7 +50,7 @@ Week 4 tutorial postscript
    - launch nuclear missiles,
    - create a wormhole that transports you, and only you, to Andromeda,
    - or anything else
-* There is no 'but the program will usually do...' when it comes to undefined behaviour.
+* There is no "but the program will usually do..." when it comes to undefined behaviour.
 * The compiler isn't required to alert you to the fact you might permit undefined behaviour in your
   program.
 * Some examples of undefined behaviour include:
