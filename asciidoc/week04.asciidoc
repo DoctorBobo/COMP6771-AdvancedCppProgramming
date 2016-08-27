@@ -384,20 +384,22 @@ inline book read_file(const std::string& filename)
 === Destructor, copy constructor, copy assignment, and the rule of three
 * The destructor is a function that's (usually) automatically called at the end of an object's
   lifetime.
-   - If you don't define one, it'll be synthesised for you.
-   - It is responsible for cleaning up any members, but it doesn't clean up resources that you
-     reserve.
-   - It is specified to be `noexcept` by default, and you shouldn't throw an exception from inside
-     one unless you want all kinds of trouble.
-   - Creating a destructor to clear a `vector` or set an `int` to 0 is redundant and should not be
-     done.
+   ** If you don't define one, it'll be synthesised for you.
+   ** It is responsible for cleaning up any members, but it doesn't automatically clean up resources
+      that you reserve.
+      *** If you reserve resources, you will need to define a destructor and manually specify how
+          the resources are to be cleaned up.
+   ** It is specified to be `noexcept` by default, and you shouldn't allow an exception to leave the
+      destructor unless you want all kinds of trouble.
+   ** Creating a destructor to clear a `vector` or set an `int` to 0 is redundant and should not be
+      done.
 * A copy constructor is responsible for copying resources from an object into an object that is
   being constructed.
    - If you don't define one, it'll be synthesised for you.
    - You are responsible for ensuring that resources you reserve are correctly copied.
    - Creating a copy constructor just to copy a `vector` is redundant, and shouldn't be done.
 * A copy assignment operator is responsible for copying resources from an object A into a
-  pre-existing variable B, _and_ cleaning up the original resources in B.
+  pre-existing object B, _and_ cleaning up the original resources in B.
    - If you don't define one, it'll be synthesised for you.
    - You are responsible for ensuring that any resources that B currently holds are appropriately
      cleaned up, and then properly copying the resources across from A.
@@ -465,9 +467,9 @@ smart_ptr<T>& smart_ptr<T>::operator=(const smart_ptr<T>& d)
 } // t cleaned up here by definition
 ------------
 
-* ...which we can do by invoking the copy constructor and the destructor.
+* ...which we can do by invoking the copy constructor and the destructor!
    - Credit goes to Scott Meyers.
-   - This is the recommended one, unless you have some reason to use the above one.
+   - This is the recommended one, unless you have some reason to use the second one.
 =====
 
 * **The rule of three states that if you have a need to implement one of these, you must implement
@@ -515,7 +517,7 @@ const auto&& rvalue_reference_to_const = 0; // legal, but the rvalue reference i
 * Moving things happens at the near of an object's lifetime.
    - Does that sound familiar?
    - Moving works with rvalue references.
-* An object that has been moved is left in a destructible state, but is an empty shell.
+* An object that has been moved is left in a destructible state, but should not be read from.
 
 ==== Move constructors
 * Move constructors are responsible for moving all of an object's resources from a preexisting
