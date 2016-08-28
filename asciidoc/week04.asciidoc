@@ -651,8 +651,8 @@ smart_ptr<T>& smart_ptr<T>::operator=(const smart_ptr<T>& d)
    - This is the recommended one, unless you have some reason to use the second one.
 =====
 
-* **The rule of three states that if you have a need to implement one of these, you must implement
-  all of them.**
+* [big]#**The rule of three states that if you have a need to implement one of these, you must implement
+  all of them.**#
 [WARNING]
 =========
 * There is no compiler check to see if you do or do not implement all three.
@@ -910,7 +910,7 @@ magic<T>& magic<T>::operator=(magic<T>&& r)
 
 === The rule of zero
 * Don't provide a custom copy/move constructor, or a custom copy/move assignment operator!
-* If your type doesn't personally manage a resource, don't bother with _any_ of the five.
+* [big]#**If your type doesn't personally manage a resource, don't bother with _any_ of the five.**#
 * The compiler will synthesise a perfectly working copy constructor, move constructor, copy
   assignment operator, move assignment operator, and destructor for you.
    - These will call the appropriate constructors for all of your members.
