@@ -545,7 +545,8 @@ inline book read_file(const std::string& filename)
 =====
 * Meyers, S. _Effective {cpp}: 55 specific ways to improve your programs and designs_.
   Third edition. p.61--6, 69 -- 73. 2005. Pearson Education, Inc. Upper Saddle River, NJ.
-* Stroustrup, B. _The {cpp} programming language_ 4th Edition. p.354--7. 2013. Pearson Education Inc. Upper Saddle River, NJ.
+* Stroustrup, B. _The {cpp} programming language_ 4th Edition. p.354--7. 2013. Pearson Education
+  Inc. Upper Saddle River, NJ.
 * Stroustrup, B. _Programming: principles and practice using {cpp}_. 2nd Edition. p.1221, 303
   -- 341. 2014. Pearson Education Inc. Upper Saddle River, NJ.
 * Stroustrup, B. _A tour of {cpp}_. p.118. Pearson Education, Inc. Upper Saddle River, NJ.
@@ -667,8 +668,19 @@ smart_ptr<T>& smart_ptr<T>::operator=(const smart_ptr<T>& d)
   Addison Wesley. Westford, MA.
 * Meyers, S. _Effective {cpp}: 55 specific ways to improve your programs and designs_.
   Third edition. p.44 -- 60, 66 -- 73. 2005. Pearson Education, Inc. Upper Saddle River, NJ.
+* Stroustrup, B. _The {cpp} programming language_ 4th Edition. p.481 -- 9, 507 -- 14, 520 -- 3. 2013.
+  Pearson Education Inc. Upper Saddle River, NJ.
+* Stroustrup, B. _Programming: principles and practice using {cpp}_. 2nd Edition. p.601 -- 5,
+  633 -- 7, 640 -- 6. 2014. Pearson Education Inc. Upper Saddle River, NJ.
 * Sutter, H. _Exceptional {cpp}: 47 engineering puzzlies, programming problems, and solutions_.
   p.9 -- 17, 25 -- 68. 2000. Pearson Education, Inc. Indianapolis, IN.
+* Sutter, H. _More exceptional {cpp}: 40 new engineering puzzles, programming problems, and
+  solutions_. p.126 -- 131. 2002. Pearson Education, Inc. Boston, MA.
+* link:http://en.cppreference.com/w/cpp/language/copy_constructor[cppreference -- Copy
+  constructors]
+* link:http://en.cppreference.com/w/cpp/language/copy_assignment[cppreference -- Copy assignment
+  operator]
+* link:http://en.cppreference.com/w/cpp/language/destructor[cppreference -- Destructors]
 * link:http://en.cppreference.com/w/cpp/language/rule_of_three[cppreference -- The rule of
   three/five/zero]
 * link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#cctor-constructors-assignments-and-destructors[CppCoreGuidelines
@@ -729,6 +741,16 @@ auto&& rvalue_reference = 0; // okay
 const auto&& rvalue_reference_to_const = 0; // legal, but the rvalue reference is now useless.
 ------------
 
+.References
+[TIP]
+=====
+* link:http://en.cppreference.com/w/cpp/language/reference[cppreference -- Reference declaration]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#f18-for-consume-parameters-pass-by-x-and-stdmove-the-parameter[CppCoreGuidelines
+  -- F.18: For "consume" parameters, pass by `X&&` and `std::move` the parameter]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rf-return-ref-ref[CppCoreGuidelines
+  -- F.45 Don't return a `T&&`]
+=====
+
 === Move constructor, move assignment, and the rule of five
 * A fax machine scans your document and replicates it. This is akin to copying.
 * Handing a document to another person means that you no longer have the document, and only one
@@ -737,6 +759,8 @@ const auto&& rvalue_reference_to_const = 0; // legal, but the rvalue reference i
    - Does that sound familiar?
    - Moving works with rvalue references.
 * An object that has been moved is left in a destructible state, but should not be read from.
+* **The rule of five is an extension to the rule of three, requiring you to supply a user-defined
+     move constructor, _and_ a user-defined move assignment operator.**
 
 ==== Move constructors
 * Move constructors are responsible for moving all of an object's resources from a preexisting
@@ -832,8 +856,6 @@ record<T>& record<T>::operator=(record<T>&& r)
 ------------
 =========
 
-* **The rule of five is an extension to the rule of three, requiring you to supply a user-defined
-     move constructor, _and_ a user-defined move assignment operator.**
 [WARNING]
 =========
 * Not everything is moveable (built-in types, stack-allocated arrays, etc.).
@@ -842,6 +864,49 @@ record<T>& record<T>::operator=(record<T>&& r)
      and user-defined move assignment operators.
 * Similarly to the rule of three, tools may help, but they probably won't. Be vigilant.
 =========
+
+.References
+[TIP]
+=====
+* link:https://youtu.be/xnqTKD8uD64?t=51m6s[CppCon 2014: Herb Sutter "Back to the Basics!
+  Essentials of Modern C++ Style"]
+* Meyers, S. _Effective modern {cpp} -- 42 ways to improve your use of {cpp}11 and {cpp}14_. p.157
+  -- 177, 203 -- 6. 2014. O'Reilly Media Inc. Sebastopol, CA.
+* Stroustrup, B. _The {cpp} programming language_ 4th Edition. p.514 -- 523. 2013. Pearson
+  Education Inc. Upper Saddle River, NJ.
+* Stroustrup, B. _Programming: principles and practice using {cpp}_. 2nd Edition. p.601 -- 5,
+  637 -- 646. 2014. Pearson Education Inc. Upper Saddle River, NJ.
+* link:https://herbsutter.com/2013/05/06/gotw-1-variable-initialization-or-is-it-310/[GotW #1:
+  Variable Initialization—or Is It? (3/10)]
+* link:https://herbsutter.com/2013/05/09/gotw-2-temporary-objects-510/[GotW #2: Temporary Objects]
+* link:https://herbsutter.com/2013/05/13/gotw-3-using-the-standard-library-or-temporaries-revisited-310/[GotW #3:
+  Using the Standard Library (or, Temporaries Revisited) (3/10)]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Res-move[CppCoreGuidelines
+  -- ES.56: Write `std::move()` only when you need to explicitly move an object to another scope]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#f6-if-your-function-may-not-throw-declare-it-noexcept[CppCoreGuidelines
+  -- F.6: If your function may not throw, declare it `noexcept`]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#f18-for-consume-parameters-pass-by-x-and-stdmove-the-parameter[CppCoreGuidelines
+  -- F.18: For "consume" parameters, pass by `X&&` and `std::move` the parameter]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rf-return-ref-ref[CppCoreGuidelines
+  -- F.45 Don't return a `T&&`]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rc-copy-self[CppCoreGuidelines
+  -- C.62: Make copy assignment safe for self-assignment]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rc-move-assignment[CppCoreGuidelines
+  -- C.63: Make move assignment non-`virtual`, take the parameter by `&&`, and return by non-`const &`]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rc-move-semantic[CppCoreGuidelines
+  -- C.64: A move operation should move and leave its source in a valid state]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#c65-make-move-assignment-safe-for-self-assignment[CppCoreGuidelines
+  -- C.65: Make move assignment safe for self-assignment]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rc-move-noexcept[CppCoreGuidelines
+  -- C.66: Make move operations `noexcept`]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#define-copy-move-and-destroy-consistently[CppCoreGuidelines
+  -- Define Copy, move, and destroy consistently]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Cr-value-return[CppCoreGuidelines
+  -- Return containers by value (relying on move or copy elision for efficiency)]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#if-a-class-is-a-resource-handle-it-needs-a-constructor-a-destructor-and-copy-andor-move-operations[CppCoreGuidelines
+  -- If a class is a resource handle, it needs a constructor, a destructor, and copy and/or move
+  operations]
+=====
 
 === The rule of zero
 * Don't provide a custom copy/move constructor, or a custom copy/move assignment operator!
@@ -882,6 +947,28 @@ private:
 
 * The functions that are `= default` are still synthesised by the compiler.
 * The functions that are `= delete` are not implemented.
+
+.References
+[TIP]
+=====
+* Meyers, S. _Effective modern {cpp} -- 42 ways to improve your use of {cpp}11 and {cpp}14_. p.74
+  -- 79. 2014. O'Reilly Media Inc. Sebastopol, CA.
+* Stroustrup, B. _The {cpp} programming language_ 4th Edition. p.517 -- 526. 2013. Pearson
+  Education Inc. Upper Saddle River, NJ.
+* link:http://en.cppreference.com/w/cpp/language/rule_of_three[cppreference -- The rule of
+  three/five/zero]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#c20-if-you-can-avoid-defining-default-operations-do[CppCoreGuidelines
+  -- C.20: If you can avoid defining default operations, do]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rc-default0[CppCoreGuidelines
+  -- C.43: Ensure that a class has a default constructor]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rc-default[CppCoreGuidelines
+  -- C.45: Don't define a default constructor that only initializes data members; use in-class
+  member initializers instead]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rc-eqdefault[CppCoreGuidelines
+  -- C.80: Use `=default` if you have to be explicit about using the default semantics]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rc-delete[CppCoreGuidelines
+  -- C.81: Use `=delete` when you want to disable default behavior (without wanting an alternative)]
+=====
 
 === Copy elision
 * So, we've looked at both copy control and move semantics, or more formally known as RAII.
@@ -926,8 +1013,15 @@ std::vector<int> make_school(const int children)
 .References
 [TIP]
 =====
-* Meyers, S. _More effective {cpp}: 35 new ways to improve your programs and designs_. p.101 -- 4. 1996.
+* Meyers, S. _More effective {cpp}: 35 new ways to improve your programs and designs_. p.169 -- 177. 1996.
   Addison Wesley. Westford, MA.
+* Meyers, S. _Effective modern {cpp} -- 42 ways to improve your use of {cpp}11 and {cpp}14_. p.74
+  -- 79. 2014. O'Reilly Media Inc. Sebastopol, CA.
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#es56-write-stdmove-only-when-you-need-to-explicitly-move-an-object-to-another-scope[CppCoreGuidelines
+  -- ES.56: Write `std::move()` only when you need to explicitly move an object to another scope]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Cr-value-return[CppCoreGuidelines
+  -- Return containers by value (relying on move or copy elision for efficiency)]
+* link:http://en.cppreference.com/w/cpp/language/copy_elision[cppreference -- Copy elision]
 =====
 
 === Passing by parameters revisited
@@ -982,6 +1076,15 @@ film::film(std::string title, std::string director, std::vector<std::string> cas
 {
 }
 ------------
+
+.References
+[TIP]
+=====
+* link:https://youtu.be/xnqTKD8uD64?t=51m6s[CppCon 2014: Herb Sutter "Back to the Basics!
+  Essentials of Modern C++ Style"]
+* Meyers, S. _Effective modern {cpp} -- 42 ways to improve your use of {cpp}11 and {cpp}14_. p.281
+  -- 292. 2014. O'Reilly Media Inc. Sebastopol, CA.
+=====
 
 == {cpp}'s most vexing parse
 * Pop quiz: does this code compile?
@@ -1133,3 +1236,18 @@ int main()
    - That is, always put `auto` on the left-hand side (even for fundamental types).
    - On the right-hand side, choose based on whether you need list-initalisation or a constructor.
    - If it doesn't matter between the two, choose list-initialisation.
+
+.References
+[TIP]
+=====
+* Meyers, S. _Effective STL: 50 specific ways to improve your use of the standard template
+  library_. p.33 -- 35. 2001. Pearson Education, Inc. Upper Saddle River, NJ.
+* link:https://herbsutter.com/2013/06/05/gotw-92-auto-variables-part-1/[GotW #92: Auto Variables,
+  Part 1]
+* link:https://herbsutter.com/2013/06/07/gotw-93-auto-variables-part-2/[GotW #93: Auto Variables,
+  Part 2]
+* link:https://herbsutter.com/2013/06/13/gotw-94-special-edition-aaa-style-almost-always-auto/[GotW
+  #94 Special Edition: AAA Style (Almost Always Auto)]
+* link:https://herbsutter.com/2013/08/12/gotw-94-solution-aaa-style-almost-always-auto/[GotW #94
+  Solution: AAA Style (Almost Always Auto)]
+=====

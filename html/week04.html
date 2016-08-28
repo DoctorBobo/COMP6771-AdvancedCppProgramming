@@ -1583,6 +1583,18 @@ Sutter, H. <em>More exceptional C++: 40 new engineering puzzles, programming pro
 </li>
 <li>
 <p>
+<a href="http://en.cppreference.com/w/cpp/language/initializer_list">cppreference&#8201;&#8212;&#8201;Constructors and
+  member initializer lists</a>
+</p>
+</li>
+<li>
+<p>
+<a href="http://en.cppreference.com/w/cpp/language/default_constructor">cppreference&#8201;&#8212;&#8201;Default
+  constructors</a>
+</p>
+</li>
+<li>
+<p>
 <a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rc-ctor">CppCoreGuidelines
  &#8201;&#8212;&#8201;C.40: Define a constructor if a class has an invariant</a>
 </p>
@@ -1734,42 +1746,6 @@ When should you not be returning data members this way?
 </td>
 </tr></table>
 </div>
-<div class="admonitionblock">
-<table><tr>
-<td class="icon">
-<div class="title">Tip</div>
-</td>
-<td class="content">
-<div class="title">References</div>
-<div class="ulist"><ul>
-<li>
-<p>
-Meyers, S. <em>Effective C++: 55 specific ways to improve your programs and designs</em>.
-  Third edition. p.19&#8201;&#8212;&#8201;26. 2005. Pearson Education, Inc. Upper Saddle River, NJ.
-</p>
-</li>
-<li>
-<p>
-Stroustrup, B. <em>The C++ programming language</em> 4th Edition. p.461&#8201;&#8212;&#8201;463. 2013. Pearson
-  Education Inc. Upper Saddle River, NJ.
-</p>
-</li>
-<li>
-<p>
-Sutter, H. <em>Exceptional C++: 47 engineering puzzles, programming problems, and solutions}</em>.
-  p.69&#8201;&#8212;&#8201;75, 177&#8201;&#8212;&#8201;184. 2000. Pearson Education, Inc. Indianapolis, IN.
-</p>
-</li>
-<li>
-<p>
-<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rconst-fct">CppCoreGuidelines
- &#8201;&#8212;&#8201;Con.2: By default, make member functions <code>const</code></a>
-</p>
-</li>
-</ul></div>
-</td>
-</tr></table>
-</div>
 </div>
 <div class="sect2">
 <h3 id="_code_mutable_code_data_members"><code>mutable</code> data members</h3>
@@ -1821,6 +1797,60 @@ http://www.gnu.org/software/src-highlite -->
 
    <span style="font-weight: bold"><span style="color: #0000FF">return</span></span> <span style="color: #990000">*</span>top_film_<span style="color: #990000">;</span>
 <span style="color: #FF0000">}</span></tt></pre></div></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="title">References for <code>const</code> member functions and <code>mutable</code> data members</div>
+<div class="ulist"><ul>
+<li>
+<p>
+Meyers, S. <em>Effective C++: 55 specific ways to improve your programs and designs</em>.
+  Third edition. p.19&#8201;&#8212;&#8201;26. 2005. Pearson Education, Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+Stroustrup, B. <em>The C++ programming language</em> 4th Edition. p.461&#8201;&#8212;&#8201;464. 2013. Pearson
+  Education Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+Sutter, H. <em>Exceptional C++: 47 engineering puzzles, programming problems, and solutions}</em>.
+  p.69&#8201;&#8212;&#8201;75, 177&#8201;&#8212;&#8201;184. 2000. Pearson Education, Inc. Indianapolis, IN.
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Res-casts-const">CppCoreGuidelines
+ &#8201;&#8212;&#8201;ES.50: Don&#8217;t cast away <code>const</code></a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rconst-fct">CppCoreGuidelines
+ &#8201;&#8212;&#8201;Con.2: By default, make member functions <code>const</code></a>
+</p>
+</li>
+<li>
+<p>
+<a href="http://en.cppreference.com/w/cpp/language/member_functions#const-.2C_volatile-.2C_and_ref-qualified_member_functions">cppreference
+ &#8201;&#8212;&#8201;Non-static member functions: const-, volatile-, and ref-qualified member functions</a>
+</p>
+</li>
+<li>
+<p>
+<a href="http://en.cppreference.com/w/cpp/language/cv">cppreference&#8201;&#8212;&#8201;cv (<code>const</code> and <code>volatile</code>)
+  type qualifiers</a>
+</p>
+</li>
+</ul></div>
+</td>
+</tr></table>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_code_inline_code_functions"><code>inline</code> functions</h3>
@@ -1863,14 +1893,22 @@ We declare inline functions to hint to the compiler that it should replace funct
 <div class="ulist"><ul>
 <li>
 <p>
-This can potentially improve performance, as the call overhead is lost, and other
-      optimisations might be possible (key word is "<em>might</em>"&#8201;&#8212;&#8201;as an expert in compilers,
-      Jingling can better answer this).
+This can potentially improve performance, as the call overhead is lost.
 </p>
 </li>
 <li>
 <p>
-Remember to test for performance before making performance claims.
+You could also bloat the size of your code, which might pessimise your code too.
+</p>
+</li>
+<li>
+<p>
+<strong>Remember to test for performance before making performance claims.</strong>
+</p>
+</li>
+<li>
+<p>
+You can always inline a function later, if necessary.
 </p>
 </li>
 <li>
@@ -1970,9 +2008,68 @@ http://www.gnu.org/software/src-highlite -->
    <span style="font-weight: bold"><span style="color: #0000FF">else</span></span>
       <span style="font-weight: bold"><span style="color: #0000FF">throw</span></span> std<span style="color: #990000">::</span>runtime_error<span style="color: #FF0000">{</span><span style="color: #FF0000">"Cannot open file "</span>s <span style="color: #990000">+</span> filename<span style="color: #FF0000">}</span><span style="color: #990000">;</span>
 <span style="color: #FF0000">}</span></tt></pre></div></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="title">References</div>
+<div class="ulist"><ul>
+<li>
+<p>
+ISO/IEC. Working Draft, Standard for Programming Language C++, p.151&#8201;&#8212;&#8201;152. 2014. ISO/IEC,
+  Geneva Switzerland.
+</p>
+</li>
+<li>
+<p>
+Meyers, S. <em>Effective C++: 55 specific ways to improve your programs and designs</em>.
+  Third edition. p.13&#8201;&#8212;&#8201;17, 134&#8201;&#8212;&#8201;139. 2005. Pearson Education, Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+Stroustrup, B. <em>The C++ programming language</em> 4th Edition. p.307, 310&#8201;&#8212;&#8201;311. 2013. Pearson
+  Education Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+Sutter, H. <em>More exceptional C++: 40 new engineering puzzles, programming problems, and
+  solutions</em>. p.83&#8201;&#8212;&#8201;85. 2002. Pearson Education, Inc. Boston, MA.
+</p>
+</li>
+<li>
+<p>
+Sutter, H. <em>Exceptional C++ style: 40 new engineering puzzles, programming problems, and
+  solutions</em>. p.190&#8201;&#8212;&#8201;198. 2005. Pearson Education, Inc. Boston, MA.
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rf-inline">CppCoreGuidelines
+ &#8201;&#8212;&#8201;F.5: If a function is very small and time-critical, declare it <code>inline</code></a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rs-inline">CppCoreGuidelines
+ &#8201;&#8212;&#8201;SF.2: A .h file may not contain object definitions or non-inline function definitions</a>
+</p>
+</li>
+<li>
+<p>
+<a href="http://en.cppreference.com/w/cpp/language/inline">cppreference&#8201;&#8212;&#8201;<code>inline</code> specifier</a>
+</p>
+</li>
+</ul></div>
+</td>
+</tr></table>
+</div>
 </div>
 <div class="sect2">
-<h3 id="_code_friend_code_functions"><code>friend</code> functions</h3>
+<h3 id="_friend_s">`friend`s</h3>
 <div class="ulist"><ul>
 <li>
 <p>
@@ -1981,7 +2078,7 @@ Have access to a class&#8217;s privates.
 </li>
 <li>
 <p>
-Are free-form functions or other classes that have the <em>same</em> access as any function within the
+Are functions or even whole classes that have the <em>same</em> access as any function within the
   class.
 </p>
 </li>
@@ -2003,13 +2100,42 @@ Non-member, non-friend functions help to improve encapsulation.
 </ul></div>
 </li>
 </ul></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="title">Reference</div>
+<div class="ulist"><ul>
+<li>
+<p>
+Stroustrup, B. <em>The C++ programming language</em> 4th Edition. p.571&#8201;&#8212;&#8201;576. 2013. Pearson
+  Education Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+Meyers, S. <em>Effective C++: 55 specific ways to improve your programs and designs</em>.
+  Third edition. p.98&#8201;&#8212;&#8201;102. 2005. Pearson Education, Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+<a href="http://en.cppreference.com/w/cpp/language/friend">cppreference&#8201;&#8212;&#8201;<code>friend</code> declaration</a>
+</p>
+</li>
+</ul></div>
+</td>
+</tr></table>
+</div>
 </div>
 </div>
 </div>
 <div class="sect1">
 <h2 id="_resource_acquisition_is_initialisation_or_as_it_8217_s_called_in_lectures_copy_control">Resource Acquisition is Initialisation (or as it&#8217;s called in lectures, "Copy Control")</h2>
 <div class="sectionbody">
-<div class="ulist"><ul>
+<div class="ulist"><div class="title">References</div><ul>
 <li>
 <p>
 The <em>single</em> most powerful feature C++ has to offer.
@@ -2126,6 +2252,65 @@ cellspacing="0" cellpadding="4">
 </tr>
 </tbody>
 </table>
+</div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="title">References</div>
+<div class="ulist"><ul>
+<li>
+<p>
+Meyers, S. <em>Effective C++: 55 specific ways to improve your programs and designs</em>.
+  Third edition. p.61&#8212;6, 69&#8201;&#8212;&#8201;73. 2005. Pearson Education, Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+Stroustrup, B. <em>The C++ programming language</em> 4th Edition. p.354&#8212;7. 2013. Pearson Education
+  Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+Stroustrup, B. <em>Programming: principles and practice using C++</em>. 2nd Edition. p.1221, 303
+ &#8201;&#8212;&#8201;341. 2014. Pearson Education Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+Stroustrup, B. <em>A tour of C++</em>. p.118. Pearson Education, Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+Sutter, H. <em>Exceptional C++: 47 engineering puzzlies, programming problems, and solutions</em>.
+  p.25&#8201;&#8212;&#8201;68, 167&#8201;&#8212;&#8201;174. 2000. Pearson Education, Inc. Indianapolis, IN.
+</p>
+</li>
+<li>
+<p>
+Sutter, H. <em>More exceptional C++: 40 new engineering puzzles, programming problems, and
+  solutions</em>. p.115&#8201;&#8212;&#8201;126. 2002. Pearson Education, Inc. Boston, MA.
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rr-raii">CppCoreGuidelines
+ &#8201;&#8212;&#8201;R.1: Manage resources automatically using resource handles and RAII (Resource Acquisition Is
+  Initialization)</a>
+</p>
+</li>
+<li>
+<p>
+<a href="http://en.cppreference.com/w/cpp/language/raii">cppreference&#8201;&#8212;&#8201;RAII</a>
+</p>
+</li>
+</ul></div>
+</td>
+</tr></table>
 </div>
 <div class="sect2">
 <h3 id="_destructor_copy_constructor_copy_assignment_and_the_rule_of_three">Destructor, copy constructor, copy assignment, and the rule of three</h3>
@@ -2411,6 +2596,161 @@ This is a part of the RAII programming idiom, and is up to you to enforce.
 </td>
 </tr></table>
 </div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="title">References</div>
+<div class="ulist"><ul>
+<li>
+<p>
+Meyers, S. <em>More effective C++: 35 new ways to improve your programs and designs</em>. p.41&#8201;&#8212;&#8201;68. 1996.
+  Addison Wesley. Westford, MA.
+</p>
+</li>
+<li>
+<p>
+Meyers, S. <em>Effective C++: 55 specific ways to improve your programs and designs</em>.
+  Third edition. p.44&#8201;&#8212;&#8201;60, 66&#8201;&#8212;&#8201;73. 2005. Pearson Education, Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+Stroustrup, B. <em>The C++ programming language</em> 4th Edition. p.481&#8201;&#8212;&#8201;9, 507&#8201;&#8212;&#8201;14, 520&#8201;&#8212;&#8201;3. 2013.
+  Pearson Education Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+Stroustrup, B. <em>Programming: principles and practice using C++</em>. 2nd Edition. p.601&#8201;&#8212;&#8201;5,
+  633&#8201;&#8212;&#8201;7, 640&#8201;&#8212;&#8201;6. 2014. Pearson Education Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+Sutter, H. <em>Exceptional C++: 47 engineering puzzlies, programming problems, and solutions</em>.
+  p.9&#8201;&#8212;&#8201;17, 25&#8201;&#8212;&#8201;68. 2000. Pearson Education, Inc. Indianapolis, IN.
+</p>
+</li>
+<li>
+<p>
+Sutter, H. <em>More exceptional C++: 40 new engineering puzzles, programming problems, and
+  solutions</em>. p.126&#8201;&#8212;&#8201;131. 2002. Pearson Education, Inc. Boston, MA.
+</p>
+</li>
+<li>
+<p>
+<a href="http://en.cppreference.com/w/cpp/language/copy_constructor">cppreference&#8201;&#8212;&#8201;Copy
+  constructors</a>
+</p>
+</li>
+<li>
+<p>
+<a href="http://en.cppreference.com/w/cpp/language/copy_assignment">cppreference&#8201;&#8212;&#8201;Copy assignment
+  operator</a>
+</p>
+</li>
+<li>
+<p>
+<a href="http://en.cppreference.com/w/cpp/language/destructor">cppreference&#8201;&#8212;&#8201;Destructors</a>
+</p>
+</li>
+<li>
+<p>
+<a href="http://en.cppreference.com/w/cpp/language/rule_of_three">cppreference&#8201;&#8212;&#8201;The rule of
+  three/five/zero</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#cctor-constructors-assignments-and-destructors">CppCoreGuidelines
+ &#8201;&#8212;&#8201;C.ctor: Constructors, assignments, and destructors</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rc-zero">CppCoreGuidelines
+ &#8201;&#8212;&#8201;C.20: If you can avoid defining default operations, do</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rc-matched">CppCoreGuidelines
+ &#8201;&#8212;&#8201;C.22: Make default operations consistent</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rc-copy-assignment">CppCoreGuidelines
+ &#8201;&#8212;&#8201;C.60: Make copy assignment non-virtual, take the parameter by <code>const&amp;</code>, and return by <code>non-const&amp;</code></a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#c61-a-copy-operation-should-copy">CppCoreGuidelines
+ &#8201;&#8212;&#8201;C.61: A copy operation should copy</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rc-copy-self">CppCoreGuidelines
+ &#8201;&#8212;&#8201;C.62: Make copy assignment safe for self-assignment</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rc-dtor">CppCoreGuidelines
+ &#8201;&#8212;&#8201;C.30: Define a destructor if a class needs an explicit action at object destruction</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rc-dtor-release">CppCoreGuidelines
+ &#8201;&#8212;&#8201;C.31: All resources acquired by a class must be released by the class&#8217;s destructor</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rc-dtor-ptr">CppCoreGuidelines
+ &#8201;&#8212;&#8201;C.32: If a class has a raw pointer (<code>T*</code>) or reference (<code>T&amp;</code>), consider whether it might be owning</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rc-dtor-ptr2">CppCoreGuidelines
+ &#8201;&#8212;&#8201;C.33: If a class has an owning pointer member, define a destructor</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rc-dtor-ref">CppCoreGuidelines
+ &#8201;&#8212;&#8201;C.34: If a class has an owning reference member, define a destructor</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rc-dtor-fail">CppCoreGuidelines
+ &#8201;&#8212;&#8201;C.36: A destructor may not fail</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rc-dtor-noexcept">CppCoreGuidelines
+ &#8201;&#8212;&#8201;C.37: Make destructors <code>noexcept</code></a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#define-copy-move-and-destroy-consistently">CppCoreGuidelines
+ &#8201;&#8212;&#8201;Define Copy, move, and destroy consistently</a>
+</p>
+</li>
+</ul></div>
+</td>
+</tr></table>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_rvalue_references">Rvalue references</h3>
@@ -2501,6 +2841,35 @@ http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite -->
 <pre><tt><span style="font-weight: bold"><span style="color: #0000FF">auto</span></span><span style="color: #990000">&amp;&amp;</span> rvalue_reference <span style="color: #990000">=</span> <span style="color: #993399">0</span><span style="color: #990000">;</span> <span style="font-style: italic"><span style="color: #9A1900">// okay</span></span>
 <span style="font-weight: bold"><span style="color: #0000FF">const</span></span> <span style="font-weight: bold"><span style="color: #0000FF">auto</span></span><span style="color: #990000">&amp;&amp;</span> rvalue_reference_to_const <span style="color: #990000">=</span> <span style="color: #993399">0</span><span style="color: #990000">;</span> <span style="font-style: italic"><span style="color: #9A1900">// legal, but the rvalue reference is now useless.</span></span></tt></pre></div></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="title">References</div>
+<div class="ulist"><ul>
+<li>
+<p>
+<a href="http://en.cppreference.com/w/cpp/language/reference">cppreference&#8201;&#8212;&#8201;Reference declaration</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#f18-for-consume-parameters-pass-by-x-and-stdmove-the-parameter">CppCoreGuidelines
+ &#8201;&#8212;&#8201;F.18: For "consume" parameters, pass by <code>X&amp;&amp;</code> and <code>std::move</code> the parameter</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rf-return-ref-ref">CppCoreGuidelines
+ &#8201;&#8212;&#8201;F.45 Don&#8217;t return a <code>T&amp;&amp;</code></a>
+</p>
+</li>
+</ul></div>
+</td>
+</tr></table>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_move_constructor_move_assignment_and_the_rule_of_five">Move constructor, move assignment, and the rule of five</h3>
@@ -2536,6 +2905,12 @@ Moving works with rvalue references.
 <li>
 <p>
 An object that has been moved is left in a destructible state, but should not be read from.
+</p>
+</li>
+<li>
+<p>
+<strong>The rule of five is an extension to the rule of three, requiring you to supply a user-defined
+     move constructor, <em>and</em> a user-defined move assignment operator.</strong>
 </p>
 </li>
 </ul></div>
@@ -2771,14 +3146,6 @@ record<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;
 </td>
 </tr></table>
 </div>
-<div class="ulist"><ul>
-<li>
-<p>
-<strong>The rule of five is an extension to the rule of three, requiring you to supply a user-defined
-     move constructor, <em>and</em> a user-defined move assignment operator.</strong>
-</p>
-</li>
-</ul></div>
 <div class="admonitionblock">
 <table><tr>
 <td class="icon">
@@ -2807,6 +3174,132 @@ These do not fall under the rule of three, but should still have user-defined mo
 <li>
 <p>
 Similarly to the rule of three, tools may help, but they probably won&#8217;t. Be vigilant.
+</p>
+</li>
+</ul></div>
+</td>
+</tr></table>
+</div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="title">References</div>
+<div class="ulist"><ul>
+<li>
+<p>
+<a href="https://youtu.be/xnqTKD8uD64?t=51m6s">CppCon 2014: Herb Sutter "Back to the Basics!
+  Essentials of Modern C++ Style"</a>
+</p>
+</li>
+<li>
+<p>
+Meyers, S. <em>Effective modern C++&#8201;&#8212;&#8201;42 ways to improve your use of C++11 and C++14</em>. p.157
+ &#8201;&#8212;&#8201;177, 203&#8201;&#8212;&#8201;6. 2014. O&#8217;Reilly Media Inc. Sebastopol, CA.
+</p>
+</li>
+<li>
+<p>
+Stroustrup, B. <em>The C++ programming language</em> 4th Edition. p.514&#8201;&#8212;&#8201;523. 2013. Pearson
+  Education Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+Stroustrup, B. <em>Programming: principles and practice using C++</em>. 2nd Edition. p.601&#8201;&#8212;&#8201;5,
+  637&#8201;&#8212;&#8201;646. 2014. Pearson Education Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+<a href="https://herbsutter.com/2013/05/06/gotw-1-variable-initialization-or-is-it-310/">GotW #1:
+  Variable Initialization—or Is It? (3/10)</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://herbsutter.com/2013/05/09/gotw-2-temporary-objects-510/">GotW #2: Temporary Objects</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://herbsutter.com/2013/05/13/gotw-3-using-the-standard-library-or-temporaries-revisited-310/">GotW #3:
+  Using the Standard Library (or, Temporaries Revisited) (3/10)</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Res-move">CppCoreGuidelines
+ &#8201;&#8212;&#8201;ES.56: Write <code>std::move()</code> only when you need to explicitly move an object to another scope</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#f6-if-your-function-may-not-throw-declare-it-noexcept">CppCoreGuidelines
+ &#8201;&#8212;&#8201;F.6: If your function may not throw, declare it <code>noexcept</code></a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#f18-for-consume-parameters-pass-by-x-and-stdmove-the-parameter">CppCoreGuidelines
+ &#8201;&#8212;&#8201;F.18: For "consume" parameters, pass by <code>X&amp;&amp;</code> and <code>std::move</code> the parameter</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rf-return-ref-ref">CppCoreGuidelines
+ &#8201;&#8212;&#8201;F.45 Don&#8217;t return a <code>T&amp;&amp;</code></a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rc-copy-self">CppCoreGuidelines
+ &#8201;&#8212;&#8201;C.62: Make copy assignment safe for self-assignment</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rc-move-assignment">CppCoreGuidelines
+ &#8201;&#8212;&#8201;C.63: Make move assignment non-<code>virtual</code>, take the parameter by <code>&amp;&amp;</code>, and return by non-<code>const &amp;</code></a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rc-move-semantic">CppCoreGuidelines
+ &#8201;&#8212;&#8201;C.64: A move operation should move and leave its source in a valid state</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#c65-make-move-assignment-safe-for-self-assignment">CppCoreGuidelines
+ &#8201;&#8212;&#8201;C.65: Make move assignment safe for self-assignment</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rc-move-noexcept">CppCoreGuidelines
+ &#8201;&#8212;&#8201;C.66: Make move operations <code>noexcept</code></a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#define-copy-move-and-destroy-consistently">CppCoreGuidelines
+ &#8201;&#8212;&#8201;Define Copy, move, and destroy consistently</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Cr-value-return">CppCoreGuidelines
+ &#8201;&#8212;&#8201;Return containers by value (relying on move or copy elision for efficiency)</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#if-a-class-is-a-resource-handle-it-needs-a-constructor-a-destructor-and-copy-andor-move-operations">CppCoreGuidelines
+ &#8201;&#8212;&#8201;If a class is a resource handle, it needs a constructor, a destructor, and copy and/or move
+  operations</a>
 </p>
 </li>
 </ul></div>
@@ -2919,6 +3412,67 @@ The functions that are <code>= delete</code> are not implemented.
 </p>
 </li>
 </ul></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="title">References</div>
+<div class="ulist"><ul>
+<li>
+<p>
+Meyers, S. <em>Effective modern C++&#8201;&#8212;&#8201;42 ways to improve your use of C++11 and C++14</em>. p.74
+ &#8201;&#8212;&#8201;79. 2014. O&#8217;Reilly Media Inc. Sebastopol, CA.
+</p>
+</li>
+<li>
+<p>
+Stroustrup, B. <em>The C++ programming language</em> 4th Edition. p.517&#8201;&#8212;&#8201;526. 2013. Pearson
+  Education Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+<a href="http://en.cppreference.com/w/cpp/language/rule_of_three">cppreference&#8201;&#8212;&#8201;The rule of
+  three/five/zero</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#c20-if-you-can-avoid-defining-default-operations-do">CppCoreGuidelines
+ &#8201;&#8212;&#8201;C.20: If you can avoid defining default operations, do</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rc-default0">CppCoreGuidelines
+ &#8201;&#8212;&#8201;C.43: Ensure that a class has a default constructor</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rc-default">CppCoreGuidelines
+ &#8201;&#8212;&#8201;C.45: Don&#8217;t define a default constructor that only initializes data members; use in-class
+  member initializers instead</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rc-eqdefault">CppCoreGuidelines
+ &#8201;&#8212;&#8201;C.80: Use <code>=default</code> if you have to be explicit about using the default semantics</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rc-delete">CppCoreGuidelines
+ &#8201;&#8212;&#8201;C.81: Use <code>=delete</code> when you want to disable default behavior (without wanting an alternative)</a>
+</p>
+</li>
+</ul></div>
+</td>
+</tr></table>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_copy_elision">Copy elision</h3>
@@ -3034,6 +3588,47 @@ This is one of the <em>very few</em> hard and fast rules that I assert.
 </p>
 </li>
 </ul></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="title">References</div>
+<div class="ulist"><ul>
+<li>
+<p>
+Meyers, S. <em>More effective C++: 35 new ways to improve your programs and designs</em>. p.169&#8201;&#8212;&#8201;177. 1996.
+  Addison Wesley. Westford, MA.
+</p>
+</li>
+<li>
+<p>
+Meyers, S. <em>Effective modern C++&#8201;&#8212;&#8201;42 ways to improve your use of C++11 and C++14</em>. p.74
+ &#8201;&#8212;&#8201;79. 2014. O&#8217;Reilly Media Inc. Sebastopol, CA.
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#es56-write-stdmove-only-when-you-need-to-explicitly-move-an-object-to-another-scope">CppCoreGuidelines
+ &#8201;&#8212;&#8201;ES.56: Write <code>std::move()</code> only when you need to explicitly move an object to another scope</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Cr-value-return">CppCoreGuidelines
+ &#8201;&#8212;&#8201;Return containers by value (relying on move or copy elision for efficiency)</a>
+</p>
+</li>
+<li>
+<p>
+<a href="http://en.cppreference.com/w/cpp/language/copy_elision">cppreference&#8201;&#8212;&#8201;Copy elision</a>
+</p>
+</li>
+</ul></div>
+</td>
+</tr></table>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_passing_by_parameters_revisited">Passing by parameters revisited</h3>
@@ -3175,6 +3770,30 @@ film<span style="color: #990000">::</span><span style="font-weight: bold"><span 
      revenue_<span style="color: #FF0000">{</span>revenue<span style="color: #FF0000">}</span>
 <span style="color: #FF0000">{</span>
 <span style="color: #FF0000">}</span></tt></pre></div></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="title">References</div>
+<div class="ulist"><ul>
+<li>
+<p>
+<a href="https://youtu.be/xnqTKD8uD64?t=51m6s">CppCon 2014: Herb Sutter "Back to the Basics!
+  Essentials of Modern C++ Style"</a>
+</p>
+</li>
+<li>
+<p>
+Meyers, S. <em>Effective modern C++&#8201;&#8212;&#8201;42 ways to improve your use of C++11 and C++14</em>. p.281
+ &#8201;&#8212;&#8201;292. 2014. O&#8217;Reilly Media Inc. Sebastopol, CA.
+</p>
+</li>
+</ul></div>
+</td>
+</tr></table>
+</div>
 </div>
 </div>
 </div>
@@ -3486,6 +4105,48 @@ If it doesn&#8217;t matter between the two, choose list-initialisation.
 </ul></div>
 </li>
 </ul></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="title">References</div>
+<div class="ulist"><ul>
+<li>
+<p>
+Meyers, S. <em>Effective STL: 50 specific ways to improve your use of the standard template
+  library</em>. p.33&#8201;&#8212;&#8201;35. 2001. Pearson Education, Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+<a href="https://herbsutter.com/2013/06/05/gotw-92-auto-variables-part-1/">GotW #92: Auto Variables,
+  Part 1</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://herbsutter.com/2013/06/07/gotw-93-auto-variables-part-2/">GotW #93: Auto Variables,
+  Part 2</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://herbsutter.com/2013/06/13/gotw-94-special-edition-aaa-style-almost-always-auto/">GotW
+  #94 Special Edition: AAA Style (Almost Always Auto)</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://herbsutter.com/2013/08/12/gotw-94-solution-aaa-style-almost-always-auto/">GotW #94
+  Solution: AAA Style (Almost Always Auto)</a>
+</p>
+</li>
+</ul></div>
+</td>
+</tr></table>
+</div>
 </div>
 </div>
 </div>
@@ -3493,7 +4154,7 @@ If it doesn&#8217;t matter between the two, choose list-initialisation.
 <div id="footer">
 <div id="footer-text">
 Version 1<br />
-Last updated 2016-08-27 19:03:57 AEST
+Last updated 2016-08-28 20:06:27 AEST
 </div>
 </div>
 </body>
