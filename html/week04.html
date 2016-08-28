@@ -3008,7 +3008,7 @@ by Lorenzo Bettini
 http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite -->
 <pre><tt><span style="font-weight: bold"><span style="color: #0000FF">template</span></span> <span style="color: #990000">&lt;</span><span style="font-weight: bold"><span style="color: #0000FF">typename</span></span> <span style="color: #008080">T</span><span style="color: #990000">&gt;</span>
-record<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;::</span><span style="font-weight: bold"><span style="color: #000000">record</span></span><span style="color: #990000">(</span>record<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;&amp;&amp;</span> o<span style="color: #990000">)</span>
+magic<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;::</span><span style="font-weight: bold"><span style="color: #000000">magic</span></span><span style="color: #990000">(</span>magic<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;&amp;&amp;</span> o<span style="color: #990000">)</span>
    <span style="color: #990000">:</span> data_<span style="color: #FF0000">{</span>std<span style="color: #990000">::</span><span style="font-weight: bold"><span style="color: #000000">move</span></span><span style="color: #990000">(</span>o<span style="color: #990000">.</span>data_<span style="color: #990000">)</span><span style="color: #FF0000">}</span><span style="color: #990000">,</span> <span style="font-style: italic"><span style="color: #9A1900">// data_ is a vector&lt;T&gt;</span></span>
      resource_<span style="color: #FF0000">{</span>o<span style="color: #990000">.</span>resource_<span style="color: #FF0000">}</span> <span style="font-style: italic"><span style="color: #9A1900">// resource_ is a pointer pointing to something on the free store</span></span>
 <span style="color: #FF0000">{</span>
@@ -3131,7 +3131,7 @@ by Lorenzo Bettini
 http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite -->
 <pre><tt><span style="font-weight: bold"><span style="color: #0000FF">template</span></span> <span style="color: #990000">&lt;</span><span style="font-weight: bold"><span style="color: #0000FF">typename</span></span> <span style="color: #008080">T</span><span style="color: #990000">&gt;</span>
-record<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;&amp;</span> record<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;::</span><span style="font-weight: bold"><span style="color: #0000FF">operator</span></span><span style="color: #990000">=(</span>record<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;&amp;&amp;</span> r<span style="color: #990000">)</span>
+magic<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;&amp;</span> magic<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;::</span><span style="font-weight: bold"><span style="color: #0000FF">operator</span></span><span style="color: #990000">=(</span>magic<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;&amp;&amp;</span> r<span style="color: #990000">)</span>
 <span style="color: #FF0000">{</span>
    <span style="font-weight: bold"><span style="color: #0000FF">if</span></span> <span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">this</span></span> <span style="color: #990000">!=</span> <span style="color: #990000">&amp;</span>r<span style="color: #990000">)</span>
    <span style="color: #FF0000">{</span>
@@ -3384,18 +3384,17 @@ by Lorenzo Bettini
 http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite -->
 <pre><tt><span style="font-weight: bold"><span style="color: #0000FF">template</span></span> <span style="color: #990000">&lt;</span><span style="font-weight: bold"><span style="color: #0000FF">typename</span></span> <span style="color: #008080">T</span><span style="color: #990000">&gt;</span>
-<span style="font-weight: bold"><span style="color: #0000FF">class</span></span> <span style="color: #008080">record</span>
+<span style="font-weight: bold"><span style="color: #0000FF">class</span></span> <span style="color: #008080">magic</span>
 <span style="color: #FF0000">{</span>
 <span style="font-weight: bold"><span style="color: #0000FF">public</span></span><span style="color: #990000">:</span>
-   <span style="font-weight: bold"><span style="color: #000000">record</span></span><span style="color: #990000">()</span> <span style="color: #990000">=</span> <span style="font-weight: bold"><span style="color: #0000FF">default</span></span><span style="color: #990000">;</span>
-   <span style="font-weight: bold"><span style="color: #000000">record</span></span><span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">const</span></span> T<span style="color: #990000">&amp;</span> t<span style="color: #990000">);</span>
+   <span style="font-weight: bold"><span style="color: #000000">magic</span></span><span style="color: #990000">()</span> <span style="color: #990000">=</span> <span style="font-weight: bold"><span style="color: #0000FF">default</span></span><span style="color: #990000">;</span>
 
-   <span style="font-weight: bold"><span style="color: #000000">record</span></span><span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">const</span></span> record<span style="color: #990000">&amp;)</span> <span style="color: #990000">=</span> <span style="font-weight: bold"><span style="color: #0000FF">delete</span></span><span style="color: #990000">;</span>
-   record<span style="color: #990000">&amp;</span> <span style="font-weight: bold"><span style="color: #0000FF">operator</span></span><span style="color: #990000">=(</span><span style="font-weight: bold"><span style="color: #0000FF">const</span></span> record<span style="color: #990000">&amp;)</span> <span style="color: #990000">=</span> <span style="font-weight: bold"><span style="color: #0000FF">delete</span></span><span style="color: #990000">;</span>
-   <span style="color: #990000">~</span><span style="font-weight: bold"><span style="color: #000000">record</span></span><span style="color: #990000">()</span> <span style="color: #990000">=</span> <span style="font-weight: bold"><span style="color: #0000FF">default</span></span><span style="color: #990000">;</span>
+   <span style="font-weight: bold"><span style="color: #000000">magic</span></span><span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">const</span></span> magic<span style="color: #990000">&amp;)</span> <span style="color: #990000">=</span> <span style="font-weight: bold"><span style="color: #0000FF">delete</span></span><span style="color: #990000">;</span>
+   magic<span style="color: #990000">&amp;</span> <span style="font-weight: bold"><span style="color: #0000FF">operator</span></span><span style="color: #990000">=(</span><span style="font-weight: bold"><span style="color: #0000FF">const</span></span> magic<span style="color: #990000">&amp;)</span> <span style="color: #990000">=</span> <span style="font-weight: bold"><span style="color: #0000FF">delete</span></span><span style="color: #990000">;</span>
+   <span style="color: #990000">~</span><span style="font-weight: bold"><span style="color: #000000">magic</span></span><span style="color: #990000">()</span> <span style="color: #990000">=</span> <span style="font-weight: bold"><span style="color: #0000FF">default</span></span><span style="color: #990000">;</span>
 
-   <span style="font-weight: bold"><span style="color: #000000">record</span></span><span style="color: #990000">(</span>record<span style="color: #990000">&amp;&amp;)</span> <span style="color: #990000">=</span> <span style="font-weight: bold"><span style="color: #0000FF">default</span></span><span style="color: #990000">;</span>
-   record<span style="color: #990000">&amp;</span> <span style="font-weight: bold"><span style="color: #0000FF">operator</span></span><span style="color: #990000">=(</span>record<span style="color: #990000">&amp;&amp;)</span> <span style="color: #990000">=</span> <span style="font-weight: bold"><span style="color: #0000FF">default</span></span><span style="color: #990000">;</span>
+   <span style="font-weight: bold"><span style="color: #000000">magic</span></span><span style="color: #990000">(</span>magic<span style="color: #990000">&amp;&amp;)</span> <span style="color: #990000">=</span> <span style="font-weight: bold"><span style="color: #0000FF">default</span></span><span style="color: #990000">;</span>
+   magic<span style="color: #990000">&amp;</span> <span style="font-weight: bold"><span style="color: #0000FF">operator</span></span><span style="color: #990000">=(</span>magic<span style="color: #990000">&amp;&amp;)</span> <span style="color: #990000">=</span> <span style="font-weight: bold"><span style="color: #0000FF">default</span></span><span style="color: #990000">;</span>
 <span style="font-weight: bold"><span style="color: #0000FF">private</span></span><span style="color: #990000">:</span>
    std<span style="color: #990000">::</span><span style="color: #008080">vector&lt;T&gt;</span> data_<span style="color: #990000">;</span>
    resource_t<span style="color: #990000">*</span> resource_<span style="color: #990000">;</span>
@@ -4154,7 +4153,7 @@ Meyers, S. <em>Effective STL: 50 specific ways to improve your use of the standa
 <div id="footer">
 <div id="footer-text">
 Version 1<br />
-Last updated 2016-08-28 20:06:27 AEST
+Last updated 2016-08-28 20:19:54 AEST
 </div>
 </div>
 </body>

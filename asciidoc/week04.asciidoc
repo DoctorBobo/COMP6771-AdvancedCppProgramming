@@ -797,7 +797,7 @@ smart_ptr<T>::smart_ptr(smart_ptr<T>&& o)
 [source,cpp]
 ------------
 template <typename T>
-record<T>::record(record<T>&& o)
+magic<T>::magic(magic<T>&& o)
    : data_{std::move(o.data_)}, // data_ is a vector<T>
      resource_{o.resource_} // resource_ is a pointer pointing to something on the free store
 {
@@ -841,7 +841,7 @@ record<T>::record(record<T>&& o)
 [source,cpp]
 ------------
 template <typename T>
-record<T>& record<T>::operator=(record<T>&& r)
+magic<T>& magic<T>::operator=(magic<T>&& r)
 {
    if (this != &r)
    {
@@ -927,18 +927,17 @@ record<T>& record<T>::operator=(record<T>&& r)
 [source,cpp]
 ------------
 template <typename T>
-class record
+class magic
 {
 public:
-   record() = default;
-   record(const T& t);
+   magic() = default;
 
-   record(const record&) = delete;
-   record& operator=(const record&) = delete;
-   ~record() = default;
+   magic(const magic&) = delete;
+   magic& operator=(const magic&) = delete;
+   ~magic() = default;
 
-   record(record&&) = default;
-   record& operator=(record&&) = default;
+   magic(magic&&) = default;
+   magic& operator=(magic&&) = default;
 private:
    std::vector<T> data_;
    resource_t* resource_;
