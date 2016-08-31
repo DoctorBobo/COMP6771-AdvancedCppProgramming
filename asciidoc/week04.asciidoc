@@ -758,7 +758,10 @@ const auto&& rvalue_reference_to_const = 0; // legal, but the rvalue reference i
 * Moving things happens at the near of an object's lifetime.
    - Does that sound familiar?
    - Moving works with rvalue references.
-* An object that has been moved is left in a destructible state, but should not be read from.
+* An object that has been moved is left in a valid, but unspecified state.
+   ** You may perform operations that do not have any preconditions on a recently-moved object.
+   ** Performing operations with postconditions on a recently-moved object can cause undefined
+      behaviour, because we don't know what the state of the object is when we operate on it.
 * **The rule of five is an extension to the rule of three, requiring you to supply a user-defined
      move constructor, _and_ a user-defined move assignment operator.**
 

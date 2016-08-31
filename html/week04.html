@@ -2904,8 +2904,21 @@ Moving works with rvalue references.
 </li>
 <li>
 <p>
-An object that has been moved is left in a destructible state, but should not be read from.
+An object that has been moved is left in a valid, but unspecified state.
 </p>
+<div class="ulist"><ul>
+<li>
+<p>
+You may perform operations that do not have any preconditions on a recently-moved object.
+</p>
+</li>
+<li>
+<p>
+Performing operations with postconditions on a recently-moved object can cause undefined
+      behaviour, because we don&#8217;t know what the state of the object is when we operate on it.
+</p>
+</li>
+</ul></div>
 </li>
 <li>
 <p>
@@ -4153,7 +4166,7 @@ Meyers, S. <em>Effective STL: 50 specific ways to improve your use of the standa
 <div id="footer">
 <div id="footer-text">
 Version 1<br />
-Last updated 2016-08-28 20:25:22 AEST
+Last updated 2016-08-31 21:54:25 AEST
 </div>
 </div>
 </body>
