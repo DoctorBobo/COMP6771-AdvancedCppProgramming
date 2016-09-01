@@ -24,6 +24,8 @@ Week 5 tutorial postscript notes
 * No memory leaks (usually).
 * Usually zero-to-very-little overhead.
 * Factories should usually return a `unique_ptr`.
+   ** Clients can promote a `unique_ptr` to `shared_ptr`.
+   ** It is not possible to transform a `shared_ptr` to a `unique_ptr`.
 
 ==== `std::make_unique`
 * Your standard `unique_ptr` allocator.
@@ -48,6 +50,8 @@ Week 5 tutorial postscript notes
 * Shared pointers are expensive: not only do they need to manage the resource that they have been
   asked to manage (like a `unique_ptr`), but they also need to manage a control block for reference
   counting.
+   ** The reference counting (increment and decrement) is atomic (for concurrency purposes), so it
+      is slower than normal arithmetic operations.
 * This control block is how a `shared_ptr` knows if there are multiple owners, or if it is the sole
   owner.
 * You need to justify why you need to use a `shared_ptr` over a `unique_ptr`.
@@ -57,9 +61,9 @@ Week 5 tutorial postscript notes
 ==== `std::make_shared` and `std::allocate_shared`
 * `make_shared` is the common garden variety: it is a specialised version of `allocate_shared`.
 * Similar to `make_unique`, except they produce a `shared_ptr` instead.
-   - `allocate_shared` will use a user-specified allocator.
-   - `make_shared` will use the standard allocator.
-   - Prefer `make_shared`
+   ** `allocate_shared` will use a user-specified allocator.
+   ** `make_shared` will use the standard allocator.
+   ** Prefer `make_shared`
 * These functions only perform _one_ allocation, whereas explicitly assigning a `shared_ptr` makes
   two allocations.
 * This means that `make_shared` is faster than explicitly allocating your own `shared_ptr`.
@@ -83,12 +87,44 @@ Week 5 tutorial postscript notes
 * Raw pointers are great...
    ** ...but they are only for resource _observers_.
 * You should only store smart pointers.
-   - This is opposed to storing raw pointers; if you can avoid storing pointers, please do so!
+   - This is opposed to storing raw pointers: if you can avoid manually allocating objects on the
+     heap, please do so!
    - Remember that pointers should only be used when you need reference semantics _and_ you want
      to be able to change what you refer to, _or_ if you need a valid "nothing to reference" option.
 * You should feel free to keep passing raw pointers around and returning raw pointers from
   functions...
    ** ...with a few caveats.
+
+=== 1. Prefer raw pointers as object parameters to functions
+* Raw pointers are not aware of lifetime policies.
+   ** If a function doesn't participate in the maintenance of this policy, it doesn't need to take
+      a smart pointer.
+* Using raw pointers as observers is recommended when you are sure that the object (pointee) will
+  outlive the raw pointer.
+   ** Copying a `shared_ptr` is expensive, and moving a `unqiue_ptr` too much will make things
+      confusing.
+* Standard `const` rules still apply.
+* Standard reference vs pointer rules still apply.
+
+=== 2. Pass `unique_ptr` by value when the pointee's lifetime ends at the end of the callee function
+* Such functions are called sinks.
+* RAII and move semantics will make sure that the `unique_ptr` is correctly transferred and
+  destroyed when the function returns.
+
+=== 3. Pass `unique_ptr` by reference when you wish to modify the pointer's value, but never pass a `unique_ptr` by reference-to-`const`
+* Passing a `unique_ptr` by reference implies that there is potential for the pointer to change
+  what it points to.
+* Passing a `unique_ptr` by reference-to-`const` offers no additional benefits to passing a raw
+  pointer, and actually restricts what can be passed in to a `unique_ptr` type. Recall rule 1.
+
+=== 4. Pass `shared_ptr` by value when you wish for the callee to share ownership with the caller
+* The function needs to retain a copy of the `shared_ptr` for shared ownership.
+
+=== 5. Pass `shared_ptr` by reference when you wish to modify the pointer's value
+* Same as 3.1
+* Accepting a `shared_ptr` as a reference-to-`const` parameter is only acceptable when your
+  function calls a function that implements rule 4.
+* Otherwise, prefer rule 1.
 
 == `decltype`
 * A very powerful type deduction tool.
@@ -102,20 +138,23 @@ Week 5 tutorial postscript notes
 * [big]#How about in English, professor?#
 * The above is a bit technical, so let's break it down:
    - `decltype(e)` takes the type of whatever is inside, and becomes like an unnamed type alias
-     (formerly known as a `typedef`).
+     (named type aliases were formerly known as a `typedef`).
    - `decltype((e))` takes the type of whatever is inside, and becomes like an unnamed type alias,
      with the caveat that the type is a reference to `e`'s type.
 * Why would you want to _ever_ use an unnamed alias?
    - For the same reason you want to use `auto`!
 * Relying on type deduction means that you are placing trust in the compiler to work out the correct
   type.
-   - The compiler is actually a fair bit smarter than you for things like this. Trust your tool.
+   ** Your explicit type might go out of date.
+   ** `decltype(e)` will only go out of date if your expression is _wrong_.
+      *** You probably have a bigger problem at that point.
+   ** Trust your tool.
 * But I can't see my type!
    - Correct, and the minute your type goes off the screen, your type can't be seen anyway.
    - You should keep the scope of variables as small as possible to limit their potential misuse.
    - If you use an IDE, your IDE should be able to deduce the type information on the fly.
-   - However, a stronger argument is that `decltype`, like `auto` helps you code against interfaces,
-     _not_ implementations.
+   - However, a stronger argument is that `decltype`, like `auto`, helps you code against interfaces;
+     explicit types promote coding against implementations.
    - Unlike `auto`, `decltype` isn't supposed to be used everywhere.
 * `decltype` doesn't replace `auto` either:
    - `auto` is placed on the left, before the identifier.
@@ -168,4 +207,7 @@ auto i = decltype(0){0};
 auto j = decltype(i){1};
 ------------
 
-* Heavens, no! Use `decltype` when you need a type to be the 
+* Heavens, no! Use `decltype` when you require type that is dependent on some expression.
+* An example is the `value_type` above: it is dependent on a container.
+* We can also use `decltype` to deduce the return type of complex types.
+   ** One of these will feature in the `template` notes.
