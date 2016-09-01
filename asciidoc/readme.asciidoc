@@ -113,9 +113,11 @@ features introduced. You can tell students that the exam will focus on the core 
 [TIP]
 =====
 * I am a fan of works by Bjarne Stroustrup, Herb Sutter, Scott Meyers, Anthony Williams, and Sergey
-  Zubkov.
-* Bjarne Stroustrup is the original creator of {cpp}. He is a senior member of WG21.
-* Herb Sutter is a very senior member of the {cpp} community, and is the convener for WG21.
+  Zubkov, Howard Hinnant, and Niel McIntosh.
+* link:https://isocpp.org/wiki/faq/wg21#bjarne-stroustrup[Bjarne Stroustrup] is the original
+  creator of {cpp}. He is a senior member of WG21.
+* link:https://isocpp.org/wiki/faq/wg21#herb-sutter[Herb Sutter] is a senior member of the {cpp}
+  community, and is the convener for WG21.
 * Scott Meyers was a senior member of the {cpp} community, but chose to retire from {cpp} in 2015.
   He is directly responsible for the programming style of a large portion of the {cpp} community.
 * Anthony Williams is a concurrency expert and a senior member of the {cpp} community.
@@ -123,11 +125,15 @@ features introduced. You can tell students that the exam will focus on the core 
   He is a member of WG21, and is a _major_ contributor to en.cppreference.com (see below). He also
   has a link:https://www.quora.com/profile/Sergey-Zubkov-1[Quora.com] profile with 800+ answers in
   {cpp} alone.
+* link:https://isocpp.org/wiki/faq/wg21#howard-hinnant[Howard Hinnant] is the Chair Emeritus for
+  LWG, and is a highly influential member of WG21. He single handedly implemented `libstdc++`,
+  which is clang's standard library for {cpp}.
 
 * WG21 is the name of the team of people that ultimately decide what features go into the next
   version of {cpp}. WG stands for 'Working Group'.
-* SG14 is a Study Group underneath WG21, led by Michael Wong, concerned with {cpp} for games and
-  finance. I am a passive member of SG14 at present.
+* LWG stands for the 'Library Working Group'.
+* SG14 is a Study Group underneath WG21, led by link:https://isocpp.org/wiki/faq/wg21#michael-wong[Michael Wong],
+  concerned with {cpp} for games and finance. I am a passive member of SG14 at present.
 =====
 
 === Websites
