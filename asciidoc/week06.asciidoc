@@ -1,0 +1,171 @@
+Week 5 tutorial postscript notes
+================================
+:Author: Christopher Di Bella
+:Email: cjdb.ns@gmail.com
+:Date: 2016/08/03
+:Revision: 1
+:cpp: C++
+
+== Smart pointers
+* A smart pointer is some type that behaves as a pointer, but also does something extra.
+* Smart pointers are resource _oweners_.
+   ** They manage the resource they own.
+   ** This often means that they "clean up", or delete their resources once they are no longer used.
+* The most common form of smart pointers that you will encounter are:
+   ** `std::unique_ptr`
+   ** `std::shared_ptr`
+   ** `std::weak_ptr`
+   ** `boost::scoped_ptr` (extension material, not assessable)
+
+=== `std::unique_ptr`
+* The sole _owner_ of an object.
+* Your default smart pointer.
+* When a `unique_ptr` goes out of scope, the deleter is called, which "cleans up" the resources.
+* No memory leaks (usually).
+* Usually zero-to-very-little overhead.
+* Factories should usually return a `unique_ptr`.
+
+==== `std::make_unique`
+* Your standard `unique_ptr` allocator.
+* No need to use `new`.
+* No chance of leaking memory!
+* Prefer `make_unique` to raw `new`.
+
+==== Custom deleters (advanced)
+* Are useful for when you aren't allocating memory via `make_unique`.
+* Why would you possibly want to allocate memory otherwise?
+* Perhaps you've got a custom allocator, or a custom deleter.
+* link:blah[This is a good (practical) example of where a custom deleter is necessary.]
+
+=== `std::shared_ptr`
+* Used when there are multiple owners of an object. 
+* The resource a only released when there are no more owners.
+* Think of the classroom:
+   - When we are all in the room, we are all using the lights.
+   - If the someone leaves the room, it is impolite to turn the lights off while others are still
+     in the shared place.
+   - When the last person leaves, they turn the lights off.
+* Shared pointers are expensive: not only do they need to manage the resource that they have been
+  asked to manage (like a `unique_ptr`), but they also need to manage a control block for reference
+  counting.
+* This control block is how a `shared_ptr` knows if there are multiple owners, or if it is the sole
+  owner.
+* You need to justify why you need to use a `shared_ptr` over a `unique_ptr`.
+* If you use a `shared_ptr` irresponsibly, you can still end up with memory leaks!
+   - This is most commonly found when two objects depend on each other.
+
+==== `std::make_shared` and `std::allocate_shared`
+* `make_shared` is the common garden variety: it is a specialised version of `allocate_shared`.
+* Similar to `make_unique`, except they produce a `shared_ptr` instead.
+   - `allocate_shared` will use a user-specified allocator.
+   - `make_shared` will use the standard allocator.
+   - Prefer `make_shared`
+* These functions only perform _one_ allocation, whereas explicitly assigning a `shared_ptr` makes
+  two allocations.
+* This means that `make_shared` is faster than explicitly allocating your own `shared_ptr`.
+* There are only a handful of instances where you shouldn't (or more, can't) use `make_shared`:
+   . When you need to provide a custom deleter
+   .
+   . When the object is extremely large (see xref:weak_ptr-problems[Problems with `weak_ptr` and
+     `make_shared`]).
+
+=== `std::weak_ptr`
+* Is an affiliate of `shared_ptr`.
+* Is not actually a pointer: you can't do anything but check that a `shared_ptr` still owns a
+  resource.
+
+==== <<weak_ptr-problems,Problems with `weak_ptr` and `make_shared`>>
+* When an 
+
+== Smart pointers versus raw pointers
+* Smart pointers are great...
+   ** ...but they are only for resource _owners_.
+* Raw pointers are great...
+   ** ...but they are only for resource _observers_.
+* You should only store smart pointers.
+   - This is opposed to storing raw pointers; if you can avoid storing pointers, please do so!
+   - Remember that pointers should only be used when you need reference semantics _and_ you want
+     to be able to change what you refer to, _or_ if you need a valid "nothing to reference" option.
+* You should feel free to keep passing raw pointers around and returning raw pointers from
+  functions...
+   ** ...with a few caveats.
+
+== `decltype`
+* A very powerful type deduction tool.
+* `decltype(e)` for some expression `e` will be deduced as the type of the expression `e`.
+   - If `e` does not have a valid expression type, your code will not compile.
+   - If `e` is the name of an overloaded function, your code will not compile.
+* `decltype((e))`, for some _parenthesised_ expression `(e)` does not resolve to the same type as
+  `decltype(e)`:
+   - If `e` is an lvalue, then `decltype((e))` will be deduced as `decltype(e)&`.
+   - If `e` is an rvalue, then `decltype((e))` will be deduced as `decltype(e)&&`.
+* [big]#How about in English, professor?#
+* The above is a bit technical, so let's break it down:
+   - `decltype(e)` takes the type of whatever is inside, and becomes like an unnamed type alias
+     (formerly known as a `typedef`).
+   - `decltype((e))` takes the type of whatever is inside, and becomes like an unnamed type alias,
+     with the caveat that the type is a reference to `e`'s type.
+* Why would you want to _ever_ use an unnamed alias?
+   - For the same reason you want to use `auto`!
+* Relying on type deduction means that you are placing trust in the compiler to work out the correct
+  type.
+   - The compiler is actually a fair bit smarter than you for things like this. Trust your tool.
+* But I can't see my type!
+   - Correct, and the minute your type goes off the screen, your type can't be seen anyway.
+   - You should keep the scope of variables as small as possible to limit their potential misuse.
+   - If you use an IDE, your IDE should be able to deduce the type information on the fly.
+   - However, a stronger argument is that `decltype`, like `auto` helps you code against interfaces,
+     _not_ implementations.
+   - Unlike `auto`, `decltype` isn't supposed to be used everywhere.
+* `decltype` doesn't replace `auto` either:
+   - `auto` is placed on the left, before the identifier.
+   - `decltype` is placed on the right, after the `operator=`.
+
+[source, cpp]
+-------------
+#include <iostream>
+#include <vector>
+
+std::vector<int> make_crowd(int children, int adults, int seniors);
+
+int main()
+{
+   auto crowd = make_crowd(10, 120, 16);
+   // auto on the left, decltype on the right
+   auto first_child = decltype(crowd)::value_type{7}; // is the same as...
+   auto second_child = std::vector<int>::value_type{7}; // is the same as...
+   auto third_child = int{7};
+}
+-------------
+
+* That seems pointless... why didn't we just use `int{0}`?
+* Consider this modification:
+
+[source, cpp]
+-------------
+#include <iostream>
+#include <vector>
+
+// children are often proud of their age, and will happily tell you that they are "six and a half",
+// so all children will now give an _exact_ age
+std::vector<double> make_crowd(int children, int adults, int seniors);
+
+int main()
+{
+   auto crowd = make_crowd(10, 120, 16);
+   // auto on the left, decltype on the right
+   auto first_child = decltype(crowd)::value_type{7};   // is the same as std::vector<double>::value_type{7}; but not the same as...
+   auto second_child = std::vector<int>::value_type{7}; // both of which are embedded in our code
+   auto third_child = int{7};                           // errors are likely to crop up
+}
+-------------
+
+* So should I be using `decltype` like in this program?
+
+[source,cpp]
+------------
+auto i = decltype(0){0};
+auto j = decltype(i){1};
+------------
+
+* Heavens, no! Use `decltype` when you need a type to be the 
