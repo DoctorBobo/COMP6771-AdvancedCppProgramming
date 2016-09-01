@@ -887,8 +887,8 @@ magic<T>& magic<T>::operator=(magic<T>&& m)
 }
 ------------
 
-* Howard Hinnant (the man that pretty much single handedly wrote clang's libstdc++ from scratch)
-  argues that you shouldn't do this because:
+* Howard Hinnant (the man that single handedly wrote clang's libc++ from scratch) argues that you
+  shouldn't do this because:
    ** An rvalue reference promises that you either have a temporary, or are being promised that you
       are working with a temporary.
    ** If you have a reference to a true temporary, then the reference you hold is unique, and

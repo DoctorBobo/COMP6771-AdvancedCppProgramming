@@ -126,7 +126,7 @@ features introduced. You can tell students that the exam will focus on the core 
   has a link:https://www.quora.com/profile/Sergey-Zubkov-1[Quora.com] profile with 800+ answers in
   {cpp} alone.
 * link:https://isocpp.org/wiki/faq/wg21#howard-hinnant[Howard Hinnant] is the Chair Emeritus for
-  LWG, and is a highly influential member of WG21. He single handedly implemented `libstdc++`,
+  LWG, and is a highly influential member of WG21. He single handedly implemented `libc++`,
   which is clang's standard library for {cpp}.
 
 * WG21 is the name of the team of people that ultimately decide what features go into the next
