@@ -497,7 +497,7 @@ inline book read_file(const std::string& filename)
 * Prefer non-member, non-friend functions when possible.
    - Non-member, non-friend functions help to improve encapsulation.
 
-.Reference
+.References
 [TIP]
 =====
 * Stroustrup, B. _The {cpp} programming language_ 4th Edition. p.571 -- 576. 2013. Pearson
@@ -507,7 +507,6 @@ inline book read_file(const std::string& filename)
 * link:http://en.cppreference.com/w/cpp/language/friend[cppreference -- `friend` declaration]
 =====
 
-.References
 
 == Resource Acquisition is Initialisation (or as it's called in lectures, "Copy Control")
 * The _single_ most powerful feature C++ has to offer.
@@ -611,6 +610,7 @@ smart_ptr<T>& smart_ptr<T>::operator=(const smart_ptr<T>& d)
 
 [source,cpp]
 ------------
+// check-for-self implementation
 template <typename T>
 smart_ptr<T>& smart_ptr<T>::operator=(const smart_ptr<T>& d)
 {
@@ -637,18 +637,41 @@ smart_ptr<T>& smart_ptr<T>::operator=(const smart_ptr<T>& d)
 
 [source,cpp]
 ------------
+// copy-and-swap implementation
 template <typename T>
-smart_ptr<T>& smart_ptr<T>::operator=(const smart_ptr<T>& d)
+smart_ptr<T>& smart_ptr<T>::operator=(smart_ptr<T> d) // d is passed by value, which invokes the copy constructor
 {
-   auto t = smart_ptr{d}; // copy constructor call
-   std::swap(*this, t);   // resources of our old smart_ptr go into t
+   using std::swap; // _always_ do this
+   swap(*this, d);  // resources of our old smart_ptr go into t
    return *this;
-} // t cleaned up here by definition
+} // d cleaned up here by definition
 ------------
 
 * ...which we can do by invoking the copy constructor and the destructor!
-   - Credit goes to Scott Meyers.
-   - This is the recommended one, unless you have some reason to use the second one.
+* There's still a problem with this one.
+   - If `this == &d`, then we've just performed an expensive copy for nothing!
+   - Fortunately, there's a simple fix:
+
+[source,cpp]
+------------
+// check-for-self + copy-and-swap
+template <typename T>
+smart_ptr<T>& smart_ptr<T>::operator=(const smart_ptr<T>& d) // d is passed by reference-to-const again
+{
+   if (this != &d) // avoid the expensive copy if it's self-assignment
+   {
+      using std::swap;
+      auto t = d; // we copy d into t via the smart_ptr<T> copy constructor
+      swap(*this, t); // resources from the copy go into t
+   } // t cleaned up here
+
+   return *this;
+}
+------------
+
+* This is the preferred copy assingment operator.
+   - Exception: when you are allocating an array on the free store.
+   - That's when you go back to the original check-for-self copy assignment operator.
 =====
 
 * [big]#**The rule of three states that if you have a need to implement one of these, you must implement
@@ -676,6 +699,8 @@ smart_ptr<T>& smart_ptr<T>::operator=(const smart_ptr<T>& d)
   p.9 -- 17, 25 -- 68. 2000. Pearson Education, Inc. Indianapolis, IN.
 * Sutter, H. _More exceptional {cpp}: 40 new engineering puzzles, programming problems, and
   solutions_. p.126 -- 131. 2002. Pearson Education, Inc. Boston, MA.
+* link:http://stackoverflow.com/a/9322542/4097528[StackOverflow: Howard Hinnant's answer to
+  "Move assignment operator and `if (this != &rhs)`"]
 * link:http://en.cppreference.com/w/cpp/language/copy_constructor[cppreference -- Copy
   constructors]
 * link:http://en.cppreference.com/w/cpp/language/copy_assignment[cppreference -- Copy assignment
@@ -844,27 +869,59 @@ magic<T>::magic(magic<T>&& o)
 [source,cpp]
 ------------
 template <typename T>
-magic<T>& magic<T>::operator=(magic<T>&& r)
+magic<T>& magic<T>::operator=(magic<T>&& m)
 {
    if (this != &r)
    {
       delete[] resource_;
-      data_ = std::move(r.data_);
-      resource_ = r.resource_;
-      r.resource_ = nullptr;
+      resource_ = m.resource_;
+      m.resource_ = nullptr;
+
+      size_ = m.size_;
+      m.size_ = 0;
+
+      data_ = std::move(m.data_);
    }
 
    return *this;
 }
 ------------
+
+* Howard Hinnant (the man that pretty much single handedly wrote clang's libstdc++ from scratch)
+  argues that you shouldn't do this because:
+   ** An rvalue reference promises that you either have a temporary, or are being promised that you
+      are working with a temporary.
+   ** If you have a reference to a true temporary, then the reference you hold is unique, and
+      self-assignment is literally impossible.
+   ** If you haven't received a reference to a temporary, then the client has a bug. It's _their_
+      fault, and _their_ problem to fix.
+* Howard also believes this is better than the above (and given the above arguments, I'm inclined
+  to agree):
+
+[source,cpp]
+------------
+template <typename T>
+magic<T>& magic<T>::operator=(magic<T>&& m)
+{
+   assert(this != &r);
+   delete[] resource_;
+   resource_ = m.resource_;
+   m.resource_ = nullptr;
+
+   data_ = std::move(m.data_);
+
+   return *this;
+}
+------------
+
+* This way, the client is forced to fix their problem, rather than dart around it.
 =========
 
 [WARNING]
 =========
 * Not everything is moveable (built-in types, stack-allocated arrays, etc.).
 * Some things that can be moved can't be copied (e.g. `unique_ptr`).
-   - These do not fall under the rule of three, but should still have user-defined move constructors
-     and user-defined move assignment operators.
+   - These do not fall under the rule of three or five.
 * Similarly to the rule of three, tools may help, but they probably won't. Be vigilant.
 =========
 
@@ -879,6 +936,8 @@ magic<T>& magic<T>::operator=(magic<T>&& r)
   Education Inc. Upper Saddle River, NJ.
 * Stroustrup, B. _Programming: principles and practice using {cpp}_. 2nd Edition. p.601 -- 5,
   637 -- 646. 2014. Pearson Education Inc. Upper Saddle River, NJ.
+* link:http://stackoverflow.com/a/9322542/4097528[StackOverflow: Howard Hinnant's answer to
+  "Move assignment operator and `if (this != &rhs)`"]
 * link:https://herbsutter.com/2013/05/06/gotw-1-variable-initialization-or-is-it-310/[GotW #1:
   Variable Initialization—or Is It? (3/10)]
 * link:https://herbsutter.com/2013/05/09/gotw-2-temporary-objects-510/[GotW #2: Temporary Objects]
