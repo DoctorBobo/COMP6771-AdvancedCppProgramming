@@ -1,0 +1,375 @@
+COMP6771 Word Ladder marker report
+==================================
+:Author: Christopher Di Bella
+:Email: cjdb.ns@gmail.com
+:Date: 2016/08/20
+:Revision: 1
+:cpp: C++
+
+**Please note that the details of this report are solely concerned with tutorial codes mon16a,
+tue16a, and tue17a. If you do not attend one of these tutorials, then this report does not apply
+to you: you are welcome to read these notes so that you can improve your code, but a point made
+here does _not_ represent your tutor's views.**
+
+== Introduction
+* The following report offers an overview of why students in these classes received their mark.
+* It serves as a guide to help students work out where they stand amongst others.
+* A mark deduction only happens once per mistake, even if the mistake frequently occurred.
+* The tone of this document is not the same as the tone of the feedback students received.
+
+== Things that went well
+* Many students scored very highly.
+* Many students followed at least some of the CppCoreGuidelines.
+   - Students that followed some of the guidelines scored well.
+   - Not following the guidelines didn't cause students to lose marks, but following them often
+     helped students retain marks.
+* Students who justified why they did something showed understanding.
+* Students took to using `vector` and `string` over C-style arrays and strings quite well.
+
+== Critical mistakes
+* A critical mistake is a mistake that carries serious weight.
+   - They often resulted in mark deductions.
+* Critical mistakes require careful analysis so that they aren't introduced into the next
+  assignment, or real-world code.
+* Some students didn't sort their output, or didn't produce all possible word ladders, and lost
+  marks for correctness.
+
+=== Complexity
+* Some students tried solving problems in exotic ways.
+* {cpp} is not about writing bleeding-edge fast code.
+   - It is about using the abstractions available to write clean, clear, and concise code.
+* While technically sound, it was difficult to work out what they had done, or why they had done
+  something.
+   - Consult link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Res-abstr[ES.2
+     Prefer suitable abstractions to direct use of language features].
+* Handcrafting an algorithm or data structure that is readily available in the C++ standard library
+  introduces unnecessary complexity.
+   - Consult link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Res-lib[ES.1:
+     Prefer the standard library to other libraries and to "handcrafted code"].
+   - Consult link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rsl-lib[SL.1:
+     Use libraries wherever possible].
+   - Consult link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rsl-sl[SL.2:
+     Prefer the standard library to other libraries].
+* All students should watch these two CppCon talks:
+   - link:https://www.youtube.com/watch?v=nesCaocNjtQ[CppCon 2014: Bjarne Stroustrup "Make Simple
+     Tasks Simple!"]
+   - link:https://www.youtube.com/watch?v=xnqTKD8uD64[CppCon 2014: Herb Sutter "Back to the Basics!
+     Essentials of Modern C++ Style"]
+
+=== Explicitly allocating memory
+* Explicitly allocating memory is not necessary for this assignment.
+* It is also very dangerous, as students hadn't learnt about Resource Acquisition Is Initialisation
+  (RAII).
+   - Consult link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rr-raii[R.1
+     Manage resources automatically using resource handles and RAII (Resource Acquisition Is
+     Initialization)].
+   - Consult link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rr-ptr[R.3
+     A raw pointer (a `T*`) is non-owning].
+* Fortunately, very few students did this.
+* The few who did generally forgot to clean up after themselves (very bad, as there isn't a garbage
+  collector to recollect memory!)
+   - Consult R.3 (linked above).
+   - Consult link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rr-newdelete[R.11
+     Avoid calling `new` and `delete` explicitly].
+   - Consult link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rr-immediate-alloc[R.12
+     Immediately give the result of an explicit allocation to a manager object].
+   - Consult link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rr-owner[R.20
+     Use `unique_ptr` or `shared_ptr` to represent ownership].
+   - Consult link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rr-make_unique[R.23
+     Use `make_unique()` to make `unique_ptr` s].
+* Some students used `std::unique_ptr`: this is still unnecessary, and added complexity (often for
+  a custom linked list).
+
+=== Global variables
+* Several students did this.
+* Global variables are available to the whole program.
+* Anyone can modify a global.
+* Globals also do not teach students how to properly pass data in {cpp}.
+* Consult link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Ri-global[I.2
+  Avoid global variables].
+* Consult link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rr-global[R.6
+  Avoid non-`const` global variables].
+* Consult link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rl-name-length[NL.7
+  Make the length of a name roughly proportional to the length of its scope].
+
+=== Implicit narrowing conversions
+* Implicit conversions are usually bad.
+* Implicit narrowing conversions are worse, because you try to fit more data into an object than is
+  possible, and some of the information is lost.
+* Did you really intend for that to happen?
+   - I don't know, because you didn't tell me!
+* Only a handful of implicit narrowing conversions were made.
+* Consult link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Res-narrowing[ES.45:
+  Avoid narrowing conversions].
+
+=== Uninitialised variables
+* Lots of things go wrong if variables are not initialised and are read from.
+  - Students are taught not to do this from first year.
+* Consult link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Res-always[ES.20:
+  Always initialize an object].
+* Consult link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Res-init[ES.22:
+  Don't declare a variable until you have a value to initialize it with].
+
+=== Not using functions!
+* About three quarters of my students did _everything_ in `main`.
+* They did not break the task down into logical, managable tasks.
+* Functions are an important part of intrinsic documentation and management.
+* Consult link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rf-package[F.1:
+  "Package" meaningful operations as carefully named functions].
+* Consult link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rf-logical[F.2:
+  A function should perform a single logical operation].
+* Consult link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rf-single[F.3:
+  Keep functions short and simple].
+
+== Minor mistakes
+* A minor mistake is something that doesn't directly correspond to a loss of marks.
+* These mistakes require attention, but are okay for a first {cpp} assignment.
+
+=== Not using range-based `for` statements whenever possible
+* Range-`for` statements are the best way to iterate over an entire range.
+* Range-`for` statements make it impossible for a loop variable to be declared outside of the loop.
+* It is also extremely clear to communicate what you are doing.
+* Consult link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Res-for-range[ES.71:
+  Prefer a range-`for`-statement to a `for`-statement when there is a choice].
+
+=== Passing parameters incorrectly
+**This applies to both function parameters, and the variable declared in a range-`for` statement.**
+
+* Java programmers are used to passing things between functions cheaply.
+* In {cpp}, all objects are copied when they are passed.
+   - We need to pass by reference to get around this.
+* Students often passed things by value when they should have passed by reference-to-`const`, or by
+  reference-to-non-`const` when they should have returned a value.
+* Consult link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rf-conventional[F.15:
+  Prefer simple and conventional ways of passing information].
+* Consult link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rf-in[F.16:
+  For "in" parameters, pass cheaply-copied types by value and others by reference to `const`].
+* Consult link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rf-inout[F.17:
+  For "in-out" parameters, pass by reference to non-`const`].
+* Consult link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rf-out[F.20:
+  For "out" output values, prefer return values to output parameters].
+* Consult link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rf-out-multi[F.21:
+  To return multiplue "out" values, prefer returning a tuple or struct].
+* Consult link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rf-return-ref[F.44:
+  Return a T& when copy is undesirable and "returning no object" isn't an option]. This one is only
+  applicable to a few students for assignment 1.
+
+=== Lack of `const` correctness
+* Making things `const` promises both the reader and the compiler that things aren't going to
+  change.
+* Using `const_iterator` over `iterator` (e.g. `cbegin` in favour of `begin`) expresses intent.
+* Declaring variables that don't intend to be changed should be marked as `const` to avoid
+  accidental changes.
+* Consult link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Res-const[ES.25:
+  Declare an object `const` or `constexpr` unless you want to modify its value later on].
+* Consult link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Res-magic[ES.46:
+  Avoid "magic constants"; use symbolic constants].
+* Consult link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#S-const[Con:
+  Constants and Immutability].
+
+=== Inconsistent style and variable names
+* Third years should have a consistent programming style.
+   - I don't care what style you choose$, but I do care if it's choppy and doesn't appear
+     consistent.
+* Variable names should be descriptive and appropriate for the scope they are in.
+* Variable names should not contain their type in their name.
+   - What happens if you decide `vector<char>` is more appropriate than `string`?
+   - The name becomes misleading!
+   - It also completely defeats the purpose of `auto`.
+
+$ Excludes variables named in `ALL_CAPS` (see below).
+
+[source,cpp]
+------------
+// examples of some code I saw
+auto first_variable = 5;
+double Second_variable = 42.0;
+
+auto containerOfStrings = f();
+DescriptiveName(Second_variable);
+------------
+
+* Consult link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rl-name-type[NL.5:
+  Don't encode type information in names]. This did not impact marking.
+* Consult link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rl-name-length[NL.7:
+  Make the length of a name roughly proportional to the length of its scope]. This did not impact marking.
+* Consult link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rl-name[NL.8:
+  Use a consistent naming style]. This _did_ impact marking.
+* Consult link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rl-all-caps[NL.9
+  Use `ALL_CAPS` for macro names only]. This did not impact marking.
+* Consult link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rl-misread[NL.19:
+  Avoid names that are easily misread].
+
+=== Coming from C
+* UNSW teaches C as a first programming language.
+* Unless I am mistaken, we still teach C90, which has some archaic rules about it.
+* As a first {cpp} assignment, these were incredibly frequent mistakes, and are the easiest to
+  correct.
+
+==== Macros (`#define`)
+* {cpp} programmers coming from C are used to `#define`.
+* {cpp} programmers are encouraged to avoid macros like the plague.
+* Very few students used a macro.
+* Consult link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rf-constexpr[F.4:
+  If a function may have to be evaluated at compile time, declare it constexpr].
+* Consult link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rf-inline[F.5:
+  If a function is very small and time-critical, declare it inline].
+* Consult link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Res-macros[ES.30:
+  Don't use macros for program text manipulation].
+* Consult link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Res-macros2[ES.31:
+  Don't use macros for constants or "functions"].
+* Consult link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#S-const[Con:
+  Constants and Immutability].
+
+
+==== Declaring variables at the top of a function/not correctly scoping variables within a function
+* Lots of students did this.
+* Doing this makes variables 'global' for that function.
+* It is easy to use a variable of the same type that has already declared for something that it
+  shouldn't have been used for.
+* Variables exist for expressing intentions.
+* Consult link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Res-introduce[ES.21:
+  Don't introduce a variable (or constant) before you need to use it].
+* Consult link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Res-init[ES.22:
+  Don't declare a variable until you have a value to initialize it with].
+* Consult link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Res-recycle[ES.26
+  Don't use a variable for two unrelated purposes].
+
+==== Unnamed casts
+* Both C and Java (assumed knowledge) cast like so:
+[source,c]
+----------
+double foo = 1.0;
+int bar = (int)foo;
+----------
+
+* {cpp} programmers are encouraged to use named casts.
+* This expresses intent, and forces the compiler to do the correct cast.
+   - The above unnamed cast does three of the four standard named casts in one.
+   - Which one did you really want?
+* I also generally pointed out when casting was unnecessary, or a very bad idea. For example:
+[source,cpp]
+------------
+// it doesn't matter what container.size() returns: you should make _your_ variable match the type
+// of the function's return type!
+// changing this to static_cast<int> doesn't make a difference
+for (auto i = 0; i < (int)container.size(); ++i)
+   ...
+------------
+* Consult link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Res-casts[ES.48:
+  Avoid casts].
+* Consult link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Res-casts-named[ES.49:
+  If you must use a cast, use a named cast].
+
+== Common comments (but no deductions)
+* The following are sections that detail things that I offered recommendations for, but these
+  comments have absolutely no weigh in on the mark awarded.
+* Some of them are because deducting marks is not fair, pedantic, or because it is a first {cpp}
+  assignment.
+* Most students received some constructive criticism.
+
+=== Not checking input from `std::cin` is valid
+* I brought this to students' attention, because a few students asked in the first tutorial why
+  their programs gave the wrong output when bad input was entered.
+* An `istream` will not read in further input while its internal state is not good.
+* No marks were deducted because students were told that they would only be given valid input.
+   - This comment is mainly for awareness.
+
+=== Lack of type deduction
+* Students are used to declaring variables with explicit types.
+   - Even professionals disagree on type deduction.
+   - As a result, I thought it would be best to leave the decision up to students for the first
+     assignment.
+   - I very strongly encourage the use of type deduction.
+* Many students thought that they get additional 'control' over explicit typing.
+   - This isn't true
+   - Mistakes were introduced because of a lack of type deduction (e.g. uninitialised variables,
+     incorrect types, unnecessary casting etc.)
+* Herb Sutter (one of the most senior {cpp} programmers in the world) offers five main points for
+  choosing to use type deduction over explicit typing:
+   1. Correctness
+   2. Code maintainability
+   3. Performance (Chris' note: don't believe this? Test and find out for yourself!)
+   4. Usability
+   5. Convenience
+* Consult these CppCon videos:
+  - link:https://www.youtube.com/watch?v=wQxj20X-tIU[CppCon 2014: Scott Meyers "Type Deduction and
+    Why You Care"].
+  - link:https://www.youtube.com/watch?v=xnqTKD8uD64&feature=youtu.be&t=28m24s[CppCon 2014: Herb
+    Sutter "Back to the Basics! Essentials of Modern {cpp} Style"].
+* Consult Herb Sutter's guide on `auto`:
+  - link:https://herbsutter.com/2013/06/07/gotw-92-solution-auto-variables-part-1/[GotW #92
+    Solution: Auto Variables, Part 1].
+  - link:https://herbsutter.com/2013/06/13/gotw-93-solution-auto-variables-part-2/[GotW #93
+    Solution: Auto Variables, Part 2].
+  - link:https://herbsutter.com/2013/08/12/gotw-94-solution-aaa-style-almost-always-auto/[GotW #94
+    Solution: AAA Style (Almost Always Auto)].
+* Consult these CppCoreGuidelines:
+  - link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Res-auto[ES.11:
+    Use auto to avoid redundant repetition of type names].
+
+=== Unnecessary comments
+* Comments that explain what is happening rather than why something happens.
+* A comment should never state what is clearly stated in code.
+
+[source,cpp]
+------------
+auto word_ladder = std::vector<std::string>{};
+// ... code manipulating word_ladder
+
+word_ladder.clear(); // clear/empty the word ladder
+------------
+
+* It is very obvious that this is happening in the above example.
+* Comments aren't checked by the compiler, and so should be used judiciously (not sparingly).
+* Consult link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rl-comments[NL 1:
+  Don't say in comments what can be clearly stated in code].
+* Consult link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rl-comments-intent[NL.2:
+  State intent in comments].
+* Consult link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rl-comments-crisp[NL.3:
+  Keep comments crisp].
+
+=== Unnecessary variables
+* Some students would do things like
+
+[source,cpp]
+------------
+auto word_ladder_size = word_ladder.size();
+for (auto i = 0U; i < word_ladder_size; ++i)
+   // ...
+------------
+
+* Such variables are not necessary.
+* Another flavour is:
+
+[source,cpp]
+------------
+auto first_word_ladder = std::vector<std::string>{};
+first_word_ladder.push_back(start_word);
+auto all_word_ladders = std::queue<std::vector<std::string>>{};
+all_word_ladders.push(first_word_ladder);
+// first_word_ladder is never used again -- wastes memory and exposes a redundant name!
+
+// prefer
+auto all_word_ladders = std::queue<std::vector<std::string>>{{{start}}};
+------------
+
+=== Unnecessary use of `std::endl`
+* Some students used `endl` unnecessarily where `'\n'` is suffice.
+* Students were offered a friendly reminder that the only difference between `endl` and `'\n'` for
+  is that `endl` also flushes the buffer.
+* No marks were deducted.
+* Consult link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rio-endl[SL.io.50:
+  Avoid `endl`]
+* Consult link:https://www.quora.com/Why-is-endl-preferred-over-n-sequence-in-C%2B%2B/answer/Sergey-Zubkov-1?srid=CbmP&share=527eb8ca[Sergey
+  Zubkov's answer to "Why is `endl` preferred over `'\n'` sequence?" -- Quora.com]
+* Consult link:https://www.youtube.com/watch?v=GMqQOEZYVJQ[{cpp} Weekly ep 7: Stop using
+  `std::endl`]
+* Consult link:http://stackoverflow.com/questions/213907/c-stdendl-vs-n[C++ "`std::endl`" vs `'\n'`
+  -- StackOverflow]
+* Consult link:http://en.cppreference.com/w/cpp/io/manip/endl[en.cppreference.com -- `std::endl`]
+
+=== Multiple names in the same declaration
+* Consult link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Res-name-one[ES.10:
+  Declare one name (only) per declaration].
+

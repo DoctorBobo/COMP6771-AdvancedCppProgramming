@@ -1,0 +1,1936 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
+<meta name="generator" content="AsciiDoc 8.6.9" />
+<title>COMP6771 Word Ladder marker report</title>
+<style type="text/css">
+/* Shared CSS for AsciiDoc xhtml11 and html5 backends */
+
+/* Default font. */
+body {
+  font-family: Georgia,serif;
+}
+
+/* Title font. */
+h1, h2, h3, h4, h5, h6,
+div.title, caption.title,
+thead, p.table.header,
+#toctitle,
+#author, #revnumber, #revdate, #revremark,
+#footer {
+  font-family: Arial,Helvetica,sans-serif;
+}
+
+body {
+  margin: 1em 5% 1em 5%;
+}
+
+a {
+  color: blue;
+  text-decoration: underline;
+}
+a:visited {
+  color: fuchsia;
+}
+
+em {
+  font-style: italic;
+  color: navy;
+}
+
+strong {
+  font-weight: bold;
+  color: #083194;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #527bbd;
+  margin-top: 1.2em;
+  margin-bottom: 0.5em;
+  line-height: 1.3;
+}
+
+h1, h2, h3 {
+  border-bottom: 2px solid silver;
+}
+h2 {
+  padding-top: 0.5em;
+}
+h3 {
+  float: left;
+}
+h3 + * {
+  clear: left;
+}
+h5 {
+  font-size: 1.0em;
+}
+
+div.sectionbody {
+  margin-left: 0;
+}
+
+hr {
+  border: 1px solid silver;
+}
+
+p {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+ul, ol, li > p {
+  margin-top: 0;
+}
+ul > li     { color: #aaa; }
+ul > li > * { color: black; }
+
+.monospaced, code, pre {
+  font-family: "Courier New", Courier, monospace;
+  font-size: inherit;
+  color: navy;
+  padding: 0;
+  margin: 0;
+}
+pre {
+  white-space: pre-wrap;
+}
+
+#author {
+  color: #527bbd;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+#email {
+}
+#revnumber, #revdate, #revremark {
+}
+
+#footer {
+  font-size: small;
+  border-top: 2px solid silver;
+  padding-top: 0.5em;
+  margin-top: 4.0em;
+}
+#footer-text {
+  float: left;
+  padding-bottom: 0.5em;
+}
+#footer-badges {
+  float: right;
+  padding-bottom: 0.5em;
+}
+
+#preamble {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+div.imageblock, div.exampleblock, div.verseblock,
+div.quoteblock, div.literalblock, div.listingblock, div.sidebarblock,
+div.admonitionblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.admonitionblock {
+  margin-top: 2.0em;
+  margin-bottom: 2.0em;
+  margin-right: 10%;
+  color: #606060;
+}
+
+div.content { /* Block element content. */
+  padding: 0;
+}
+
+/* Block element titles. */
+div.title, caption.title {
+  color: #527bbd;
+  font-weight: bold;
+  text-align: left;
+  margin-top: 1.0em;
+  margin-bottom: 0.5em;
+}
+div.title + * {
+  margin-top: 0;
+}
+
+td div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content + div.title {
+  margin-top: 0.0em;
+}
+
+div.sidebarblock > div.content {
+  background: #ffffee;
+  border: 1px solid #dddddd;
+  border-left: 4px solid #f0f0f0;
+  padding: 0.5em;
+}
+
+div.listingblock > div.content {
+  border: 1px solid #dddddd;
+  border-left: 5px solid #f0f0f0;
+  background: #f8f8f8;
+  padding: 0.5em;
+}
+
+div.quoteblock, div.verseblock {
+  padding-left: 1.0em;
+  margin-left: 1.0em;
+  margin-right: 10%;
+  border-left: 5px solid #f0f0f0;
+  color: #888;
+}
+
+div.quoteblock > div.attribution {
+  padding-top: 0.5em;
+  text-align: right;
+}
+
+div.verseblock > pre.content {
+  font-family: inherit;
+  font-size: inherit;
+}
+div.verseblock > div.attribution {
+  padding-top: 0.75em;
+  text-align: left;
+}
+/* DEPRECATED: Pre version 8.2.7 verse style literal block. */
+div.verseblock + div.attribution {
+  text-align: left;
+}
+
+div.admonitionblock .icon {
+  vertical-align: top;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-decoration: underline;
+  color: #527bbd;
+  padding-right: 0.5em;
+}
+div.admonitionblock td.content {
+  padding-left: 0.5em;
+  border-left: 3px solid #dddddd;
+}
+
+div.exampleblock > div.content {
+  border-left: 3px solid #dddddd;
+  padding-left: 0.5em;
+}
+
+div.imageblock div.content { padding-left: 0; }
+span.image img { border-style: none; vertical-align: text-bottom; }
+a.image:visited { color: white; }
+
+dl {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+dt {
+  margin-top: 0.5em;
+  margin-bottom: 0;
+  font-style: normal;
+  color: navy;
+}
+dd > *:first-child {
+  margin-top: 0.1em;
+}
+
+ul, ol {
+    list-style-position: outside;
+}
+ol.arabic {
+  list-style-type: decimal;
+}
+ol.loweralpha {
+  list-style-type: lower-alpha;
+}
+ol.upperalpha {
+  list-style-type: upper-alpha;
+}
+ol.lowerroman {
+  list-style-type: lower-roman;
+}
+ol.upperroman {
+  list-style-type: upper-roman;
+}
+
+div.compact ul, div.compact ol,
+div.compact p, div.compact p,
+div.compact div, div.compact div {
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+}
+
+tfoot {
+  font-weight: bold;
+}
+td > div.verse {
+  white-space: pre;
+}
+
+div.hdlist {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+div.hdlist tr {
+  padding-bottom: 15px;
+}
+dt.hdlist1.strong, td.hdlist1.strong {
+  font-weight: bold;
+}
+td.hdlist1 {
+  vertical-align: top;
+  font-style: normal;
+  padding-right: 0.8em;
+  color: navy;
+}
+td.hdlist2 {
+  vertical-align: top;
+}
+div.hdlist.compact tr {
+  margin: 0;
+  padding-bottom: 0;
+}
+
+.comment {
+  background: yellow;
+}
+
+.footnote, .footnoteref {
+  font-size: 0.8em;
+}
+
+span.footnote, span.footnoteref {
+  vertical-align: super;
+}
+
+#footnotes {
+  margin: 20px 0 20px 0;
+  padding: 7px 0 0 0;
+}
+
+#footnotes div.footnote {
+  margin: 0 0 5px 0;
+}
+
+#footnotes hr {
+  border: none;
+  border-top: 1px solid silver;
+  height: 1px;
+  text-align: left;
+  margin-left: 0;
+  width: 20%;
+  min-width: 100px;
+}
+
+div.colist td {
+  padding-right: 0.5em;
+  padding-bottom: 0.3em;
+  vertical-align: top;
+}
+div.colist td img {
+  margin-top: 0.3em;
+}
+
+@media print {
+  #footer-badges { display: none; }
+}
+
+#toc {
+  margin-bottom: 2.5em;
+}
+
+#toctitle {
+  color: #527bbd;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-top: 1.0em;
+  margin-bottom: 0.1em;
+}
+
+div.toclevel0, div.toclevel1, div.toclevel2, div.toclevel3, div.toclevel4 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+div.toclevel2 {
+  margin-left: 2em;
+  font-size: 0.9em;
+}
+div.toclevel3 {
+  margin-left: 4em;
+  font-size: 0.9em;
+}
+div.toclevel4 {
+  margin-left: 6em;
+  font-size: 0.9em;
+}
+
+span.aqua { color: aqua; }
+span.black { color: black; }
+span.blue { color: blue; }
+span.fuchsia { color: fuchsia; }
+span.gray { color: gray; }
+span.green { color: green; }
+span.lime { color: lime; }
+span.maroon { color: maroon; }
+span.navy { color: navy; }
+span.olive { color: olive; }
+span.purple { color: purple; }
+span.red { color: red; }
+span.silver { color: silver; }
+span.teal { color: teal; }
+span.white { color: white; }
+span.yellow { color: yellow; }
+
+span.aqua-background { background: aqua; }
+span.black-background { background: black; }
+span.blue-background { background: blue; }
+span.fuchsia-background { background: fuchsia; }
+span.gray-background { background: gray; }
+span.green-background { background: green; }
+span.lime-background { background: lime; }
+span.maroon-background { background: maroon; }
+span.navy-background { background: navy; }
+span.olive-background { background: olive; }
+span.purple-background { background: purple; }
+span.red-background { background: red; }
+span.silver-background { background: silver; }
+span.teal-background { background: teal; }
+span.white-background { background: white; }
+span.yellow-background { background: yellow; }
+
+span.big { font-size: 2em; }
+span.small { font-size: 0.6em; }
+
+span.underline { text-decoration: underline; }
+span.overline { text-decoration: overline; }
+span.line-through { text-decoration: line-through; }
+
+div.unbreakable { page-break-inside: avoid; }
+
+
+/*
+ * xhtml11 specific
+ *
+ * */
+
+div.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.tableblock > table {
+  border: 3px solid #527bbd;
+}
+thead, p.table.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.table {
+  margin-top: 0;
+}
+/* Because the table frame attribute is overriden by CSS in most browsers. */
+div.tableblock > table[frame="void"] {
+  border-style: none;
+}
+div.tableblock > table[frame="hsides"] {
+  border-left-style: none;
+  border-right-style: none;
+}
+div.tableblock > table[frame="vsides"] {
+  border-top-style: none;
+  border-bottom-style: none;
+}
+
+
+/*
+ * html5 specific
+ *
+ * */
+
+table.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+thead, p.tableblock.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.tableblock {
+  margin-top: 0;
+}
+table.tableblock {
+  border-width: 3px;
+  border-spacing: 0px;
+  border-style: solid;
+  border-color: #527bbd;
+  border-collapse: collapse;
+}
+th.tableblock, td.tableblock {
+  border-width: 1px;
+  padding: 4px;
+  border-style: solid;
+  border-color: #527bbd;
+}
+
+table.tableblock.frame-topbot {
+  border-left-style: hidden;
+  border-right-style: hidden;
+}
+table.tableblock.frame-sides {
+  border-top-style: hidden;
+  border-bottom-style: hidden;
+}
+table.tableblock.frame-none {
+  border-style: hidden;
+}
+
+th.tableblock.halign-left, td.tableblock.halign-left {
+  text-align: left;
+}
+th.tableblock.halign-center, td.tableblock.halign-center {
+  text-align: center;
+}
+th.tableblock.halign-right, td.tableblock.halign-right {
+  text-align: right;
+}
+
+th.tableblock.valign-top, td.tableblock.valign-top {
+  vertical-align: top;
+}
+th.tableblock.valign-middle, td.tableblock.valign-middle {
+  vertical-align: middle;
+}
+th.tableblock.valign-bottom, td.tableblock.valign-bottom {
+  vertical-align: bottom;
+}
+
+
+/*
+ * manpage specific
+ *
+ * */
+
+body.manpage h1 {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  border-top: 2px solid silver;
+  border-bottom: 2px solid silver;
+}
+body.manpage h2 {
+  border-style: none;
+}
+body.manpage div.sectionbody {
+  margin-left: 3em;
+}
+
+@media print {
+  body.manpage div#toc { display: none; }
+}
+
+
+</style>
+<script type="text/javascript">
+/*<![CDATA[*/
+var asciidoc = {  // Namespace.
+
+/////////////////////////////////////////////////////////////////////
+// Table Of Contents generator
+/////////////////////////////////////////////////////////////////////
+
+/* Author: Mihai Bazon, September 2002
+ * http://students.infoiasi.ro/~mishoo
+ *
+ * Table Of Content generator
+ * Version: 0.4
+ *
+ * Feel free to use this script under the terms of the GNU General Public
+ * License, as long as you do not remove or alter this notice.
+ */
+
+ /* modified by Troy D. Hanson, September 2006. License: GPL */
+ /* modified by Stuart Rackham, 2006, 2009. License: GPL */
+
+// toclevels = 1..4.
+toc: function (toclevels) {
+
+  function getText(el) {
+    var text = "";
+    for (var i = el.firstChild; i != null; i = i.nextSibling) {
+      if (i.nodeType == 3 /* Node.TEXT_NODE */) // IE doesn't speak constants.
+        text += i.data;
+      else if (i.firstChild != null)
+        text += getText(i);
+    }
+    return text;
+  }
+
+  function TocEntry(el, text, toclevel) {
+    this.element = el;
+    this.text = text;
+    this.toclevel = toclevel;
+  }
+
+  function tocEntries(el, toclevels) {
+    var result = new Array;
+    var re = new RegExp('[hH]([1-'+(toclevels+1)+'])');
+    // Function that scans the DOM tree for header elements (the DOM2
+    // nodeIterator API would be a better technique but not supported by all
+    // browsers).
+    var iterate = function (el) {
+      for (var i = el.firstChild; i != null; i = i.nextSibling) {
+        if (i.nodeType == 1 /* Node.ELEMENT_NODE */) {
+          var mo = re.exec(i.tagName);
+          if (mo && (i.getAttribute("class") || i.getAttribute("className")) != "float") {
+            result[result.length] = new TocEntry(i, getText(i), mo[1]-1);
+          }
+          iterate(i);
+        }
+      }
+    }
+    iterate(el);
+    return result;
+  }
+
+  var toc = document.getElementById("toc");
+  if (!toc) {
+    return;
+  }
+
+  // Delete existing TOC entries in case we're reloading the TOC.
+  var tocEntriesToRemove = [];
+  var i;
+  for (i = 0; i < toc.childNodes.length; i++) {
+    var entry = toc.childNodes[i];
+    if (entry.nodeName.toLowerCase() == 'div'
+     && entry.getAttribute("class")
+     && entry.getAttribute("class").match(/^toclevel/))
+      tocEntriesToRemove.push(entry);
+  }
+  for (i = 0; i < tocEntriesToRemove.length; i++) {
+    toc.removeChild(tocEntriesToRemove[i]);
+  }
+
+  // Rebuild TOC entries.
+  var entries = tocEntries(document.getElementById("content"), toclevels);
+  for (var i = 0; i < entries.length; ++i) {
+    var entry = entries[i];
+    if (entry.element.id == "")
+      entry.element.id = "_toc_" + i;
+    var a = document.createElement("a");
+    a.href = "#" + entry.element.id;
+    a.appendChild(document.createTextNode(entry.text));
+    var div = document.createElement("div");
+    div.appendChild(a);
+    div.className = "toclevel" + entry.toclevel;
+    toc.appendChild(div);
+  }
+  if (entries.length == 0)
+    toc.parentNode.removeChild(toc);
+},
+
+
+/////////////////////////////////////////////////////////////////////
+// Footnotes generator
+/////////////////////////////////////////////////////////////////////
+
+/* Based on footnote generation code from:
+ * http://www.brandspankingnew.net/archive/2005/07/format_footnote.html
+ */
+
+footnotes: function () {
+  // Delete existing footnote entries in case we're reloading the footnodes.
+  var i;
+  var noteholder = document.getElementById("footnotes");
+  if (!noteholder) {
+    return;
+  }
+  var entriesToRemove = [];
+  for (i = 0; i < noteholder.childNodes.length; i++) {
+    var entry = noteholder.childNodes[i];
+    if (entry.nodeName.toLowerCase() == 'div' && entry.getAttribute("class") == "footnote")
+      entriesToRemove.push(entry);
+  }
+  for (i = 0; i < entriesToRemove.length; i++) {
+    noteholder.removeChild(entriesToRemove[i]);
+  }
+
+  // Rebuild footnote entries.
+  var cont = document.getElementById("content");
+  var spans = cont.getElementsByTagName("span");
+  var refs = {};
+  var n = 0;
+  for (i=0; i<spans.length; i++) {
+    if (spans[i].className == "footnote") {
+      n++;
+      var note = spans[i].getAttribute("data-note");
+      if (!note) {
+        // Use [\s\S] in place of . so multi-line matches work.
+        // Because JavaScript has no s (dotall) regex flag.
+        note = spans[i].innerHTML.match(/\s*\[([\s\S]*)]\s*/)[1];
+        spans[i].innerHTML =
+          "[<a id='_footnoteref_" + n + "' href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+        spans[i].setAttribute("data-note", note);
+      }
+      noteholder.innerHTML +=
+        "<div class='footnote' id='_footnote_" + n + "'>" +
+        "<a href='#_footnoteref_" + n + "' title='Return to text'>" +
+        n + "</a>. " + note + "</div>";
+      var id =spans[i].getAttribute("id");
+      if (id != null) refs["#"+id] = n;
+    }
+  }
+  if (n == 0)
+    noteholder.parentNode.removeChild(noteholder);
+  else {
+    // Process footnoterefs.
+    for (i=0; i<spans.length; i++) {
+      if (spans[i].className == "footnoteref") {
+        var href = spans[i].getElementsByTagName("a")[0].getAttribute("href");
+        href = href.match(/#.*/)[0];  // Because IE return full URL.
+        n = refs[href];
+        spans[i].innerHTML =
+          "[<a href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+      }
+    }
+  }
+},
+
+install: function(toclevels) {
+  var timerId;
+
+  function reinstall() {
+    asciidoc.footnotes();
+    if (toclevels) {
+      asciidoc.toc(toclevels);
+    }
+  }
+
+  function reinstallAndRemoveTimer() {
+    clearInterval(timerId);
+    reinstall();
+  }
+
+  timerId = setInterval(reinstall, 500);
+  if (document.addEventListener)
+    document.addEventListener("DOMContentLoaded", reinstallAndRemoveTimer, false);
+  else
+    window.onload = reinstallAndRemoveTimer;
+}
+
+}
+asciidoc.install();
+/*]]>*/
+</script>
+</head>
+<body class="article">
+<div id="header">
+<h1>COMP6771 Word Ladder marker report</h1>
+<span id="author">Christopher Di Bella</span><br />
+<span id="email"><code>&lt;<a href="mailto:cjdb.ns@gmail.com">cjdb.ns@gmail.com</a>&gt;</code></span><br />
+<span id="revnumber">version 1,</span>
+<span id="revdate">2016/08/20</span>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph"><p><strong>Please note that the details of this report are solely concerned with tutorial codes mon16a,
+tue16a, and tue17a. If you do not attend one of these tutorials, then this report does not apply
+to you: you are welcome to read these notes so that you can improve your code, but a point made
+here does <em>not</em> represent your tutor&#8217;s views.</strong></p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_introduction">Introduction</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+The following report offers an overview of why students in these classes received their mark.
+</p>
+</li>
+<li>
+<p>
+It serves as a guide to help students work out where they stand amongst others.
+</p>
+</li>
+<li>
+<p>
+A mark deduction only happens once per mistake, even if the mistake frequently occurred.
+</p>
+</li>
+<li>
+<p>
+The tone of this document is not the same as the tone of the feedback students received.
+</p>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_things_that_went_well">Things that went well</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+Many students scored very highly.
+</p>
+</li>
+<li>
+<p>
+Many students followed at least some of the CppCoreGuidelines.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+Students that followed some of the guidelines scored well.
+</p>
+</li>
+<li>
+<p>
+Not following the guidelines didn&#8217;t cause students to lose marks, but following them often
+     helped students retain marks.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Students who justified why they did something showed understanding.
+</p>
+</li>
+<li>
+<p>
+Students took to using <code>vector</code> and <code>string</code> over C-style arrays and strings quite well.
+</p>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_critical_mistakes">Critical mistakes</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+A critical mistake is a mistake that carries serious weight.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+They often resulted in mark deductions.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Critical mistakes require careful analysis so that they aren&#8217;t introduced into the next
+  assignment, or real-world code.
+</p>
+</li>
+<li>
+<p>
+Some students didn&#8217;t sort their output, or didn&#8217;t produce all possible word ladders, and lost
+  marks for correctness.
+</p>
+</li>
+</ul></div>
+<div class="sect2">
+<h3 id="_complexity">Complexity</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+Some students tried solving problems in exotic ways.
+</p>
+</li>
+<li>
+<p>
+C++ is not about writing bleeding-edge fast code.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+It is about using the abstractions available to write clean, clear, and concise code.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+While technically sound, it was difficult to work out what they had done, or why they had done
+  something.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+Consult <a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Res-abstr">ES.2
+     Prefer suitable abstractions to direct use of language features</a>.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Handcrafting an algorithm or data structure that is readily available in the C++ standard library
+  introduces unnecessary complexity.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+Consult <a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Res-lib">ES.1:
+     Prefer the standard library to other libraries and to "handcrafted code"</a>.
+</p>
+</li>
+<li>
+<p>
+Consult <a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rsl-lib">SL.1:
+     Use libraries wherever possible</a>.
+</p>
+</li>
+<li>
+<p>
+Consult <a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rsl-sl">SL.2:
+     Prefer the standard library to other libraries</a>.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+All students should watch these two CppCon talks:
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+<a href="https://www.youtube.com/watch?v=nesCaocNjtQ">CppCon 2014: Bjarne Stroustrup "Make Simple
+     Tasks Simple!"</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://www.youtube.com/watch?v=xnqTKD8uD64">CppCon 2014: Herb Sutter "Back to the Basics!
+     Essentials of Modern C++ Style"</a>
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="_explicitly_allocating_memory">Explicitly allocating memory</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+Explicitly allocating memory is not necessary for this assignment.
+</p>
+</li>
+<li>
+<p>
+It is also very dangerous, as students hadn&#8217;t learnt about Resource Acquisition Is Initialisation
+  (RAII).
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+Consult <a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rr-raii">R.1
+     Manage resources automatically using resource handles and RAII (Resource Acquisition Is
+     Initialization)</a>.
+</p>
+</li>
+<li>
+<p>
+Consult <a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rr-ptr">R.3
+     A raw pointer (a <code>T*</code>) is non-owning</a>.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Fortunately, very few students did this.
+</p>
+</li>
+<li>
+<p>
+The few who did generally forgot to clean up after themselves (very bad, as there isn&#8217;t a garbage
+  collector to recollect memory!)
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+Consult R.3 (linked above).
+</p>
+</li>
+<li>
+<p>
+Consult <a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rr-newdelete">R.11
+     Avoid calling <code>new</code> and <code>delete</code> explicitly</a>.
+</p>
+</li>
+<li>
+<p>
+Consult <a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rr-immediate-alloc">R.12
+     Immediately give the result of an explicit allocation to a manager object</a>.
+</p>
+</li>
+<li>
+<p>
+Consult <a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rr-owner">R.20
+     Use <code>unique_ptr</code> or <code>shared_ptr</code> to represent ownership</a>.
+</p>
+</li>
+<li>
+<p>
+Consult <a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rr-make_unique">R.23
+     Use <code>make_unique()</code> to make <code>unique_ptr</code> s</a>.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Some students used <code>std::unique_ptr</code>: this is still unnecessary, and added complexity (often for
+  a custom linked list).
+</p>
+</li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="_global_variables">Global variables</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+Several students did this.
+</p>
+</li>
+<li>
+<p>
+Global variables are available to the whole program.
+</p>
+</li>
+<li>
+<p>
+Anyone can modify a global.
+</p>
+</li>
+<li>
+<p>
+Globals also do not teach students how to properly pass data in C++.
+</p>
+</li>
+<li>
+<p>
+Consult <a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Ri-global">I.2
+  Avoid global variables</a>.
+</p>
+</li>
+<li>
+<p>
+Consult <a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rr-global">R.6
+  Avoid non-<code>const</code> global variables</a>.
+</p>
+</li>
+<li>
+<p>
+Consult <a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rl-name-length">NL.7
+  Make the length of a name roughly proportional to the length of its scope</a>.
+</p>
+</li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="_implicit_narrowing_conversions">Implicit narrowing conversions</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+Implicit conversions are usually bad.
+</p>
+</li>
+<li>
+<p>
+Implicit narrowing conversions are worse, because you try to fit more data into an object than is
+  possible, and some of the information is lost.
+</p>
+</li>
+<li>
+<p>
+Did you really intend for that to happen?
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+I don&#8217;t know, because you didn&#8217;t tell me!
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Only a handful of implicit narrowing conversions were made.
+</p>
+</li>
+<li>
+<p>
+Consult <a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Res-narrowing">ES.45:
+  Avoid narrowing conversions</a>.
+</p>
+</li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="_uninitialised_variables">Uninitialised variables</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+Lots of things go wrong if variables are not initialised and are read from.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+Students are taught not to do this from first year.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Consult <a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Res-always">ES.20:
+  Always initialize an object</a>.
+</p>
+</li>
+<li>
+<p>
+Consult <a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Res-init">ES.22:
+  Don&#8217;t declare a variable until you have a value to initialize it with</a>.
+</p>
+</li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="_not_using_functions">Not using functions!</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+About three quarters of my students did <em>everything</em> in <code>main</code>.
+</p>
+</li>
+<li>
+<p>
+They did not break the task down into logical, managable tasks.
+</p>
+</li>
+<li>
+<p>
+Functions are an important part of intrinsic documentation and management.
+</p>
+</li>
+<li>
+<p>
+Consult <a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rf-package">F.1:
+  "Package" meaningful operations as carefully named functions</a>.
+</p>
+</li>
+<li>
+<p>
+Consult <a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rf-logical">F.2:
+  A function should perform a single logical operation</a>.
+</p>
+</li>
+<li>
+<p>
+Consult <a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rf-single">F.3:
+  Keep functions short and simple</a>.
+</p>
+</li>
+</ul></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_minor_mistakes">Minor mistakes</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+A minor mistake is something that doesn&#8217;t directly correspond to a loss of marks.
+</p>
+</li>
+<li>
+<p>
+These mistakes require attention, but are okay for a first C++ assignment.
+</p>
+</li>
+</ul></div>
+<div class="sect2">
+<h3 id="_not_using_range_based_code_for_code_statements_whenever_possible">Not using range-based <code>for</code> statements whenever possible</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+Range-<code>for</code> statements are the best way to iterate over an entire range.
+</p>
+</li>
+<li>
+<p>
+Range-<code>for</code> statements make it impossible for a loop variable to be declared outside of the loop.
+</p>
+</li>
+<li>
+<p>
+It is also extremely clear to communicate what you are doing.
+</p>
+</li>
+<li>
+<p>
+Consult <a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Res-for-range">ES.71:
+  Prefer a range-<code>for</code>-statement to a <code>for</code>-statement when there is a choice</a>.
+</p>
+</li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="_passing_parameters_incorrectly">Passing parameters incorrectly</h3>
+<div class="paragraph"><p><strong>This applies to both function parameters, and the variable declared in a range-<code>for</code> statement.</strong></p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+Java programmers are used to passing things between functions cheaply.
+</p>
+</li>
+<li>
+<p>
+In C++, all objects are copied when they are passed.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+We need to pass by reference to get around this.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Students often passed things by value when they should have passed by reference-to-<code>const</code>, or by
+  reference-to-non-<code>const</code> when they should have returned a value.
+</p>
+</li>
+<li>
+<p>
+Consult <a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rf-conventional">F.15:
+  Prefer simple and conventional ways of passing information</a>.
+</p>
+</li>
+<li>
+<p>
+Consult <a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rf-in">F.16:
+  For "in" parameters, pass cheaply-copied types by value and others by reference to <code>const</code></a>.
+</p>
+</li>
+<li>
+<p>
+Consult <a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rf-inout">F.17:
+  For "in-out" parameters, pass by reference to non-<code>const</code></a>.
+</p>
+</li>
+<li>
+<p>
+Consult <a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rf-out">F.20:
+  For "out" output values, prefer return values to output parameters</a>.
+</p>
+</li>
+<li>
+<p>
+Consult <a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rf-out-multi">F.21:
+  To return multiplue "out" values, prefer returning a tuple or struct</a>.
+</p>
+</li>
+<li>
+<p>
+Consult <a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rf-return-ref">F.44:
+  Return a T&amp; when copy is undesirable and "returning no object" isn&#8217;t an option</a>. This one is only
+  applicable to a few students for assignment 1.
+</p>
+</li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="_lack_of_code_const_code_correctness">Lack of <code>const</code> correctness</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+Making things <code>const</code> promises both the reader and the compiler that things aren&#8217;t going to
+  change.
+</p>
+</li>
+<li>
+<p>
+Using <code>const_iterator</code> over <code>iterator</code> (e.g. <code>cbegin</code> in favour of <code>begin</code>) expresses intent.
+</p>
+</li>
+<li>
+<p>
+Declaring variables that don&#8217;t intend to be changed should be marked as <code>const</code> to avoid
+  accidental changes.
+</p>
+</li>
+<li>
+<p>
+Consult <a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Res-const">ES.25:
+  Declare an object <code>const</code> or <code>constexpr</code> unless you want to modify its value later on</a>.
+</p>
+</li>
+<li>
+<p>
+Consult <a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Res-magic">ES.46:
+  Avoid "magic constants"; use symbolic constants</a>.
+</p>
+</li>
+<li>
+<p>
+Consult <a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#S-const">Con:
+  Constants and Immutability</a>.
+</p>
+</li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="_inconsistent_style_and_variable_names">Inconsistent style and variable names</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+Third years should have a consistent programming style.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+I don&#8217;t care what style you choose$, but I do care if it&#8217;s choppy and doesn&#8217;t appear
+     consistent.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Variable names should be descriptive and appropriate for the scope they are in.
+</p>
+</li>
+<li>
+<p>
+Variable names should not contain their type in their name.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+What happens if you decide <code>vector&lt;char&gt;</code> is more appropriate than <code>string</code>?
+</p>
+</li>
+<li>
+<p>
+The name becomes misleading!
+</p>
+</li>
+<li>
+<p>
+It also completely defeats the purpose of <code>auto</code>.
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+<div class="paragraph"><p>$ Excludes variables named in <code>ALL_CAPS</code> (see below).</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-style: italic"><span style="color: #9A1900">// examples of some code I saw</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> first_variable <span style="color: #990000">=</span> <span style="color: #993399">5</span><span style="color: #990000">;</span>
+<span style="color: #009900">double</span> Second_variable <span style="color: #990000">=</span> <span style="color: #993399">42.0</span><span style="color: #990000">;</span>
+
+<span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> containerOfStrings <span style="color: #990000">=</span> <span style="font-weight: bold"><span style="color: #000000">f</span></span><span style="color: #990000">();</span>
+<span style="font-weight: bold"><span style="color: #000000">DescriptiveName</span></span><span style="color: #990000">(</span>Second_variable<span style="color: #990000">);</span></tt></pre></div></div>
+<div class="ulist"><ul>
+<li>
+<p>
+Consult <a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rl-name-type">NL.5:
+  Don&#8217;t encode type information in names</a>. This did not impact marking.
+</p>
+</li>
+<li>
+<p>
+Consult <a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rl-name-length">NL.7:
+  Make the length of a name roughly proportional to the length of its scope</a>. This did not impact marking.
+</p>
+</li>
+<li>
+<p>
+Consult <a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rl-name">NL.8:
+  Use a consistent naming style</a>. This <em>did</em> impact marking.
+</p>
+</li>
+<li>
+<p>
+Consult <a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rl-all-caps">NL.9
+  Use <code>ALL_CAPS</code> for macro names only</a>. This did not impact marking.
+</p>
+</li>
+<li>
+<p>
+Consult <a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rl-misread">NL.19:
+  Avoid names that are easily misread</a>.
+</p>
+</li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="_coming_from_c">Coming from C</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+UNSW teaches C as a first programming language.
+</p>
+</li>
+<li>
+<p>
+Unless I am mistaken, we still teach C90, which has some archaic rules about it.
+</p>
+</li>
+<li>
+<p>
+As a first C++ assignment, these were incredibly frequent mistakes, and are the easiest to
+  correct.
+</p>
+</li>
+</ul></div>
+<div class="sect3">
+<h4 id="_macros_code_define_code">Macros (<code>#define</code>)</h4>
+<div class="ulist"><ul>
+<li>
+<p>
+C++ programmers coming from C are used to <code>#define</code>.
+</p>
+</li>
+<li>
+<p>
+C++ programmers are encouraged to avoid macros like the plague.
+</p>
+</li>
+<li>
+<p>
+Very few students used a macro.
+</p>
+</li>
+<li>
+<p>
+Consult <a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rf-constexpr">F.4:
+  If a function may have to be evaluated at compile time, declare it constexpr</a>.
+</p>
+</li>
+<li>
+<p>
+Consult <a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rf-inline">F.5:
+  If a function is very small and time-critical, declare it inline</a>.
+</p>
+</li>
+<li>
+<p>
+Consult <a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Res-macros">ES.30:
+  Don&#8217;t use macros for program text manipulation</a>.
+</p>
+</li>
+<li>
+<p>
+Consult <a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Res-macros2">ES.31:
+  Don&#8217;t use macros for constants or "functions"</a>.
+</p>
+</li>
+<li>
+<p>
+Consult <a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#S-const">Con:
+  Constants and Immutability</a>.
+</p>
+</li>
+</ul></div>
+</div>
+<div class="sect3">
+<h4 id="_declaring_variables_at_the_top_of_a_function_not_correctly_scoping_variables_within_a_function">Declaring variables at the top of a function/not correctly scoping variables within a function</h4>
+<div class="ulist"><ul>
+<li>
+<p>
+Lots of students did this.
+</p>
+</li>
+<li>
+<p>
+Doing this makes variables <em>global</em> for that function.
+</p>
+</li>
+<li>
+<p>
+It is easy to use a variable of the same type that has already declared for something that it
+  shouldn&#8217;t have been used for.
+</p>
+</li>
+<li>
+<p>
+Variables exist for expressing intentions.
+</p>
+</li>
+<li>
+<p>
+Consult <a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Res-introduce">ES.21:
+  Don&#8217;t introduce a variable (or constant) before you need to use it</a>.
+</p>
+</li>
+<li>
+<p>
+Consult <a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Res-init">ES.22:
+  Don&#8217;t declare a variable until you have a value to initialize it with</a>.
+</p>
+</li>
+<li>
+<p>
+Consult <a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Res-recycle">ES.26
+  Don&#8217;t use a variable for two unrelated purposes</a>.
+</p>
+</li>
+</ul></div>
+</div>
+<div class="sect3">
+<h4 id="_unnamed_casts">Unnamed casts</h4>
+<div class="ulist"><ul>
+<li>
+<p>
+Both C and Java (assumed knowledge) cast like so:
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="color: #009900">double</span> foo <span style="color: #990000">=</span> <span style="color: #993399">1.0</span><span style="color: #990000">;</span>
+<span style="color: #009900">int</span> bar <span style="color: #990000">=</span> <span style="color: #990000">(</span><span style="color: #009900">int</span><span style="color: #990000">)</span>foo<span style="color: #990000">;</span></tt></pre></div></div>
+<div class="ulist"><ul>
+<li>
+<p>
+C++ programmers are encouraged to use named casts.
+</p>
+</li>
+<li>
+<p>
+This expresses intent, and forces the compiler to do the correct cast.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+The above unnamed cast does three of the four standard named casts in one.
+</p>
+</li>
+<li>
+<p>
+Which one did you really want?
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+I also generally pointed out when casting was unnecessary, or a very bad idea. For example:
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-style: italic"><span style="color: #9A1900">// it doesn't matter what container.size() returns: you should make _your_ variable match the type</span></span>
+<span style="font-style: italic"><span style="color: #9A1900">// of the function's return type!</span></span>
+<span style="font-style: italic"><span style="color: #9A1900">// changing this to static_cast&lt;int&gt; doesn't make a difference</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">for</span></span> <span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> i <span style="color: #990000">=</span> <span style="color: #993399">0</span><span style="color: #990000">;</span> i <span style="color: #990000">&lt;</span> <span style="color: #990000">(</span><span style="color: #009900">int</span><span style="color: #990000">)</span>container<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">size</span></span><span style="color: #990000">();</span> <span style="color: #990000">++</span>i<span style="color: #990000">)</span>
+   <span style="color: #990000">...</span></tt></pre></div></div>
+<div class="ulist"><ul>
+<li>
+<p>
+Consult <a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Res-casts">ES.48:
+  Avoid casts</a>.
+</p>
+</li>
+<li>
+<p>
+Consult <a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Res-casts-named">ES.49:
+  If you must use a cast, use a named cast</a>.
+</p>
+</li>
+</ul></div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_common_comments_but_no_deductions">Common comments (but no deductions)</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+The following are sections that detail things that I offered recommendations for, but these
+  comments have absolutely no weigh in on the mark awarded.
+</p>
+</li>
+<li>
+<p>
+Some of them are because deducting marks is not fair, pedantic, or because it is a first C++
+  assignment.
+</p>
+</li>
+<li>
+<p>
+Most students received some constructive criticism.
+</p>
+</li>
+</ul></div>
+<div class="sect2">
+<h3 id="_not_checking_input_from_code_std_cin_code_is_valid">Not checking input from <code>std::cin</code> is valid</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+I brought this to students' attention, because a few students asked in the first tutorial why
+  their programs gave the wrong output when bad input was entered.
+</p>
+</li>
+<li>
+<p>
+An <code>istream</code> will not read in further input while its internal state is not good.
+</p>
+</li>
+<li>
+<p>
+No marks were deducted because students were told that they would only be given valid input.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+This comment is mainly for awareness.
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="_lack_of_type_deduction">Lack of type deduction</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+Students are used to declaring variables with explicit types.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+Even professionals disagree on type deduction.
+</p>
+</li>
+<li>
+<p>
+As a result, I thought it would be best to leave the decision up to students for the first
+     assignment.
+</p>
+</li>
+<li>
+<p>
+I very strongly encourage the use of type deduction.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Many students thought that they get additional <em>control</em> over explicit typing.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+This isn&#8217;t true
+</p>
+</li>
+<li>
+<p>
+Mistakes were introduced because of a lack of type deduction (e.g. uninitialised variables,
+     incorrect types, unnecessary casting etc.)
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Herb Sutter (one of the most senior C++ programmers in the world) offers five main points for
+  choosing to use type deduction over explicit typing:
+</p>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+Correctness
+</p>
+</li>
+<li>
+<p>
+Code maintainability
+</p>
+</li>
+<li>
+<p>
+Performance (Chris' note: don&#8217;t believe this? Test and find out for yourself!)
+</p>
+</li>
+<li>
+<p>
+Usability
+</p>
+</li>
+<li>
+<p>
+Convenience
+</p>
+</li>
+</ol></div>
+</li>
+<li>
+<p>
+Consult these CppCon videos:
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+<a href="https://www.youtube.com/watch?v=wQxj20X-tIU">CppCon 2014: Scott Meyers "Type Deduction and
+    Why You Care"</a>.
+</p>
+</li>
+<li>
+<p>
+<a href="https://www.youtube.com/watch?v=xnqTKD8uD64&amp;feature=youtu.be&amp;t=28m24s">CppCon 2014: Herb
+    Sutter "Back to the Basics! Essentials of Modern C++ Style"</a>.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Consult Herb Sutter&#8217;s guide on <code>auto</code>:
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+<a href="https://herbsutter.com/2013/06/07/gotw-92-solution-auto-variables-part-1/">GotW #92
+    Solution: Auto Variables, Part 1</a>.
+</p>
+</li>
+<li>
+<p>
+<a href="https://herbsutter.com/2013/06/13/gotw-93-solution-auto-variables-part-2/">GotW #93
+    Solution: Auto Variables, Part 2</a>.
+</p>
+</li>
+<li>
+<p>
+<a href="https://herbsutter.com/2013/08/12/gotw-94-solution-aaa-style-almost-always-auto/">GotW #94
+    Solution: AAA Style (Almost Always Auto)</a>.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Consult these CppCoreGuidelines:
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Res-auto">ES.11:
+    Use auto to avoid redundant repetition of type names</a>.
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="_unnecessary_comments">Unnecessary comments</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+Comments that explain what is happening rather than why something happens.
+</p>
+</li>
+<li>
+<p>
+A comment should never state what is clearly stated in code.
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> word_ladder <span style="color: #990000">=</span> std<span style="color: #990000">::</span>vector<span style="color: #990000">&lt;</span>std<span style="color: #990000">::</span>string<span style="color: #990000">&gt;</span><span style="color: #FF0000">{}</span><span style="color: #990000">;</span>
+<span style="font-style: italic"><span style="color: #9A1900">// ... code manipulating word_ladder</span></span>
+
+word_ladder<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">clear</span></span><span style="color: #990000">();</span> <span style="font-style: italic"><span style="color: #9A1900">// clear/empty the word ladder</span></span></tt></pre></div></div>
+<div class="ulist"><ul>
+<li>
+<p>
+It is very obvious that this is happening in the above example.
+</p>
+</li>
+<li>
+<p>
+Comments aren&#8217;t checked by the compiler, and so should be used judiciously (not sparingly).
+</p>
+</li>
+<li>
+<p>
+Consult <a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rl-comments">NL 1:
+  Don&#8217;t say in comments what can be clearly stated in code</a>.
+</p>
+</li>
+<li>
+<p>
+Consult <a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rl-comments-intent">NL.2:
+  State intent in comments</a>.
+</p>
+</li>
+<li>
+<p>
+Consult <a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rl-comments-crisp">NL.3:
+  Keep comments crisp</a>.
+</p>
+</li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="_unnecessary_variables">Unnecessary variables</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+Some students would do things like
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> word_ladder_size <span style="color: #990000">=</span> word_ladder<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">size</span></span><span style="color: #990000">();</span>
+<span style="font-weight: bold"><span style="color: #0000FF">for</span></span> <span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> i <span style="color: #990000">=</span> 0U<span style="color: #990000">;</span> i <span style="color: #990000">&lt;</span> word_ladder_size<span style="color: #990000">;</span> <span style="color: #990000">++</span>i<span style="color: #990000">)</span>
+   <span style="font-style: italic"><span style="color: #9A1900">// ...</span></span></tt></pre></div></div>
+<div class="ulist"><ul>
+<li>
+<p>
+Such variables are not necessary.
+</p>
+</li>
+<li>
+<p>
+Another flavour is:
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> first_word_ladder <span style="color: #990000">=</span> std<span style="color: #990000">::</span>vector<span style="color: #990000">&lt;</span>std<span style="color: #990000">::</span>string<span style="color: #990000">&gt;</span><span style="color: #FF0000">{}</span><span style="color: #990000">;</span>
+first_word_ladder<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">push_back</span></span><span style="color: #990000">(</span>start_word<span style="color: #990000">);</span>
+<span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> all_word_ladders <span style="color: #990000">=</span> std<span style="color: #990000">::</span>queue<span style="color: #990000">&lt;</span>std<span style="color: #990000">::</span>vector<span style="color: #990000">&lt;</span>std<span style="color: #990000">::</span>string<span style="color: #990000">&gt;&gt;</span><span style="color: #FF0000">{}</span><span style="color: #990000">;</span>
+all_word_ladders<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">push</span></span><span style="color: #990000">(</span>first_word_ladder<span style="color: #990000">);</span>
+<span style="font-style: italic"><span style="color: #9A1900">// first_word_ladder is never used again -- wastes memory and exposes a redundant name!</span></span>
+
+<span style="font-style: italic"><span style="color: #9A1900">// prefer</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> all_word_ladders <span style="color: #990000">=</span> std<span style="color: #990000">::</span>queue<span style="color: #990000">&lt;</span>std<span style="color: #990000">::</span>vector<span style="color: #990000">&lt;</span>std<span style="color: #990000">::</span>string<span style="color: #990000">&gt;&gt;</span><span style="color: #FF0000">{{{</span>start<span style="color: #FF0000">}}}</span><span style="color: #990000">;</span></tt></pre></div></div>
+</div>
+<div class="sect2">
+<h3 id="_unnecessary_use_of_code_std_endl_code">Unnecessary use of <code>std::endl</code></h3>
+<div class="ulist"><ul>
+<li>
+<p>
+Some students used <code>endl</code> unnecessarily where <code>'\n'</code> is suffice.
+</p>
+</li>
+<li>
+<p>
+Students were offered a friendly reminder that the only difference between <code>endl</code> and <code>'\n'</code> for
+  is that <code>endl</code> also flushes the buffer.
+</p>
+</li>
+<li>
+<p>
+No marks were deducted.
+</p>
+</li>
+<li>
+<p>
+Consult <a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rio-endl">SL.io.50:
+  Avoid <code>endl</code></a>
+</p>
+</li>
+<li>
+<p>
+Consult <a href="https://www.quora.com/Why-is-endl-preferred-over-n-sequence-in-C%2B%2B/answer/Sergey-Zubkov-1?srid=CbmP&amp;share=527eb8ca">Sergey
+  Zubkov&#8217;s answer to "Why is <code>endl</code> preferred over <code>'\n'</code> sequence?"&#8201;&#8212;&#8201;Quora.com</a>
+</p>
+</li>
+<li>
+<p>
+Consult <a href="https://www.youtube.com/watch?v=GMqQOEZYVJQ">C++ Weekly ep 7: Stop using
+  <code>std::endl</code></a>
+</p>
+</li>
+<li>
+<p>
+Consult <a href="http://stackoverflow.com/questions/213907/c-stdendl-vs-n">C++ "<code>std::endl</code>" vs <code>'\n'</code>
+ &#8201;&#8212;&#8201;StackOverflow</a>
+</p>
+</li>
+<li>
+<p>
+Consult <a href="http://en.cppreference.com/w/cpp/io/manip/endl">en.cppreference.com&#8201;&#8212;&#8201;<code>std::endl</code></a>
+</p>
+</li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="_multiple_names_in_the_same_declaration">Multiple names in the same declaration</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+Consult <a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Res-name-one">ES.10:
+  Declare one name (only) per declaration</a>.
+</p>
+</li>
+</ul></div>
+</div>
+</div>
+</div>
+</div>
+<div id="footnotes"><hr /></div>
+<div id="footer">
+<div id="footer-text">
+Version 1<br />
+Last updated 2016-09-04 13:51:08 AEST
+</div>
+</div>
+</body>
+</html>
