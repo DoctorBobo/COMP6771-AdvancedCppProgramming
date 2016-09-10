@@ -650,14 +650,15 @@ _not_ at all like Java's interfaces.
 |can be instantiated via a derived class                                             |cannot be instantiated, as they are not a type
 |cannot interact with anything outside of their specification without being downcast |have the same semantic properties as templates after you meet the minimum requirements
 |are a restriction on type _definition_                                              |are a restriction on type _usage_
-|are like a grfgsgb                                                                  |are like a bouncer
+|promote type _erasure_                                                              |promote type _deduction_
+|are like a political party, requiring uniform conformance                           |are like a bouncer, not letting you in without meeting criteria
 |=========================
 
 Although it is possible to emulate Java interfaces through concepts, they are intended to restrict
 type usage based on semantic properties they lack: as with anything else in {cpp}, you shouldn't aim
 to make {cpp} fit Java. Furthermore, concepts are not a way to say that a particular object has some
-syntactic property (e.g. "class overloads `operator+`), but rather to enforce that a type meets some
-otherwise theoretical concept. Concepts make the intangible tangible!
+syntactic property (e.g. "class overloads `operator+`"), but rather to enforce that a type meets
+some otherwise theoretical concept.
 
 === Basic concepts
 Let's quickly take a look at a simple example.
@@ -665,9 +666,149 @@ Let's quickly take a look at a simple example.
 [source,cpp]
 ------------
 template <typename T>
-concept bool Smallish() {
-   return sizeof(T) < 4;
+concept bool Small() {
+   return sizeof(T) < sizeof(long);
 }
 ------------
 
-Let's break down the above.
+This concept, `Small`, will deduce any type, but rejects types that are not smaller than a `long`.
+A more complex concept might look like
+
+[source,cpp]
+------------
+template <typename T>
+concept bool Arithmetic() {
+   return ranges::Regular<T>() &&
+          ranges::StrictTotallyOrdered<T>() &&
+          requires(T t) {
+      {t + t}   -> T;
+      {t - t}   -> T;
+      {t * t}   -> T;
+      {t / t}   -> T;
+      {t += t}  -> T&;
+      {t -= t}  -> T&;
+      {t *= t}  -> T&;
+      {t /= t}  -> T&;
+      {++t}     -> T&;
+      {t++}     -> T;
+      {--t}     -> T&;
+      {t--}     -> T;
+      {&t}      -> T*;
+   };
+}
+------------
+
+This looks like a lot, but it all boils down to two things: for a type to be considered
+`Arithmetic` it must be `Regular`, `StrictTotallyOrdered` (supports equality operators, inequality
+operators, etc.), and it must support all the specified operations in the `requires` block, such
+that the expressions within the block must evaluate to an expression on the right-hand side. All
+the fundamental arithmetic types conform to this `Arithmetic` concept.
+
+Unfortunately, there's still the problem that we never check if two types are compatible. That is,
+desipte `Big_int` meeting the requirements of `Arithmetic`, this program below will generate around
+360 lines of error!
+
+[source,cpp]
+------------
+#include "arithmetic_concept.hpp"
+#include <cstdint>
+#include <iostream>
+#include <type_traits>
+
+class Big_int {
+public:
+   explicit Big_int(std::uint64_t low = 0U, std::int64_t high = 0U) noexcept;
+
+   Big_int& operator+=(const Big_int&) noexcept;
+   Big_int& operator-=(const Big_int&) noexcept;
+   Big_int& operator*=(const Big_int&) noexcept;
+   Big_int& operator/=(const Big_int&) noexcept;
+   Big_int& operator%=(const Big_int&) noexcept;
+
+   Big_int operator+(Big_int) const noexcept;
+   Big_int operator-(Big_int) const noexcept;
+   Big_int operator*(Big_int) const noexcept;
+   Big_int operator/(Big_int) const noexcept;
+
+   bool operator<(const Big_int&) const noexcept;
+   bool operator<=(const Big_int&) const noexcept;
+   bool operator==(const Big_int&) const noexcept;
+   bool operator!=(const Big_int&) const noexcept;
+   bool operator>=(const Big_int&) const noexcept;
+   bool operator>(const Big_int&) const noexcept;
+
+   Big_int& operator++() noexcept;
+   Big_int operator++(int) noexcept;
+   Big_int& operator--() noexcept;
+   Big_int& operator--(int) noexcept;
+
+   explicit operator std::int64() const;
+private:
+   std::int64_t high_;
+   std::uint64_t low_;
+};
+
+std::ostream& operator<<(std::ostream&, const Big_int&);
+
+template <Arithmetic T, Arithmetic U>
+Arithmetic compute(T a, U b)
+{
+   return a + b;
+}
+
+int main()
+{
+   std::cout << compute(Big_int{1}, 1.0) << '\n';
+}
+------------
+
+What we failed to capture in our `Arithmetic` concept is the possibility that a client might try to
+constrain two _different_ `Arithmetic` types, and operate on them. This is clearly an oversight on
+the library developer's part (read our part). To fix this issue, we'll need to create a second
+`Arithmetic` concept.
+
+[source,cpp]
+------------
+// code up until std::ostream& operator<<(std::ostream&, const Big_int&); here
+
+template <typename T, typename U>
+concept bool Arithmetic() {
+   return Arithmetic<T>() &&
+          Arithmetic<U>() &&
+          ranges::Common<T, U>() &&
+          requires(T t, U u) {
+      {t + u} -> std::common_type_t<T, U>;
+      {t - u} -> std::common_type_t<T, U>;
+      {t * u} -> std::common_type_t<T, U>;
+      {t / u} -> std::common_type_t<T, U>;
+      {t += u} -> T&;
+      {t -= u} -> T&;
+      {t *= u} -> T&;
+      {t /= u} -> T&;
+      {u += t} -> U&;
+      {u -= t} -> U&;
+      {u *= t} -> U&;
+      {u /= t} -> U&;
+   };
+}
+
+template <typename T, typename U>
+   requires Arithmetic<T, U>
+Arithmetic compute(T a, U b)
+{
+   return a + b;
+}
+
+// main here
+------------
+
+Even though compiling this new and improved program still won't fly, we only get 34 lines of error.
+That's less than 10% of our original error's size! So what did we do to achieve this? We took a
+type `T`, and a type `U`, checked that
+   1. they are individually `Arithmetic` types,
+   2. they have some type in common,
+   3. any basic arithmetic opreation results in this common type,
+   4. All operations on an object of type `T` with respect to type `U` resolve to `T&`, and
+   5. All operations on an object of type `U` with respect to type `T` resolve to `U&`.
+
+
