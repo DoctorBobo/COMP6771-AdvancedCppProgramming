@@ -1,0 +1,609 @@
+Concepts TS and Ranges TS extension notes
+=========================================
+:Author: Christopher Di Bella
+:Email: cjdb.ns@gmail.com
+:Date: 2016/09/06
+:Revision: 1
+:cpp: C++
+
+== Prerequisites
+* In order to complete this extension material, you will need the following:
+   ** A copy of gcc 6.1 or later
+      *** The school computers have gcc 6.1 pre-installed
+      *** If you cannot install gcc 6 on your machine, you can
+          link:https://github.com/cjdb/applied-modern-cpp/raw/master/season01/001-install/001-install.pdf[download]
+          a virtual machine that I have set up.
+   ** Clone link:https://github.com/CaseyCarter/cmcstl2[this GitHub repository].
+   ** Copy link:Makefile[this Makefile] to the same directory that you cloned `cmcstl2` to.
+      *** The Makefile will correctly compile and link the code.
+
+== Using the Concepts TS and Ranges TS library to address the common template problem in assignment 2
+Consider the following code that somewhat resembles the template constructor for a EuclideanVector
+assignment, and the size-specification constructor:
+
+[source,cpp]
+------------
+// motivation1.cpp
+#include <algorithm>
+#include <cstdint>
+#include <iostream>
+#include <iterator>
+#include <vector>
+
+template <typename T>
+   // requires ForwardIterator<T>()
+std::vector<double> make_vector(T first, const T last)
+{
+   auto v = std::vector<double>{};
+   while (first != last)
+      v.push_back(*first++);
+   return v;
+}
+
+std::vector<double> make_vector(const std::size_t size, const double magnitude)
+{
+   return std::vector<double>(size, magnitude);
+}
+
+int main()
+{
+   auto v = make_vector(10, 20);
+   std::copy(v.cbegin(), v.cend(), std::ostream_iterator<decltype(v)::value_type>{std::cout, " "});
+   std::cout << '\n';
+}
+------------
+
+Below is the compiler output:
+
+[source,bash]
+-------------
+cjdb: g++ --version
+g++.exe (x86_64-posix-seh-rev0, Built by MinGW-W64 project) 6.2.0
+Copyright (C) 2016 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+cjdb: make motivation-1
+g++ -Wall -Wextra -pedantic -Werror -o motivation1 motivation1.cpp
+motivation1.cpp: In instantiation of 'std::vector<double> make_vector(T, T) [with T = int]':
+motivation1.cpp:23:31:   required from here
+motivation1.cpp:12:19: error: invalid type argument of unary '*' (have 'int')
+       v.push_back(*first++);
+                   ^~~~~~~~
+-------------
+
+After a bit of thinking, it becomes apparent that `make_vector(10, 20)` calls the wrong function:
+a large number of students unfamiliar with templates expected the types to be implicitly converted
+from `int` to the required arithmetic types. As we covered in class, the template function better
+matches the function call because it expects two parameters of the same type, whereas the
+non-template function expects two _different_ types: namely `std::size_t` and `double`.
+
+Most students went on to overload many constructors that essentially delegated to the non-template
+`make_vector` above, using `static_cast`. While not wrong, there is an easier solution to the
+problem that conveys more meaning.
+
+Consider this slightly revised code from our first problem:
+
+[source,cpp]
+------------
+// using_concepts.cpp
+#include <algorithm>
+#include <cstdint>
+#include <iostream>
+#include <experimental/ranges/iterator>
+#include <vector>
+
+namespace ranges = std::experimental::ranges::v1;
+
+template <typename T>
+   requires ranges::ForwardIterator<T>()
+std::vector<double> make_vector(T first, const T last)
+{
+   std::cerr << "make_vector(T, T)\n";
+   auto v = std::vector<double>{};
+   while (first != last)
+      v.push_back(*first++);
+   return v;
+}
+
+std::vector<double> make_vector(const std::size_t size, const double magnitude)
+{
+   std::cerr << "make_vector(std::size_t, double)\n";
+   return std::vector<double>(size, magnitude);
+}
+
+int main()
+{
+   auto v = make_vector(10, 20);
+   std::copy(v.cbegin(), v.cend(), std::ostream_iterator<decltype(v)::value_type>{std::cout, " "});
+   std::cout << '\n';
+}
+------------
+
+Here is the output:
+
+[source,bash]
+-------------
+cjdb: make
+g++ -std=c++1z -fconcepts -I "cmcstl2/include" -Wall -Wextra -pedantic -Werror -o using_concepts using_concepts.cpp
+cjdb: ./using_concepts.exe
+20 20 20 20 20 20 20 20 20 20
+cjdb:
+-------------
+
+The code compiled! This isn't magic: you can _easily_ do this yourself. Unlike the code immediately
+above, providing a commented-out `requires` clause on line 10 is required for assignments that
+involve templated code, so I've placed a table of well-known requirements in the
+link:week07.html[templates notes]. Providing this `requires` clause isn't necessary in the exam,
+because it's an exam, and I don't expect you to memorise that table.
+
+The `requires` clause tells the compiler that you are expecting `T` to conform to some set of
+constraints in order to be compatible with the template function. We can explicitly specifiy these
+constraints, or we can group them into named constraints, such as `ForwardIterator`. These named
+constraints are called concepts. We will look at defining our own concepts in part 2.
+
+`ForwardIterator` is already a link:http://en.cppreference.com/w/cpp/concept/ForwardIterator[standard
+concept] in {cpp}14, but the compiler has no technical way to enforce the requirements of a
+`ForwardIterator` without a compiler that implements the xref:concepts-ts[Concepts TS]. Furthermore,
+without the experimental `ranges` library we included, we would be required to implement the
+`ForwardIterator` concept ourselves.
+
+When an argument doesn't meet the specified requirements, it is overlooked like any other function.
+That is why the function you expected to be called is called in this example solution. Let's now
+find out what happens when we recompile without the size/magnitude overload.
+
+[source,cpp]
+------------
+// using_concepts.cpp
+#include <algorithm>
+#include <cstdint>
+#include <iostream>
+#include <experimental/ranges/iterator>
+#include <vector>
+
+namespace ranges = std::experimental::ranges::v1;
+
+template <typename T>
+   requires ranges::ForwardIterator<T>()
+std::vector<double> make_vector(T first, const T last)
+{
+   std::cerr << "make_vector(T, T)\n";
+   auto v = std::vector<double>{};
+   while (first != last)
+      v.push_back(*first++);
+   return v;
+}
+
+int main()
+{
+   auto v = make_vector(10, 20);
+   std::copy(v.cbegin(), v.cend(), std::ostream_iterator<decltype(v)::value_type>{std::cout, " "});
+   std::cout << '\n';
+}
+------------
+
+Compiler output (ignores error on line 22):
+
+[source,bash]
+-------------
+using_concepts.cpp: In function 'int main()':
+using_concepts.cpp:21:31: error: cannot call function 'std::vector<double> make_vector(T, T) [with T = int]'
+    auto v = make_vector(10, 20);
+                               ^
+using_concepts.cpp:11:21: note:   constraints not satisfied
+ std::vector<double> make_vector(T first, const T last)
+                     ^~~~~~~~~~~
+using_concepts.cpp:11:21: note: in the expansion of concept '(ForwardIterator<T>)()' template<class I> concept bool std::experimental::ranges::v1::ForwardIterator() [with I = int]
+-------------
+
+This error is much clearer: here, we are being told that a particular constraint hasn't been
+satisfied, and what that constraint is in plain English: `ForwardIterator<T>()`.
+
+=== <<concepts-ts,What's this "Concepts TS"?>>
+Although they've been a work in progress for quite a long time, concepts are a new feature to {cpp},
+so new that only gcc 6 supports them at present. Concepts aren't a part of {cpp}14, nor will they be
+a part of {cpp}17, as WG21 decided that they needed further research and implementation to warrant
+being accepted into the Standard for {cpp}.
+
+It instead resides in a document that accompanies the {cpp} standard, known as a Technical
+Specification, which is essentially a secondary (non-mandatory) authority on {cpp} that has't yet
+made it into the standard due to a lack of support.
+
+The Ranges TS is in a similar boat: it's something that is wanted in the standard, is mature enough
+to be seriously considered by the standards committee, but isn't quite ready to be placed in the
+Standard for {cpp}. As the Ranges TS is dependent on the Concepts TS, it likely won't become
+standardised before concepts become a part of the mandatory standard.
+
+.References
+[TIP]
+=====
+* link:http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/n4553.pdf[Working Draft, {cpp}
+  Extensions for Concepts] (Concepts TS working draft)
+* link:http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/n4569.pdf[Working Draft, {cpp}
+  Extensions for Ranges] (Ranges TS working draft)
+* link:http://www.iso.org/iso/home/standards_development/deliverables-all.htm?type=ts[ISO Deliverables
+  -- ISO/TS Technical Specification]
+=====
+
+=== Compiling with concepts
+As previously mentioned, you need gcc 6 or later to compile any program that supports concepts (at
+the time of writing). Clang, Visual {cpp}, and so on, do not support them yet.
+
+Secondly, you will need to explicitly turn on support by enabling the `-fconcepts` flag when
+building your program.
+
+=== Compiling with the experimental ranges library
+Our ranges library requires concepts, so we are forced to compile any code that is dependent on
+ranges with a `g++ -fconcepts`. Furthermore, this library leverages features found in {cpp}17 and
+not {cpp}14, so we need to tell the compiler that we would like to compile with gcc's current
+support for {cpp}17. We do this by adding the `-std={cpp}1z` flag.
+
+{cpp}1z is similar to the `-std={cpp}14` flag, except that we are telling the compiler that we'd
+like to compile with a different version. We currently call {cpp}17 "{cpp}1z" (pronounced "onesie",
+the only acceptable time to pronounce the letter `z` as "zee" in favour of "zed"), as the standard
+hasn't been ratified, and there is still a chance it might be delayed. It also indicates that
+features from {cpp}17 are in an experimental state, and code we write might break between compiler
+versions, as the standard is altered, and as bugs are fixed.
+
+== Using `ranges::Regular` to shrink nasty error messages to a few lines
+The following source code is from the week 7 tutorial. Please compile and run the program, even if
+you know what the output will be.
+
+[source,cpp]
+------------
+// save as motivation2.cpp
+// run make motivation-2 to compile
+#include <iostream>
+#include <memory>
+
+template <typename T>
+   // requires Regular<T>()
+std::unique_ptr<T> make_unique(T t)
+{
+   return std::make_unique<T>(t);
+}
+
+int main()
+{
+   auto p = make_unique(10);
+   auto q = make_unique(p);
+   std::cout << *q << '\n';
+}
+------------
+
+Assuming you compiled the above without alteration, you should get around two hundred and fifty
+distinct lines of error. Many of these lines are several hundred characters in length, so it
+won't be surprising if your compiler appeared to spit out over a thousand lines of error messages.
+
+Assuming you can scroll all the way to the top of the error message to work your way down the chain
+of errors, you'll also need to have a _very_ keen eye to spot the error: and this is with only one
+mistake!
+
+Using concepts to explicitly enforce constraints such as "the type must be copyable" would
+make this error a lot easier to understand, particularly if it resembles the error that we last saw.
+
+[source,cpp]
+------------
+// save as regular.cpp
+// run make regular to compile
+#include <experimental/ranges/concepts>
+#include <iostream>
+#include <memory>
+
+namespace ranges = std::experimental::ranges::v1;
+
+template <ranges::Regular T>
+std::unique_ptr<T> make_unique(T t)
+{
+   return std::make_unique<T>(t);
+}
+
+int main()
+{
+   auto p = make_unique(10);
+   auto q = make_unique(p);
+   std::cout << *q << '\n';
+}
+------------
+
+When you compile this code, you should get about half the number of lines as errors. While not an
+ideal number of lines, we can ignore the listed paths and focus on any line that has the word
+"concept bool" in it. Here, we can see that the constraint not met is the `Regular` constraint.
+
+Reading a bit further into the error shows us that we didn't meet the `Semiregular` constraint, upon
+which the `Regular` constraint is dependent. If we look but a bit further, we see that our argument
+failed to meet the `Copyable` concept, and that is when we remember that our argument is a
+`unique_ptr`, which obviously isn't copyable.
+
+You could look _even_ deeper into the issue, but it's just going to reveal the prerequisites for a
+`Copyable` type: you have enough experience to infer the _minimum_ requirements.
+
+=== No `typename T`
+In `forward_iterator.cpp`, we used
+
+[source,cpp]
+------------
+template <typename T>
+   requires ranges::ForwardIterator<T>()
+------------
+
+but in `regular.cpp`, we simply did
+
+[source,cpp]
+------------
+template <ranges::Regular T>
+------------
+
+Either of these is fine, but the latter is recommended: it's clearer that you want to meet a
+specific constraint, namely `ranges::Regular`. Most types that you will use should meet the
+`Regular` concept, or at the least, the `Semiregular` concept., so your `T` should probably be a
+`Regular` over `typename`. Please read the link:blah[function template notes] for the constraints 
+these two concepts enforce.
+
+Although there may be a reason to consider the former, I cannot think of a good reason to do so,
+since we can also do this:
+
+[source,cpp]
+------------
+template <Regular T>
+   requires ForwardIterator<T>()
+------------
+
+When your compiler supports concepts, do this third one to enforce multiple concepts, or the same
+concept for multiple types. When your compiler _doesn't_ support concepts (e.g. the compiler used
+for COMP6771, clang, Visual {cpp}, etc.), do the first option, and simply comment out the
+requirements. When your compiler supports concepts (hopefully in the very near future), you can then
+uncomment these requirements and enjoy all the benefits they offer.
+
+Notice that I said that the third alternative is the better option for requiring _multiple_
+concepts or constraining _multiple_ types. When you only need to enforce a single constraint on one
+type, such as in `regular.cpp`, we can actually eliminate the need to say that it is a `template`
+function altogether: the concept name implies this for a single parameterised type.
+
+[source,cpp]
+------------
+// save as regular2.cpp
+// run make regular2 to compile
+#include <experimental/ranges/concepts>
+#include <iostream>
+#include <memory>
+
+namespace ranges = std::experimental::ranges::v1;
+
+// implicitly template <ranges::Regular T>
+std::unique_ptr<ranges::Regular> make_unique(ranges::Regular t)
+{
+   return std::make_unique<ranges::Regular>(t);
+}
+
+int main()
+{
+   auto p = make_unique(10);
+   std::cout << *p << '\n';
+}
+------------
+
+Unlike the previous example, this one is designed to compile and run. This is the _preferred_ way
+to specify a requirement. It's the least verbose, and it leaves little room for error.
+Unfortunately, this is only viable for parameters of a single type: if you were to pass two types,
+you'd need to do this:
+
+[source,cpp]
+------------
+// save as regular3.cpp
+// run make regular3 to compile
+#include <experimental/ranges/concepts>
+#include <iostream>
+#include <memory>
+
+namespace ranges = std::experimental::ranges::v1;
+
+struct Foobar {
+   Foobar() = default;
+   Foobar(int i, double d) : foo{i}, bar{d} {}
+
+   int foo{0};
+   double bar{0.0};
+};
+
+template <ranges::Semiregular T, ranges::Regular... Args>
+std::unique_ptr<T> make_unique(Args&&... args)
+{
+   return std::unique_ptr<T>(new T{std::forward<Args>(args)...});
+}
+
+int main()
+{
+   auto p = make_unique<Foobar>(10, 2.1);
+   std::cout << p->foo << ' ' << p->bar << '\n';
+}
+------------
+
+.References
+[TIP]
+=====
+* link:http://en.cppreference.com/w/cpp/language/constraints[cppreference -- Constraints and
+  concepts: Abbreviated templates]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rt-shorthand[CppCoreGuidelines
+  -- T.13: Prefer the shorthand notation for simple, single-type argument concepts]
+=====
+
+== Using concepts to make automatic type deduction more restrictive
+Without compiling the source, what is the problem with the following code? Does compilation make it
+any easier?
+
+[source,cpp]
+------------
+#include <algorithm>
+#include <forward_list>
+#include <iostream>
+#include <iterator>
+#include <vector>
+
+
+int main()
+{
+   auto viktor = std::vector<int>{1, 2, 3, 4, 5};
+   auto frodo = std::forward_list<int>{6, 7, 8, 9, 10};
+   auto end = std::copy(viktor.cbegin(), viktor.cend(), frodo.begin()); // end is RandomAccessIterator
+   std::sort(frodo.begin(), end);
+   std::copy(frodo.begin(), end, std::ostream_iterator<decltype(frodo)::value_type>{std::cout, "\n"});
+}
+------------
+
+Compiling might help you, but it might also confuse you, especially if you aren't aware of what
+you're looking for. The error can be found on line 3, where the compiler gratiously informs us that
+
+[source,cpp]
+------------
+In instantiation of 'void std::__sort(_RandomAccessIterator, _RandomAccessIterator, _Compare) [with _RandomAccessIterator = std::_Fwd_list_iterator<int>; _Compare = __gnu_cxx::__ops::_Iter_less_iter]':
+motivation3.cpp:12:32:   required from here
+------------
+
+Formally, `sort` expects a random access iterator, but we've provided a forward iterator, which
+doesn't meet the requirements for `sort`. There are actually a few errors here:
+   1. We are expecting `end` to be an iterator to the wrong container (logic error).
+   2. We are expecting `end` to be a `RandomAccessIterator` when it is in fact a `ForwardIterator`
+      (logic error).
+
+=== Concepts in place of `auto`
+Anyone that speaks with me, or reads code that I've written, knows that I am a huge advocate for
+Sutter's link:[Almost Always Auto]. We'll be switching out `auto` in place of concepts to make sure
+that we get the correct type. `auto`, while great, becomes the weakest concept, somewhat resembling
+a "constraints not necessary" mentality. Wherever possible, we should be more restrictive to ensure
+that the correct type is met.
+
+[source,cpp]
+------------
+#include <experimental/ranges/iterator>
+#include <algorithm>
+#include <forward_list>
+#include <iostream>
+#include <vector>
+
+namespace ranges = std::experimental::ranges::v1;
+
+int main()
+{
+   auto viktor = std::vector<int>{1, 2, 3, 4, 5};
+   auto frodo = std::forward_list<int>{6, 7, 8, 9, 10};
+   ranges::RandomAccessIterator end = std::copy(viktor.cbegin(), viktor.cend(), frodo.begin());
+   std::sort(frodo.begin(), end);
+   std::copy(frodo.begin(), end, std::ostream_iterator<decltype(frodo)::value_type>{std::cout, "\n"});
+}
+------------
+
+This time around, we get a similar number of lines of error, but the lines are much more
+descriptive. We are stating that we'd like a random access iterator, and that the concept has been
+presented with `std::_Fwd_list_iterator<int>`, which doesn't meet the requirements.
+
+It is very different to explicitly specifying a type. Firstly, we haven't said that we want any
+particular type at all. We've more or less said "`auto` + a few restrictions". If these constraints
+are met, then `ranges::RandomAccessIterator` is no different to `auto`!
+
+**Note to reviewers: As per link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rt-auto[T.12]
+and link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rt-regular[T.46],
+does this mean that we should change from _Almost Always Auto_ to _Seriously Select Semiregular_ or
+_Really Rely (on) Regular_? If so, I'll transform this paragraph into such a recommendation.**
+
+== Range problems
+Again, try to spot the error without compiling.
+
+[source,cpp]
+------------
+#include <algorithm>
+#include <chrono>
+#include <iostream>
+#include <iterator>
+#include <random>
+#include <vector>
+
+std::vector<int> make_crowd(const int children, const int adults, const int seniors)
+{
+   auto crowd = std::vector<int>{};
+
+   // random number generator in C++... much better than what you're used to!
+   namespace chrono = std::chrono;
+   auto generator = std::mt19937(chrono::system_clock::now().time_since_epoch().count());
+   auto distribute = std::uniform_int_distribution<>{0, 17};
+
+   for (auto i = 0; i < children; ++i)
+      crowd.push_back(distribute(generator));
+
+   distribute = std::uniform_int_distribution<>{18, 64};
+   for (auto i = 0; i < adults; ++i)
+      crowd.push_back(distribute(generator));
+
+   distribute = std::uniform_int_distribution<>{65, 128};
+   for (auto i = 0; i < seniors; ++i)
+      crowd.push_back(distribute(generator));
+
+   return crowd;
+}
+
+int main()
+{
+   auto a = make_crowd(10, 2, 5);
+   std::sort(a.begin(), a.end());
+
+   auto b = make_crowd(10, 2, 5);
+   std::sort(b.begin(), b.end());
+
+   // get the container that has the extremes
+   auto youngest = a.front() < b.front() ? a.cbegin() : b.cbegin();
+   auto oldest = a.back() > b.back() ? a.crbegin().base() : b.crbegin().base(); // tutor note: base converts a reverse_iterator to an iterator
+   std::copy(youngest, oldest, std::ostream_iterator<decltype(youngest)::value_type>{std::cout, "\n"});
+}
+------------
+
+In this example, the error should be quite obvious: we might not be copying a valid range to `cout`.
+That is, `youngest` might be an iterator to `a`, and `oldest` might be an iterator to `b`. Perhaps
+we should rethink our design in general, but there's a problem with using iterators here.
+
+The compiler will not pick us up on this problem. A lint tool might, and a static analyser hopefully
+will, but we can identify the problem by replacing `std::copy` with `ranges::copy`.
+
+=== Ranges TS to the rescue!
+
+[source,cpp]
+------------
+#include <experimental/ranges/algorithm>
+#include <experimental/ranges/iterator>
+#include <chrono>
+#include <iostream>
+#include <random>
+#include <vector>
+
+// make_crowd here
+
+namespace ranges = std::experimental::ranges::v1;
+
+int main()
+{
+   auto a = make_crowd(10, 2, 5);
+   std::sort(a.begin(), a.end());
+
+   auto b = make_crowd(5, 2, 10);
+   std::sort(b.begin(), b.end());
+
+   // get the container that has the extremes
+   auto youngest = a.front() < b.front();
+   auto oldest = a.back() > b.back();
+
+   if (youngest && oldest)
+      ranges::copy(a, ranges::ostream_iterator<decltype(a)::value_type>{std::cout, "\n"});
+   else if (!youngest && !oldest)
+      ranges::copy(b, ranges::ostream_iterator<decltype(b)::value_type>{std::cout, "\n"});
+   else
+      std::cout << "ranges overlap\n";
+}
+------------
+
+This is a change in our design. Instead of grabbing the iterators, which was a bad idea to begin
+with, we have replaced our `std::copy` that takes a begin iterator and an end iterator with an
+algorithm that takes our container and copies the range for us internally. `ranges::copy` accepts
+anything that `std::copy` accepts, but you might need to change a few things (such as
+`ostream_iterator`, as shown above) to a range-equivalent.
+
+=== Already employ ranges
+Wherever possible, you should prefer range-based algorithms over the begin/end algorithms to avoid
+issues such as the ones desc
