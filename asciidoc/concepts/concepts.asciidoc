@@ -604,6 +604,70 @@ algorithm that takes our container and copies the range for us internally. `rang
 anything that `std::copy` accepts, but you might need to change a few things (such as
 `ostream_iterator`, as shown above) to a range-equivalent.
 
-=== Already employ ranges
+=== Start employing ranges now, even in COMP6771
 Wherever possible, you should prefer range-based algorithms over the begin/end algorithms to avoid
-issues such as the ones desc
+issues such as the ones described above. You should start using them immediately. I've attached an
+example of such algorithms.
+
+[source,cpp]
+------------
+// ranges_algorithm.hpp
+// include only functions from <algorithm> in this file... see cppreference for more details
+namespace ranges {
+template <typename Rng, typename O>
+   // requires ranges::InputRange<Rng>() &&
+   //          ranges::OutputIterator<O>()
+OutputIterator copy(Rng&& rng, O o)
+{
+   return std::copy(std::cbegin(rng), std::cend(rng), o);
+}
+
+template <typename Rng, typename T>
+   // requires ranges::InputRange<Rng>()
+Rng::iterator find(Rng&& rng, const T& t)
+{
+   return std::find(std::cbegin(rng), std::cend(rng), t);
+}
+} // namespace ranges
+------------
+
+=== `ranges-v3`
+An even better idea than rolling your own ranges library is to use Eric Niebler's `ranges-v3`
+library. This is pretty much a direct predecessor to the Ranges TS library, and even supports
+{cpp}11. Check with Jingling to see if you're allowed to use it in assignments before doing so, but
+you won't get the benefits of the Concepts TS.
+
+== Part 2: Writing your own concepts
+Up until now, we've only looked at _using_ preexisting concepts, but we haven't actually written our
+own. We start by asserting that just like templates are nothing like Java's generics, concepts are
+_not_ at all like Java's interfaces.
+
+.Differences between C++ concepts and Java interfaces
+[options="header"]
+|=========================
+|Java interfaces                                                                     |{cpp} concepts
+|specify the functions necessary for a class to conform to its type                  |specify the semantic properties for a type used in some algorithm
+|can be instantiated via a derived class                                             |cannot be instantiated, as they are not a type
+|cannot interact with anything outside of their specification without being downcast |have the same semantic properties as templates after you meet the minimum requirements
+|are a restriction on type _definition_                                              |are a restriction on type _usage_
+|are like a grfgsgb                                                                  |are like a bouncer
+|=========================
+
+Although it is possible to emulate Java interfaces through concepts, they are intended to restrict
+type usage based on semantic properties they lack: as with anything else in {cpp}, you shouldn't aim
+to make {cpp} fit Java. Furthermore, concepts are not a way to say that a particular object has some
+syntactic property (e.g. "class overloads `operator+`), but rather to enforce that a type meets some
+otherwise theoretical concept. Concepts make the intangible tangible!
+
+=== Basic concepts
+Let's quickly take a look at a simple example.
+
+[source,cpp]
+------------
+template <typename T>
+concept bool Smallish() {
+   return sizeof(T) < 4;
+}
+------------
+
+Let's break down the above.
