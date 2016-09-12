@@ -688,11 +688,11 @@ concept bool Arithmetic() {
       {t - t}   -> T;
       {t * t}   -> T;
       {t / t}   -> T;
-      {t += t}  -> T&;
-      {t -= t}  -> T&;
-      {t *= t}  -> T&;
-      {t /= t}  -> T&;
-      {&t}      -> T*;
+      {t += t}  -> ranges::Same<T&>;
+      {t -= t}  -> ranges::Same<T&>;
+      {t *= t}  -> ranges::Same<T&>;
+      {t /= t}  -> ranges::Same<T&>;
+      {&t}      -> ranges::Same<T*>;
    };
 }
 ------------
@@ -741,7 +741,7 @@ public:
    Big_int& operator--() noexcept;
    Big_int& operator--(int) noexcept;
 
-   explicit operator std::int64() const;
+   explicit operator std::int64() const noexcept;
 private:
    std::int64_t high_;
    std::uint64_t low_;
@@ -780,12 +780,12 @@ concept bool Arithmetic() {
       {t - u}  -> std::common_type_t<T, U>;
       {t * u}  -> std::common_type_t<T, U>;
       {t / u}  -> std::common_type_t<T, U>;
-      {t += u} -> T&;
-      {t -= u} -> T&;
-      {t *= u} -> T&;
-      {t /= u} -> T&;
+      {t += u} -> ranges::Same<T&>;
+      {t -= u} -> ranges::Same<T&>;
+      {t *= u} -> ranges::Same<T&>;
+      {t /= u} -> ranges::Same<T&>;
       {static_cast<T>(u)}  -> T;
-      {static_cast<T&>(u)} -> T&;
+      {static_cast<T&>(u)} -> Same<T&>;
    };
 }
 
@@ -813,4 +813,10 @@ necessary for an `Arithmetic T`: the difference is that we are providing semanti
 operations that involve two _different_ `Arithmetic` types.
 
 Notice that we only specified that `U` be convertible to `T`: that is because conversions between
-most fundamental types result in narrowing conversions.
+most fundamental types result in narrowing conversions. We currently impose no requirements on
+`u = t`, because that is how fundamental arithmetic types work: you may assign an `int` to a `float`
+without compiler interference.
+
+=== A more complicated concept
+Let's build the link:http://en.cppreference.com/w/cpp/concept/Container[Container] concept. A
+standard container
