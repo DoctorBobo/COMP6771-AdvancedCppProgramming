@@ -6,11 +6,14 @@ Week 5 tutorial postscript notes
 :Revision: 1
 :cpp: C++
 
-== Exceptions and error handling
+[big]#**WARNING:** these notes are only _partially_ cited. Please do not consider these notes
+     reliable until this warning has been removed.#
 
-=== Exception safety
+== Exceptions and error handling
 * Designing a program to handle exception safety requires thought.
    ** To quote Herb Sutter, "supporting exceptions should never be an afterthought".
+
+=== Exception safety
 * I planned to provide a full set of notes on exception safety and error handling, but David
   Abrahams beat me to it (by over a decade).
 * Although they are old, they convey most of the content that I think is relevant.
@@ -20,6 +23,24 @@ Week 5 tutorial postscript notes
      handling].
 * Before continuing, please take the time to read _both_ articles: I have written the next section
   assuming that you have.
+
+=== Exceptions versus assertions
+* Assertions are good to stop developer screw ups.
+* That is, they force developers to make sure they are using functions correctly.
+   ** An assertion is a hard failure, for non-recoverable errors, with _instant_ program
+      termination.
+   ** A non-recoverable error should not be in the final software.
+* They are _not_ for error handling.
+   ** Once code leaves the dev office, they should be disabled.
+   ** An example of a good assertion is when self move assignment has been detected (see week 4
+      notes for self-assignment and move semantics).
+* Exceptions on the other hand are for _recoverable_ errors, such as stopping an invalid range from
+  being accessed.
+* We roll back the invariants, and perform destruction as necessary.
+* Another good example is detecting division by zero in a calculator when a user supplies `1 / 0`:
+  this should be recoverable, as we can inform the user of an error and keep processing.
+* The CppCoreGuidelines outline two special functions: `Expects` and `Ensures`, which at the moment
+  are basically the C assert with different names to convey meaning.
 
 === `noexcept`
 * `noexcept` is a compiler-enforced no-throw guarantee.
@@ -105,7 +126,7 @@ catch (std::exception e) // bad... slicing can happen
 try
 {
 }
-catch (std::exception& e) // okay if you need to modify e... but this would probably involve a rethrow
+catch (std::exception& e) // okay if you need to modify e
 {
 }
 
@@ -137,6 +158,13 @@ catch (const std::exception& e) // good as a default
 * link:http://www.boost.org/community/error_handling.html[David Abrahams' error handling notes]
 * link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#S-errors[CppCoreGuidelines
   -- E: Error Handling] **this is an important reference to read!**
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Ri-expects[CppCoreGuidelines
+  -- I.6: Prefer `Expects()` for expressing preconditions]
+* https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Ri-ensures[CppCoreGuidelines
+  -- I.8: Prefer `Ensures()` for expressing postconditions]
+* https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#gslassert-assertions[CppCoreGuidelines
+  -- GSL.assert: Assertions]
+* link:http://www.boost.org/doc/libs/1_61_0/libs/exception/doc/motivation.html[Boost Exception]
 =====
 
 == Smart pointers
@@ -252,18 +280,53 @@ catch (const std::exception& e) // good as a default
   resource.
    ** If there is at least one `shared_ptr` owner, then the `weak_ptr` can create another owner for
       you to use.
+* `weak_ptr` is used to break dependency cycles and detect dangling pointers.
+* `weak_ptr` has _not_ been designed to replace raw pointers (`T*`, xref:smart-vs-dumb[see below]).
+* Use of `weak_ptr` is rare.
+* The best way to use a `weak_ptr` is:
+
+[source,cpp]
+------------
+void foo(const std::size_t i)
+{
+   if (auto connection = links_[i].lock()) {
+      // connection is a shared_ptr
+      // use connection in here
+   }
+   else {
+      // connection == nullptr
+      // best to erase links_[i] (see below)
+   }
+}
+------------
 
 .References
 [TIP]
 =====
+* Meyers, S. _Effective Modern {cpp} -- 42 ways to improve your use of {cpp}11 and {cpp}14_. p.134
+  -- 138. 2014. O'Reilly Media Inc. Sebastopol, CA.
 * link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rr-weak_ptr[CppCoreGuidelines
   -- R.24: Use `weak_ptr` to break cycles of `shared_ptr` s]
 =====
 
 ==== <<weak_ptr-problems,Problems with `weak_ptr` and `make_shared`>>
-* When an 
+* When a `shared_ptr` is allocated with `make_shared`, it performs one memory allocation for both
+  the memory you wish to reserve, and the control block in question.
+* That means that the block of memory can't be deallocated unless the control block is also
+  deallocated.
+* Because this control block keeps a record of the number of `weak_ptr` s that are in circulation,
+  we can't deallocate the control block or the object until there are no further `weak_ptr` s.
+* Thus, if you maintain a container of `weak_ptr` s, it is a good idea to purge the ones that report
+  that they dangle.
 
-== Smart pointers versus raw pointers
+.References
+[TIP]
+=====
+* Meyers, S. _Effective Modern {cpp} -- 42 ways to improve your use of {cpp}11 and {cpp}14_. p.139
+  -- 147. 2014. O'Reilly Media Inc. Sebastopol, CA.
+=====
+
+== <<smart-vs-dumb,Smart pointers versus raw pointers>>
 * Smart pointers are great...
    ** ...but they are only for resource _owners_.
 * Raw pointers are great...
