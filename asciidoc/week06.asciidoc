@@ -289,7 +289,8 @@ catch (const std::exception& e) // good as a default
 ------------
 void foo(const std::size_t i)
 {
-   if (auto connection = links_[i].lock()) {
+   if (auto connection = links_[i].lock())
+   {
       // connection is a shared_ptr
       // use connection in here
    }
