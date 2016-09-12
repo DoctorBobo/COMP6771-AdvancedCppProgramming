@@ -294,7 +294,8 @@ void foo(const std::size_t i)
       // connection is a shared_ptr
       // use connection in here
    }
-   else {
+   else
+   {
       // connection == nullptr
       // best to erase links_[i] (see below)
    }
