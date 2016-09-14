@@ -30,9 +30,8 @@ assignment, and the size-specification constructor:
 #include <iterator>
 #include <vector>
 
-template <typename T>
-   // requires ForwardIterator<T>()
-std::vector<double> make_vector(T first, const T last)
+template <typename InputIterator>
+std::vector<double> make_vector(InputIterator first, const InputIterator last)
 {
    auto v = std::vector<double>{};
    while (first != last)
@@ -163,7 +162,7 @@ find out what happens when we recompile without the size/magnitude overload.
 namespace ranges = std::experimental::ranges::v1;
 
 template <typename T>
-   requires ranges::ForwardIterator<T>()
+   requires ranges::InputIterator<T>()
 std::vector<double> make_vector(T first, const T last)
 {
    std::cerr << "make_vector(T, T)\n";
@@ -192,7 +191,7 @@ using_concepts.cpp:21:31: error: cannot call function 'std::vector<double> make_
 using_concepts.cpp:11:21: note:   constraints not satisfied
  std::vector<double> make_vector(T first, const T last)
                      ^~~~~~~~~~~
-using_concepts.cpp:11:21: note: in the expansion of concept '(ForwardIterator<T>)()' template<class I> concept bool std::experimental::ranges::v1::ForwardIterator() [with I = int]
+using_concepts.cpp:11:21: note: in the expansion of concept '(InputIterator<T>)()' template<class I> concept bool std::experimental::ranges::v1::InputIterator() [with I = int]
 -------------
 
 This error is much clearer: here, we are being told that a particular constraint hasn't been
@@ -256,7 +255,6 @@ you know what the output will be.
 #include <memory>
 
 template <typename T>
-   // requires Regular<T>()
 std::unique_ptr<T> make_unique(T t)
 {
    return std::make_unique<T>(t);
@@ -817,6 +815,49 @@ most fundamental types result in narrowing conversions. We currently impose no r
 `u = t`, because that is how fundamental arithmetic types work: you may assign an `int` to a `float`
 without compiler interference.
 
-=== A more complicated concept
-Let's build the link:http://en.cppreference.com/w/cpp/concept/Container[Container] concept. A
-standard container
+== Concepts **now**!
+While concpets are only just beginning to enter the world of {cpp}, their reasoning has been in
+circulation since at least 2014. Bjarne Stroustrup has been recommending for years that programmers
+include these requires clauses at the top of their concepts, so that when a championing compiler
+arrives, they can use concepts immediately without program redesign and reevaluation.
+
+Let's take the very first example that we saw:
+
+[source,cpp]
+------------
+template <typename InputIterator>
+std::vector<double> make_vector(InputIterator first, const InputIterator last)
+{
+   auto v = std::vector<double>{};
+   while (first != last)
+      v.push_back(*first++);
+   return v;
+}
+
+------------
+
+We're reasoning that we'd like an input iterator here. Another way we could do this is to follow
+Bjarne's and Sergey's advice:
+
+[source,cpp]
+------------
+template <typename T>
+   // requires ranges::InputIterator<T>()
+std::vector<double> make_vector(T first, const T last)
+{
+   auto v = std::vector<double>{};
+   while (first != last)
+      v.push_back(*first++);
+   return v;
+}
+------------
+
+Now we can grep for "requires", and uncomment the clauses, rather than needing to manually inspect
+each template parameter to see if it qualifies as a concept.
+
+== Conclusion
+We've taken a brief look at concepts and ranges. There is a lot more for us to explore, but you
+should have enough confidence to go out into the world and start implementing your own constraints.
+We have covered the basics of providing reasoning for non-standard concepts, but with practice and
+peer reviews, you should be able to push forward. Just remember that you should be making concepts
+that reason about semantics, not syntax, and that you should provide a complete set of operations.
