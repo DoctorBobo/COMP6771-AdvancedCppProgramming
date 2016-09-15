@@ -6,6 +6,13 @@ Concepts TS and Ranges TS extension notes
 :Revision: 1
 :cpp: C++
 
+== Contributors
+Unlike most of my documents, I have asked for some assistance with writing about concepts and ranges,
+as there is such little reliable literature. Below are a list of people that have helped check that
+the notes are accurate and offer guidance where they are not.
+
+* Daryl D'Souza
+
 == Prerequisites
 * In order to complete this extension material, you will need the following:
    ** A copy of gcc 6.1 or later
@@ -23,7 +30,6 @@ assignment, and the size-specification constructor:
 
 [source,cpp]
 ------------
-// motivation1.cpp
 #include <algorithm>
 #include <cstdint>
 #include <iostream>
@@ -84,7 +90,6 @@ Consider this slightly revised code from our first problem:
 
 [source,cpp]
 ------------
-// using_concepts.cpp
 #include <algorithm>
 #include <cstdint>
 #include <iostream>
@@ -94,7 +99,7 @@ Consider this slightly revised code from our first problem:
 namespace ranges = std::experimental::ranges::v1;
 
 template <typename T>
-   requires ranges::ForwardIterator<T>()
+   requires ranges::InputIterator<T>()
 std::vector<double> make_vector(T first, const T last)
 {
    std::cerr << "make_vector(T, T)\n";
@@ -137,14 +142,14 @@ because it's an exam, and I don't expect you to memorise that table.
 
 The `requires` clause tells the compiler that you are expecting `T` to conform to some set of
 constraints in order to be compatible with the template function. We can explicitly specifiy these
-constraints, or we can group them into named constraints, such as `ForwardIterator`. These named
+constraints, or we can group them into named constraints, such as `InputIterator`. These named
 constraints are called concepts. We will look at defining our own concepts in part 2.
 
-`ForwardIterator` is already a link:http://en.cppreference.com/w/cpp/concept/ForwardIterator[standard
+`InputIterator` is already a link:http://en.cppreference.com/w/cpp/concept/InputIterator[standard
 concept] in {cpp}14, but the compiler has no technical way to enforce the requirements of a
-`ForwardIterator` without a compiler that implements the xref:concepts-ts[Concepts TS]. Furthermore,
+`InputIterator` without a compiler that implements the xref:concepts-ts[Concepts TS]. Furthermore,
 without the experimental `ranges` library we included, we would be required to implement the
-`ForwardIterator` concept ourselves.
+`InputIterator` concept ourselves.
 
 When an argument doesn't meet the specified requirements, it is overlooked like any other function.
 That is why the function you expected to be called is called in this example solution. Let's now
@@ -152,7 +157,6 @@ find out what happens when we recompile without the size/magnitude overload.
 
 [source,cpp]
 ------------
-// using_concepts.cpp
 #include <algorithm>
 #include <cstdint>
 #include <iostream>
@@ -195,7 +199,7 @@ using_concepts.cpp:11:21: note: in the expansion of concept '(InputIterator<T>)(
 -------------
 
 This error is much clearer: here, we are being told that a particular constraint hasn't been
-satisfied, and what that constraint is in plain English: `ForwardIterator<T>()`.
+satisfied, and what that constraint is in plain English: `InputIterator<T>()`.
 
 === <<concepts-ts,What's this "Concepts TS"?>>
 Although they've been a work in progress for quite a long time, concepts are a new feature to {cpp},
@@ -249,8 +253,6 @@ you know what the output will be.
 
 [source,cpp]
 ------------
-// save as motivation2.cpp
-// run make motivation-2 to compile
 #include <iostream>
 #include <memory>
 
@@ -281,8 +283,6 @@ make this error a lot easier to understand, particularly if it resembles the err
 
 [source,cpp]
 ------------
-// save as regular.cpp
-// run make regular to compile
 #include <experimental/ranges/concepts>
 #include <iostream>
 #include <memory>
@@ -316,12 +316,12 @@ You could look _even_ deeper into the issue, but it's just going to reveal the p
 `Copyable` type: you have enough experience to infer the _minimum_ requirements.
 
 === No `typename T`
-In `forward_iterator.cpp`, we used
+In `solution1.cpp`, we used
 
 [source,cpp]
 ------------
 template <typename T>
-   requires ranges::ForwardIterator<T>()
+   requires ranges::InputIterator<T>()
 ------------
 
 but in `regular.cpp`, we simply did
@@ -343,7 +343,7 @@ since we can also do this:
 [source,cpp]
 ------------
 template <Regular T>
-   requires ForwardIterator<T>()
+   requires InputIterator<T>()
 ------------
 
 When your compiler supports concepts, do this third one to enforce multiple concepts, or the same
@@ -359,8 +359,6 @@ function altogether: the concept name implies this for a single parameterised ty
 
 [source,cpp]
 ------------
-// save as regular2.cpp
-// run make regular2 to compile
 #include <experimental/ranges/concepts>
 #include <iostream>
 #include <memory>
@@ -387,8 +385,6 @@ you'd need to do this:
 
 [source,cpp]
 ------------
-// save as regular3.cpp
-// run make regular3 to compile
 #include <experimental/ranges/concepts>
 #include <iostream>
 #include <memory>
@@ -648,7 +644,7 @@ _not_ at all like Java's interfaces.
 |can be instantiated via a derived class                                             |cannot be instantiated, as they are not a type
 |cannot interact with anything outside of their specification without being downcast |have the same semantic properties as templates after you meet the minimum requirements
 |are a restriction on type _definition_                                              |are a restriction on type _usage_
-|promote type _erasure_                                                              |promote type _deduction_
+|                                                                                    |promote type _deduction_
 |are like a political party, requiring uniform conformance                           |are like a bouncer, not letting you in without meeting criteria
 |=========================
 
@@ -737,7 +733,7 @@ public:
    Big_int& operator++() noexcept;
    Big_int operator++(int) noexcept;
    Big_int& operator--() noexcept;
-   Big_int& operator--(int) noexcept;
+   Big_int operator--(int) noexcept;
 
    explicit operator std::int64() const noexcept;
 private:
