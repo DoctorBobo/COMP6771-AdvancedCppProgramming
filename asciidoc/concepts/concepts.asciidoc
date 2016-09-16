@@ -419,6 +419,8 @@ int main()
   concepts: Abbreviated templates]
 * link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rt-shorthand[CppCoreGuidelines
   -- T.13: Prefer the shorthand notation for simple, single-type argument concepts]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rt-regular[CppCoreGuidelines
+  -- T.46: Require template arguments to be at least `Regular` or `SemiRegular`]
 =====
 
 == Using concepts to make automatic type deduction more restrictive
@@ -811,6 +813,19 @@ most fundamental types result in narrowing conversions. We currently impose no r
 `u = t`, because that is how fundamental arithmetic types work: you may assign an `int` to a `float`
 without compiler interference.
 
+.References
+[TIP]
+=====
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rt-low[CppCoreGuidelines
+  -- T.20: Avoid "concepts" without meaningful semantics]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#t21-require-a-complete-set-of-operations-for-a-concept[CppCoreGuidelines
+  -- T.21: Require a complete set of operations for a concept]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rt-axiom[CppCoreGuidelines
+  -- T.22: Specify axioms for concepts]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rt-not[CppCoreGuidelines
+  -- T.25: Avoid complementary constraints]
+=====
+
 == Concepts **now**!
 While concpets are only just beginning to enter the world of {cpp}, their reasoning has been in
 circulation since at least 2014. Bjarne Stroustrup has been recommending for years that programmers
@@ -847,6 +862,13 @@ std::vector<double> make_vector(T first, const T last)
    return v;
 }
 ------------
+
+.References
+[TIP]
+=====
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rt-concept-def[CppCoreGuidelines
+  -- T.48: If your compiler does not support concepts, fake them with `enable_if`]
+=====
 
 Now we can grep for "requires", and uncomment the clauses, rather than needing to manually inspect
 each template parameter to see if it qualifies as a concept.
