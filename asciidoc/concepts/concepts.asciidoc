@@ -12,12 +12,13 @@ as there is such little reliable literature. Below are a list of people that hav
 the notes are accurate and offer guidance where they are not.
 
 * Daryl D'Souza
-* Andrew Sutton
-* Sergey Zubkov
+* link:https://sites.google.com/site/andrewnsutton/[Andrew Sutton]
+* link:http://cubbi.com/[Sergey Zubkov]
 
 == Prerequisites
 * In order to complete this extension material, you will need the following:
-   ** A copy of gcc 6.1 or later
+   ** A copy of gcc 6.1 or later (preferably gcc 6.2 as it provides better performance and error
+      precise diagnostics)
       *** The school computers have gcc 6.1 pre-installed
       *** If you cannot install gcc 6 on your machine, you can
           link:https://github.com/cjdb/applied-modern-cpp/raw/master/season01/001-install/001-install.pdf[download]
@@ -440,9 +441,9 @@ any easier?
 
 int main()
 {
-   auto viktor = std::vector<int>{1, 2, 3, 4, 5};
+   auto victor = std::vector<int>{1, 2, 3, 4, 5};
    auto frodo = std::forward_list<int>{6, 7, 8, 9, 10};
-   auto end = std::copy(viktor.cbegin(), viktor.cend(), frodo.begin()); // end is RandomAccessIterator
+   auto end = std::copy(victor.cbegin(), victor.cend(), frodo.begin()); // end is RandomAccessIterator
    std::sort(frodo.begin(), end);
    std::copy(frodo.begin(), end, std::ostream_iterator<decltype(frodo)::value_type>{std::cout, "\n"});
 }
@@ -482,9 +483,9 @@ namespace ranges = std::experimental::ranges::v1;
 
 int main()
 {
-   auto viktor = std::vector<int>{1, 2, 3, 4, 5};
+   auto victor = std::vector<int>{1, 2, 3, 4, 5};
    auto frodo = std::forward_list<int>{6, 7, 8, 9, 10};
-   ranges::RandomAccessIterator end = std::copy(viktor.cbegin(), viktor.cend(), frodo.begin());
+   ranges::RandomAccessIterator end = std::copy(victor.cbegin(), victor.cend(), frodo.begin());
    std::sort(frodo.begin(), end);
    std::copy(frodo.begin(), end, std::ostream_iterator<decltype(frodo)::value_type>{std::cout, "\n"});
 }
@@ -509,12 +510,16 @@ explicitly spelling out the desired type to the compiler. While this is great: w
 forcing programmers to code against interfaces instead of implementations, we've just seen one case
 where `auto` is a little _too_ general. As such, instead of choosing `auto` as your default concept,
 prefer `ranges::Regular` as your _default_ concept for variables. We can change "Almost Always Auto"
-to "Requires Regular Recommended".
+to "Regularly Require Regular". Some types, such as `unique_ptr` and `basic_istream` don't conform
+to the `Regular` concept, but there isn't a standard `Unique` concept at present.
 
 Even better is choosing a type-appropriate constraint. If you need an iterator, choose
 `ranges::Iterator` _at minimium_. There's lots of different concepts to choose from, so I've
 compiled a link:basic_requirements.txt[list to ouline which concepts] you'll most likely want to
-fall back on.
+fall back on. It is much better for you to provide something more restrictive to function
+parameters, as it formally communicates the expectations of the type to the compiler (think back to
+Problem 1: changing to `Regular` doesn't fix the problem, but `InputIterator` has already proven to
+do so).
 
 == Range problems
 Again, try to spot the error without compiling.
@@ -651,25 +656,40 @@ you won't get the benefits of the Concepts TS.
 == Part 2: Writing your own concepts
 Up until now, we've only looked at _using_ preexisting concepts, but we haven't actually written our
 own. We start by asserting that just like templates are nothing like Java's generics, concepts are
-_not_ at all like Java's interfaces.
+_not_ at all like Java's interfaces. It's also been brought to my attention that Haskell's type
+classes are compared even more than interfaces: again, beyond a few skin-deep similarities, they
+aren't very much alike. Note that my knowledge of Haskell is very limited, so there may be errors
+when presenting differences.
 
-.Differences between C++ concepts and Java interfaces
+.Differences between Java interfaces, Haskell's type classes, and C++ concepts
 [options="header"]
 |=========================
-|Java interfaces                                                                     |{cpp} concepts
-|specify the functions necessary for a class to conform to its type                  |specify the semantic properties for a type used in some algorithm
-|can be instantiated via a derived class                                             |cannot be instantiated, as they are not a type
-|cannot interact with anything outside of their specification without being downcast |have the same semantic properties as templates after you meet the minimum requirements
-|are a restriction on type _definition_                                              |are a restriction on type _usage_
-|                                                                                    |promote type _deduction_
-|are like a political party, requiring uniform conformance                           |are like a bouncer, not letting you in without meeting criteria
+|Java interfaces                                                                     |Type classes (e.g. Haskell)                                              |{cpp} concepts
+|specify the functions necessary for a class to conform to its type                  |specify whether a model of some type                                     |specify the syntactic properties for a type used in some algorithm
+|work with _runtime_ polymorphism only                                               |work with either compile-time polymorphism or runtime polymorphism       |work with compile-time polymorphism only
+|can be instantiated via a derived class                                             |determine if an object is an instance of some type                       |determine if an object conforms to some predefined constraints
+|cannot interact with anything outside of their specification without being downcast |participate in type checking                                             |do not participate in type checking, and have the same semantic properties as templates after you meet the minimum requirements
+|are a restriction on type _definition_                                              |are a restriction on type _usage_ through the type system                |are a restriction on type _usage_ through predicate evaluation
+|promote modularity                                                                  |promote modularity                                                       |promote type deduction (and thus cannot promote modularity)
+|are like a political party, requiring uniform conformance                           |are probably like a bouncer, not letting you in without meeting criteria |are definitely like a bouncer, not letting you in without meeting criteria
 |=========================
 
 Although it is possible to emulate Java interfaces through concepts, they are intended to restrict
 type usage based on semantic properties they lack: as with anything else in {cpp}, you shouldn't aim
-to make {cpp} fit Java. Furthermore, concepts are not a way to say that a particular object has some
-syntactic property (e.g. "class overloads `operator+`"), but rather to enforce that a type meets
-some otherwise theoretical concept.
+to make {cpp} fit Java. Concepts are a way to say that a particular object has some syntactic
+property (e.g. "class overloads `operator+`"), but should be used to help enforce that a type meets
+some otherwise theoretical concept. Unlike type classes, if a faulty type passes a concept's checks,
+you'll still get a compiler explosion thanks to the fact that the type you instantiate is a
+template (see below).
+
+.References
+[TIP]
+=====
+* link:http://stackoverflow.com/questions/32124627/how-are-c-concepts-different-to-haskell-typeclasses[StackOverflow
+  -- Andrew Sutton's response to 'How are c++ concepts different to Haskell typeclasses?']
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rt-axiom[CppCoreGuidelines
+  -- T.22 Specify axioms for concepts]
+=====
 
 === Basic concepts
 Let's quickly take a look at a simple example.
@@ -782,6 +802,21 @@ the library developer's part (read our part). To fix this issue, we'll need to c
 // code up until std::ostream& operator<<(std::ostream&, const Big_int&); here
 
 template <Arithmetic T, Arithmetic U>
+   // axiom(T a, U b, T c, U d) {
+   //    a + b == b + a;
+   //    a - b == -(b - a);
+   //    a * (b + c) == b * (a + c);
+   //    a * (b + d) == b * (a + d);
+   //    (a * c == b * d) => (a / b == c / d);
+   //    (a == b)         => !(a != b);
+   //    (a < b)          => (b > a) && !(a > b);
+   //    (a <= b)         => (a < b || a == b);
+   //    (a >= b)         => (a > b || a == b);
+   //    (a = a + b) == (a += b);
+   //    (a = a - b) == (a -= b);
+   //    (a = a * b) == (a *= b);
+   //    (a = a / b) == (a /= b);
+   // }
 concept bool Arithmetic() {
    return ranges::Common<T, U>() &&
           ranges::StrictTotallyOrdered<T, U>() &&
@@ -839,6 +874,8 @@ without compiler interference.
   -- T.22: Specify axioms for concepts]
 * link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rt-not[CppCoreGuidelines
   -- T.25: Avoid complementary constraints]
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rt-use[CppCoreGuidelines
+  -- T.26: Prefer to define concepts in terms of use-patterns rather than simple syntax]
 =====
 
 == Concepts **now**!
@@ -877,14 +914,35 @@ std::vector<double> make_vector(T first, const T last)
 }
 ------------
 
+Now we can grep for "requires", and uncomment the clauses, rather than needing to manually inspect
+each template parameter to see if it qualifies as a concept.
+
+Similarly, we can do this with our values:
+
+[source,cpp]
+------------
+int main()
+{
+   auto victor = std::vector<int>{1, 2, 3, 4, 5};
+   auto frodo = std::forward_list<int>{6, 7, 8, 9, 10};
+   auto end = std::copy(victor.cbegin(), victor.cend(), frodo.begin()); // requires ranges::RandomAccessIterator
+   std::sort(frodo.begin(), end);
+   std::copy(frodo.begin(), end, std::ostream_iterator<decltype(frodo)::value_type>{std::cout, "\n"});
+}
+------------
+
+Even though we don't specify requirements in that format, we can still search for the requires clause
+and swap it out with `auto` when the time is right.
+
 .References
 [TIP]
 =====
-* link:https://www.youtube.com/watch?v=nesCaocNjtQ[
+* link:https://www.youtube.com/watch?v=nesCaocNjtQ[CppCon 2014: Bjarne Stroustrup "Make Simple Tasks
+  Simple!"]
+* link:https://www.quora.com/What-is-your-opinion-on-Herb-Sutters-advice-for-automatic-type-deduction/answer/Sergey-Zubkov-1?srid=CbmP[Quora.com
+  -- Sergey Zubkov's answer to 'What is your opinion on Herb Sutter's advice for automatic type
+  deduction?']
 =====
-
-Now we can grep for "requires", and uncomment the clauses, rather than needing to manually inspect
-each template parameter to see if it qualifies as a concept.
 
 == Conclusion
 We've taken a brief look at concepts and ranges. There is a lot more for us to explore, but you
@@ -892,3 +950,17 @@ should have enough confidence to go out into the world and start implementing yo
 We have covered the basics of providing reasoning for non-standard concepts, but with practice and
 peer reviews, you should be able to push forward. Just remember that you should be making concepts
 that reason about semantics, not syntax, and that you should provide a complete set of operations.
+
+.References that fit in everywhere
+[TIP]
+=====
+* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#S-templates[CppCoreGuidelines
+  -- Templates and Generic Programming]
+* link:https://www.youtube.com/watch?v=qwXq5MqY2ZA[CppCon 2014: Andrew Sutton "Generic Programming
+  with Concepts Lite, Part I"]
+* link:https://www.youtube.com/watch?v=NZeTAnW5LL0[CppCon 2014: Andrew Sutton "Generic Programming
+  with Concepts Lite, Part II"]
+* link:https://accu.org/index.php/journals/2157[Andrew Sutton: Introducing Concepts]
+* link:https://accu.org/index.php/journals/2198[Andrew Sutton: Defining Concepts]
+
+=====
