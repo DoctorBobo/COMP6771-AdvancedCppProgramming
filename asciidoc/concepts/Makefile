@@ -1,5 +1,5 @@
 CPP=g++ -fconcepts -std=c++1z
-CPP_FLAGS=-Wall -Wextra -pedantic -Werror -O2
+CPP_FLAGS=-Wall -Wextra -pedantic -Werror -O2 -I cmcstl2/include
 
 motivation1: motivation1.cpp
 	$(CPP) $(CPP_FLAGS) motivation1.cpp # won't compile, so no point giving -o
