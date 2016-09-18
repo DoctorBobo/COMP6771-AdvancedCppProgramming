@@ -799,21 +799,6 @@ the library developer's part (read our part). To fix this issue, we'll need to c
 // code up until std::ostream& operator<<(std::ostream&, const Big_int&); here
 
 template <Arithmetic T, Arithmetic U>
-   // axiom(T a, U b, T c, U d) {
-   //    a + b == b + a;
-   //    a - b == -(b - a);
-   //    a * (b + c) == b * (a + c);
-   //    a * (b + d) == b * (a + d);
-   //    (a * c == b * d) => (a / b == c / d);
-   //    (a == b)         => !(a != b);
-   //    (a < b)          => (b > a) && !(a > b);
-   //    (a <= b)         => (a < b || a == b);
-   //    (a >= b)         => (a > b || a == b);
-   //    (a = a + b) == (a += b);
-   //    (a = a - b) == (a -= b);
-   //    (a = a * b) == (a *= b);
-   //    (a = a / b) == (a /= b);
-   // }
 concept bool Arithmetic() {
    return ranges::Common<T, U>() &&
           ranges::StrictTotallyOrdered<T, U>() &&
