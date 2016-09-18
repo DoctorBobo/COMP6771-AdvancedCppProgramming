@@ -732,8 +732,8 @@ that the expressions within the block must evaluate to an expression on the righ
 the fundamental arithmetic types conform to this `Arithmetic` concept.
 
 Unfortunately, there's still the problem that we never check if two types are compatible. That is,
-desipte `Big_int` meeting the requirements of `Arithmetic`, this program below will generate around
-360 lines of error!
+desipte `Big_int` meeting the requirements of `Arithmetic`, this program below will generate a lot
+of meaningless garble!
 
 [source,cpp]
 ------------
@@ -827,9 +827,9 @@ Arithmetic compute(T a, U b)
 // main here
 ------------
 
-Even though compiling this new and improved program still won't fly, we only get 34 lines of error.
-That's less than 10% of our original error's size! So what did we do to achieve this? We take an
-arithmetic type `T`, and an arithmetic type `U`, checked that
+Even though compiling this new and improved program still won't fly, our diagnostics are
+understandable! So what did we do to achieve this? We take an arithmetic type `T`, and an arithmetic
+type `U`, checked that
    . they have some type in common,
    . can be conventionally ordered using `operator<`, etc.
    . any object of type `T` can be assigned a type `U`,
