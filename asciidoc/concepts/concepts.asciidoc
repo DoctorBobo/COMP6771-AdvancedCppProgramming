@@ -250,7 +250,7 @@ hasn't been ratified, and there is still a chance it might be delayed. It also i
 features from {cpp}17 are in an experimental state, and code we write might break between compiler
 versions, as the standard is altered, and as bugs are fixed.
 
-== Using `ranges::Regular` to shrink nasty error messages to a few lines
+== Using `ranges::Regular` to shrink nasty error messages to get better diagnostics
 The following source code is from the week 7 tutorial. Please compile and run the program, even if
 you know what the output will be.
 
@@ -273,12 +273,8 @@ int main()
 }
 ------------
 
-Assuming you compiled the above without alteration, you should get around two hundred and fifty
-distinct lines of error. Many of these lines are several hundred characters in length, so it
-won't be surprising if your compiler appeared to spit out over a thousand lines of error messages.
-
-Assuming you can scroll all the way to the top of the error message to work your way down the chain
-of errors, you'll also need to have a _very_ keen eye to spot the error: and this is with only one
+Assuming you compiled the above without alteration, you should get a lot of meaningless error
+diagnostics. You'll need to have a _very_ keen eye to spot the error: and this is with only one
 mistake!
 
 Using concepts to explicitly enforce constraints such as "the type must be copyable" would
@@ -306,9 +302,9 @@ int main()
 }
 ------------
 
-When you compile this code, you should get about half the number of lines as errors. While not an
-ideal number of lines, we can ignore the listed paths and focus on any line that has the word
-"concept bool" in it. Here, we can see that the constraint not met is the `Regular` constraint.
+The code still fails compilation, but we can ignore the listed paths and focus on any line that has
+the word "concept bool" in it. Here, we can see that the constraint not met is the `Regular`
+constraint.
 
 Reading a bit further into the error shows us that we didn't meet the `Semiregular` constraint, upon
 which the `Regular` constraint is dependent. If we look but a bit further, we see that our argument
@@ -511,7 +507,8 @@ forcing programmers to code against interfaces instead of implementations, we've
 where `auto` is a little _too_ general. As such, instead of choosing `auto` as your default concept,
 prefer `ranges::Regular` as your _default_ concept for variables. We can change "Almost Always Auto"
 to "Regularly Require Regular". Some types, such as `unique_ptr` and `basic_istream` don't conform
-to the `Regular` concept, but there isn't a standard `Unique` concept at present.
+to the `Regular` concept, but there isn't a standard `Unique` concept at present. You can easily
+make one, as I have link:unique.cpp[here].
 
 Even better is choosing a type-appropriate constraint. If you need an iterator, choose
 `ranges::Iterator` _at minimium_. There's lots of different concepts to choose from, so I've
