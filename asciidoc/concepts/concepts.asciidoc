@@ -12,6 +12,8 @@ as there is such little reliable literature. Below are a list of people that hav
 the notes are accurate and offer guidance where they are not.
 
 * Daryl D'Souza
+* Andrew Sutton
+* Sergey Zubkov
 
 == Prerequisites
 * In order to complete this extension material, you will need the following:
@@ -202,10 +204,10 @@ This error is much clearer: here, we are being told that a particular constraint
 satisfied, and what that constraint is in plain English: `InputIterator<T>()`.
 
 === <<concepts-ts,What's this "Concepts TS"?>>
-Although they've been a work in progress for quite a long time, concepts are a new feature to {cpp},
-so new that only gcc 6 supports them at present. Concepts aren't a part of {cpp}14, nor will they be
-a part of {cpp}17, as WG21 decided that they needed further research and implementation to warrant
-being accepted into the Standard for {cpp}.
+Although they've been a work in progress since the early 2000s, the concepts that we discuss in this
+document are a new feature to {cpp}, so new that only gcc 6 supports them at present. Concepts
+aren't a part of {cpp}14, nor will they be a part of {cpp}17, as WG21 decided that they needed
+further research and implementation to warrant being accepted into the Standard for {cpp}.
 
 It instead resides in a document that accompanies the {cpp} standard, known as a Technical
 Specification, which is essentially a secondary (non-mandatory) authority on {cpp} that has't yet
@@ -499,7 +501,20 @@ are met, then `ranges::RandomAccessIterator` is no different to `auto`!
 **Note to reviewers: As per link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rt-auto[T.12]
 and link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rt-regular[T.46],
 does this mean that we should change from _Almost Always Auto_ to _Seriously Select Semiregular_ or
-_Really Rely (on) Regular_? If so, I'll transform this paragraph into such a recommendation.**
+_Really Rely (on) Regular_? If so, I'll transform this paragraph into such a recommendation. (Draft
+below).**
+
+{cpp} programmers have been encouraged to use `auto` for the past few years in favour over
+explicitly spelling out the desired type to the compiler. While this is great: we are further
+forcing programmers to code against interfaces instead of implementations, we've just seen one case
+where `auto` is a little _too_ general. As such, instead of choosing `auto` as your default concept,
+prefer `ranges::Regular` as your _default_ concept for variables. We can change "Almost Always Auto"
+to "Requires Regular Recommended".
+
+Even better is choosing a type-appropriate constraint. If you need an iterator, choose
+`ranges::Iterator` _at minimium_. There's lots of different concepts to choose from, so I've
+compiled a link:basic_requirements.txt[list to ouline which concepts] you'll most likely want to
+fall back on.
 
 == Range problems
 Again, try to spot the error without compiling.
@@ -827,10 +842,9 @@ without compiler interference.
 =====
 
 == Concepts **now**!
-While concpets are only just beginning to enter the world of {cpp}, their reasoning has been in
-circulation since at least 2014. Bjarne Stroustrup has been recommending for years that programmers
-include these requires clauses at the top of their concepts, so that when a championing compiler
-arrives, they can use concepts immediately without program redesign and reevaluation.
+Bjarne Stroustrup has been recommending for years that programmers include these requires clauses at
+the top of their concepts, so that when a championing compiler arrives, they can use concepts
+immediately without program redesign and reevaluation.
 
 Let's take the very first example that we saw:
 
@@ -848,7 +862,7 @@ std::vector<double> make_vector(InputIterator first, const InputIterator last)
 ------------
 
 We're reasoning that we'd like an input iterator here. Another way we could do this is to follow
-Bjarne's and Sergey's advice:
+Bjarne's and Herb's advice:
 
 [source,cpp]
 ------------
@@ -866,8 +880,7 @@ std::vector<double> make_vector(T first, const T last)
 .References
 [TIP]
 =====
-* link:https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rt-concept-def[CppCoreGuidelines
-  -- T.48: If your compiler does not support concepts, fake them with `enable_if`]
+* link:https://www.youtube.com/watch?v=nesCaocNjtQ[
 =====
 
 Now we can grep for "requires", and uncomment the clauses, rather than needing to manually inspect
