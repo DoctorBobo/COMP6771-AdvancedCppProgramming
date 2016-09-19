@@ -772,8 +772,8 @@ const auto& reference_to_const_int = 0; // okay
 
 [source,cpp]
 ------------
-auto&& rvalue_reference = 0; // okay
-const auto&& rvalue_reference_to_const = 0; // legal, but the rvalue reference is now useless.
+int&& rvalue_reference = 0; // okay, deliberately _not_ `auto&&`
+const int&& rvalue_reference_to_const = 0; // legal, but the rvalue reference is now useless.
 ------------
 
 .References
