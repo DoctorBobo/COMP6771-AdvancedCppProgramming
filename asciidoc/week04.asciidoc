@@ -596,7 +596,8 @@ template <typename T>
 smart_ptr<T>& smart_ptr<T>::operator=(const smart_ptr<T>& d)
 {
    delete data_;
-   data_ = new T{*d.data_};
+   data_ = new T[d.size_]{*d.data_};
+   size_ = d.size_;
    return *this;
 }
 ------------
@@ -618,6 +619,7 @@ smart_ptr<T>& smart_ptr<T>::operator=(const smart_ptr<T>& d)
    {
       delete data_;
       data_ = new T{*d.data_};
+      size_ = d.size_;
    }
 
    return *this;
@@ -639,39 +641,47 @@ smart_ptr<T>& smart_ptr<T>::operator=(const smart_ptr<T>& d)
 ------------
 // copy-and-swap implementation
 template <typename T>
-smart_ptr<T>& smart_ptr<T>::operator=(smart_ptr<T> d) // d is passed by value, which invokes the copy constructor
+smart_ptr<T>& smart_ptr<T>::operator=(const smart_ptr<T>& o) // d is passed by value, which invokes the copy constructor
 {
-   using std::swap; // _always_ do this
-   swap(*this, d);  // resources of our old smart_ptr go into t
+   smart_ptr<T>{}.swap(*this);  // resources of our old smart_ptr go into the temporary,
+                                // which is cleaned up at the semicolon by default
    return *this;
-} // d cleaned up here by definition
+}
+
+template <typename T>
+void smart_ptr<T>::swap(smart_ptr<T>& o) noexcept
+{
+   using std::swap; // very important!
+   swap(data, o.data_);
+   swap(size_, o.size_);
+}
 ------------
 
 * ...which we can do by invoking the copy constructor and the destructor!
-* There's still a problem with this one.
-   - If `this == &d`, then we've just performed an expensive copy for nothing!
-   - Fortunately, there's a simple fix:
+* This is the preferred copy assingment operator.
+   - Exception: when you are allocating an array on the free store.
+   - That's when you go back to the original check-for-self copy assignment operator, with a caveat:
 
 [source,cpp]
 ------------
-// check-for-self + copy-and-swap
+// special optimisation assignment for dumb arrays
 template <typename T>
-smart_ptr<T>& smart_ptr<T>::operator=(const smart_ptr<T>& d) // d is passed by reference-to-const again
+smart_ptr<T>& smart_ptr<T>::operator=(const smart_ptr<T>& o)
 {
-   if (this != &d) // avoid the expensive copy if it's self-assignment
-   {
-      using std::swap;
-      auto t = d; // we copy d into t via the smart_ptr<T> copy constructor
-      swap(*this, t); // resources from the copy go into t
-   } // t cleaned up here
+   if (this != &d) {
+      if (o.size_ == size_) // saves an expensive heap allocation if it isn't necessary
+         std::copy(o.begin(), o.end(), begin());
+      else
+         smart_ptr<T>{}.swap(*this);
+   }
 
    return *this;
 }
 ------------
 
-* This is the preferred copy assingment operator.
-   - Exception: when you are allocating an array on the free store.
-   - That's when you go back to the original check-for-self copy assignment operator.
+* This last one is an optimisation: **do not do optimise without performance testing**.
+   - If you do, you might pessimise your code.
+
 =====
 
 * [big]#**The rule of three states that if you have a need to implement one of these, you must implement
@@ -808,11 +818,13 @@ const auto&& rvalue_reference_to_const = 0; // legal, but the rvalue reference i
 [source,cpp]
 ------------
 template <typename T>
-smart_ptr<T>::smart_ptr(smart_ptr<T>&& o)
-   : data_{o.data_}
+smart_ptr<T>::smart_ptr(smart_ptr<T>&& o) noexcept // move constructor must always be noexcept
+   : size_{o.size_},
+     data_{o.data_}
 {
    o.data_ = nullptr; // o.data_ is no longer an owner of the
                       // object, and cannot point to the resource.
+   o.size_ = 0;
 }
 ------------
 
@@ -825,7 +837,7 @@ smart_ptr<T>::smart_ptr(smart_ptr<T>&& o)
 [source,cpp]
 ------------
 template <typename T>
-magic<T>::magic(magic<T>&& o)
+magic<T>::magic(magic<T>&& o) noexcept
    : data_{std::move(o.data_)}, // data_ is a vector<T>
      resource_{o.resource_} // resource_ is a pointer pointing to something on the free store
 {
@@ -869,7 +881,7 @@ magic<T>::magic(magic<T>&& o)
 [source,cpp]
 ------------
 template <typename T>
-magic<T>& magic<T>::operator=(magic<T>&& m)
+magic<T>& magic<T>::operator=(magic<T>&& m) noexcept
 {
    if (this != &r)
    {
@@ -895,26 +907,39 @@ magic<T>& magic<T>::operator=(magic<T>&& m)
       self-assignment is literally impossible.
    ** If you haven't received a reference to a temporary, then the client has a bug. It's _their_
       fault, and _their_ problem to fix.
+* Patrice Roy (another member of WG21) taught me during my adventures at CppCon the same thing.
 * Howard also believes this is better than the above (and given the above arguments, I'm inclined
   to agree):
 
 [source,cpp]
 ------------
 template <typename T>
-magic<T>& magic<T>::operator=(magic<T>&& m)
+magic<T>& magic<T>::operator=(magic<T>&& m) noexcept // move assignment operator must always be noexcept
 {
    assert(this != &r);
-   delete[] resource_;
-   resource_ = m.resource_;
-   m.resource_ = nullptr;
-
-   data_ = std::move(m.data_);
-
+   clear();
+   swap(m);
    return *this;
+}
+
+template <typename T>
+magic<T>& magic<T>::clear() noexcept
+{
+   delete[] resource_;
+   data_.clear();
+}
+
+template <typename T>
+void magic<T>::swap(magic<T>& o) noexcept // swap must always be noexcept!!
+{
+   using std::swap;
+   swap(resource_, o.resource_);
+   swap(data_, o.data_);
 }
 ------------
 
 * This way, the client is forced to fix their problem, rather than dart around it.
+* If you read _The {cpp} Programming Language (4th Edition)_, you'll also find the above function.
 =========
 
 [WARNING]
