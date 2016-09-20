@@ -11,7 +11,9 @@ Unlike most of my documents, I have asked for some assistance with writing about
 as there is such little reliable literature. Below are a list of people that have helped check that
 the notes are accurate and offer guidance where they are not.
 
-* Daryl D'Souza
+* Oswyn Brent (Haskell advice)
+* Casey Carter
+* Daryl D'Souza (Java advice, first dry run)
 * link:https://sites.google.com/site/andrewnsutton/[Andrew Sutton]
 * link:http://cubbi.com/[Sergey Zubkov]
 
@@ -662,9 +664,9 @@ when presenting differences.
 [options="header"]
 |=========================
 |Java interfaces                                                                     |Type classes (e.g. Haskell)                                              |{cpp} concepts
-|specify the functions necessary for a class to conform to its type                  |specify whether a model of some type                                     |specify the syntactic properties for a type used in some algorithm
+|specify the functions necessary for a class to conform to its type                  |specify whether a model is of some type                                  |specify the syntactic properties for a type used in some algorithm
 |work with _runtime_ polymorphism only                                               |work with either compile-time polymorphism or runtime polymorphism       |work with compile-time polymorphism only
-|can be instantiated via a derived class                                             |determine if an object is an instance of some type                       |determine if an object conforms to some predefined constraints
+|can be instantiated via a derived class                                             |determine if an object satisfies certain behaviours                      |determine if an object conforms to some predefined constraints
 |cannot interact with anything outside of their specification without being downcast |participate in type checking                                             |do not participate in type checking, and have the same semantic properties as templates after you meet the minimum requirements
 |are a restriction on type _definition_                                              |are a restriction on type _usage_ through the type system                |are a restriction on type _usage_ through predicate evaluation
 |promote modularity                                                                  |promote modularity                                                       |promote type deduction (and thus cannot promote modularity)
@@ -922,8 +924,8 @@ and swap it out with `auto` when the time is right.
 * link:https://www.youtube.com/watch?v=nesCaocNjtQ[CppCon 2014: Bjarne Stroustrup "Make Simple Tasks
   Simple!"]
 * link:https://www.quora.com/What-is-your-opinion-on-Herb-Sutters-advice-for-automatic-type-deduction/answer/Sergey-Zubkov-1?srid=CbmP[Quora.com
-  -- Sergey Zubkov's answer to 'What is your opinion on Herb Sutter's advice for automatic type
-  deduction?']
+  -- Sergey Zubkov's answer to _What is your opinion on Herb Sutter's advice for automatic type
+  deduction?_]
 =====
 
 == Conclusion
