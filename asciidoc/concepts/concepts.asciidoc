@@ -565,7 +565,7 @@ int main()
 
    // get the container that has the extremes
    auto youngest = a.front() < b.front() ? a.cbegin() : b.cbegin();
-   auto oldest = a.back() > b.back() ? a.crbegin().base() : b.crbegin().base(); // tutor note: base converts a reverse_iterator to an iterator
+   auto oldest = a.back() > b.back() ? a.crbegin().base() : b.crbegin().base();
    std::copy(youngest, oldest, std::ostream_iterator<decltype(youngest)::value_type>{std::cout, "\n"});
 }
 ------------
@@ -583,26 +583,21 @@ will, but we can identify the problem by replacing `std::copy` with `ranges::cop
 ------------
 #include <experimental/ranges/algorithm>
 #include <experimental/ranges/iterator>
-#include <chrono>
-#include <iostream>
-#include <random>
-#include <vector>
-
+// other headers...
 // make_crowd here
-
 namespace ranges = std::experimental::ranges::v1;
 
 int main()
 {
-   auto a = make_crowd(10, 2, 5);
+   auto a = make_crowd(10, 2, 5); // requires Container<decltype(a)>()
    std::sort(a.begin(), a.end());
 
-   auto b = make_crowd(5, 2, 10);
+   auto b = make_crowd(5, 2, 10); // requires Container<decltype(a)>()
    std::sort(b.begin(), b.end());
 
-   // get the container that has the extremes
-   auto youngest = a.front() < b.front();
-   auto oldest = a.back() > b.back();
+   // determines if a has both extremes
+   ranges::Regular youngest = a.front() < b.front(); // two variables, since !(youngest ^ oldest)
+   ranges::Regular oldest = a.back() > b.back();     // can't identify the range with both extremes
 
    if (youngest && oldest)
       ranges::copy(a, ranges::ostream_iterator<decltype(a)::value_type>{std::cout, "\n"});
@@ -889,7 +884,7 @@ Bjarne's and Herb's advice:
 ------------
 template <typename T>
    // requires ranges::InputIterator<T>()
-std::vector<double> make_vector(T first, const T last)
+std::vector<double> make_vector(T first, const T last, typename std::iterator_traits<T>::pointer = {}))
 {
    auto v = std::vector<double>{};
    while (first != last)

@@ -4,8 +4,8 @@
 #include <iterator>
 #include <vector>
 
-template <typename T, typename U>
-std::vector<double> make_vector(T first, const U last)
+template <typename T>
+std::vector<double> make_vector(T first, const T last)
 {
    auto v = std::vector<double>{};
    while (first != last)
@@ -20,7 +20,7 @@ std::vector<double> make_vector(const std::size_t size, const double magnitude)
 
 int main()
 {
-   auto v = make_vector(10LLU, 20.0);
+   auto v = make_vector(10, 20);
    std::copy(v.cbegin(), v.cend(), std::ostream_iterator<decltype(v)::value_type>{std::cout, " "});
    std::cout << '\n';
 }
