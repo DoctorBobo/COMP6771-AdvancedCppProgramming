@@ -643,8 +643,8 @@ smart_ptr<T>& smart_ptr<T>::operator=(const smart_ptr<T>& d)
 template <typename T>
 smart_ptr<T>& smart_ptr<T>::operator=(const smart_ptr<T>& o) // d is passed by value, which invokes the copy constructor
 {
-   smart_ptr<T>{}.swap(*this);  // resources of our old smart_ptr go into the temporary,
-                                // which is cleaned up at the semicolon by default
+   smart_ptr<T>{o}.swap(*this);  // resources of our old smart_ptr go into the temporary,
+                                 // which is cleaned up at the semicolon by default
    return *this;
 }
 

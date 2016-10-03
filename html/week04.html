@@ -2535,8 +2535,8 @@ http://www.gnu.org/software/src-highlite -->
 <span style="font-weight: bold"><span style="color: #0000FF">template</span></span> <span style="color: #990000">&lt;</span><span style="font-weight: bold"><span style="color: #0000FF">typename</span></span> <span style="color: #008080">T</span><span style="color: #990000">&gt;</span>
 smart_ptr<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;&amp;</span> smart_ptr<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;::</span><span style="font-weight: bold"><span style="color: #0000FF">operator</span></span><span style="color: #990000">=(</span><span style="font-weight: bold"><span style="color: #0000FF">const</span></span> smart_ptr<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;&amp;</span> o<span style="color: #990000">)</span> <span style="font-style: italic"><span style="color: #9A1900">// d is passed by value, which invokes the copy constructor</span></span>
 <span style="color: #FF0000">{</span>
-   smart_ptr<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;</span><span style="color: #FF0000">{}</span><span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">swap</span></span><span style="color: #990000">(*</span><span style="font-weight: bold"><span style="color: #0000FF">this</span></span><span style="color: #990000">);</span>  <span style="font-style: italic"><span style="color: #9A1900">// resources of our old smart_ptr go into the temporary,</span></span>
-                                <span style="font-style: italic"><span style="color: #9A1900">// which is cleaned up at the semicolon by default</span></span>
+   smart_ptr<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;</span><span style="color: #FF0000">{</span>o<span style="color: #FF0000">}</span><span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">swap</span></span><span style="color: #990000">(*</span><span style="font-weight: bold"><span style="color: #0000FF">this</span></span><span style="color: #990000">);</span>  <span style="font-style: italic"><span style="color: #9A1900">// resources of our old smart_ptr go into the temporary,</span></span>
+                                 <span style="font-style: italic"><span style="color: #9A1900">// which is cleaned up at the semicolon by default</span></span>
    <span style="font-weight: bold"><span style="color: #0000FF">return</span></span> <span style="color: #990000">*</span><span style="font-weight: bold"><span style="color: #0000FF">this</span></span><span style="color: #990000">;</span>
 <span style="color: #FF0000">}</span>
 
@@ -4311,7 +4311,7 @@ Meyers, S. <em>Effective STL: 50 specific ways to improve your use of the standa
 <div id="footer">
 <div id="footer-text">
 Version 1<br />
-Last updated 2016-10-04 00:33:26 AEDT
+Last updated 2016-10-04 01:32:07 AEDT
 </div>
 </div>
 </body>
