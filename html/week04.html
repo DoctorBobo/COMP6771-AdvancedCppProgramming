@@ -2432,7 +2432,8 @@ http://www.gnu.org/software/src-highlite -->
 smart_ptr<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;&amp;</span> smart_ptr<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;::</span><span style="font-weight: bold"><span style="color: #0000FF">operator</span></span><span style="color: #990000">=(</span><span style="font-weight: bold"><span style="color: #0000FF">const</span></span> smart_ptr<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;&amp;</span> d<span style="color: #990000">)</span>
 <span style="color: #FF0000">{</span>
    <span style="font-weight: bold"><span style="color: #0000FF">delete</span></span> data_<span style="color: #990000">;</span>
-   data_ <span style="color: #990000">=</span> <span style="font-weight: bold"><span style="color: #0000FF">new</span></span> T<span style="color: #FF0000">{</span><span style="color: #990000">*</span>d<span style="color: #990000">.</span>data_<span style="color: #FF0000">}</span><span style="color: #990000">;</span>
+   data_ <span style="color: #990000">=</span> <span style="font-weight: bold"><span style="color: #0000FF">new</span></span> T<span style="color: #990000">[</span>d<span style="color: #990000">.</span>size_<span style="color: #990000">]</span><span style="color: #FF0000">{</span><span style="color: #990000">*</span>d<span style="color: #990000">.</span>data_<span style="color: #FF0000">}</span><span style="color: #990000">;</span>
+   size_ <span style="color: #990000">=</span> d<span style="color: #990000">.</span>size_<span style="color: #990000">;</span>
    <span style="font-weight: bold"><span style="color: #0000FF">return</span></span> <span style="color: #990000">*</span><span style="font-weight: bold"><span style="color: #0000FF">this</span></span><span style="color: #990000">;</span>
 <span style="color: #FF0000">}</span></tt></pre></div></div>
 <div class="ulist"><ul>
@@ -2478,6 +2479,7 @@ smart_ptr<span style="color: #990000">&lt;</span>T<span style="color: #990000">&
    <span style="color: #FF0000">{</span>
       <span style="font-weight: bold"><span style="color: #0000FF">delete</span></span> data_<span style="color: #990000">;</span>
       data_ <span style="color: #990000">=</span> <span style="font-weight: bold"><span style="color: #0000FF">new</span></span> T<span style="color: #FF0000">{</span><span style="color: #990000">*</span>d<span style="color: #990000">.</span>data_<span style="color: #FF0000">}</span><span style="color: #990000">;</span>
+      size_ <span style="color: #990000">=</span> d<span style="color: #990000">.</span>size_<span style="color: #990000">;</span>
    <span style="color: #FF0000">}</span>
 
    <span style="font-weight: bold"><span style="color: #0000FF">return</span></span> <span style="color: #990000">*</span><span style="font-weight: bold"><span style="color: #0000FF">this</span></span><span style="color: #990000">;</span>
@@ -2531,55 +2533,26 @@ http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite -->
 <pre><tt><span style="font-style: italic"><span style="color: #9A1900">// copy-and-swap implementation</span></span>
 <span style="font-weight: bold"><span style="color: #0000FF">template</span></span> <span style="color: #990000">&lt;</span><span style="font-weight: bold"><span style="color: #0000FF">typename</span></span> <span style="color: #008080">T</span><span style="color: #990000">&gt;</span>
-<span style="color: #008080">smart_ptr&lt;T&gt;&amp; smart_ptr&lt;T&gt;::operator=(smart_ptr&lt;T&gt;</span> d<span style="color: #990000">)</span> <span style="font-style: italic"><span style="color: #9A1900">// d is passed by value, which invokes the copy constructor</span></span>
+smart_ptr<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;&amp;</span> smart_ptr<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;::</span><span style="font-weight: bold"><span style="color: #0000FF">operator</span></span><span style="color: #990000">=(</span><span style="font-weight: bold"><span style="color: #0000FF">const</span></span> smart_ptr<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;&amp;</span> o<span style="color: #990000">)</span> <span style="font-style: italic"><span style="color: #9A1900">// d is passed by value, which invokes the copy constructor</span></span>
 <span style="color: #FF0000">{</span>
-   <span style="font-weight: bold"><span style="color: #0000FF">using</span></span> std<span style="color: #990000">::</span>swap<span style="color: #990000">;</span> <span style="font-style: italic"><span style="color: #9A1900">// _always_ do this</span></span>
-   <span style="font-weight: bold"><span style="color: #000000">swap</span></span><span style="color: #990000">(*</span><span style="font-weight: bold"><span style="color: #0000FF">this</span></span><span style="color: #990000">,</span> d<span style="color: #990000">);</span>  <span style="font-style: italic"><span style="color: #9A1900">// resources of our old smart_ptr go into t</span></span>
+   smart_ptr<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;</span><span style="color: #FF0000">{}</span><span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">swap</span></span><span style="color: #990000">(*</span><span style="font-weight: bold"><span style="color: #0000FF">this</span></span><span style="color: #990000">);</span>  <span style="font-style: italic"><span style="color: #9A1900">// resources of our old smart_ptr go into the temporary,</span></span>
+                                <span style="font-style: italic"><span style="color: #9A1900">// which is cleaned up at the semicolon by default</span></span>
    <span style="font-weight: bold"><span style="color: #0000FF">return</span></span> <span style="color: #990000">*</span><span style="font-weight: bold"><span style="color: #0000FF">this</span></span><span style="color: #990000">;</span>
-<span style="color: #FF0000">}</span> <span style="font-style: italic"><span style="color: #9A1900">// d cleaned up here by definition</span></span></tt></pre></div></div>
+<span style="color: #FF0000">}</span>
+
+<span style="font-weight: bold"><span style="color: #0000FF">template</span></span> <span style="color: #990000">&lt;</span><span style="font-weight: bold"><span style="color: #0000FF">typename</span></span> <span style="color: #008080">T</span><span style="color: #990000">&gt;</span>
+<span style="color: #009900">void</span> smart_ptr<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;::</span><span style="font-weight: bold"><span style="color: #000000">swap</span></span><span style="color: #990000">(</span>smart_ptr<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;&amp;</span> o<span style="color: #990000">)</span> noexcept
+<span style="color: #FF0000">{</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">using</span></span> std<span style="color: #990000">::</span>swap<span style="color: #990000">;</span> <span style="font-style: italic"><span style="color: #9A1900">// very important!</span></span>
+   <span style="font-weight: bold"><span style="color: #000000">swap</span></span><span style="color: #990000">(</span>data<span style="color: #990000">,</span> o<span style="color: #990000">.</span>data_<span style="color: #990000">);</span>
+   <span style="font-weight: bold"><span style="color: #000000">swap</span></span><span style="color: #990000">(</span>size_<span style="color: #990000">,</span> o<span style="color: #990000">.</span>size_<span style="color: #990000">);</span>
+<span style="color: #FF0000">}</span></tt></pre></div></div>
 <div class="ulist"><ul>
 <li>
 <p>
 &#8230;which we can do by invoking the copy constructor and the destructor!
 </p>
 </li>
-<li>
-<p>
-There&#8217;s still a problem with this one.
-</p>
-<div class="ulist"><ul>
-<li>
-<p>
-If <code>this == &amp;d</code>, then we&#8217;ve just performed an expensive copy for nothing!
-</p>
-</li>
-<li>
-<p>
-Fortunately, there&#8217;s a simple fix:
-</p>
-</li>
-</ul></div>
-</li>
-</ul></div>
-<div class="listingblock">
-<div class="content"><!-- Generator: GNU source-highlight 3.1.8
-by Lorenzo Bettini
-http://www.lorenzobettini.it
-http://www.gnu.org/software/src-highlite -->
-<pre><tt><span style="font-style: italic"><span style="color: #9A1900">// check-for-self + copy-and-swap</span></span>
-<span style="font-weight: bold"><span style="color: #0000FF">template</span></span> <span style="color: #990000">&lt;</span><span style="font-weight: bold"><span style="color: #0000FF">typename</span></span> <span style="color: #008080">T</span><span style="color: #990000">&gt;</span>
-smart_ptr<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;&amp;</span> smart_ptr<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;::</span><span style="font-weight: bold"><span style="color: #0000FF">operator</span></span><span style="color: #990000">=(</span><span style="font-weight: bold"><span style="color: #0000FF">const</span></span> smart_ptr<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;&amp;</span> d<span style="color: #990000">)</span> <span style="font-style: italic"><span style="color: #9A1900">// d is passed by reference-to-const again</span></span>
-<span style="color: #FF0000">{</span>
-   <span style="font-weight: bold"><span style="color: #0000FF">if</span></span> <span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">this</span></span> <span style="color: #990000">!=</span> <span style="color: #990000">&amp;</span>d<span style="color: #990000">)</span> <span style="font-style: italic"><span style="color: #9A1900">// avoid the expensive copy if it's self-assignment</span></span>
-   <span style="color: #FF0000">{</span>
-      <span style="font-weight: bold"><span style="color: #0000FF">using</span></span> std<span style="color: #990000">::</span>swap<span style="color: #990000">;</span>
-      <span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> t <span style="color: #990000">=</span> d<span style="color: #990000">;</span> <span style="font-style: italic"><span style="color: #9A1900">// we copy d into t via the smart_ptr&lt;T&gt; copy constructor</span></span>
-      <span style="font-weight: bold"><span style="color: #000000">swap</span></span><span style="color: #990000">(*</span><span style="font-weight: bold"><span style="color: #0000FF">this</span></span><span style="color: #990000">,</span> t<span style="color: #990000">);</span> <span style="font-style: italic"><span style="color: #9A1900">// resources from the copy go into t</span></span>
-   <span style="color: #FF0000">}</span> <span style="font-style: italic"><span style="color: #9A1900">// t cleaned up here</span></span>
-
-   <span style="font-weight: bold"><span style="color: #0000FF">return</span></span> <span style="color: #990000">*</span><span style="font-weight: bold"><span style="color: #0000FF">this</span></span><span style="color: #990000">;</span>
-<span style="color: #FF0000">}</span></tt></pre></div></div>
-<div class="ulist"><ul>
 <li>
 <p>
 This is the preferred copy assingment operator.
@@ -2592,7 +2565,39 @@ Exception: when you are allocating an array on the free store.
 </li>
 <li>
 <p>
-That&#8217;s when you go back to the original check-for-self copy assignment operator.
+That&#8217;s when you go back to the original check-for-self copy assignment operator, with a caveat:
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-style: italic"><span style="color: #9A1900">// special optimisation assignment for dumb arrays</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">template</span></span> <span style="color: #990000">&lt;</span><span style="font-weight: bold"><span style="color: #0000FF">typename</span></span> <span style="color: #008080">T</span><span style="color: #990000">&gt;</span>
+smart_ptr<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;&amp;</span> smart_ptr<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;::</span><span style="font-weight: bold"><span style="color: #0000FF">operator</span></span><span style="color: #990000">=(</span><span style="font-weight: bold"><span style="color: #0000FF">const</span></span> smart_ptr<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;&amp;</span> o<span style="color: #990000">)</span>
+<span style="color: #FF0000">{</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">if</span></span> <span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">this</span></span> <span style="color: #990000">!=</span> <span style="color: #990000">&amp;</span>d<span style="color: #990000">)</span> <span style="color: #FF0000">{</span>
+      <span style="font-weight: bold"><span style="color: #0000FF">if</span></span> <span style="color: #990000">(</span>o<span style="color: #990000">.</span>size_ <span style="color: #990000">==</span> size_<span style="color: #990000">)</span> <span style="font-style: italic"><span style="color: #9A1900">// saves an expensive heap allocation if it isn't necessary</span></span>
+         std<span style="color: #990000">::</span><span style="font-weight: bold"><span style="color: #000000">copy</span></span><span style="color: #990000">(</span>o<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">begin</span></span><span style="color: #990000">(),</span> o<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">end</span></span><span style="color: #990000">(),</span> <span style="font-weight: bold"><span style="color: #000000">begin</span></span><span style="color: #990000">());</span>
+      <span style="font-weight: bold"><span style="color: #0000FF">else</span></span>
+         smart_ptr<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;</span><span style="color: #FF0000">{}</span><span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">swap</span></span><span style="color: #990000">(*</span><span style="font-weight: bold"><span style="color: #0000FF">this</span></span><span style="color: #990000">);</span>
+   <span style="color: #FF0000">}</span>
+
+   <span style="font-weight: bold"><span style="color: #0000FF">return</span></span> <span style="color: #990000">*</span><span style="font-weight: bold"><span style="color: #0000FF">this</span></span><span style="color: #990000">;</span>
+<span style="color: #FF0000">}</span></tt></pre></div></div>
+<div class="ulist"><ul>
+<li>
+<p>
+This last one is an optimisation: <strong>do not do optimise without performance testing</strong>.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+If you do, you might pessimise your code.
 </p>
 </li>
 </ul></div>
@@ -2889,8 +2894,8 @@ An rvalue reference-to-<code>const</code> is thus pointless.
 by Lorenzo Bettini
 http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite -->
-<pre><tt><span style="font-weight: bold"><span style="color: #0000FF">auto</span></span><span style="color: #990000">&amp;&amp;</span> rvalue_reference <span style="color: #990000">=</span> <span style="color: #993399">0</span><span style="color: #990000">;</span> <span style="font-style: italic"><span style="color: #9A1900">// okay</span></span>
-<span style="font-weight: bold"><span style="color: #0000FF">const</span></span> <span style="font-weight: bold"><span style="color: #0000FF">auto</span></span><span style="color: #990000">&amp;&amp;</span> rvalue_reference_to_const <span style="color: #990000">=</span> <span style="color: #993399">0</span><span style="color: #990000">;</span> <span style="font-style: italic"><span style="color: #9A1900">// legal, but the rvalue reference is now useless.</span></span></tt></pre></div></div>
+<pre><tt><span style="color: #009900">int</span><span style="color: #990000">&amp;&amp;</span> rvalue_reference <span style="color: #990000">=</span> <span style="color: #993399">0</span><span style="color: #990000">;</span> <span style="font-style: italic"><span style="color: #9A1900">// okay, deliberately _not_ `auto&amp;&amp;`</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">const</span></span> <span style="color: #009900">int</span><span style="color: #990000">&amp;&amp;</span> rvalue_reference_to_const <span style="color: #990000">=</span> <span style="color: #993399">0</span><span style="color: #990000">;</span> <span style="font-style: italic"><span style="color: #9A1900">// legal, but the rvalue reference is now useless.</span></span></tt></pre></div></div>
 <div class="admonitionblock">
 <table><tr>
 <td class="icon">
@@ -3038,11 +3043,13 @@ by Lorenzo Bettini
 http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite -->
 <pre><tt><span style="font-weight: bold"><span style="color: #0000FF">template</span></span> <span style="color: #990000">&lt;</span><span style="font-weight: bold"><span style="color: #0000FF">typename</span></span> <span style="color: #008080">T</span><span style="color: #990000">&gt;</span>
-smart_ptr<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;::</span><span style="font-weight: bold"><span style="color: #000000">smart_ptr</span></span><span style="color: #990000">(</span>smart_ptr<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;&amp;&amp;</span> o<span style="color: #990000">)</span>
-   <span style="color: #990000">:</span> data_<span style="color: #FF0000">{</span>o<span style="color: #990000">.</span>data_<span style="color: #FF0000">}</span>
+smart_ptr<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;::</span><span style="font-weight: bold"><span style="color: #000000">smart_ptr</span></span><span style="color: #990000">(</span>smart_ptr<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;&amp;&amp;</span> o<span style="color: #990000">)</span> noexcept <span style="font-style: italic"><span style="color: #9A1900">// move constructor must always be noexcept</span></span>
+   <span style="color: #990000">:</span> size_<span style="color: #FF0000">{</span>o<span style="color: #990000">.</span>size_<span style="color: #FF0000">}</span><span style="color: #990000">,</span>
+     data_<span style="color: #FF0000">{</span>o<span style="color: #990000">.</span>data_<span style="color: #FF0000">}</span>
 <span style="color: #FF0000">{</span>
    o<span style="color: #990000">.</span>data_ <span style="color: #990000">=</span> nullptr<span style="color: #990000">;</span> <span style="font-style: italic"><span style="color: #9A1900">// o.data_ is no longer an owner of the</span></span>
                       <span style="font-style: italic"><span style="color: #9A1900">// object, and cannot point to the resource.</span></span>
+   o<span style="color: #990000">.</span>size_ <span style="color: #990000">=</span> <span style="color: #993399">0</span><span style="color: #990000">;</span>
 <span style="color: #FF0000">}</span></tt></pre></div></div>
 <div class="ulist"><ul>
 <li>
@@ -3071,7 +3078,7 @@ by Lorenzo Bettini
 http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite -->
 <pre><tt><span style="font-weight: bold"><span style="color: #0000FF">template</span></span> <span style="color: #990000">&lt;</span><span style="font-weight: bold"><span style="color: #0000FF">typename</span></span> <span style="color: #008080">T</span><span style="color: #990000">&gt;</span>
-magic<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;::</span><span style="font-weight: bold"><span style="color: #000000">magic</span></span><span style="color: #990000">(</span>magic<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;&amp;&amp;</span> o<span style="color: #990000">)</span>
+magic<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;::</span><span style="font-weight: bold"><span style="color: #000000">magic</span></span><span style="color: #990000">(</span>magic<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;&amp;&amp;</span> o<span style="color: #990000">)</span> noexcept
    <span style="color: #990000">:</span> data_<span style="color: #FF0000">{</span>std<span style="color: #990000">::</span><span style="font-weight: bold"><span style="color: #000000">move</span></span><span style="color: #990000">(</span>o<span style="color: #990000">.</span>data_<span style="color: #990000">)</span><span style="color: #FF0000">}</span><span style="color: #990000">,</span> <span style="font-style: italic"><span style="color: #9A1900">// data_ is a vector&lt;T&gt;</span></span>
      resource_<span style="color: #FF0000">{</span>o<span style="color: #990000">.</span>resource_<span style="color: #FF0000">}</span> <span style="font-style: italic"><span style="color: #9A1900">// resource_ is a pointer pointing to something on the free store</span></span>
 <span style="color: #FF0000">{</span>
@@ -3194,7 +3201,7 @@ by Lorenzo Bettini
 http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite -->
 <pre><tt><span style="font-weight: bold"><span style="color: #0000FF">template</span></span> <span style="color: #990000">&lt;</span><span style="font-weight: bold"><span style="color: #0000FF">typename</span></span> <span style="color: #008080">T</span><span style="color: #990000">&gt;</span>
-magic<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;&amp;</span> magic<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;::</span><span style="font-weight: bold"><span style="color: #0000FF">operator</span></span><span style="color: #990000">=(</span>magic<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;&amp;&amp;</span> m<span style="color: #990000">)</span>
+magic<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;&amp;</span> magic<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;::</span><span style="font-weight: bold"><span style="color: #0000FF">operator</span></span><span style="color: #990000">=(</span>magic<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;&amp;&amp;</span> m<span style="color: #990000">)</span> noexcept
 <span style="color: #FF0000">{</span>
    <span style="font-weight: bold"><span style="color: #0000FF">if</span></span> <span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">this</span></span> <span style="color: #990000">!=</span> <span style="color: #990000">&amp;</span>r<span style="color: #990000">)</span>
    <span style="color: #FF0000">{</span>
@@ -3239,6 +3246,11 @@ If you haven&#8217;t received a reference to a temporary, then the client has a 
 </li>
 <li>
 <p>
+Patrice Roy (another member of WG21) taught me during my adventures at CppCon the same thing.
+</p>
+</li>
+<li>
+<p>
 Howard also believes this is better than the above (and given the above arguments, I&#8217;m inclined
   to agree):
 </p>
@@ -3250,21 +3262,37 @@ by Lorenzo Bettini
 http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite -->
 <pre><tt><span style="font-weight: bold"><span style="color: #0000FF">template</span></span> <span style="color: #990000">&lt;</span><span style="font-weight: bold"><span style="color: #0000FF">typename</span></span> <span style="color: #008080">T</span><span style="color: #990000">&gt;</span>
-magic<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;&amp;</span> magic<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;::</span><span style="font-weight: bold"><span style="color: #0000FF">operator</span></span><span style="color: #990000">=(</span>magic<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;&amp;&amp;</span> m<span style="color: #990000">)</span>
+magic<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;&amp;</span> magic<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;::</span><span style="font-weight: bold"><span style="color: #0000FF">operator</span></span><span style="color: #990000">=(</span>magic<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;&amp;&amp;</span> m<span style="color: #990000">)</span> noexcept <span style="font-style: italic"><span style="color: #9A1900">// move assignment operator must always be noexcept</span></span>
 <span style="color: #FF0000">{</span>
    <span style="font-weight: bold"><span style="color: #000000">assert</span></span><span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">this</span></span> <span style="color: #990000">!=</span> <span style="color: #990000">&amp;</span>r<span style="color: #990000">);</span>
-   <span style="font-weight: bold"><span style="color: #0000FF">delete</span></span><span style="color: #990000">[]</span> resource_<span style="color: #990000">;</span>
-   resource_ <span style="color: #990000">=</span> m<span style="color: #990000">.</span>resource_<span style="color: #990000">;</span>
-   m<span style="color: #990000">.</span>resource_ <span style="color: #990000">=</span> nullptr<span style="color: #990000">;</span>
-
-   data_ <span style="color: #990000">=</span> std<span style="color: #990000">::</span><span style="font-weight: bold"><span style="color: #000000">move</span></span><span style="color: #990000">(</span>m<span style="color: #990000">.</span>data_<span style="color: #990000">);</span>
-
+   <span style="font-weight: bold"><span style="color: #000000">clear</span></span><span style="color: #990000">();</span>
+   <span style="font-weight: bold"><span style="color: #000000">swap</span></span><span style="color: #990000">(</span>m<span style="color: #990000">);</span>
    <span style="font-weight: bold"><span style="color: #0000FF">return</span></span> <span style="color: #990000">*</span><span style="font-weight: bold"><span style="color: #0000FF">this</span></span><span style="color: #990000">;</span>
+<span style="color: #FF0000">}</span>
+
+<span style="font-weight: bold"><span style="color: #0000FF">template</span></span> <span style="color: #990000">&lt;</span><span style="font-weight: bold"><span style="color: #0000FF">typename</span></span> <span style="color: #008080">T</span><span style="color: #990000">&gt;</span>
+magic<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;&amp;</span> magic<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;::</span><span style="font-weight: bold"><span style="color: #000000">clear</span></span><span style="color: #990000">()</span> noexcept
+<span style="color: #FF0000">{</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">delete</span></span><span style="color: #990000">[]</span> resource_<span style="color: #990000">;</span>
+   data_<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">clear</span></span><span style="color: #990000">();</span>
+<span style="color: #FF0000">}</span>
+
+<span style="font-weight: bold"><span style="color: #0000FF">template</span></span> <span style="color: #990000">&lt;</span><span style="font-weight: bold"><span style="color: #0000FF">typename</span></span> <span style="color: #008080">T</span><span style="color: #990000">&gt;</span>
+<span style="color: #009900">void</span> magic<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;::</span><span style="font-weight: bold"><span style="color: #000000">swap</span></span><span style="color: #990000">(</span>magic<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;&amp;</span> o<span style="color: #990000">)</span> noexcept <span style="font-style: italic"><span style="color: #9A1900">// swap must always be noexcept!!</span></span>
+<span style="color: #FF0000">{</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">using</span></span> std<span style="color: #990000">::</span>swap<span style="color: #990000">;</span>
+   <span style="font-weight: bold"><span style="color: #000000">swap</span></span><span style="color: #990000">(</span>resource_<span style="color: #990000">,</span> o<span style="color: #990000">.</span>resource_<span style="color: #990000">);</span>
+   <span style="font-weight: bold"><span style="color: #000000">swap</span></span><span style="color: #990000">(</span>data_<span style="color: #990000">,</span> o<span style="color: #990000">.</span>data_<span style="color: #990000">);</span>
 <span style="color: #FF0000">}</span></tt></pre></div></div>
 <div class="ulist"><ul>
 <li>
 <p>
 This way, the client is forced to fix their problem, rather than dart around it.
+</p>
+</li>
+<li>
+<p>
+If you read <em>The C++ Programming Language (4th Edition)</em>, you&#8217;ll also find the above function.
 </p>
 </li>
 </ul></div>
@@ -4283,7 +4311,7 @@ Meyers, S. <em>Effective STL: 50 specific ways to improve your use of the standa
 <div id="footer">
 <div id="footer-text">
 Version 1<br />
-Last updated 2016-09-01 23:37:20 AEST
+Last updated 2016-10-04 00:33:26 AEDT
 </div>
 </div>
 </body>
