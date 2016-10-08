@@ -16,11 +16,6 @@ std::vector<double> make_vector(T first, const T last)
    return v;
 }
 
-std::vector<double> make_vector(const std::size_t size, const double magnitude)
-{
-   return std::vector<double>(size, magnitude);
-}
-
 int main()
 {
    auto v = make_vector(10, 20);
