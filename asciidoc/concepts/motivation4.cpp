@@ -30,10 +30,10 @@ std::vector<int> make_crowd(const int children, const int adults, const int seni
 
 int main()
 {
-   auto a = make_crowd(0, 2, 1'000);
+   auto a = make_crowd(5, 2, 100);
    std::sort(a.begin(), a.end());
 
-   auto b = make_crowd(1'000, 2, 0);
+   auto b = make_crowd(100, 2, 5);
    std::sort(b.begin(), b.end());
 
    // get the container that has the extremes

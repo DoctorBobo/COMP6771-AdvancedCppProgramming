@@ -32,20 +32,20 @@ namespace ranges = std::experimental::ranges::v1;
 
 int main()
 {
-   auto a = make_crowd(10, 2, 5);
-   std::sort(a.begin(), a.end());
+   auto a = make_crowd(100, 2, 5);
+   ranges::sort(a);
 
-   auto b = make_crowd(5, 2, 10);
-   std::sort(b.begin(), b.end());
+   auto b = make_crowd(5, 2, 100);
+   ranges::sort(b);
 
    // get the container that has the extremes
    auto youngest = a.front() < b.front();
    auto oldest = a.back() > b.back();
 
    if (youngest && oldest)
-      ranges::copy(a, std::ostream_iterator<decltype(a)::value_type>{std::cout, "\n"});
-   else if (!youngest && !oldest)
-      ranges::copy(b, std::ostream_iterator<decltype(b)::value_type>{std::cout, "\n"});
+      ranges::copy(a, ranges::ostream_iterator<decltype(a)::value_type>{std::cout, "\n"});
+   else if (not (youngest || oldest))
+      ranges::copy(b, ranges::ostream_iterator<decltype(b)::value_type>{std::cout, "\n"});
    else
       std::cout << "ranges overlap\n";
 }
