@@ -1,0 +1,2336 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
+<meta name="generator" content="AsciiDoc 8.6.9" />
+<title>Week 5 tutorial postscript notes</title>
+<style type="text/css">
+/* Shared CSS for AsciiDoc xhtml11 and html5 backends */
+
+/* Default font. */
+body {
+  font-family: Georgia,serif;
+}
+
+/* Title font. */
+h1, h2, h3, h4, h5, h6,
+div.title, caption.title,
+thead, p.table.header,
+#toctitle,
+#author, #revnumber, #revdate, #revremark,
+#footer {
+  font-family: Arial,Helvetica,sans-serif;
+}
+
+body {
+  margin: 1em 5% 1em 5%;
+}
+
+a {
+  color: blue;
+  text-decoration: underline;
+}
+a:visited {
+  color: fuchsia;
+}
+
+em {
+  font-style: italic;
+  color: navy;
+}
+
+strong {
+  font-weight: bold;
+  color: #083194;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #527bbd;
+  margin-top: 1.2em;
+  margin-bottom: 0.5em;
+  line-height: 1.3;
+}
+
+h1, h2, h3 {
+  border-bottom: 2px solid silver;
+}
+h2 {
+  padding-top: 0.5em;
+}
+h3 {
+  float: left;
+}
+h3 + * {
+  clear: left;
+}
+h5 {
+  font-size: 1.0em;
+}
+
+div.sectionbody {
+  margin-left: 0;
+}
+
+hr {
+  border: 1px solid silver;
+}
+
+p {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+ul, ol, li > p {
+  margin-top: 0;
+}
+ul > li     { color: #aaa; }
+ul > li > * { color: black; }
+
+.monospaced, code, pre {
+  font-family: "Courier New", Courier, monospace;
+  font-size: inherit;
+  color: navy;
+  padding: 0;
+  margin: 0;
+}
+pre {
+  white-space: pre-wrap;
+}
+
+#author {
+  color: #527bbd;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+#email {
+}
+#revnumber, #revdate, #revremark {
+}
+
+#footer {
+  font-size: small;
+  border-top: 2px solid silver;
+  padding-top: 0.5em;
+  margin-top: 4.0em;
+}
+#footer-text {
+  float: left;
+  padding-bottom: 0.5em;
+}
+#footer-badges {
+  float: right;
+  padding-bottom: 0.5em;
+}
+
+#preamble {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+div.imageblock, div.exampleblock, div.verseblock,
+div.quoteblock, div.literalblock, div.listingblock, div.sidebarblock,
+div.admonitionblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.admonitionblock {
+  margin-top: 2.0em;
+  margin-bottom: 2.0em;
+  margin-right: 10%;
+  color: #606060;
+}
+
+div.content { /* Block element content. */
+  padding: 0;
+}
+
+/* Block element titles. */
+div.title, caption.title {
+  color: #527bbd;
+  font-weight: bold;
+  text-align: left;
+  margin-top: 1.0em;
+  margin-bottom: 0.5em;
+}
+div.title + * {
+  margin-top: 0;
+}
+
+td div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content + div.title {
+  margin-top: 0.0em;
+}
+
+div.sidebarblock > div.content {
+  background: #ffffee;
+  border: 1px solid #dddddd;
+  border-left: 4px solid #f0f0f0;
+  padding: 0.5em;
+}
+
+div.listingblock > div.content {
+  border: 1px solid #dddddd;
+  border-left: 5px solid #f0f0f0;
+  background: #f8f8f8;
+  padding: 0.5em;
+}
+
+div.quoteblock, div.verseblock {
+  padding-left: 1.0em;
+  margin-left: 1.0em;
+  margin-right: 10%;
+  border-left: 5px solid #f0f0f0;
+  color: #888;
+}
+
+div.quoteblock > div.attribution {
+  padding-top: 0.5em;
+  text-align: right;
+}
+
+div.verseblock > pre.content {
+  font-family: inherit;
+  font-size: inherit;
+}
+div.verseblock > div.attribution {
+  padding-top: 0.75em;
+  text-align: left;
+}
+/* DEPRECATED: Pre version 8.2.7 verse style literal block. */
+div.verseblock + div.attribution {
+  text-align: left;
+}
+
+div.admonitionblock .icon {
+  vertical-align: top;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-decoration: underline;
+  color: #527bbd;
+  padding-right: 0.5em;
+}
+div.admonitionblock td.content {
+  padding-left: 0.5em;
+  border-left: 3px solid #dddddd;
+}
+
+div.exampleblock > div.content {
+  border-left: 3px solid #dddddd;
+  padding-left: 0.5em;
+}
+
+div.imageblock div.content { padding-left: 0; }
+span.image img { border-style: none; vertical-align: text-bottom; }
+a.image:visited { color: white; }
+
+dl {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+dt {
+  margin-top: 0.5em;
+  margin-bottom: 0;
+  font-style: normal;
+  color: navy;
+}
+dd > *:first-child {
+  margin-top: 0.1em;
+}
+
+ul, ol {
+    list-style-position: outside;
+}
+ol.arabic {
+  list-style-type: decimal;
+}
+ol.loweralpha {
+  list-style-type: lower-alpha;
+}
+ol.upperalpha {
+  list-style-type: upper-alpha;
+}
+ol.lowerroman {
+  list-style-type: lower-roman;
+}
+ol.upperroman {
+  list-style-type: upper-roman;
+}
+
+div.compact ul, div.compact ol,
+div.compact p, div.compact p,
+div.compact div, div.compact div {
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+}
+
+tfoot {
+  font-weight: bold;
+}
+td > div.verse {
+  white-space: pre;
+}
+
+div.hdlist {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+div.hdlist tr {
+  padding-bottom: 15px;
+}
+dt.hdlist1.strong, td.hdlist1.strong {
+  font-weight: bold;
+}
+td.hdlist1 {
+  vertical-align: top;
+  font-style: normal;
+  padding-right: 0.8em;
+  color: navy;
+}
+td.hdlist2 {
+  vertical-align: top;
+}
+div.hdlist.compact tr {
+  margin: 0;
+  padding-bottom: 0;
+}
+
+.comment {
+  background: yellow;
+}
+
+.footnote, .footnoteref {
+  font-size: 0.8em;
+}
+
+span.footnote, span.footnoteref {
+  vertical-align: super;
+}
+
+#footnotes {
+  margin: 20px 0 20px 0;
+  padding: 7px 0 0 0;
+}
+
+#footnotes div.footnote {
+  margin: 0 0 5px 0;
+}
+
+#footnotes hr {
+  border: none;
+  border-top: 1px solid silver;
+  height: 1px;
+  text-align: left;
+  margin-left: 0;
+  width: 20%;
+  min-width: 100px;
+}
+
+div.colist td {
+  padding-right: 0.5em;
+  padding-bottom: 0.3em;
+  vertical-align: top;
+}
+div.colist td img {
+  margin-top: 0.3em;
+}
+
+@media print {
+  #footer-badges { display: none; }
+}
+
+#toc {
+  margin-bottom: 2.5em;
+}
+
+#toctitle {
+  color: #527bbd;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-top: 1.0em;
+  margin-bottom: 0.1em;
+}
+
+div.toclevel0, div.toclevel1, div.toclevel2, div.toclevel3, div.toclevel4 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+div.toclevel2 {
+  margin-left: 2em;
+  font-size: 0.9em;
+}
+div.toclevel3 {
+  margin-left: 4em;
+  font-size: 0.9em;
+}
+div.toclevel4 {
+  margin-left: 6em;
+  font-size: 0.9em;
+}
+
+span.aqua { color: aqua; }
+span.black { color: black; }
+span.blue { color: blue; }
+span.fuchsia { color: fuchsia; }
+span.gray { color: gray; }
+span.green { color: green; }
+span.lime { color: lime; }
+span.maroon { color: maroon; }
+span.navy { color: navy; }
+span.olive { color: olive; }
+span.purple { color: purple; }
+span.red { color: red; }
+span.silver { color: silver; }
+span.teal { color: teal; }
+span.white { color: white; }
+span.yellow { color: yellow; }
+
+span.aqua-background { background: aqua; }
+span.black-background { background: black; }
+span.blue-background { background: blue; }
+span.fuchsia-background { background: fuchsia; }
+span.gray-background { background: gray; }
+span.green-background { background: green; }
+span.lime-background { background: lime; }
+span.maroon-background { background: maroon; }
+span.navy-background { background: navy; }
+span.olive-background { background: olive; }
+span.purple-background { background: purple; }
+span.red-background { background: red; }
+span.silver-background { background: silver; }
+span.teal-background { background: teal; }
+span.white-background { background: white; }
+span.yellow-background { background: yellow; }
+
+span.big { font-size: 2em; }
+span.small { font-size: 0.6em; }
+
+span.underline { text-decoration: underline; }
+span.overline { text-decoration: overline; }
+span.line-through { text-decoration: line-through; }
+
+div.unbreakable { page-break-inside: avoid; }
+
+
+/*
+ * xhtml11 specific
+ *
+ * */
+
+div.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.tableblock > table {
+  border: 3px solid #527bbd;
+}
+thead, p.table.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.table {
+  margin-top: 0;
+}
+/* Because the table frame attribute is overriden by CSS in most browsers. */
+div.tableblock > table[frame="void"] {
+  border-style: none;
+}
+div.tableblock > table[frame="hsides"] {
+  border-left-style: none;
+  border-right-style: none;
+}
+div.tableblock > table[frame="vsides"] {
+  border-top-style: none;
+  border-bottom-style: none;
+}
+
+
+/*
+ * html5 specific
+ *
+ * */
+
+table.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+thead, p.tableblock.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.tableblock {
+  margin-top: 0;
+}
+table.tableblock {
+  border-width: 3px;
+  border-spacing: 0px;
+  border-style: solid;
+  border-color: #527bbd;
+  border-collapse: collapse;
+}
+th.tableblock, td.tableblock {
+  border-width: 1px;
+  padding: 4px;
+  border-style: solid;
+  border-color: #527bbd;
+}
+
+table.tableblock.frame-topbot {
+  border-left-style: hidden;
+  border-right-style: hidden;
+}
+table.tableblock.frame-sides {
+  border-top-style: hidden;
+  border-bottom-style: hidden;
+}
+table.tableblock.frame-none {
+  border-style: hidden;
+}
+
+th.tableblock.halign-left, td.tableblock.halign-left {
+  text-align: left;
+}
+th.tableblock.halign-center, td.tableblock.halign-center {
+  text-align: center;
+}
+th.tableblock.halign-right, td.tableblock.halign-right {
+  text-align: right;
+}
+
+th.tableblock.valign-top, td.tableblock.valign-top {
+  vertical-align: top;
+}
+th.tableblock.valign-middle, td.tableblock.valign-middle {
+  vertical-align: middle;
+}
+th.tableblock.valign-bottom, td.tableblock.valign-bottom {
+  vertical-align: bottom;
+}
+
+
+/*
+ * manpage specific
+ *
+ * */
+
+body.manpage h1 {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  border-top: 2px solid silver;
+  border-bottom: 2px solid silver;
+}
+body.manpage h2 {
+  border-style: none;
+}
+body.manpage div.sectionbody {
+  margin-left: 3em;
+}
+
+@media print {
+  body.manpage div#toc { display: none; }
+}
+
+
+</style>
+<script type="text/javascript">
+/*<![CDATA[*/
+var asciidoc = {  // Namespace.
+
+/////////////////////////////////////////////////////////////////////
+// Table Of Contents generator
+/////////////////////////////////////////////////////////////////////
+
+/* Author: Mihai Bazon, September 2002
+ * http://students.infoiasi.ro/~mishoo
+ *
+ * Table Of Content generator
+ * Version: 0.4
+ *
+ * Feel free to use this script under the terms of the GNU General Public
+ * License, as long as you do not remove or alter this notice.
+ */
+
+ /* modified by Troy D. Hanson, September 2006. License: GPL */
+ /* modified by Stuart Rackham, 2006, 2009. License: GPL */
+
+// toclevels = 1..4.
+toc: function (toclevels) {
+
+  function getText(el) {
+    var text = "";
+    for (var i = el.firstChild; i != null; i = i.nextSibling) {
+      if (i.nodeType == 3 /* Node.TEXT_NODE */) // IE doesn't speak constants.
+        text += i.data;
+      else if (i.firstChild != null)
+        text += getText(i);
+    }
+    return text;
+  }
+
+  function TocEntry(el, text, toclevel) {
+    this.element = el;
+    this.text = text;
+    this.toclevel = toclevel;
+  }
+
+  function tocEntries(el, toclevels) {
+    var result = new Array;
+    var re = new RegExp('[hH]([1-'+(toclevels+1)+'])');
+    // Function that scans the DOM tree for header elements (the DOM2
+    // nodeIterator API would be a better technique but not supported by all
+    // browsers).
+    var iterate = function (el) {
+      for (var i = el.firstChild; i != null; i = i.nextSibling) {
+        if (i.nodeType == 1 /* Node.ELEMENT_NODE */) {
+          var mo = re.exec(i.tagName);
+          if (mo && (i.getAttribute("class") || i.getAttribute("className")) != "float") {
+            result[result.length] = new TocEntry(i, getText(i), mo[1]-1);
+          }
+          iterate(i);
+        }
+      }
+    }
+    iterate(el);
+    return result;
+  }
+
+  var toc = document.getElementById("toc");
+  if (!toc) {
+    return;
+  }
+
+  // Delete existing TOC entries in case we're reloading the TOC.
+  var tocEntriesToRemove = [];
+  var i;
+  for (i = 0; i < toc.childNodes.length; i++) {
+    var entry = toc.childNodes[i];
+    if (entry.nodeName.toLowerCase() == 'div'
+     && entry.getAttribute("class")
+     && entry.getAttribute("class").match(/^toclevel/))
+      tocEntriesToRemove.push(entry);
+  }
+  for (i = 0; i < tocEntriesToRemove.length; i++) {
+    toc.removeChild(tocEntriesToRemove[i]);
+  }
+
+  // Rebuild TOC entries.
+  var entries = tocEntries(document.getElementById("content"), toclevels);
+  for (var i = 0; i < entries.length; ++i) {
+    var entry = entries[i];
+    if (entry.element.id == "")
+      entry.element.id = "_toc_" + i;
+    var a = document.createElement("a");
+    a.href = "#" + entry.element.id;
+    a.appendChild(document.createTextNode(entry.text));
+    var div = document.createElement("div");
+    div.appendChild(a);
+    div.className = "toclevel" + entry.toclevel;
+    toc.appendChild(div);
+  }
+  if (entries.length == 0)
+    toc.parentNode.removeChild(toc);
+},
+
+
+/////////////////////////////////////////////////////////////////////
+// Footnotes generator
+/////////////////////////////////////////////////////////////////////
+
+/* Based on footnote generation code from:
+ * http://www.brandspankingnew.net/archive/2005/07/format_footnote.html
+ */
+
+footnotes: function () {
+  // Delete existing footnote entries in case we're reloading the footnodes.
+  var i;
+  var noteholder = document.getElementById("footnotes");
+  if (!noteholder) {
+    return;
+  }
+  var entriesToRemove = [];
+  for (i = 0; i < noteholder.childNodes.length; i++) {
+    var entry = noteholder.childNodes[i];
+    if (entry.nodeName.toLowerCase() == 'div' && entry.getAttribute("class") == "footnote")
+      entriesToRemove.push(entry);
+  }
+  for (i = 0; i < entriesToRemove.length; i++) {
+    noteholder.removeChild(entriesToRemove[i]);
+  }
+
+  // Rebuild footnote entries.
+  var cont = document.getElementById("content");
+  var spans = cont.getElementsByTagName("span");
+  var refs = {};
+  var n = 0;
+  for (i=0; i<spans.length; i++) {
+    if (spans[i].className == "footnote") {
+      n++;
+      var note = spans[i].getAttribute("data-note");
+      if (!note) {
+        // Use [\s\S] in place of . so multi-line matches work.
+        // Because JavaScript has no s (dotall) regex flag.
+        note = spans[i].innerHTML.match(/\s*\[([\s\S]*)]\s*/)[1];
+        spans[i].innerHTML =
+          "[<a id='_footnoteref_" + n + "' href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+        spans[i].setAttribute("data-note", note);
+      }
+      noteholder.innerHTML +=
+        "<div class='footnote' id='_footnote_" + n + "'>" +
+        "<a href='#_footnoteref_" + n + "' title='Return to text'>" +
+        n + "</a>. " + note + "</div>";
+      var id =spans[i].getAttribute("id");
+      if (id != null) refs["#"+id] = n;
+    }
+  }
+  if (n == 0)
+    noteholder.parentNode.removeChild(noteholder);
+  else {
+    // Process footnoterefs.
+    for (i=0; i<spans.length; i++) {
+      if (spans[i].className == "footnoteref") {
+        var href = spans[i].getElementsByTagName("a")[0].getAttribute("href");
+        href = href.match(/#.*/)[0];  // Because IE return full URL.
+        n = refs[href];
+        spans[i].innerHTML =
+          "[<a href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+      }
+    }
+  }
+},
+
+install: function(toclevels) {
+  var timerId;
+
+  function reinstall() {
+    asciidoc.footnotes();
+    if (toclevels) {
+      asciidoc.toc(toclevels);
+    }
+  }
+
+  function reinstallAndRemoveTimer() {
+    clearInterval(timerId);
+    reinstall();
+  }
+
+  timerId = setInterval(reinstall, 500);
+  if (document.addEventListener)
+    document.addEventListener("DOMContentLoaded", reinstallAndRemoveTimer, false);
+  else
+    window.onload = reinstallAndRemoveTimer;
+}
+
+}
+asciidoc.install();
+/*]]>*/
+</script>
+</head>
+<body class="article">
+<div id="header">
+<h1>Week 5 tutorial postscript notes</h1>
+<span id="author">Christopher Di Bella</span><br />
+<span id="email"><code>&lt;<a href="mailto:cjdb.ns@gmail.com">cjdb.ns@gmail.com</a>&gt;</code></span><br />
+<span id="revnumber">version 1,</span>
+<span id="revdate">2016/09/07</span>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph"><p><span class="big"><strong>WARNING:</strong> these notes are only <em>partially</em> cited. Please do not consider these notes
+     reliable until this warning has been removed.</span></p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_exceptions_and_error_handling">Exceptions and error handling</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+Designing a program to handle exception safety requires thought.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+To quote Herb Sutter, "supporting exceptions should never be an afterthought".
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+<div class="sect2">
+<h3 id="_exception_safety">Exception safety</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+I planned to provide a full set of notes on exception safety and error handling, but David
+  Abrahams beat me to it (by over a decade).
+</p>
+</li>
+<li>
+<p>
+Although they are old, they convey most of the content that I think is relevant.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+David Abrahams' notes on <a href="http://www.boost.org/community/exception_safety.html">exception
+     safety</a>.
+</p>
+</li>
+<li>
+<p>
+David Abrahams' notes on <a href="http://www.boost.org/community/error_handling.html">error
+     handling</a>.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Before continuing, please take the time to read <em>both</em> articles: I have written the next section
+  assuming that you have.
+</p>
+</li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="_exceptions_versus_assertions">Exceptions versus assertions</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+Assertions are good to stop developer screw ups.
+</p>
+</li>
+<li>
+<p>
+That is, they force developers to make sure they are using functions correctly.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+An assertion is a hard failure, for non-recoverable errors, with <em>instant</em> program
+      termination.
+</p>
+</li>
+<li>
+<p>
+A non-recoverable error should not be in the final software.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+They are <em>not</em> for error handling.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+Once code leaves the dev office, they should be disabled.
+</p>
+</li>
+<li>
+<p>
+An example of a good assertion is when self move assignment has been detected (see week 4
+      notes for self-assignment and move semantics).
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Exceptions on the other hand are for <em>recoverable</em> errors, such as stopping an invalid range from
+  being accessed.
+</p>
+</li>
+<li>
+<p>
+We roll back the invariants, and perform destruction as necessary.
+</p>
+</li>
+<li>
+<p>
+Another good example is detecting division by zero in a calculator when a user supplies <code>1 / 0</code>:
+  this should be recoverable, as we can inform the user of an error and keep processing.
+</p>
+</li>
+<li>
+<p>
+The CppCoreGuidelines outline two special functions: <code>Expects</code> and <code>Ensures</code>, which at the moment
+  are basically the C assert with different names to convey meaning.
+</p>
+</li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="_code_noexcept_code"><code>noexcept</code></h3>
+<div class="ulist"><ul>
+<li>
+<p>
+<code>noexcept</code> is a compiler-enforced no-throw guarantee.
+</p>
+</li>
+<li>
+<p>
+If, under certain conditions, you can assert that a function has a no-throw guarantee, you should
+  specify that the function is <code>noexcept</code>.
+</p>
+</li>
+<li>
+<p>
+Destructors are an example of a function that must be unconditionally <code>noexcept</code>, as destructors
+  should never leak resources (who will clean the resources up when they do?).
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+Any custom <code>swap</code> function you write must be <code>noexcept</code> as well.
+</p>
+</li>
+<li>
+<p>
+Move constructors and move assignment operators should also be unconditionally <code>noexcept</code>.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+There are very few operations that actually throw an exception, and if you know that your function
+  doesn&#8217;t perform them, you should assert that your function is <code>noexcept</code>.
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>foo<span style="color: #990000">::~</span><span style="font-weight: bold"><span style="color: #000000">foo</span></span><span style="color: #990000">()</span> noexcept<span style="color: #990000">;</span> <span style="font-style: italic"><span style="color: #9A1900">// destructors should always have an unconditional noexcept</span></span>
+foo<span style="color: #990000">::</span><span style="font-weight: bold"><span style="color: #000000">foo</span></span><span style="color: #990000">(</span>foo<span style="color: #990000">&amp;&amp;</span> o<span style="color: #990000">)</span> noexcept<span style="color: #990000">;</span> <span style="font-style: italic"><span style="color: #9A1900">// as should move constructors/move assignment operators</span></span>
+
+<span style="font-weight: bold"><span style="color: #0000FF">template</span></span> <span style="color: #990000">&lt;</span><span style="font-weight: bold"><span style="color: #0000FF">typename</span></span> <span style="color: #008080">T</span><span style="color: #990000">&gt;</span> <span style="font-style: italic"><span style="color: #9A1900">// conditional noexcept</span></span>
+<span style="color: #009900">void</span> <span style="font-weight: bold"><span style="color: #000000">swap</span></span><span style="color: #990000">(</span>T<span style="color: #990000">&amp;</span> a<span style="color: #990000">,</span> T<span style="color: #990000">&amp;</span> b<span style="color: #990000">)</span> <span style="font-weight: bold"><span style="color: #000000">noexcept</span></span><span style="color: #990000">(</span>std<span style="color: #990000">::</span>is_nothrow_move_constructible<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;::</span>value <span style="color: #990000">&amp;&amp;</span>
+                               std<span style="color: #990000">::</span>is_nothrow_move_assignable<span style="color: #990000">&lt;</span>T<span style="color: #990000">&gt;::</span>value<span style="color: #990000">);</span></tt></pre></div></div>
+<div class="ulist"><ul>
+<li>
+<p>
+An unconditional <code>noexcept</code> asserts that the no-throw guarantee is held in all cases.
+</p>
+</li>
+<li>
+<p>
+A conditional <code>noexcept</code> means that given the condition inside the parentheses, assert a no-throw
+  guarantee. That is, when the conditional <code>noexcept</code> is <code>noexcept(true)</code>.
+</p>
+</li>
+<li>
+<p>
+If a function that is specified to be <code>noexcept</code> or <code>noexcept(true)</code> leaks an exception, then
+  <code>std::terminate</code> is called immediately.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+Unlike <code>std::exit</code>, <code>std::terminate</code> is not a clean exit from the program.
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="_no_true_code_finally_code">No true <code>finally</code></h3>
+<div class="ulist"><ul>
+<li>
+<p>
+Until very recently, C++ did not support a <code>finally</code> block, because RAII is far more powerful.
+</p>
+</li>
+<li>
+<p>
+Stroustrup decided to provide one as an ad-hoc (read incomplete) method to shut people up.
+</p>
+</li>
+<li>
+<p>
+Prefer RAII to a <code>finally</code> block, as it better fits the idioms that C++ programmers employ and
+  expect (and it&#8217;s also much better, as you never need to close a file, for example).
+</p>
+</li>
+<li>
+<p>
+If for whatever reason you can&#8217;t use a resource handle, <em>then</em> use a <code>final_action</code> object
+  (hopefully the closest C++ will ever come to the <code>finally</code> block seen in other languages).
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+If you really do need to use a <code>final_action</code> object, you should question the design of the
+      program and find out why a destructor is not okay.
+</p>
+</li>
+<li>
+<p>
+Claiming a destructor is "slow" as a reason without performance testing is beyond
+      unacceptable, and keep in mind that a <code>final_action</code> object will require declaration,
+      construction, <em>and</em> destruction in the exact same manner as a normal destructor.
+</p>
+</li>
+<li>
+<p>
+Prefer RAII to <code>finally</code>.
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="_throwing_exceptions">Throwing exceptions</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+Throwing an exception is for handling <em>exceptional</em> circumstances, such as a logic error, a
+  runtime error, and so on.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+They are not a tool for convenient return or early exit.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Prefer throwing an exception to returning an error code.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+Error codes are often ignored (do you check the return value for <code>scanf</code> in C?).
+</p>
+</li>
+<li>
+<p>
+Exceptions cannot be ignored, as an exception that leaks out of main will cause the program
+      to terminate.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Never throw a fundamental type.
+</p>
+</li>
+<li>
+<p>
+Never throw while you are the direct owner of an object.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+In other words, don&#8217;t throw an exception while you have an <em>owning</em> raw pointer.
+</p>
+</li>
+<li>
+<p>
+See below for more info.
+</p>
+</li>
+<li>
+<p>
+Stating and enforcing both preconditions and postconditions is a good way to minimise interfacing
+   errors.
+</p>
+</li>
+<li>
+<p>
+Look into the GSL&#8217;s definition of <code>Expects</code> and <code>Ensures</code> (see references).
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="_catching_exceptions">Catching exceptions</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+You should catch exceptions as rarely as possible: exception safety isn&#8217;t about placing <code>try</code> and
+  <code>catch</code> wherever you can.
+</p>
+</li>
+<li>
+<p>
+If you rely on RAII, then you <em>do not</em> need to write <code>try</code>/<code>catch</code> in every situation.
+</p>
+</li>
+<li>
+<p>
+There is a point where you do need to catch exceptions, but this should be as high up as possible:
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+The stack unwinding that happens when an exception is thrown will cause destructors to be
+     called and resources to be cleaned up along the way.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+When catching an exception, try to catch the exception with as general a class as possible.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+I often catch with <code>std::exception</code>, which is the most general case for any exception class
+      derived from <code>std::exception</code>.
+</p>
+</li>
+<li>
+<p>
+Of course, if you need to catch a more specific exception, or your class isn&#8217;t derived from
+      <code>std::exception</code> (why not?), then you will need to change this.
+</p>
+</li>
+<li>
+<p>
+Also catch by either reference, or reference-to-<code>const</code>:
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #0000FF">try</span></span>
+<span style="color: #FF0000">{</span>
+<span style="color: #FF0000">}</span>
+<span style="font-weight: bold"><span style="color: #0000FF">catch</span></span> <span style="color: #990000">(</span>std<span style="color: #990000">::</span><span style="color: #008080">exception</span> e<span style="color: #990000">)</span> <span style="font-style: italic"><span style="color: #9A1900">// bad... slicing can happen</span></span>
+<span style="color: #FF0000">{</span>
+<span style="color: #FF0000">}</span>
+
+<span style="font-weight: bold"><span style="color: #0000FF">try</span></span>
+<span style="color: #FF0000">{</span>
+<span style="color: #FF0000">}</span>
+<span style="font-weight: bold"><span style="color: #0000FF">catch</span></span> <span style="color: #990000">(</span>std<span style="color: #990000">::</span>exception<span style="color: #990000">&amp;</span> e<span style="color: #990000">)</span> <span style="font-style: italic"><span style="color: #9A1900">// okay if you need to modify e</span></span>
+<span style="color: #FF0000">{</span>
+<span style="color: #FF0000">}</span>
+
+<span style="font-weight: bold"><span style="color: #0000FF">try</span></span>
+<span style="color: #FF0000">{</span>
+<span style="color: #FF0000">}</span>
+<span style="font-weight: bold"><span style="color: #0000FF">catch</span></span> <span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">const</span></span> std<span style="color: #990000">::</span>exception<span style="color: #990000">&amp;</span> e<span style="color: #990000">)</span> <span style="font-style: italic"><span style="color: #9A1900">// good as a default</span></span>
+<span style="color: #FF0000">{</span>
+<span style="color: #FF0000">}</span></tt></pre></div></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="title">References</div>
+<div class="ulist"><ul>
+<li>
+<p>
+Meyers, S. <em>More effective C++: 35 new ways to improve your programs and designs</em>. p.XX. 1996.
+  Addison Wesley. Westford, MA.
+</p>
+</li>
+<li>
+<p>
+Meyers, S. <em>Effective C++: 55 specific ways to improve your programs and designs</em>.
+  Third edition. p.XX. 2005. Pearson Education, Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+Stroustrup, B. <em>The C++ programming language</em>. Fourth edition. p.XX. 2013. Pearson
+  Education, Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+Stroustrup, B. <em>A tour of C++</em>. p.XX. 2014. Pearson Education, Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+Stroustrup, B. <em>Programming: principles and practice using C++</em>. Second edition. p.XX. 2014.
+  Pearson Education, Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+Sutter, H. <em>Exceptional C++ style: 40 new engineering puzzles, programming problems, and
+  solutions</em>. p.XX. 2005. Pearson Education, Inc. Boston, MA.
+</p>
+</li>
+<li>
+<p>
+Sutter, H. Alexandrescu, A. <em>C++ coding standards: 101 rules, guidelines, and best practices</em>.
+  p.YY. 2005. Pearson Education, Inc. Upper Saddle River, NJ.
+</p>
+</li>
+<li>
+<p>
+<a href="http://www.boost.org/community/exception_safety.html">David Abrahams' exception safety notes</a>
+</p>
+</li>
+<li>
+<p>
+<a href="http://www.boost.org/community/error_handling.html">David Abrahams' error handling notes</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#S-errors">CppCoreGuidelines
+ &#8201;&#8212;&#8201;E: Error Handling</a> <strong>this is an important reference to read!</strong>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Ri-expects">CppCoreGuidelines
+ &#8201;&#8212;&#8201;I.6: Prefer <code>Expects()</code> for expressing preconditions</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Ri-ensures">CppCoreGuidelines
+ &#8201;&#8212;&#8201;I.8: Prefer <code>Ensures()</code> for expressing postconditions</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#gslassert-assertions">CppCoreGuidelines
+ &#8201;&#8212;&#8201;GSL.assert: Assertions</a>
+</p>
+</li>
+<li>
+<p>
+<a href="http://www.boost.org/doc/libs/1_61_0/libs/exception/doc/motivation.html">Boost Exception</a>
+</p>
+</li>
+</ul></div>
+</td>
+</tr></table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_smart_pointers">Smart pointers</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+A smart pointer is some type that behaves as a pointer, but also does something extra.
+</p>
+</li>
+<li>
+<p>
+Smart pointers are resource <em>oweners</em>.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+They manage the resource they own.
+</p>
+</li>
+<li>
+<p>
+This often means that they "clean up", or delete their resources once they are no longer used.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+The most common form of smart pointers that you will encounter are:
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+<code>std::unique_ptr</code>
+</p>
+</li>
+<li>
+<p>
+<code>std::shared_ptr</code>
+</p>
+</li>
+<li>
+<p>
+<code>std::weak_ptr</code>
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="title">References</div>
+<div class="ulist"><ul>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rf-ptr">CppCoreGuidelines
+ &#8201;&#8212;&#8201;F.22: Use <code>T*</code> or <code>owner&lt;T*&gt;</code> or a smart pointer to designate a single object</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rh-smart">CppCoreGuidelines
+ &#8201;&#8212;&#8201;C.149: Use <code>unique_ptr</code> or <code>shared_ptr</code> to avoid forgetting to <code>delete</code> objects created using <code>new</code></a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Ro-address-of">CppCoreGuidelines
+ &#8201;&#8212;&#8201;C.166: Overload unary <code>&amp;</code> only as part of a system of smart pointers and references</a>
+</p>
+</li>
+</ul></div>
+</td>
+</tr></table>
+</div>
+<div class="sect2">
+<h3 id="_code_std_unique_ptr_code"><code>std::unique_ptr</code></h3>
+<div class="ulist"><ul>
+<li>
+<p>
+The sole <em>owner</em> of an object.
+</p>
+</li>
+<li>
+<p>
+<strong>Your default smart pointer</strong>.
+</p>
+</li>
+<li>
+<p>
+When a <code>unique_ptr</code> goes out of scope, the deleter is called, which "cleans up" the resources.
+</p>
+</li>
+<li>
+<p>
+When correctly used, you should have no memory leaks.
+</p>
+</li>
+<li>
+<p>
+Usually zero-to-very-little overhead.
+</p>
+</li>
+<li>
+<p>
+Factories should usually return a <code>unique_ptr</code>.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+Clients can promote a <code>unique_ptr</code> to <code>shared_ptr</code>.
+</p>
+</li>
+<li>
+<p>
+It is not possible to transform a <code>shared_ptr</code> to a <code>unique_ptr</code>.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Think of the classroom:
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+The projector is a resource that needs to be allocated (logged on) and deallocated (logged
+      off).
+</p>
+</li>
+<li>
+<p>
+The lecturer or tutor is in control of this resource: they are the <code>unique_ptr</code>.
+</p>
+</li>
+<li>
+<p>
+When they leave, they log off, and the session is ended.
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="title">References</div>
+<div class="ulist"><ul>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rr-unique">CppCoreGuidelines
+ &#8201;&#8212;&#8201;R.21: Prefer <code>unique_ptr</code> over <code>shared_ptr</code> unless you need to share ownership</a>
+</p>
+</li>
+</ul></div>
+</td>
+</tr></table>
+</div>
+<div class="sect3">
+<h4 id="_code_std_make_unique_code"><code>std::make_unique</code></h4>
+<div class="ulist"><ul>
+<li>
+<p>
+Your standard <code>unique_ptr</code> allocator.
+</p>
+</li>
+<li>
+<p>
+No need to use <code>new</code>.
+</p>
+</li>
+<li>
+<p>
+No chance of leaking memory!
+</p>
+</li>
+<li>
+<p>
+Prefer <code>make_unique</code> to raw <code>new</code>.
+</p>
+</li>
+</ul></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="title">References</div>
+<div class="ulist"><ul>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rh-make_unique">CppCoreGuidelines
+ &#8201;&#8212;&#8201;C.150: Use <code>make_unique()</code> to construct objects owned by   unique_ptr` s</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rr-make_unique">CppCoreGuidelines
+ &#8201;&#8212;&#8201;R.23 Use <code>make_unique</code> to make <code>unique_ptr</code> s</a>
+</p>
+</li>
+</ul></div>
+</td>
+</tr></table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_custom_deleters_advanced">Custom deleters (advanced)</h4>
+<div class="ulist"><ul>
+<li>
+<p>
+Are useful for when you aren&#8217;t allocating memory via <code>make_unique</code>.
+</p>
+</li>
+<li>
+<p>
+Why would you possibly want to allocate memory otherwise?
+</p>
+</li>
+<li>
+<p>
+Perhaps you&#8217;ve got a custom allocator, or a custom deleter.
+</p>
+</li>
+<li>
+<p>
+<a href="blah">This is a good (practical) example of where a custom deleter is necessary.</a>
+</p>
+</li>
+<li>
+<p>
+Notice that the memory is still not allocated via a raw <code>new</code>.
+</p>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_code_std_shared_ptr_code"><code>std::shared_ptr</code></h3>
+<div class="ulist"><ul>
+<li>
+<p>
+Used when there are multiple owners of an object.
+</p>
+</li>
+<li>
+<p>
+The resource a only released when there are no more owners.
+</p>
+</li>
+<li>
+<p>
+Think of the classroom:
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+When we are all in the room, we are all using the lights.
+</p>
+</li>
+<li>
+<p>
+If the someone leaves the room, it is impolite to turn the lights off while others are still
+     in the public room.
+</p>
+</li>
+<li>
+<p>
+When the last person leaves, they turn the lights off.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Shared pointers are expensive: not only do they need to manage the resource that they have been
+  asked to manage (like a <code>unique_ptr</code>), but they also need to manage a control block for reference
+  counting.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+The reference counting (increment and decrement) is atomic (for concurrency purposes), so it
+      is slower than normal arithmetic operations.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+This control block is how a <code>shared_ptr</code> knows if there are multiple owners, or if it is the sole
+  owner.
+</p>
+</li>
+<li>
+<p>
+You need to justify why you need to use a <code>shared_ptr</code> over a <code>unique_ptr</code>.
+</p>
+</li>
+<li>
+<p>
+If you use a <code>shared_ptr</code> irresponsibly, you can still end up with memory leaks!
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+This is most commonly found when two objects depend on each other.
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+<div class="sect3">
+<h4 id="_code_std_make_shared_code_and_code_std_allocate_shared_code"><code>std::make_shared</code> and <code>std::allocate_shared</code></h4>
+<div class="ulist"><ul>
+<li>
+<p>
+<code>make_shared</code> is the common garden variety: it is a specialised version of <code>allocate_shared</code>.
+</p>
+</li>
+<li>
+<p>
+Similar to <code>make_unique</code>, except they produce a <code>shared_ptr</code> instead.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+<code>allocate_shared</code> will use a user-specified allocator.
+</p>
+</li>
+<li>
+<p>
+<code>make_shared</code> will use the standard allocator.
+</p>
+</li>
+<li>
+<p>
+Prefer <code>make_shared</code>
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+These functions only perform <em>one</em> allocation, whereas explicitly assigning a <code>shared_ptr</code> makes
+  two allocations.
+</p>
+</li>
+<li>
+<p>
+This means that <code>make_shared</code> is faster than explicitly allocating your own <code>shared_ptr</code>.
+</p>
+</li>
+<li>
+<p>
+There are only a handful of instances where you shouldn&#8217;t (or more, can&#8217;t) use <code>make_shared</code>:
+</p>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+When you need to provide a custom deleter
+   .
+</p>
+</li>
+<li>
+<p>
+When the object is extremely large (see <a href="#weak_ptr-problems">Problems with <code>weak_ptr</code> and
+     <code>make_shared</code></a>).
+</p>
+</li>
+</ol></div>
+</li>
+</ul></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="ulist"><ul>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rh-make_shared">CppCoreGuidelines
+ &#8201;&#8212;&#8201;C.151: Use <code>make_shared()</code> to construct objects owned by <code>shared_ptr</code> s</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rr-make_shared">CppCoreGuidelines
+ &#8201;&#8212;&#8201;R.22 Use <code>make_shared</code> to make <code>shared_ptr</code> s</a>
+</p>
+</li>
+</ul></div>
+</td>
+</tr></table>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_code_std_weak_ptr_code"><code>std::weak_ptr</code></h3>
+<div class="ulist"><ul>
+<li>
+<p>
+Is an affiliate of <code>shared_ptr</code>.
+</p>
+</li>
+<li>
+<p>
+Is not actually a pointer: you can&#8217;t do anything but check that a <code>shared_ptr</code> still owns a
+  resource.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+If there is at least one <code>shared_ptr</code> owner, then the <code>weak_ptr</code> can create another owner for
+      you to use.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+<code>weak_ptr</code> is used to break dependency cycles and detect dangling pointers.
+</p>
+</li>
+<li>
+<p>
+<code>weak_ptr</code> has <em>not</em> been designed to replace raw pointers (<code>T*</code>, <a href="#smart-vs-dumb">see below</a>).
+</p>
+</li>
+<li>
+<p>
+Use of <code>weak_ptr</code> is rare.
+</p>
+</li>
+<li>
+<p>
+The best way to use a <code>weak_ptr</code> is:
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="color: #009900">void</span> <span style="font-weight: bold"><span style="color: #000000">foo</span></span><span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">const</span></span> std<span style="color: #990000">::</span><span style="color: #008080">size_t</span> i<span style="color: #990000">)</span>
+<span style="color: #FF0000">{</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">if</span></span> <span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> connection <span style="color: #990000">=</span> links_<span style="color: #990000">[</span>i<span style="color: #990000">].</span><span style="font-weight: bold"><span style="color: #000000">lock</span></span><span style="color: #990000">())</span>
+   <span style="color: #FF0000">{</span>
+      <span style="font-style: italic"><span style="color: #9A1900">// connection is a shared_ptr</span></span>
+      <span style="font-style: italic"><span style="color: #9A1900">// use connection in here</span></span>
+   <span style="color: #FF0000">}</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">else</span></span>
+   <span style="color: #FF0000">{</span>
+      <span style="font-style: italic"><span style="color: #9A1900">// connection == nullptr</span></span>
+      <span style="font-style: italic"><span style="color: #9A1900">// best to erase links_[i] (see below)</span></span>
+   <span style="color: #FF0000">}</span>
+<span style="color: #FF0000">}</span></tt></pre></div></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="title">References</div>
+<div class="ulist"><ul>
+<li>
+<p>
+Meyers, S. <em>Effective Modern C++&#8201;&#8212;&#8201;42 ways to improve your use of C++11 and C++14</em>. p.134
+ &#8201;&#8212;&#8201;138. 2014. O&#8217;Reilly Media Inc. Sebastopol, CA.
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rr-weak_ptr">CppCoreGuidelines
+ &#8201;&#8212;&#8201;R.24: Use <code>weak_ptr</code> to break cycles of <code>shared_ptr</code> s</a>
+</p>
+</li>
+</ul></div>
+</td>
+</tr></table>
+</div>
+<div class="sect3">
+<h4 id="_a_href_weak_ptr_problems_problems_with_code_weak_ptr_code_and_code_make_shared_code_a"><a href="#weak_ptr-problems">Problems with <code>weak_ptr</code> and <code>make_shared</code></a></h4>
+<div class="ulist"><ul>
+<li>
+<p>
+When a <code>shared_ptr</code> is allocated with <code>make_shared</code>, it performs one memory allocation for both
+  the memory you wish to reserve, and the control block in question.
+</p>
+</li>
+<li>
+<p>
+That means that the block of memory can&#8217;t be deallocated unless the control block is also
+  deallocated.
+</p>
+</li>
+<li>
+<p>
+Because this control block keeps a record of the number of <code>weak_ptr</code> s that are in circulation,
+  we can&#8217;t deallocate the control block or the object until there are no further <code>weak_ptr</code> s.
+</p>
+</li>
+<li>
+<p>
+Thus, if you maintain a container of <code>weak_ptr</code> s, it is a good idea to purge the ones that report
+  that they dangle.
+</p>
+</li>
+</ul></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="title">References</div>
+<div class="ulist"><ul>
+<li>
+<p>
+Meyers, S. <em>Effective Modern C++&#8201;&#8212;&#8201;42 ways to improve your use of C++11 and C++14</em>. p.139
+ &#8201;&#8212;&#8201;147. 2014. O&#8217;Reilly Media Inc. Sebastopol, CA.
+</p>
+</li>
+</ul></div>
+</td>
+</tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_a_href_smart_vs_dumb_smart_pointers_versus_raw_pointers_a"><a href="#smart-vs-dumb">Smart pointers versus raw pointers</a></h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+Smart pointers are great&#8230;
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+&#8230;but they are only for resource <em>owners</em>.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Raw pointers are great&#8230;
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+&#8230;but they are only for resource <em>observers</em>.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+You should only store smart pointers.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+This is opposed to storing raw pointers: if you can avoid manually allocating objects on the
+     heap, please do so!
+</p>
+</li>
+<li>
+<p>
+Remember that pointers should only be used when you need reference semantics <em>and</em> you want
+     to be able to change what you refer to, <em>or</em> if you need a valid "nothing to reference" option.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Consider the classroom:
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+The class facilitator is the <code>unique_ptr</code>.
+</p>
+</li>
+<li>
+<p>
+They own the projector.
+</p>
+</li>
+<li>
+<p>
+You as students are observers.
+</p>
+</li>
+<li>
+<p>
+You are free to leave the class whenever you please, and your leaving does not affect anybody
+      else.
+</p>
+</li>
+<li>
+<p>
+Students are <em>raw pointers</em>.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+You should feel free to keep passing raw pointers around and returning raw pointers from
+  functions&#8230;
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+&#8230;with a few caveats.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Herb Sutter has <a href="https://herbsutter.com/2013/06/05/gotw-91-solution-smart-pointer-parameters/">listed
+  a few guidelines</a> about when to choose smart pointers, and when to choose raw pointers: below is a
+  summary of his advice.
+</p>
+</li>
+</ul></div>
+<div class="sect2">
+<h3 id="_1_prefer_raw_pointers_as_object_parameters_to_functions">1. Prefer raw pointers as object parameters to functions</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+Raw pointers are not aware of lifetime policies.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+If a function doesn&#8217;t participate in the maintenance of this policy, it doesn&#8217;t need to take
+      a smart pointer.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Using raw pointers as observers is recommended when you are sure that the object (pointee) will
+  outlive the raw pointer.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+Copying a <code>shared_ptr</code> is expensive, and moving a <code>unqiue_ptr</code> too much will make things
+      confusing.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Standard <code>const</code> rules still apply.
+</p>
+</li>
+<li>
+<p>
+Standard reference vs pointer rules still apply.
+</p>
+</li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="_2_pass_code_unique_ptr_code_by_value_when_the_pointee_8217_s_lifetime_ends_at_the_end_of_the_callee_function">2. Pass <code>unique_ptr</code> by value when the pointee&#8217;s lifetime ends at the end of the callee function</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+Such functions are called sinks.
+</p>
+</li>
+<li>
+<p>
+RAII and move semantics will make sure that the <code>unique_ptr</code> is correctly transferred and
+  destroyed when the function returns.
+</p>
+</li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="_3_pass_code_unique_ptr_code_by_reference_when_you_wish_to_modify_the_pointer_8217_s_value_but_never_pass_a_code_unique_ptr_code_by_reference_to_code_const_code">3. Pass <code>unique_ptr</code> by reference when you wish to modify the pointer&#8217;s value, but never pass a <code>unique_ptr</code> by reference-to-<code>const</code></h3>
+<div class="ulist"><ul>
+<li>
+<p>
+Passing a <code>unique_ptr</code> by reference implies that there is potential for the pointer to change
+  what it points to.
+</p>
+</li>
+<li>
+<p>
+Passing a <code>unique_ptr</code> by reference-to-<code>const</code> offers no additional benefits to passing a raw
+  pointer, and actually restricts what can be passed into the function. Recall rule 1.
+</p>
+</li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="_4_pass_code_shared_ptr_code_by_value_when_you_wish_for_the_callee_to_share_ownership_with_the_caller">4. Pass <code>shared_ptr</code> by value when you wish for the callee to share ownership with the caller</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+The function needs to retain a copy of the <code>shared_ptr</code> for shared ownership to be meaningful.
+</p>
+</li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="_5_pass_code_shared_ptr_code_by_reference_when_you_wish_to_modify_the_pointer_8217_s_value">5. Pass <code>shared_ptr</code> by reference when you wish to modify the pointer&#8217;s value</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+Same as 3.1
+</p>
+</li>
+<li>
+<p>
+Accepting a <code>shared_ptr</code> as a reference-to-<code>const</code> parameter is only acceptable when your
+  function calls a function that implements rule 4.
+</p>
+</li>
+<li>
+<p>
+Otherwise, prefer rule 1.
+</p>
+</li>
+</ul></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="title">References</div>
+<div class="ulist"><ul>
+<li>
+<p>
+<a href="https://herbsutter.com/2013/05/29/gotw-89-solution-smart-pointers">GotW #89 Solution: Smart
+  Pointers</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://herbsutter.com/2013/05/30/gotw-90-solution-factories">GotW #90 Solution: Factories</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://herbsutter.com/2013/06/05/gotw-91-solution-smart-pointer-parameters">GotW #91
+  Solution: Smart Pointer Parameters</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rf-smart">CppCoreGuidelines
+ &#8201;&#8212;&#8201;F.7: For general use, take <code>T*</code> or <code>T&amp;</code> arguments rather than smart pointers</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rr-owner">CppCoreGuidelines
+ &#8201;&#8212;&#8201;R.20: Use <code>unique_ptr</code> or <code>shared_ptr</code> to represent ownership</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rr-smartptrparam">CppCoreGuidelines
+ &#8201;&#8212;&#8201;R.30: Take smart pointers as parameters only to explicitly express lifetime semantics</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rr-smart">CppCoreGuidelines
+ &#8201;&#8212;&#8201;R.31: If you have non-<code>std</code> smart pointers, follow the basic pattern from <code>std</code></a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rr-uniqueptrparam">CppCoreGuidelines
+ &#8201;&#8212;&#8201;R.32: Take a <code>unique_ptr&lt;widget&gt;</code> parameter to express that a function assumes ownership of a <code>widget</code></a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rr-reseat">CppCoreGuidelines
+ &#8201;&#8212;&#8201;R.33: Take a <code>unique_ptr&lt;widget&gt;&amp;</code> parameter to express that a function reseats the <code>widget</code></a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rr-sharedptrparam-owner">CppCoreGuidelines
+ &#8201;&#8212;&#8201;R.34: Take a <code>shared_ptr&lt;widget&gt;</code> parameter to express that a function is part owner</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rr-sharedptrparam">CppCoreGuidelines
+ &#8201;&#8212;&#8201;R.35: Take a <code>shared_ptr&lt;widget&gt;&amp;</code> parameter to express that a function might reseat the shared pointer</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rr-sharedptrparam-const">CppCoreGuidelines
+ &#8201;&#8212;&#8201;R.36: Take a <code>const shared_ptr&lt;widget&gt;&amp;</code> parameter to express that it might retain a reference count to the object ???</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#Rr-smartptrget">CppCoreGuidelines
+ &#8201;&#8212;&#8201;R.37: Do not pass a pointer or reference obtained from an aliased smart pointer</a>
+</p>
+</li>
+</ul></div>
+</td>
+</tr></table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_code_decltype_code"><code>decltype</code></h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+A very powerful type deduction tool.
+</p>
+</li>
+<li>
+<p>
+<code>decltype(e)</code> for some expression <code>e</code> will be deduced as the type of the expression <code>e</code>.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+If <code>e</code> does not have a valid expression type, your code will not compile.
+</p>
+</li>
+<li>
+<p>
+If <code>e</code> is the name of an overloaded function, your code will not compile.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+<code>decltype((e))</code>, for some <em>parenthesised</em> expression <code>(e)</code> does not resolve to the same type as
+  <code>decltype(e)</code>:
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+If <code>e</code> is an lvalue, then <code>decltype((e))</code> will be deduced as <code>decltype(e)&amp;</code>.
+</p>
+</li>
+<li>
+<p>
+If <code>e</code> is an rvalue, then <code>decltype((e))</code> will be deduced as <code>decltype(e)&amp;&amp;</code>.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+<span class="big">How about in English, professor?</span>
+</p>
+</li>
+<li>
+<p>
+The above is a bit technical, so let&#8217;s break it down:
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+<code>decltype(e)</code> takes the type of whatever is inside, and becomes like an unnamed type alias
+     (named type aliases were formerly known as a <code>typedef</code>).
+</p>
+</li>
+<li>
+<p>
+<code>decltype((e))</code> takes the type of whatever is inside, and becomes like an unnamed type alias,
+     with the caveat that the type is a reference to <code>e</code>'s type.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Why would you want to <em>ever</em> use an unnamed alias?
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+For the same reason you want to use <code>auto</code>!
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Relying on type deduction means that you are placing trust in the compiler to work out the correct
+  type.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+Your explicit type might go out of date.
+</p>
+</li>
+<li>
+<p>
+<code>decltype(e)</code> will only go out of date if your expression is <em>wrong</em>.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+You probably have a bigger problem at that point.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Trust your tool.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+But I can&#8217;t see my type!
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+Correct, and the minute your type goes off the screen, your type can&#8217;t be seen anyway.
+</p>
+</li>
+<li>
+<p>
+You should keep the scope of variables as small as possible to limit their potential misuse.
+</p>
+</li>
+<li>
+<p>
+If you use an IDE, your IDE should be able to deduce the type information on the fly.
+</p>
+</li>
+<li>
+<p>
+However, a stronger argument is that <code>decltype</code>, like <code>auto</code>, helps you code against interfaces;
+     explicit types promote coding against implementations.
+</p>
+</li>
+<li>
+<p>
+Unlike <code>auto</code>, <code>decltype</code> isn&#8217;t supposed to be used everywhere.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+<code>decltype</code> doesn&#8217;t replace <code>auto</code> either:
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+<code>auto</code> is placed on the left, before the identifier.
+</p>
+</li>
+<li>
+<p>
+<code>decltype</code> is placed on the right, after the <code>operator=</code>.
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;iostream&gt;</span>
+<span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;vector&gt;</span>
+
+std<span style="color: #990000">::</span><span style="color: #008080">vector&lt;int&gt;</span> <span style="font-weight: bold"><span style="color: #000000">make_crowd</span></span><span style="color: #990000">(</span><span style="color: #009900">int</span> children<span style="color: #990000">,</span> <span style="color: #009900">int</span> adults<span style="color: #990000">,</span> <span style="color: #009900">int</span> seniors<span style="color: #990000">);</span>
+
+<span style="color: #009900">int</span> <span style="font-weight: bold"><span style="color: #000000">main</span></span><span style="color: #990000">()</span>
+<span style="color: #FF0000">{</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> crowd <span style="color: #990000">=</span> <span style="font-weight: bold"><span style="color: #000000">make_crowd</span></span><span style="color: #990000">(</span><span style="color: #993399">10</span><span style="color: #990000">,</span> <span style="color: #993399">120</span><span style="color: #990000">,</span> <span style="color: #993399">16</span><span style="color: #990000">);</span>
+   <span style="font-style: italic"><span style="color: #9A1900">// auto on the left, decltype on the right</span></span>
+   <span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> first_child <span style="color: #990000">=</span> <span style="font-weight: bold"><span style="color: #000000">decltype</span></span><span style="color: #990000">(</span>crowd<span style="color: #990000">)::</span>value_type<span style="color: #FF0000">{</span><span style="color: #993399">7</span><span style="color: #FF0000">}</span><span style="color: #990000">;</span> <span style="font-style: italic"><span style="color: #9A1900">// is the same as...</span></span>
+   <span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> second_child <span style="color: #990000">=</span> std<span style="color: #990000">::</span>vector<span style="color: #990000">&lt;</span><span style="color: #009900">int</span><span style="color: #990000">&gt;::</span>value_type<span style="color: #FF0000">{</span><span style="color: #993399">7</span><span style="color: #FF0000">}</span><span style="color: #990000">;</span> <span style="font-style: italic"><span style="color: #9A1900">// is the same as...</span></span>
+   <span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> third_child <span style="color: #990000">=</span> <span style="color: #009900">int</span><span style="color: #FF0000">{</span><span style="color: #993399">7</span><span style="color: #FF0000">}</span><span style="color: #990000">;</span>
+<span style="color: #FF0000">}</span></tt></pre></div></div>
+<div class="ulist"><ul>
+<li>
+<p>
+That seems pointless&#8230; why didn&#8217;t we just use <code>int{0}</code>?
+</p>
+</li>
+<li>
+<p>
+Consider this modification:
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;iostream&gt;</span>
+<span style="font-weight: bold"><span style="color: #000080">#include</span></span> <span style="color: #FF0000">&lt;vector&gt;</span>
+
+<span style="font-style: italic"><span style="color: #9A1900">// children are often proud of their age, and will happily tell you that they are "six and a half",</span></span>
+<span style="font-style: italic"><span style="color: #9A1900">// so all children will now give an _exact_ age</span></span>
+std<span style="color: #990000">::</span><span style="color: #008080">vector&lt;double&gt;</span> <span style="font-weight: bold"><span style="color: #000000">make_crowd</span></span><span style="color: #990000">(</span><span style="color: #009900">int</span> children<span style="color: #990000">,</span> <span style="color: #009900">int</span> adults<span style="color: #990000">,</span> <span style="color: #009900">int</span> seniors<span style="color: #990000">);</span>
+
+<span style="color: #009900">int</span> <span style="font-weight: bold"><span style="color: #000000">main</span></span><span style="color: #990000">()</span>
+<span style="color: #FF0000">{</span>
+   <span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> crowd <span style="color: #990000">=</span> <span style="font-weight: bold"><span style="color: #000000">make_crowd</span></span><span style="color: #990000">(</span><span style="color: #993399">10</span><span style="color: #990000">,</span> <span style="color: #993399">120</span><span style="color: #990000">,</span> <span style="color: #993399">16</span><span style="color: #990000">);</span>
+   <span style="font-style: italic"><span style="color: #9A1900">// auto on the left, decltype on the right</span></span>
+   <span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> first_child <span style="color: #990000">=</span> <span style="font-weight: bold"><span style="color: #000000">decltype</span></span><span style="color: #990000">(</span>crowd<span style="color: #990000">)::</span>value_type<span style="color: #FF0000">{</span><span style="color: #993399">7</span><span style="color: #FF0000">}</span><span style="color: #990000">;</span>   <span style="font-style: italic"><span style="color: #9A1900">// is the same as std::vector&lt;double&gt;::value_type{7}; but not the same as...</span></span>
+   <span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> second_child <span style="color: #990000">=</span> std<span style="color: #990000">::</span>vector<span style="color: #990000">&lt;</span><span style="color: #009900">int</span><span style="color: #990000">&gt;::</span>value_type<span style="color: #FF0000">{</span><span style="color: #993399">7</span><span style="color: #FF0000">}</span><span style="color: #990000">;</span> <span style="font-style: italic"><span style="color: #9A1900">// both of which are embedded in our code</span></span>
+   <span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> third_child <span style="color: #990000">=</span> <span style="color: #009900">int</span><span style="color: #FF0000">{</span><span style="color: #993399">7</span><span style="color: #FF0000">}</span><span style="color: #990000">;</span>                           <span style="font-style: italic"><span style="color: #9A1900">// errors are likely to crop up</span></span>
+<span style="color: #FF0000">}</span></tt></pre></div></div>
+<div class="ulist"><ul>
+<li>
+<p>
+So should I be using <code>decltype</code> like in this program?
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.8
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> i <span style="color: #990000">=</span> <span style="font-weight: bold"><span style="color: #000000">decltype</span></span><span style="color: #990000">(</span><span style="color: #993399">0</span><span style="color: #990000">)</span><span style="color: #FF0000">{</span><span style="color: #993399">0</span><span style="color: #FF0000">}</span><span style="color: #990000">;</span>
+<span style="font-weight: bold"><span style="color: #0000FF">auto</span></span> j <span style="color: #990000">=</span> <span style="font-weight: bold"><span style="color: #000000">decltype</span></span><span style="color: #990000">(</span>i<span style="color: #990000">)</span><span style="color: #FF0000">{</span><span style="color: #993399">1</span><span style="color: #FF0000">}</span><span style="color: #990000">;</span></tt></pre></div></div>
+<div class="ulist"><ul>
+<li>
+<p>
+Heavens, no! Use <code>decltype</code> when you require type that is dependent on some expression.
+</p>
+</li>
+<li>
+<p>
+An example is the <code>value_type</code> above: it is dependent on a container.
+</p>
+</li>
+<li>
+<p>
+We can also use <code>decltype</code> to deduce the return type of complex types.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+One of these will feature in the <code>template class</code> notes.
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</div>
+</div>
+</div>
+<div id="footnotes"><hr /></div>
+<div id="footer">
+<div id="footer-text">
+Version 1<br />
+Last updated 2016-10-04 00:33:26 AEDT
+</div>
+</div>
+</body>
+</html>
