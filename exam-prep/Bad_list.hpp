@@ -410,30 +410,30 @@ private:
 
    template <typename L>
       // requires ranges::Same<Node, std::remove_const_t<Node>>()
-   static auto begin_impl(L& l) -> decltype(l.begin())
+   static auto begin_impl(L& l) noexcept -> decltype(l.begin())
    {
-      return decltype(l.begin())(l.front_);
+      return decltype(l.begin()){l.front_};
    }
 
    template <typename L>
       // requires ranges::Same<Node, std::remove_const_t<Node>>()
-   static auto end_impl(L& l) -> decltype(l.end())
+   static auto end_impl(L& l) noexcept -> decltype(l.end())
    {
-      return l.empty() ? begin_impl(l) : decltype(l.end())(l.back_->next_.get());
+      return l.empty() ? begin_impl(l) : decltype(l.end()){l.back_->next_.get()};
    }
 
    template <typename L>
       // requires ranges::Same<Node, std::remove_const_t<Node>>()
-   static auto rbegin_impl(L& l) -> decltype(l.rbegin())
+   static auto rbegin_impl(L& l) noexcept -> decltype(l.rbegin())
    {
-      return decltype(l.rbegin())(end_impl(l));
+      return decltype(l.rbegin()){end_impl(l)};
    }
 
    template <typename L>
       // requires ranges::Same<Node, std::remove_const_t<Node>>()
-   static auto rend_impl(L& l) -> decltype(l.rend())
+   static auto rend_impl(L& l) noexcept -> decltype(l.rend())
    {
-      return l.empty() ? rbegin_impl(l) : decltype(l.rend()){decltype(l.begin())(l.head_->next_.get())};
+      return l.empty() ? rbegin_impl(l) : decltype(l.rend()){l.head_->next_.get()};
    }
 
    struct Node {
@@ -449,7 +449,7 @@ private:
          next_ = n;
          prev_ = p;
       }*/
-      Node(T e, Owner n, Node* p)
+      Node(T e, Owner n, Node* p) noexcept
          : element_{std::move(e)},
            next_{std::move(n)},
            prev_{p}
@@ -494,19 +494,18 @@ private:
       using const_reference = const value_type&;
       using iterator_category = std::bidirectional_iterator_tag;
 
-      friend Iterator<const std::remove_const_t<P>>;
       /*Iterator(shared_ptr<Node> p)
          : ptr_(p)
       {}*/
       Iterator() noexcept = default;
-      explicit Iterator(pointer p) noexcept
+      Iterator(pointer p) noexcept
          : ptr_{p}
       {}
 
       template <typename U>
          // requires ranges::Same<U, std::remove_const_t<U>>() &&
-         //          !ranges::Same<U, P>()
-      Iterator(Iterator<U> i)
+         //          !ranges::Same<U, P>()                        // ew... shouldn't be negating a concept
+      Iterator(Iterator<U> i) noexcept
          : ptr_{i.ptr_}
       {}
 
@@ -598,13 +597,14 @@ private:
    private:
       /*weak_ptr<Node> ptr_;*/
       pointer ptr_;
+      friend Iterator<const P>;
    };
 };
 
 template <typename T>
    // requires ranges::Regular<T>() &&
-   //         ranges::StrictTotallyOrdered<T>()
-inline bool operator==(const Bad_list<T>& a, const Bad_list<T>& b)
+   //          ranges::StrictTotallyOrdered<T>()
+inline bool operator==(const Bad_list<T>& a, const Bad_list<T>& b) noexcept
 {
    if (a.size() != b.size())
       return false;
@@ -616,41 +616,49 @@ inline bool operator==(const Bad_list<T>& a, const Bad_list<T>& b)
 
 template <typename T>
    // requires ranges::Regular<T>() &&
-   //         ranges::StrictTotallyOrdered<T>()
-inline bool operator!=(const Bad_list<T>& a, const Bad_list<T>& b)
+   //          ranges::StrictTotallyOrdered<T>()
+inline bool operator!=(const Bad_list<T>& a, const Bad_list<T>& b) noexcept
 {
    return !(a == b);
 }
 
 template <typename T>
    // requires ranges::Regular<T>() &&
-   //         ranges::StrictTotallyOrdered<T>()
-inline bool operator<(const Bad_list<T>& a, const Bad_list<T>& b)
+   //          ranges::StrictTotallyOrdered<T>()
+inline bool operator<(const Bad_list<T>& a, const Bad_list<T>& b) noexcept
 {
    return std::lexicographical_compare(a.begin(), a.end(), b.begin(), b.end());
 }
 
 template <typename T>
    // requires ranges::Regular<T>() &&
-   //         ranges::StrictTotallyOrdered<T>()
-inline bool operator>(const Bad_list<T>& a, const Bad_list<T>& b)
+   //          ranges::StrictTotallyOrdered<T>()
+inline bool operator>(const Bad_list<T>& a, const Bad_list<T>& b) noexcept
 {
    return b < a;
 }
 
 template <typename T>
    // requires ranges::Regular<T>() &&
-   //         ranges::StrictTotallyOrdered<T>()
-inline bool operator<=(const Bad_list<T>& a, const Bad_list<T>& b)
+   //          ranges::StrictTotallyOrdered<T>()
+inline bool operator<=(const Bad_list<T>& a, const Bad_list<T>& b) noexcept
 {
    return !(a > b);
 }
 
 template <typename T>
    // requires ranges::Regular<T>() &&
-   //         ranges::StrictTotallyOrdered<T>()
-inline bool operator>=(const Bad_list<T>& a, const Bad_list<T>& b)
+   //          ranges::StrictTotallyOrdered<T>()
+inline bool operator>=(const Bad_list<T>& a, const Bad_list<T>& b) noexcept
 {
    return !(a < b);
+}
+
+template <typename T>
+   // requires ranges::Regular<T>() &&
+   //          ranges::StrictTotallyOrdered<T>()
+inline void swap(Bad_list<T>& a, Bad_list<T>& b) noexcept
+{
+   a.swap(b);
 }
 #endif // BAD_LIST_HPP_INCLUDED
