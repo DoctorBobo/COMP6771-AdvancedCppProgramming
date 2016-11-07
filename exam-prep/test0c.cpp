@@ -5,8 +5,9 @@
 int main()
 {
    constexpr auto size = 10;
-   auto l = Bad_list<double>(size);
+   constexpr auto value = 1.23e4;
+   auto l = Bad_list<double>(size, value);
    assert(l.size() == size);
    assert(!l.empty());
-   assert(std::count(l.begin(), l.end(), double{}) == size);
+   assert(std::count(l.begin(), l.end(), value) == size);
 }
