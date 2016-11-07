@@ -369,6 +369,8 @@ public:
    {
       using std::swap;
       swap(head_, other.head_);
+      swap(front_, other.front_);
+      swap(back_, other.back_);
       swap(size_, other.size_);
    }
 private:
