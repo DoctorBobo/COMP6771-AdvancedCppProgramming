@@ -16,7 +16,7 @@ class Bad_list {
    struct Node;
    template <typename P>
       // requires ranges::Same<Node, std::remove_const_t<P>>()
-   struct Iterator;
+   class Iterator;
 public:
    using value_type             = T;
    using size_type              = std::size_t;
@@ -51,7 +51,7 @@ public:
       size_ = shared_ptr<int>(new int);
       *size_ = size;
    }*/
-   Bad_list(const difference_type n, const T& t = T{})
+   explicit Bad_list(const difference_type n, const T& t = T{})
    {
       while (size() < n)
          push_back_impl(*this, t);
@@ -85,7 +85,7 @@ public:
         back_{o.back_},
         size_{o.size_}
    {
-      clear();
+      o.clear();
    }
 
    /*Bad_list& operator=(const Bad_list& o)
