@@ -4,6 +4,8 @@
 #ifndef BAD_LIST_HPP_INCLUDED
 #define BAD_LIST_HPP_INCLUDED
 #include <algorithm>
+#include <initializer_list>
+#include <iterator>
 #include <memory>
 #include <utility>
 
@@ -56,6 +58,26 @@ public:
       while (size() < n)
          push_back_impl(*this, t);
    }
+
+   explicit Bad_list(std::initializer_list<T> l)
+   {
+      for (auto& i : l)
+         push_back_impl(*this, std::move(i));
+   }
+
+   template <typename I>
+      // requires ranges::InputIterator<I>()
+   Bad_list(I first, const I last, typename std::iterator_traits<I>::difference_type* = {})
+   {
+      for (; first != last; ++first)
+         push_back_impl(*this, *first);
+   }
+
+   template <typename C>
+      // requires Container<C>()
+   explicit Bad_list(const C& c, typename C::iterator* = {})
+      : Bad_list{c.begin(), c.end()}
+   {}
 
    /*Bad_list(const Bad_list& o)
    {
@@ -485,11 +507,12 @@ private:
       // requires ranges::Same<Node, std::remove_const_t<P>>()
    /*struct Iterator {*/
    class Iterator {
+      using Internal_pointer = P*;
    public:
       using difference_type = Bad_list::difference_type;
       using value_type = std::conditional_t<std::is_const<P>::value, const T, T>;
-      using pointer = P*;
-      using const_pointer = const P*;
+      using pointer = value_type*;
+      using const_pointer = const value_type*;
       using reference = value_type&;
       using const_reference = const value_type&;
       using iterator_category = std::bidirectional_iterator_tag;
@@ -498,7 +521,7 @@ private:
          : ptr_(p)
       {}*/
       Iterator() noexcept = default;
-      Iterator(pointer p) noexcept
+      Iterator(Internal_pointer p) noexcept
          : ptr_{p}
       {}
 
@@ -568,12 +591,12 @@ private:
       }*/
       pointer operator->() noexcept
       {
-         return std::addressof(**this);
+         return std::addressof(operator*());
       }
 
       const_pointer operator->() const noexcept
       {
-         return std::addressof(**this);
+         return std::addressof(operator*());
       }
 
       /*bool operator==(const Iterator i)
@@ -596,7 +619,7 @@ private:
       }
    private:
       /*weak_ptr<Node> ptr_;*/
-      pointer ptr_;
+      Internal_pointer ptr_;
       friend Iterator<const P>;
    };
 };
