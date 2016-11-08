@@ -13,18 +13,26 @@
  * limitations under the License.
  */
 #include "Bad_list.hpp"
-#include <algorithm>
 #include <cassert>
-#include "copyable.hpp"
 
 int main()
 {
-   auto a = Bad_list<Copyable>{};
-   a.push_back(Copyable());
-   assert(a.size() == 1);
-   assert(Copyable::default_ctor() == 3);
-   assert(Copyable::copy_ctor() == 0);
-   assert(Copyable::copy_assign() == 0);
-   assert(Copyable::move_ctor() == 7);
-   assert(Copyable::move_assign() == 0);
+   auto a = Bad_list<int>{1, 2, 3, 4, 5};
+   auto b = a;
+
+   assert(a == b);
+   assert(a <= b);
+   assert(b <= a);
+   assert(a >= b);
+   assert(b >= a);
+
+   std::transform(b.cbegin(), b.cend(), b.begin(),
+   [](const auto& i) {
+      return i * 2;
+   });
+
+   assert(a < b);
+   assert(a <= b);
+   assert(b >= a);
+   assert(b > a);
 }
