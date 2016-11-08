@@ -12,8 +12,7 @@
 /*using namespace std;*/
 
 template <typename T>
-   // requires ranges::Regular<T>() &&
-   //         ranges::StrictTotallyOrdered<T>()
+   // requires ranges::Regular<T>()
 class Bad_list {
    struct Node;
    template <typename P>
@@ -73,10 +72,10 @@ public:
          push_back_impl(*this, *first);
    }
 
-   template <typename C>
-      // requires Container<C>()
-   explicit Bad_list(const C& c, typename C::iterator* = {})
-      : Bad_list{c.begin(), c.end()}
+   template <typename Rng>
+      // requires InputRange<Rng>()
+   explicit Bad_list(const Rng& rng, typename Rng::iterator* = {})
+      : Bad_list{std::begin(rng), std::end(rng)}
    {}
 
    /*Bad_list(const Bad_list& o)
@@ -627,8 +626,7 @@ private:
 };
 
 template <typename T>
-   // requires ranges::Regular<T>() &&
-   //          ranges::StrictTotallyOrdered<T>()
+   // requires ranges::Regular<T>()
 inline bool operator==(const Bad_list<T>& a, const Bad_list<T>& b) noexcept
 {
    if (a.size() != b.size())
@@ -640,48 +638,14 @@ inline bool operator==(const Bad_list<T>& a, const Bad_list<T>& b) noexcept
 }
 
 template <typename T>
-   // requires ranges::Regular<T>() &&
-   //          ranges::StrictTotallyOrdered<T>()
+   // requires ranges::Regular<T>()
 inline bool operator!=(const Bad_list<T>& a, const Bad_list<T>& b) noexcept
 {
    return !(a == b);
 }
 
 template <typename T>
-   // requires ranges::Regular<T>() &&
-   //          ranges::StrictTotallyOrdered<T>()
-inline bool operator<(const Bad_list<T>& a, const Bad_list<T>& b) noexcept
-{
-   return std::lexicographical_compare(a.begin(), a.end(), b.begin(), b.end());
-}
-
-template <typename T>
-   // requires ranges::Regular<T>() &&
-   //          ranges::StrictTotallyOrdered<T>()
-inline bool operator>(const Bad_list<T>& a, const Bad_list<T>& b) noexcept
-{
-   return b < a;
-}
-
-template <typename T>
-   // requires ranges::Regular<T>() &&
-   //          ranges::StrictTotallyOrdered<T>()
-inline bool operator<=(const Bad_list<T>& a, const Bad_list<T>& b) noexcept
-{
-   return !(a > b);
-}
-
-template <typename T>
-   // requires ranges::Regular<T>() &&
-   //          ranges::StrictTotallyOrdered<T>()
-inline bool operator>=(const Bad_list<T>& a, const Bad_list<T>& b) noexcept
-{
-   return !(a < b);
-}
-
-template <typename T>
-   // requires ranges::Regular<T>() &&
-   //          ranges::StrictTotallyOrdered<T>()
+   // requires ranges::Regular<T>()
 inline void swap(Bad_list<T>& a, Bad_list<T>& b) noexcept
 {
    a.swap(b);
