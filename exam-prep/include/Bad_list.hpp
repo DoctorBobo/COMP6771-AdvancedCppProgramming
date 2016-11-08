@@ -160,14 +160,20 @@ public:
       push_back_impl(*this, std::move(t));
    }
 
-   /*template <typename... Args>          content necessary for emplace_back not covered in COMP6771
+   /*template <typename... Args>
    void emplace_back(Args... a)
    {
       T t(a...);
       return push_back(t);
+   }*/
+   template <typename... Args>
+      // requires ranges::Regular<Args...>()
+   void emplace_back(Args&&... a)
+   {
+      push_back_impl(*this, std::forward<Args>(a)...);
    }
 
-   void push_front(T t)
+   /*void push_front(T t)
    {
       head_->prev_ = shared_ptr<Node>(new Node(T(), shared_ptr<Node>(), shared_ptr<Node>()));
       head_->prev_->next_ = head_;
@@ -183,14 +189,20 @@ public:
       push_front_impl(*this, std::move(t));
    }
 
-   /*template <typename... Args>         content necessary for emplace_front not covered in COMP6771
+   /*template <typename... Args>
    void emplace_front(Args... a)
    {
       T t(a...);
       return push_front(t);
+   }*/
+   template <typename... Args>
+      // requires ranges::Regular<Args...>()
+   void emplace_front(Args&&... a)
+   {
+      push_front_impl(*this, std::forward<Args>(a)...);
    }
 
-   T pop_back()
+   /*T pop_back()
    {
       if (empty())
          throw new runtime_error("couldn't do it...");
@@ -382,15 +394,15 @@ private:
    //shared_ptr<int> size_;
    difference_type size_{};
 
-   template <typename N>
+   template <typename... Args>
       // requires ranges::Same<T, std::remove_const_t<std::remove_reference_t<N>>>()
-   static void push_back_impl(Bad_list& l, N&& n)
+   static void push_back_impl(Bad_list& l, Args&&... a)
    {
       if (l.empty()) {
-         push_first(l, std::forward<N>(n));
+         push_first(l, std::forward<Args>(a)...);
       }
       else {
-         l.back_->next_ = std::make_unique<Node>(std::forward<N>(n), std::move(l.back_->next_), l.back_);
+         l.back_->next_ = std::make_unique<Node>(T(std::forward<Args>(a)...), std::move(l.back_->next_), l.back_);
          l.back_ = l.back_->next_.get();
       }
 
@@ -398,15 +410,15 @@ private:
       ++l.size_;
    }
 
-   template <typename N>
+   template <typename... Args>
       // requires ranges::Same<T, std::remove_const_t<std::remove_reference_t<N>>>()
-   void push_front_impl(Bad_list& l, N&& n)
+   void push_front_impl(Bad_list& l, Args&&... a)
    {
       if (l.empty()) {
-         push_first(l, std::forward<N>(n));
+         push_first(l, std::forward<Args>(a)...);
       }
       else {
-         l.head_->element_ = std::forward<N>(n);
+         l.head_->element_ = T(std::forward<Args>(a)...);
          l.head_ = std::make_unique<Node>(T{}, std::move(l.head_), nullptr);
          l.front_ = l.head_->next_.get();
       }
@@ -415,12 +427,12 @@ private:
       ++size_;
    }
 
-   template <typename N>
+   template <typename... Args>
       // requires ranges::Same<T, std::remove_const_t<std::remove_reference_t<N>>>()
-   static void push_first(Bad_list& l, N&& n)
+   static void push_first(Bad_list& l, Args&&... a)
    {
       l.head_ = std::make_unique<Node>(T{},
-                                       std::make_unique<Node>(std::forward<N>(n),
+                                       std::make_unique<Node>(T(std::forward<Args>(a)...),
                                                               std::make_unique<Node>(T{}, nullptr, nullptr),
                                                               nullptr),
                                        nullptr);
