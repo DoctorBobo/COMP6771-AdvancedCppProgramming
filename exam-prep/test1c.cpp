@@ -2,13 +2,8 @@
 #include <cassert>
 #include <memory>
 #include <numeric>
+#include "types.hpp"
 #include <vector>
-
-template <typename T>
-using value_type_t = typename T::value_type;
-
-template <typename T>
-using difference_type_t = typename T::difference_type;
 
 int main()
 {
