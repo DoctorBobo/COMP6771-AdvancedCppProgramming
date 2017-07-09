@@ -99,7 +99,7 @@ i = static_cast<int>(42.5); // explicitly converts 42.5 to an int
 ==== `gsl::narrow_cast`
 * A way of signalling that you are performing a narrowing conversion.
 * Identical to `static_cast`
-* Not a standard {cpp}-stlye cast.
+* Not a standard {cpp}-style cast.
 * Found in the Guideline Support Library.
 
 [source,cpp]
@@ -312,7 +312,7 @@ int main()
 == Functions and containers
 * {cpp} offers different ways to pass parameters.
 * Remember that {cpp} works with _values_, similarly to C, by default.
-* This is opposed to Java, which works with _referneces_ by default.
+* This is opposed to Java, which works with _references_ by default.
 
 === Functions whose purpose is to create a container
 * Should _pass arguments_ that dictate the _creation_ of the container.
@@ -996,7 +996,7 @@ int main()
    - `const_iterator`, which is a non-mutable `ForwardIterator` or better
    - A `const_iterator` is like `const auto*`: you can change what is being pointed to, but you
      can't change the value of the pointee.
-* Like with everything else, unless you _know that you indend_ to change the pointee's value, stick
+* Like with everything else, unless you _know that you intend_ to change the pointee's value, stick
   with `const_iterator`s.
 * While using `cbegin` is a good way to express that you intend to use a `const_iterator` (in fact,
   with `auto`, it's the only way), `cend` is sometimes a poor choice for iterating over containers.
